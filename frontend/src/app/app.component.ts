@@ -20,4 +20,16 @@ export class AppComponent implements OnInit {
       this.data = response;
     });
   }
+
+  onSubmit() {
+    const data = { groupNumber: 54, color: 'red', numberOfStudents: 8 };
+    this.dataService.postData(data).subscribe(
+      (response) => {
+        console.log('Response:', response);
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+    );
+  }
 }
