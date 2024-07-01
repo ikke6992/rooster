@@ -5,9 +5,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nl.itvitae.rooster.scheduledday.Scheduledday;
 
 @Getter
 @Setter
@@ -21,6 +24,9 @@ public class Classroom {
   private Long id;
 
   private byte capacity;
+
+  @OneToMany(mappedBy = "classroom")
+  private List<Scheduledday> scheduleddays;
 
   private boolean hasBeamer;
 

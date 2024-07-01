@@ -25,9 +25,9 @@ public class Scheduledday {
 
   private LocalDate date;
 
-//  @ManyToOne
-//  private Classroom classroom;
-//
-//  @OneToOne
-//  private Lesson lesson;
+  @ManyToOne
+  private Classroom classroom;
+
+  @OneToOne
+  private Lesson lesson;
 }
