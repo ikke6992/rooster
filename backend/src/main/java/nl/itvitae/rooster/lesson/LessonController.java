@@ -19,4 +19,9 @@ public class LessonController {
   public ResponseEntity<?> getAll() {
     return ResponseEntity.ok(lessonService.findAll());
   }
+
+  @GetMapping("/test")
+  public ResponseEntity<Lesson> getTestLesson() {
+    return ResponseEntity.ok(lessonService.createTestLesson());
+  }
 }

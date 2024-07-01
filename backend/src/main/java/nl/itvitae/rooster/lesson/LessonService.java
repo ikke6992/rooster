@@ -12,4 +12,8 @@ public class LessonService {
   public List<Lesson> findAll() {
     return lessonRepository.findAll();
   }
+
+  public Lesson createTestLesson(){
+    return lessonRepository.save(new Lesson());
+  }
 }
