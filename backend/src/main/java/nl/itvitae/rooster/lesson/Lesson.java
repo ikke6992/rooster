@@ -1,5 +1,6 @@
 package nl.itvitae.rooster.lesson;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +23,7 @@ public class Lesson {
   private Long id;
 
   @OneToOne
+  @JsonBackReference
   private Scheduledday scheduledday;
 
 //  @ManyToOne
@@ -31,4 +33,8 @@ public class Lesson {
 //  private Teacher teacher;
 
   private boolean isPracticum;
+
+  public Lesson(boolean isPracticum) {
+    this.isPracticum = isPracticum;
+  }
 }

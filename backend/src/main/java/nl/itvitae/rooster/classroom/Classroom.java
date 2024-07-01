@@ -1,5 +1,6 @@
 package nl.itvitae.rooster.classroom;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,12 +24,19 @@ public class Classroom {
   // will also be used as room number
   private Long id;
 
-  private byte capacity;
+  private int capacity;
 
   @OneToMany(mappedBy = "classroom")
+  @JsonBackReference
   private List<Scheduledday> scheduleddays;
 
   private boolean hasBeamer;
 
   private boolean forPracticum;
+
+  public Classroom(int capacity, boolean hasBeamer, boolean forPracticum) {
+    this.capacity = capacity;
+    this.hasBeamer = hasBeamer;
+    this.forPracticum = forPracticum;
+  }
 }

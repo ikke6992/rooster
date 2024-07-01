@@ -1,5 +1,6 @@
 package nl.itvitae.rooster.scheduledday;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,4 +31,10 @@ public class Scheduledday {
 
   @OneToOne
   private Lesson lesson;
+
+  public Scheduledday(Classroom classroom, Lesson lesson) {
+    this.date = LocalDate.now();
+    this.classroom = classroom;
+    this.lesson = lesson;
+  }
 }
