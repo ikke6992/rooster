@@ -9,7 +9,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GroupService {
 
-  private GroupRepository groupRepository;
+  private final GroupRepository groupRepository;
 
   public List<Group> getAll() {
     return groupRepository.findAll();
