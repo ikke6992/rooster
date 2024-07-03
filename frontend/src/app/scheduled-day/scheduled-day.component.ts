@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { DataService } from './data.service';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,26 +9,15 @@ import { CommonModule } from '@angular/common';
   styleUrl: './scheduled-day.component.css',
 })
 export class ScheduledDayComponent {
-  data: Scheduledday[] = [];
+  @Input() item: Scheduledday = {
+  id: 0,
+  date: new Date(),
+  classroom_id: 0,
+ }
 
-  days: number[] = new Array(this.daysInMonth(7,2024)).fill(0).map((item, index) => index+1);
+ @Input() day: number = 0
+ 
 
-  TOTAL_CLASSROOMS: number[] = Array(6).fill(0).map((item, index) => index+1)
-
-  daysInMonth(month: number, year: number) {
-    return new Date(year, month, 0).getDate();
-  }
-
-  constructor(private dataService: DataService) {}
-
-  ngOnInit(): void {
-    this.dataService.getData().subscribe((response: any[]) => {
-      this.data = response;
-      this.data.map((item) => item.date = new Date(item.date))
-      console.table(this.data);
-      
-    });
-  }
 }
 
 export interface Scheduledday {

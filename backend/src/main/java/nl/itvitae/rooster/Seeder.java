@@ -42,7 +42,7 @@ public class Seeder implements CommandLineRunner {
     saveScheduledday(LocalDate.now(), classroom3, lesson4);
     saveScheduledday(LocalDate.now(), classroom2, lesson5);
     saveScheduledday(LocalDate.now(), classroom1, lesson6);
-    saveScheduledday(LocalDate.now().plusDays(1), classroom6, lesson7);
+    saveScheduledday(LocalDate.now().plusDays(1), classroom4, lesson7);
   }
 
   private Classroom saveClassroom(int capacity, boolean hasBeamer, boolean forPracticum){
