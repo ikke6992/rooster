@@ -16,6 +16,8 @@ export class ScheduledDayComponent {
  }
 
  @Input() day: number = 0
+
+ @Input() classroom: number = 0
  
 
 }

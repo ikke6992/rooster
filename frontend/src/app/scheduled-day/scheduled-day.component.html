@@ -1,15 +1,3 @@
-<!-- <div *ngFor="let item of data">
-  <h2>id {{ item.id }}</h2>
-  <p>date: {{ item.date }}</p>
-  <h3>classroom {{ item.classroom_id }}</h3>
-  <p></p>
-</div> -->
 <div *ngIf="item.date.getDay() === day">
-  {{ item.id }}
+  <div *ngIf="item.classroom_id === classroom">{{ item.id }}</div>
 </div>
-<!-- 
-<tr class="text-center border-2 bg-red-500" *ngFor="let item of data">
-  <td>{{ item.date }}</td>
-  <td>id {{ item.id }}</td>
-  <td>classroom {{ item.classroom_id }}</td>
-</tr> -->
