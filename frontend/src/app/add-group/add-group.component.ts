@@ -24,11 +24,11 @@ export class AddGroupComponent {
     this.dataService.postData(data).subscribe(
       (response) => {
         console.log('Response:', response);
+        window.location.reload();
       },
       (error) => {
         console.error('Error:', error);
       }
     );
-    window.location.reload();
   }
 }
