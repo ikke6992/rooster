@@ -1,6 +1,31 @@
-<div *ngFor="let item of data">
+<!-- <div *ngFor="let item of data">
   <h2>id {{ item.id }}</h2>
   <p>date: {{ item.date }}</p>
   <h3>classroom {{ item.classroom_id }}</h3>
   <p></p>
-</div>
+</div> -->
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Classroom 1</th>
+    <th>Classroom 2</th>
+    <th>Classroom 3</th>
+    <th>Classroom 4</th>
+    <th>Classroom 5</th>
+    <th>Classroom 6</th>
+  </tr>
+
+  <tr class="text-center border-2" *ngFor="let day of days">
+    <td class="bg-red-500">{{ day }}/7/2024</td>
+    <div *ngFor="let item of data">
+      <td *ngIf="item.date.getDay() === day">{{ item.id }}</td>
+    </div>
+
+  </tr>
+</table>
+<!-- 
+<tr class="text-center border-2 bg-red-500" *ngFor="let item of data">
+  <td>{{ item.date }}</td>
+  <td>id {{ item.id }}</td>
+  <td>classroom {{ item.classroom_id }}</td>
+</tr> -->

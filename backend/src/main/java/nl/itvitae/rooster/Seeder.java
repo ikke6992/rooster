@@ -1,5 +1,6 @@
 package nl.itvitae.rooster;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
@@ -20,9 +21,28 @@ public class Seeder implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    var classroom = saveClassroom(12, true, false);
-    var lesson = saveLesson(false);
-    saveScheduledday(classroom, lesson);
+    var classroom1 = saveClassroom(12, true, false);
+    var classroom2 = saveClassroom(20, true, false);
+    var classroom3 = saveClassroom(20, true, false);
+    var classroom4 = saveClassroom(12, false, true);
+    var classroom5 = saveClassroom(25, true, false);
+    var classroom6 = saveClassroom(14, true, true);
+
+    var lesson1 = saveLesson(false);
+    var lesson2 = saveLesson(false);
+    var lesson3 = saveLesson(true);
+    var lesson4 = saveLesson(false);
+    var lesson5 = saveLesson(false);
+    var lesson6 = saveLesson(false);
+    var lesson7 = saveLesson(false);
+
+    saveScheduledday(LocalDate.now(), classroom1, lesson1);
+    saveScheduledday(LocalDate.now(), classroom2, lesson2);
+    saveScheduledday(LocalDate.now(), classroom3, lesson3);
+    saveScheduledday(LocalDate.now(), classroom4, lesson4);
+    saveScheduledday(LocalDate.now(), classroom5, lesson5);
+    saveScheduledday(LocalDate.now(), classroom6, lesson6);
+    saveScheduledday(LocalDate.now().plusDays(1), classroom6, lesson7);
   }
 
   private Classroom saveClassroom(int capacity, boolean hasBeamer, boolean forPracticum){
@@ -33,7 +53,7 @@ public class Seeder implements CommandLineRunner {
     return lessonRepository.save(new Lesson(isPracticum));
   }
 
-  private Scheduledday saveScheduledday(Classroom classroom, Lesson lesson){
-    return scheduleddayRepository.save(new Scheduledday(classroom, lesson));
+  private Scheduledday saveScheduledday(LocalDate date, Classroom classroom, Lesson lesson){
+    return scheduleddayRepository.save(new Scheduledday(date, classroom, lesson));
   }
 }

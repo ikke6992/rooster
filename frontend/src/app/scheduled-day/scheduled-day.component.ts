@@ -12,11 +12,20 @@ import { CommonModule } from '@angular/common';
 export class ScheduledDayComponent {
   data: Scheduledday[] = [];
 
+  days: number[] = new Array(this.daysInMonth(7,2024)).fill(0).map((item, index) => index+1);
+
+  daysInMonth(month: number, year: number) {
+    return new Date(year, month, 0).getDate();
+  }
+
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
     this.dataService.getData().subscribe((response: any[]) => {
       this.data = response;
+      this.data.map((item) => item.date = new Date(item.date))
+      console.table(this.data);
+      
     });
   }
 }

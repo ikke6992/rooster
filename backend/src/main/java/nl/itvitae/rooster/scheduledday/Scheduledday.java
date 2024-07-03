@@ -32,8 +32,8 @@ public class Scheduledday {
   @OneToOne
   private Lesson lesson;
 
-  public Scheduledday(Classroom classroom, Lesson lesson) {
-    this.date = LocalDate.now();
+  public Scheduledday(LocalDate date, Classroom classroom, Lesson lesson) {
+    this.date = date;
     this.classroom = classroom;
     this.lesson = lesson;
   }
