@@ -15,7 +15,7 @@ public class TestSeeder implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     if (groupRepository.count() == 0) {
-      groupRepository.save(new Group(53, "orange", 10));
+      groupRepository.save(new Group(53, "#ffa500", 10));
     }
 
   }
