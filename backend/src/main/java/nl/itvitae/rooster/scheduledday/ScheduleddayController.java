@@ -17,7 +17,7 @@ public class ScheduleddayController {
 
   @GetMapping
   public ResponseEntity<?> getAll() {
-    return ResponseEntity.ok(scheduleddayService.findAll());
+    return ResponseEntity.ok(scheduleddayService.findAll().stream().map(ScheduleddayDTO::new).toList());
   }
 
 }

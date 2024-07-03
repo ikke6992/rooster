@@ -24,18 +24,17 @@ export class ScheduledDayComponent {
 export interface Scheduledday {
   id: number,
   date: Date,
-  classroom: Classroom,
-  lesson: Lesson
+  classroom_id: number,
 }
 
-export interface Classroom {
-  id: number
-  capacity: number,
-  hasBeamer: boolean,
-  forPracticum: boolean
-}
+// export interface Classroom {
+//   id: number
+//   capacity: number,
+//   hasBeamer: boolean,
+//   forPracticum: boolean
+// }
 
-export interface Lesson {
-  id: number,
-  isPracticum: boolean
-}
+// export interface Lesson {
+//   id: number,
+//   isPracticum: boolean
+// }
