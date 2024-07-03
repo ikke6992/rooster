@@ -36,12 +36,12 @@ public class Seeder implements CommandLineRunner {
     var lesson6 = saveLesson(false);
     var lesson7 = saveLesson(false);
 
-    saveScheduledday(LocalDate.now(), classroom1, lesson1);
-    saveScheduledday(LocalDate.now(), classroom2, lesson2);
-    saveScheduledday(LocalDate.now(), classroom3, lesson3);
-    saveScheduledday(LocalDate.now(), classroom4, lesson4);
-    saveScheduledday(LocalDate.now(), classroom5, lesson5);
-    saveScheduledday(LocalDate.now(), classroom6, lesson6);
+    saveScheduledday(LocalDate.now(), classroom6, lesson1);
+    saveScheduledday(LocalDate.now(), classroom5, lesson2);
+    saveScheduledday(LocalDate.now(), classroom4, lesson3);
+    saveScheduledday(LocalDate.now(), classroom3, lesson4);
+    saveScheduledday(LocalDate.now(), classroom2, lesson5);
+    saveScheduledday(LocalDate.now(), classroom1, lesson6);
     saveScheduledday(LocalDate.now().plusDays(1), classroom6, lesson7);
   }
 

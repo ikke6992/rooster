@@ -7,20 +7,17 @@
 <table>
   <tr>
     <th>Date</th>
-    <th>Classroom 1</th>
-    <th>Classroom 2</th>
-    <th>Classroom 3</th>
-    <th>Classroom 4</th>
-    <th>Classroom 5</th>
-    <th>Classroom 6</th>
+    <th *ngFor="let number of TOTAL_CLASSROOMS">Classroom {{ number }}</th>
+
   </tr>
 
   <tr class="text-center border-2" *ngFor="let day of days">
     <td class="bg-red-500">{{ day }}/7/2024</td>
-    <div *ngFor="let item of data">
-      <td *ngIf="item.date.getDay() === day">{{ item.id }}</td>
-    </div>
-
+    <td *ngFor="let item of data, let i = index">
+      <div *ngIf="item.date.getDay() === day">
+        <div *ngIf="item.classroom_id === item.classroom_id">{{ item.id }}</div>
+      </div>
+    </td>
   </tr>
 </table>
 <!-- 

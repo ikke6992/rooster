@@ -14,6 +14,8 @@ export class ScheduledDayComponent {
 
   days: number[] = new Array(this.daysInMonth(7,2024)).fill(0).map((item, index) => index+1);
 
+  TOTAL_CLASSROOMS: number[] = Array(6).fill(0).map((item, index) => index+1)
+
   daysInMonth(month: number, year: number) {
     return new Date(year, month, 0).getDate();
   }
