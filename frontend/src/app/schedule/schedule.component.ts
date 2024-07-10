@@ -25,6 +25,12 @@ export class ScheduleComponent {
     return new Date(year, month, 0).getDate();
   }
 
+  getMonthName(monthNumber: number): string {
+    const date = new Date();
+    date.setMonth(monthNumber - 1);
+    return new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
+  }
+
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {

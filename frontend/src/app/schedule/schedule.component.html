@@ -1,4 +1,5 @@
-<table>
+<div>currently viewing: {{ getMonthName(month) }} {{ year }}</div>
+<table class="min-w-full">
   <tr>
     <th>Date</th>
     <th *ngFor="let number of TOTAL_CLASSROOMS">Classroom {{ number }}</th>
