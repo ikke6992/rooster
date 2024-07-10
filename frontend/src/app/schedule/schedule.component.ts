@@ -12,13 +12,14 @@ import { ScheduledDayComponent } from '../scheduled-day/scheduled-day.component'
 })
 export class ScheduleComponent {
   data: Scheduledday[] = [];
-
-  days: number[] = new Array(this.daysInMonth(7,2024)).fill(0).map((item, index) => index+1);
-
-  TOTAL_CLASSROOMS: number[] = Array(6).fill(0).map((item, index) => index+1)
-
+  
   month = 7;
   year = 2024;
+
+  days: number[] = new Array(this.daysInMonth(this.month,this.year)).fill(0).map((_, index) => index+1);
+
+  TOTAL_CLASSROOMS: number[] = Array(6).fill(0).map((_, index) => index+1)
+
 
   daysInMonth(month: number, year: number) {
     return new Date(year, month, 0).getDate();
@@ -33,7 +34,7 @@ export class ScheduleComponent {
       this.data = response;
       this.data.map((item) => item.date = new Date(item.date))
       console.table(this.data);
-      
+      console.log(this.days);
     });
   }
 }
