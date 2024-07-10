@@ -31,6 +31,24 @@ export class ScheduleComponent {
     return new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
   }
 
+  public incrementMonth() {
+    if (this.month === 12) {
+      this.year++
+      return this.month = 1;
+    }
+    this.month++;
+    return this.month;
+  }
+
+  public decrementMonth() {
+    if (this.month === 1) {
+      this.year--
+      return this.month = 12;
+    }
+    this.month--;
+    return this.month;
+  }
+
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
