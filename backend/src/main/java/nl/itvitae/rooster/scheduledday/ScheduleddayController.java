@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,4 +21,8 @@ public class ScheduleddayController {
     return ResponseEntity.ok(scheduleddayService.findAll().stream().map(ScheduleddayDTO::new).toList());
   }
 
+  @GetMapping("/month/{month}/{year}")
+  public ResponseEntity<?> getAllByMonth(@PathVariable int month, @PathVariable int year){
+    return ResponseEntity.ok(scheduleddayService.findAllByMonth(month, year).stream().map(ScheduleddayDTO::new).toList());
+  }
 }

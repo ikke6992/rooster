@@ -13,5 +13,9 @@ export class DataService {
   getData(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
   }
-}
 
+  getScheduledDaysByMonth(month: number, year: number): Observable<any> {
+    const url = `${this.apiUrl}/month/${month}/${year}`
+    return this.http.get<any>(url);
+  }
+} 

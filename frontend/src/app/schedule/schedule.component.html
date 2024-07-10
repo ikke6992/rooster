@@ -3,14 +3,12 @@
       <th>Date</th>
       <th *ngFor="let number of TOTAL_CLASSROOMS">Classroom {{ number }}</th>
     </tr>
-  
     <tr class="text-center border-2" *ngFor="let day of days">
-      <td class="bg-red-500">{{ day }}/7/2024</td>
+      <td class="bg-red-500">{{ day }}/{{month}}/{{year}}</td>
       <td *ngFor="let number of TOTAL_CLASSROOMS">
         <div *ngFor="let item of data">
             <app-scheduled-day [item]="item" [day]="day" [classroom]="number"/>
           </div>
       </td>
-
     </tr>
   </table>

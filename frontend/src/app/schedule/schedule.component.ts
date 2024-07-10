@@ -17,6 +17,9 @@ export class ScheduleComponent {
 
   TOTAL_CLASSROOMS: number[] = Array(6).fill(0).map((item, index) => index+1)
 
+  month = 7;
+  year = 2024;
+
   daysInMonth(month: number, year: number) {
     return new Date(year, month, 0).getDate();
   }
@@ -24,7 +27,9 @@ export class ScheduleComponent {
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService.getData().subscribe((response: any[]) => {
+
+
+    this.dataService.getScheduledDaysByMonth(this.month, this.year).subscribe((response: any[]) => {
       this.data = response;
       this.data.map((item) => item.date = new Date(item.date))
       console.table(this.data);
