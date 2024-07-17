@@ -66,5 +66,7 @@ export class ScheduleComponent {
 export interface Scheduledday {
   id: number,
   date: Date,
-  classroom_id: number,
+  classroomId: number,
+  groupNumber: number,
+  groupColour: string,
 }

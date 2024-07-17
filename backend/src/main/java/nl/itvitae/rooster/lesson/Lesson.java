@@ -10,6 +10,7 @@ import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.scheduledday.Scheduledday;
 
 @Getter
@@ -26,15 +27,16 @@ public class Lesson {
   @JsonBackReference
   private Scheduledday scheduledday;
 
-//  @ManyToOne
-//  private Group group;
-//
+  @ManyToOne
+  private Group group;
+
 //  @ManyToOne
 //  private Teacher teacher;
 
   private boolean isPracticum;
 
-  public Lesson(boolean isPracticum) {
+  public Lesson(Group group, boolean isPracticum) {
+    this.group = group;
     this.isPracticum = isPracticum;
   }
 }
