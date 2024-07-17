@@ -1,21 +1,19 @@
-<nav>
-  <ul>
-    <li>
-      <a
-        routerLink="/schedule"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        >View schedule</a
-      >
-    </li>
-    <li>
-      <a
-        routerLink="/group"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        >View Groups</a
-      >
-    </li>
-  </ul>
+<nav class="sticky top-0 w-full z-10 px-4 bg-nav text-white">
+  <div class="width-medium mx-auto h-12 flex items-center gap-4">
+    <a
+      class="hover:border-b border-white"
+      routerLink="/schedule"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      >View schedule</a
+    >
+    <a
+      class="hover:border-b border-white"
+      routerLink="/group"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      >View Groups</a
+    >
+  </div>
 </nav>
 <router-outlet />
