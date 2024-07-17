@@ -1,2 +1,16 @@
-<app-schedule/>
+<app-schedule />
+
+<div *ngFor="let item of data">
+  <div>
+    <h3>Group {{ item.groupNumber }}</h3>
+    <p>Number of students: {{ item.numberOfStudents }}</p>
+  </div>
+</div>
+
+<button (click)="showModal()">Add Group</button>
+<app-modal id="add-group" class="hhidden">
+  <app-add-group></app-add-group>
+  <button (click)="closeModal()">Close</button>
+</app-modal>
+
 <router-outlet />

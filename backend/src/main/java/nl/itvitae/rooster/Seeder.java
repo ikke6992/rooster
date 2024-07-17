@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
+import nl.itvitae.rooster.group.Group;
+import nl.itvitae.rooster.group.GroupRepository;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonRepository;
 import nl.itvitae.rooster.scheduledday.Scheduledday;
@@ -18,6 +20,7 @@ public class Seeder implements CommandLineRunner {
   private final ClassroomRepository classroomRepository;
   private final LessonRepository lessonRepository;
   private final ScheduleddayRepository scheduleddayRepository;
+  private final GroupRepository groupRepository;
 
   @Override
   public void run(String... args) throws Exception {
@@ -43,6 +46,10 @@ public class Seeder implements CommandLineRunner {
     saveScheduledday(LocalDate.now(), classroom2, lesson5);
     saveScheduledday(LocalDate.now(), classroom1, lesson6);
     saveScheduledday(LocalDate.now().plusDays(1), classroom4, lesson7);
+
+    if (groupRepository.count() == 0) {
+      groupRepository.save(new Group(53, "#ffa500", 10));
+    }
   }
 
   private Classroom saveClassroom(int capacity, boolean hasBeamer, boolean forPracticum){
