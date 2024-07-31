@@ -1,12 +1,19 @@
-<div *ngFor="let item of data">
-  <div style="color: {{ item.color }}">
-    <h3>Group {{ item.groupNumber }}</h3>
-    <p>Number of students: {{ item.numberOfStudents }}</p>
+<nav class="sticky top-0 w-full z-10 px-4 bg-nav text-white">
+  <div class="width-medium mx-auto h-12 flex items-center gap-4">
+    <a
+      class="hover:border-b border-white"
+      routerLink="/schedule"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      >View schedule</a
+    >
+    <a
+      class="hover:border-b border-white"
+      routerLink="/group"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      >View Groups</a
+    >
   </div>
-</div>
-
-<button (click)="showModal()">Add Group</button>
-<app-modal id="add-group" class="hhidden">
-  <app-add-group></app-add-group>
-  <button (click)="closeModal()">Close</button>
-</app-modal>
+</nav>
+<router-outlet />

@@ -3,9 +3,13 @@ package nl.itvitae.rooster.group;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nl.itvitae.rooster.lesson.Lesson;
 
 @Getter
 @Setter
@@ -20,6 +24,8 @@ public class Group {
   private int groupNumber;
   private String color;
   private int numberOfStudents;
+  @OneToMany
+  private List<Lesson> lessons;
 
   public Group(int groupNumber, String color, int numberOfStudents) {
     this.groupNumber = groupNumber;
