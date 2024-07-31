@@ -14,7 +14,8 @@ export class ScheduledDayComponent {
   date: new Date(),
   classroomId: 0,
   groupNumber: 0,
-  groupColour: "#000000"
+  groupColour: "#000000",
+  name: ''
  }
 
  @Input() day: number = 0
@@ -30,6 +31,7 @@ export interface Scheduledday {
   classroomId: number,
   groupNumber: number,
   groupColour: string,
+  name: string,
 }
 
 

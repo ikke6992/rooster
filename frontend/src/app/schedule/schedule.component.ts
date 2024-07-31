@@ -69,4 +69,5 @@ export interface Scheduledday {
   classroomId: number,
   groupNumber: number,
   groupColour: string,
+  name: string,
 }

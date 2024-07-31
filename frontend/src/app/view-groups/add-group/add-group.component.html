@@ -1,13 +1,55 @@
 <form [formGroup]="addGroup" (ngSubmit)="onSubmit()">
   <label for="group-number">Group number: </label>
-  <input id="group-number" type="number" formControlName="groupNumber" required /><br />
+  <input
+    id="group-number"
+    type="number"
+    formControlName="groupNumber"
+    required
+  /><br />
   <label for="color">Color: </label>
   <input id="color" type="color" formControlName="color" required /><br />
   <label for="number-of-students">Number of students: </label>
   <input
     id="number-of-students"
     type="number"
-    formControlName="numberOfStudents" required
+    formControlName="numberOfStudents"
+    required
   /><br />
+  <label for="field">Field: </label>
+  <select id="field" formControlName="field" required>
+    <option [ngValue]="null" disabled>Select Field</option>
+    <option *ngFor="let field of fields" [ngValue]="field.id">
+      {{ field.name }}
+    </option></select
+  ><br />
+  <label for="start-date">Start Date: </label>
+  <input
+    id="start-date"
+    type="date"
+    formControlName="startDate"
+    required
+  /><br />
+  <label for="weeks-phase-1">Weeks Phase 1: </label>
+  <input
+    id="weeks-phase-1"
+    type="number"
+    formControlName="weeksPhase1"
+    required
+  /><br />
+  <label for="weeks-phase-2">Weeks Phase 2: </label>
+  <input
+    id="weeks-phase-2"
+    type="number"
+    formControlName="weeksPhase2"
+    required
+  /><br />
+  <label for="weeks-phase-3">Weeks Phase 2: </label>
+  <input
+    id="weeks-phase-3"
+    type="number"
+    formControlName="weeksPhase3"
+    required
+  /><br />
+
   <button type="submit" [disabled]="!addGroup.valid">Submit</button>
 </form>

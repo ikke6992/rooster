@@ -6,17 +6,22 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private getUrl = 'http://localhost:8080/api/v1/groups/';
-  private postUrl = 'http://localhost:8080/api/v1/groups/new';
+  private getFieldsUrl = 'http://localhost:8080/api/v1/fields/';
+  private getGroupsUrl = 'http://localhost:8080/api/v1/groups/';
+  private postGroupUrl = 'http://localhost:8080/api/v1/groups/new';
 
   constructor(private http: HttpClient) {}
 
-  getData(): Observable<any> {
-    return this.http.get<any>(this.getUrl);
+  getFields(): Observable<any> {
+    return this.http.get<any>(this.getFieldsUrl);
   }
 
-  postData(data: any): Observable<any> {
-    return this.http.post<any>(this.postUrl, data, {
+  getGroups(): Observable<any> {
+    return this.http.get<any>(this.getGroupsUrl);
+  }
+
+  postGroup(data: any): Observable<any> {
+    return this.http.post<any>(this.postGroupUrl, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
   }
