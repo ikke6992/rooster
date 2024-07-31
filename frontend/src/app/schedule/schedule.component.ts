@@ -16,13 +16,13 @@ export class ScheduleComponent {
   month = new Date().getMonth()+1;
   year = new Date().getFullYear();
 
-  days: number[] = new Array(this.daysInMonth(this.month,this.year)).fill(0).map((_, index) => index+1);
+  days: number[] = this.daysInMonth(this.month,this.year);
 
   TOTAL_CLASSROOMS: number[] = Array(6).fill(0).map((_, index) => index+1)
 
 
-  daysInMonth(month: number, year: number) {
-    return new Date(year, month, 0).getDate();
+  daysInMonth(month: number, year: number): number[] {    
+    return new Array(new Date(year, month, 0).getDate()).fill(0).map((_, index) => index+1)
   }
 
   getMonthName(monthNumber: number): string {
@@ -49,6 +49,7 @@ export class ScheduleComponent {
       return this.month = 12;
     }
     this.month--;
+
     this.ngOnInit()
     return this.month;
   }
@@ -56,6 +57,7 @@ export class ScheduleComponent {
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
+    this.days = this.daysInMonth(this.month,this.year);
     this.dataService.getScheduledDaysByMonth(this.month, this.year).subscribe((response: any[]) => {
       this.data = response;
       this.data.map((item) => item.date = new Date(item.date))
