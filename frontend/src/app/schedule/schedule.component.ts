@@ -26,8 +26,7 @@ export class ScheduleComponent {
   }
 
   getMonthName(monthNumber: number): string {
-    const date = new Date();
-    date.setMonth(monthNumber - 1);
+    const date = new Date(this.year, monthNumber - 1);
     return new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
   }
 
