@@ -34,10 +34,10 @@ export class ScheduleComponent {
     return new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
   }
 
-  isWeekend(day: number): boolean{
-    const dayOfWeek = new Date(this.year, this.month, day).getDay();
-   
-    return dayOfWeek === 2 || dayOfWeek === 3 ;
+  checkIfWeekend(day: number): boolean{
+    const dayOfWeek = new Date()
+    dayOfWeek.setDate(day)
+    return dayOfWeek.getDay() === 0 || dayOfWeek.getDay() === 6 ;
   }
 
   public incrementMonth() {
