@@ -16,28 +16,30 @@ export class ScheduleComponent {
   month = new Date().getMonth() + 1;
   year = new Date().getFullYear();
 
-  days: number[] = this.daysInMonth(this.month, this.year);
-  weekend = false;
+  days: Day[] = this.daysInMonth(this.month, this.year);
 
   TOTAL_CLASSROOMS: number[] = Array(6)
     .fill(0)
     .map((_, index) => index + 1);
 
-  daysInMonth(month: number, year: number): number[] {
-    return new Array(new Date(year, month, 0).getDate())
+  daysInMonth(month: number, year: number): Day[] {
+    const array = Array(new Date(year, month, 0).getDate())
       .fill(0)
       .map((_, index) => index + 1);
+    const days: Day[] = [];
+    array.forEach((value, index) => (days[index] = {id: value, isWeekend: this.checkIfWeekend(value)}));
+    return days;
+  }
+
+  checkIfWeekend(day: number): boolean {
+    const dayOfWeek = new Date();
+    dayOfWeek.setDate(day);
+    return dayOfWeek.getDay() === 0 || dayOfWeek.getDay() === 6;
   }
 
   getMonthName(monthNumber: number): string {
     const date = new Date(this.year, monthNumber - 1);
     return new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
-  }
-
-  checkIfWeekend(day: number): boolean{
-    const dayOfWeek = new Date()
-    dayOfWeek.setDate(day)
-    return dayOfWeek.getDay() === 0 || dayOfWeek.getDay() === 6 ;
   }
 
   public incrementMonth() {
@@ -81,4 +83,9 @@ export interface Scheduledday {
   classroomId: number;
   groupNumber: number;
   groupColour: string;
+}
+
+interface Day {
+  id: number;
+  isWeekend: boolean;
 }
