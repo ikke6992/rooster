@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from './data.service';
-import { ModalComponent } from './modal/modal.component';
+import { ModalComponent } from '../modal/modal.component';
 import { AddGroupComponent } from './add-group/add-group.component';
 import { CommonModule } from '@angular/common';
 
