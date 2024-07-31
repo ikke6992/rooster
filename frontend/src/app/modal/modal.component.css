@@ -1,11 +1,3 @@
-/** this makes the .modal visible */
-.sshow {
-    display: block;
-}
-/** this makes the element hidden/invisible */
-.hhidden {
-    display: none;
-}
 /** this holds the CSS display of the modal */
 .mmodal {
   /** makes it hover above all elements */

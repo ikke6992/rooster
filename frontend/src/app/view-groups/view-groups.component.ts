@@ -9,19 +9,24 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, ModalComponent, AddGroupComponent],
   templateUrl: './view-groups.component.html',
-  styleUrl: './view-groups.component.css'
+  styleUrl: './view-groups.component.css',
 })
 export class ViewGroupsComponent {
-  data: any[] = [];
+  groups: any[] = [];
+  fields: any[] = [];
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService.getData().subscribe((response: any[]) => {
-      this.data = response;
+    this.dataService.getGroups().subscribe((response: any[]) => {
+      this.groups = response;
+      console.log(response);
     });
 
-    
+    this.dataService.getFields().subscribe((response: any[]) => {
+      this.fields = response;
+      console.log(response);
+    });
   }
 
   showModal() {

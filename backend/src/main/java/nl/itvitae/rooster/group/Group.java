@@ -1,11 +1,12 @@
 package nl.itvitae.rooster.group;
 
 import jakarta.persistence.*;
-
+import java.time.LocalDate;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.teacher.Teacher;
 
@@ -27,9 +28,37 @@ public class Group {
   @ManyToMany(mappedBy = "groups")
   private List<Teacher> teachers;
 
+  @ManyToOne
+  private Field field;
+
+  private LocalDate startDate;
+  private int weeksPhase1;
+  private int weeksPhase2;
+  private int weeksPhase3;
+
   public Group(int groupNumber, String color, int numberOfStudents) {
     this.groupNumber = groupNumber;
     this.color = color;
     this.numberOfStudents = numberOfStudents;
+  }
+
+  public Group(
+      int groupNumber,
+      String color,
+      int numberOfStudents,
+      Field field,
+      LocalDate startDate,
+      int weeksPhase1,
+      int weeksPhase2,
+      int weeksPhase3
+  ) {
+    this.groupNumber = groupNumber;
+    this.color = color;
+    this.numberOfStudents = numberOfStudents;
+    this.field = field;
+    this.startDate = startDate;
+    this.weeksPhase1 = weeksPhase1;
+    this.weeksPhase2 = weeksPhase2;
+    this.weeksPhase3 = weeksPhase3;
   }
 }
