@@ -3,6 +3,7 @@ package nl.itvitae.rooster.group;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.field.FieldService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -27,11 +28,14 @@ public class GroupController {
   }
 
   @PostMapping("/new")
-  public ResponseEntity<Group> addGroup(@RequestBody GroupRequest request,
+  public ResponseEntity<?> addGroup(@RequestBody GroupRequest request,
       UriComponentsBuilder ucb) {
 
     if (groupRepository.findByGroupNumber(request.groupNumber()).isPresent()) {
       return ResponseEntity.badRequest().build();
+    }
+    if (groupService.checkSimilarColour(request.color())) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("Colour is too similar to colour of other group.");
     }
     final Field field = fieldService.getById(request.field());
     final LocalDate startDate = LocalDate.parse(request.startDate());

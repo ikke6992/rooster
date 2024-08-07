@@ -9,7 +9,6 @@ import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonService;
 import nl.itvitae.rooster.scheduledday.ScheduleddayService;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,6 +23,8 @@ public class GroupService {
   private final LessonService lessonService;
   private final ClassroomService classroomService;
 
+  private static final int COLOUR_DISTANCE_THRESHOLD = 50;
+
   public List<Group> getAll() {
     return groupRepository.findAll();
   }
@@ -35,7 +36,25 @@ public class GroupService {
             weeksPhase3));
   }
 
+  public boolean checkSimilarColour(String hexColour){
+    int hexR = Integer.valueOf(hexColour.substring(1, 3), 16);
+    int hexG = Integer.valueOf(hexColour.substring(3, 5), 16);
+    int hexB = Integer.valueOf(hexColour.substring(5, 7), 16);
+    List<Group> groups = getAll();
+    for (Group group : groups){
+      int hexGroupR = Integer.valueOf(group.getColor().substring(1, 3), 16);
+      int hexGroupG = Integer.valueOf(group.getColor().substring(3, 5), 16);
+      int hexGroupB = Integer.valueOf(group.getColor().substring(5, 7), 16);
+      double distance = Math.sqrt(Math.pow((hexGroupR - hexR), 2) + Math.pow((hexGroupG - hexG), 2) + Math.pow((hexGroupB - hexB), 2));
+      if (distance < COLOUR_DISTANCE_THRESHOLD) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public void scheduleGroup(Group group) {
+    // could be improved with lambdas, passing functions etc
     schedulePeriod(group.getWeeksPhase1(), group.getField().getDaysPhase1(), group.getStartDate(),
         group);
     schedulePeriod(group.getWeeksPhase2(), group.getField().getDaysPhase2(),
