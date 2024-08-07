@@ -1,5 +1,6 @@
 package nl.itvitae.rooster.group;
 
+import java.time.DayOfWeek;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
@@ -8,6 +9,7 @@ import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonService;
 import nl.itvitae.rooster.scheduledday.ScheduleddayService;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -35,10 +37,17 @@ public class GroupService {
 
   public void scheduleGroup(Group group) {
     for (int i = 1; i <= group.getWeeksPhase1(); i++) {
+
       for (int j = 1; j <= group.getField().getDaysPhase1(); j++) {
+        LocalDate date = group.getStartDate().plusWeeks(i - 1).plusDays(j - 1);
+        if (date.getDayOfWeek() == DayOfWeek.SATURDAY) {
+          date = date.plusDays(2);
+        } else if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+          date = date.plusDays(2);
+        }
         final Classroom classroom = classroomService.getById(j).get();
         final Lesson lesson = lessonService.createLesson(group, j < 2);
-        scheduleddayService.addScheduledday(group.getStartDate().plusWeeks(i).plusDays(j),
+        scheduleddayService.addScheduledday(date,
             classroom, lesson);
       }
     }
