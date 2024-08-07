@@ -38,7 +38,7 @@ public class GroupService {
       for (int j = 0; j < group.getField().getDaysPhase1(); j++) {
         final Classroom classroom = classroomService.getById(j+1).get();
         final Lesson lesson = lessonService.createLesson(group, j < 1);
-        scheduleddayService.addScheduledday(group.getStartDate(), classroom , lesson);
+        scheduleddayService.addScheduledday(group.getStartDate().plusWeeks(i+1).plusDays(j+1), classroom , lesson);
       }
     }
   }
