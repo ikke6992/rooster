@@ -64,12 +64,15 @@ public class GroupService {
   }
 
   private void schedulePeriod(int weeksPhase, int daysPhase, LocalDate startDate, Group group) {
+    // still to do
+    // prevent conflicts
+    // assign classrooms based on lesson type (practicum)
+    // optional: don't schedule all days in a row
+
     for (int i = 1; i <= weeksPhase; i++) {
       for (int j = 1; j <= daysPhase; j++) {
         LocalDate date = startDate.plusWeeks(i - 1).plusDays(j - 1);
-        if (date.getDayOfWeek() == DayOfWeek.SATURDAY) {
-          date = date.plusDays(2);
-        } else if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+        if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
           date = date.plusDays(2);
         }
         final Classroom classroom = classroomService.getById(j).get();
