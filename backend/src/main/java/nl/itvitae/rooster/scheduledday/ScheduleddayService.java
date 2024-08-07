@@ -3,6 +3,8 @@ package nl.itvitae.rooster.scheduledday;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import nl.itvitae.rooster.classroom.Classroom;
+import nl.itvitae.rooster.lesson.Lesson;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,4 +23,7 @@ public class ScheduleddayService {
     return scheduleddayRepository.findByDateBetween(startDate, endDate);
   }
 
+  public Scheduledday addScheduledday(LocalDate startdate, Classroom classroom, Lesson lesson){
+    return scheduleddayRepository.save(new Scheduledday(startdate, classroom, lesson));
+  }
 }
