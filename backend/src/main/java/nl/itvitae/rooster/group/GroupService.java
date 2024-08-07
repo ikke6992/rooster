@@ -36,10 +36,18 @@ public class GroupService {
   }
 
   public void scheduleGroup(Group group) {
-    for (int i = 1; i <= group.getWeeksPhase1(); i++) {
+    schedulePeriod(group.getWeeksPhase1(), group.getField().getDaysPhase1(), group.getStartDate(),
+        group);
+    schedulePeriod(group.getWeeksPhase2(), group.getField().getDaysPhase2(),
+        group.getStartDate().plusWeeks(group.getWeeksPhase1()), group);
+    schedulePeriod(group.getWeeksPhase3(), group.getField().getDaysPhase3(),
+        group.getStartDate().plusWeeks(group.getWeeksPhase1() + group.getWeeksPhase2()), group);
+  }
 
-      for (int j = 1; j <= group.getField().getDaysPhase1(); j++) {
-        LocalDate date = group.getStartDate().plusWeeks(i - 1).plusDays(j - 1);
+  private void schedulePeriod(int weeksPhase, int daysPhase, LocalDate startDate, Group group) {
+    for (int i = 1; i <= weeksPhase; i++) {
+      for (int j = 1; j <= daysPhase; j++) {
+        LocalDate date = startDate.plusWeeks(i - 1).plusDays(j - 1);
         if (date.getDayOfWeek() == DayOfWeek.SATURDAY) {
           date = date.plusDays(2);
         } else if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
