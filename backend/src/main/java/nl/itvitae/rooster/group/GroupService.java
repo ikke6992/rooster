@@ -34,11 +34,12 @@ public class GroupService {
   }
 
   public void scheduleGroup(Group group) {
-    for (int i = 0; i < group.getWeeksPhase1(); i++) {
-      for (int j = 0; j < group.getField().getDaysPhase1(); j++) {
-        final Classroom classroom = classroomService.getById(j+1).get();
-        final Lesson lesson = lessonService.createLesson(group, j < 1);
-        scheduleddayService.addScheduledday(group.getStartDate().plusWeeks(i+1).plusDays(j+1), classroom , lesson);
+    for (int i = 1; i <= group.getWeeksPhase1(); i++) {
+      for (int j = 1; j <= group.getField().getDaysPhase1(); j++) {
+        final Classroom classroom = classroomService.getById(j).get();
+        final Lesson lesson = lessonService.createLesson(group, j < 2);
+        scheduleddayService.addScheduledday(group.getStartDate().plusWeeks(i).plusDays(j),
+            classroom, lesson);
       }
     }
   }
