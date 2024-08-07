@@ -16,24 +16,23 @@ export class ScheduleComponent {
   month = new Date().getMonth() + 1;
   year = new Date().getFullYear();
 
-  days: Day[] = this.daysInMonth(this.month, this.year);
+  days: Day[] = this.daysInMonth(this.year, this.month);
 
   TOTAL_CLASSROOMS: number[] = Array(6)
     .fill(0)
     .map((_, index) => index + 1);
 
-  daysInMonth(month: number, year: number): Day[] {
+  daysInMonth(year: number, month: number): Day[] {
     const array = Array(new Date(year, month, 0).getDate())
       .fill(0)
       .map((_, index) => index + 1);
     const days: Day[] = [];
-    array.forEach((value, index) => (days[index] = {id: value, isWeekend: this.checkIfWeekend(value)}));
+    array.forEach((value, index) => (days[index] = {id: value, isWeekend: this.checkIfWeekend(year, month, value)}));
     return days;
   }
 
-  checkIfWeekend(day: number): boolean {
-    const dayOfWeek = new Date();
-    dayOfWeek.setDate(day);
+  checkIfWeekend(year: number, month: number, day: number): boolean {
+    const dayOfWeek = new Date(year, month-1, day);
     return dayOfWeek.getDay() === 0 || dayOfWeek.getDay() === 6;
   }
 
@@ -43,6 +42,8 @@ export class ScheduleComponent {
   }
 
   public incrementMonth() {
+
+    
     if (this.month === 12) {
       this.year++;
       this.ngOnInit();
@@ -67,7 +68,7 @@ export class ScheduleComponent {
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.days = this.daysInMonth(this.month, this.year);
+    this.days = this.daysInMonth(this.year, this.month);
     this.dataService
       .getScheduledDaysByMonth(this.month, this.year)
       .subscribe((response: any[]) => {
