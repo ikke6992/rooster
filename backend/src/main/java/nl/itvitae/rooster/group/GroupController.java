@@ -21,13 +21,13 @@ public class GroupController {
   private final FieldService fieldService;
 
   @GetMapping("/")
-  public List<Group> getAll() {
-    return groupService.getAll();
+  public ResponseEntity<List<GroupDTO>> getAll() {
+    return ResponseEntity.ok(groupService.getAll().stream().map(GroupDTO::of).toList());
   }
 
   @PostMapping("/new")
   public ResponseEntity<Group> addGroup(@RequestBody GroupRequest request, UriComponentsBuilder ucb) {
-    List<Group> groups = getAll();
+    List<Group> groups = groupService.getAll();
     for (Group exists : groups) {
       if (request.groupNumber() == exists.getGroupNumber()) {
         return ResponseEntity.badRequest().build();
