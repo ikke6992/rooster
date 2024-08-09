@@ -1,3 +1,4 @@
+<h1>Groups</h1>
 <div *ngFor="let group of groups">
   <div style="color: {{ group.color }}">
     <h3>Group {{ group.groupNumber }} {{ group.field }}</h3>
@@ -12,19 +13,33 @@
     <p>
       Phase 3: {{ group.daysPhase3 }} days for {{ group.weeksPhase3 }} weeks
     </p>
-    <p>Teachers:</p>
+    <h4>Teachers:</h4>
     <div *ngFor="let teacher of group.teachers">
       <p>- {{ teacher }}</p>
     </div>
   </div>
 </div>
-
 <button
   (click)="showModal()"
   class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400"
 >
   Add Group
 </button>
+
+<h1>Teachers</h1>
+<div *ngFor="let teacher of teachers">
+  <h3>{{ teacher.name }}</h3>
+  <h4>Availability:</h4>
+  <div *ngFor="let day of teacher.availability">
+    <p>- {{ day }}</p>
+  </div>
+  <p>max. {{ teacher.maxDaysPerWeek}} days per week</p>
+  <h4>Groups:</h4>
+  <div *ngFor="let group of teacher.groups">
+    <p>- {{ group }}</p>
+  </div>
+</div>
+
 <app-modal id="add-group" class="hhidden">
   <app-add-group [fields]="fields"></app-add-group>
   <button (click)="closeModal()">Close</button>

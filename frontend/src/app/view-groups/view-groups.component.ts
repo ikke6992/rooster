@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 export class ViewGroupsComponent {
   groups: any[] = [];
   fields: any[] = [];
+  teachers: any[] = [];
 
   constructor(private dataService: DataService) {}
 
@@ -27,6 +28,11 @@ export class ViewGroupsComponent {
       this.fields = response;
       console.log(response);
     });
+
+    this.dataService.getTeachers().subscribe((response: any[]) => {
+      this.teachers = response;
+      console.log(response);
+    })
   }
 
   showModal() {
