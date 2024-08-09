@@ -27,9 +27,14 @@ public class ScheduleddayService {
 
   public Scheduledday addScheduledday(LocalDate date, Classroom classroom, Lesson lesson){
     Scheduledday scheduledday = new Scheduledday(date, classroom, lesson);
-    if (scheduleddayRepository.existsByDateAndClassroom(date, classroom)) {
-      scheduledday.setClassroom(classroomRepository.findById(classroom.getId() + 1).get());
-    }
+    preventConflicts(scheduledday);
     return scheduleddayRepository.save(scheduledday);
+  }
+
+  private void preventConflicts(Scheduledday scheduledday){
+    if (scheduleddayRepository.existsByDateAndClassroom(scheduledday.getDate(), scheduledday.getClassroom())) {
+      scheduledday.setClassroom(classroomRepository.findById(scheduledday.getClassroom().getId() + 1).get());
+      preventConflicts(scheduledday);
+    }
   }
 }

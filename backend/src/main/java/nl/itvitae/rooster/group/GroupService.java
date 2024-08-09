@@ -67,16 +67,18 @@ public class GroupService {
     // still to do
     // prevent conflicts
     // assign classrooms based on lesson type (practicum)
+    // ask % practicum lessons with PO
     // optional: don't schedule all days in a row
 
     for (int i = 1; i <= weeksPhase; i++) {
       for (int j = 1; j <= daysPhase; j++) {
         LocalDate date = startDate.plusWeeks(i - 1).plusDays(j - 1);
+        // prevents scheduling weekends
         if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
           date = date.plusDays(2);
         }
-        final Classroom classroom = classroomService.getById(j).get();
         final Lesson lesson = lessonService.createLesson(group, j < 2);
+        final Classroom classroom = classroomService.getById(j).get();
         scheduleddayService.addScheduledday(date,
             classroom, lesson);
       }
