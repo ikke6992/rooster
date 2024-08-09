@@ -2,6 +2,7 @@ package nl.itvitae.rooster.scheduledday;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
@@ -35,8 +36,13 @@ public class ScheduleddayService {
     Classroom classroom = scheduledday.getClassroom();
     if (scheduleddayRepository.existsByDateAndClassroom(scheduledday.getDate(), classroom)) {
       int nextClassroomId = (classroom.getId() == 3 || classroom.getId() == 4) ? 2 : 1;
-
-      scheduledday.setClassroom(classroomRepository.findById(classroom.getId() + nextClassroomId).get());
+      Optional<Classroom> newClassroom = classroomRepository.findById(classroom.getId() + nextClassroomId);
+      if (newClassroom.isPresent()) {
+      scheduledday.setClassroom(newClassroom.get());
+      } else {
+        scheduledday.getLesson().setPracticum(false);
+        scheduledday.setClassroom(classroomRepository.findById(1L).get());
+      }
       preventConflicts(scheduledday);
     }
   }

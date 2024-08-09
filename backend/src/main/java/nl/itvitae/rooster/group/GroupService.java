@@ -36,16 +36,18 @@ public class GroupService {
             weeksPhase3));
   }
 
-  public boolean checkSimilarColour(String hexColour){
+  public boolean checkSimilarColour(String hexColour) {
     int hexR = Integer.valueOf(hexColour.substring(1, 3), 16);
     int hexG = Integer.valueOf(hexColour.substring(3, 5), 16);
     int hexB = Integer.valueOf(hexColour.substring(5, 7), 16);
     List<Group> groups = getAll();
-    for (Group group : groups){
+    for (Group group : groups) {
       int hexGroupR = Integer.valueOf(group.getColor().substring(1, 3), 16);
       int hexGroupG = Integer.valueOf(group.getColor().substring(3, 5), 16);
       int hexGroupB = Integer.valueOf(group.getColor().substring(5, 7), 16);
-      double distance = Math.sqrt(Math.pow((hexGroupR - hexR), 2) + Math.pow((hexGroupG - hexG), 2) + Math.pow((hexGroupB - hexB), 2));
+      double distance = Math.sqrt(
+          Math.pow((hexGroupR - hexR), 2) + Math.pow((hexGroupG - hexG), 2) + Math.pow(
+              (hexGroupB - hexB), 2));
       if (distance < COLOUR_DISTANCE_THRESHOLD) {
         return true;
       }
@@ -65,8 +67,8 @@ public class GroupService {
 
   private void schedulePeriod(int weeksPhase, int daysPhase, LocalDate startDate, Group group) {
     // still to do
-    // prevent conflicts
-    // assign classrooms based on lesson type (practicum)
+    // prevent conflicts -> move to different days
+    // assign classrooms based on capacity
     // ask % practicum lessons with PO
     // optional: don't schedule all days in a row
 
@@ -77,14 +79,8 @@ public class GroupService {
         if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
           date = date.plusDays(2);
         }
-        final Lesson lesson = lessonService.createLesson(group, !(j > daysPhase/2));
-        Classroom classroom;
-        if (lesson.isPracticum()){
-          System.out.println("test");
-          classroom = classroomService.getById(4).get();
-        } else {
-          classroom = classroomService.getById(1).get();
-        }
+        final Lesson lesson = lessonService.createLesson(group, !(j > daysPhase / 2));
+        Classroom classroom = classroomService.getById(lesson.isPracticum() ? 4 : 1).get();
         scheduleddayService.addScheduledday(date,
             classroom, lesson);
       }
