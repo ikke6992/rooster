@@ -32,8 +32,11 @@ public class ScheduleddayService {
   }
 
   private void preventConflicts(Scheduledday scheduledday){
-    if (scheduleddayRepository.existsByDateAndClassroom(scheduledday.getDate(), scheduledday.getClassroom())) {
-      scheduledday.setClassroom(classroomRepository.findById(scheduledday.getClassroom().getId() + 1).get());
+    Classroom classroom = scheduledday.getClassroom();
+    if (scheduleddayRepository.existsByDateAndClassroom(scheduledday.getDate(), classroom)) {
+      int nextClassroomId = (classroom.getId() == 3 || classroom.getId() == 4) ? 2 : 1;
+
+      scheduledday.setClassroom(classroomRepository.findById(classroom.getId() + nextClassroomId).get());
       preventConflicts(scheduledday);
     }
   }
