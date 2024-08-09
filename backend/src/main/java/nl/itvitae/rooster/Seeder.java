@@ -1,6 +1,10 @@
 package nl.itvitae.rooster;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
@@ -21,6 +25,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class Seeder implements CommandLineRunner {
 
+  private final MyDayRepository myDayRepository;
   private final ClassroomRepository classroomRepository;
   private final LessonRepository lessonRepository;
   private final ScheduleddayRepository scheduleddayRepository;
@@ -30,6 +35,12 @@ public class Seeder implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
+    var monday = saveDay(DayOfWeek.MONDAY);
+    var tuesday = saveDay(DayOfWeek.TUESDAY);
+    var wednesday = saveDay(DayOfWeek.WEDNESDAY);
+    var thursday = saveDay(DayOfWeek.THURSDAY);
+    var friday = saveDay(DayOfWeek.FRIDAY);
+
     var classroom1 = saveClassroom(12, true, false);
     var classroom2 = saveClassroom(20, true, false);
     var classroom3 = saveClassroom(20, true, false);
@@ -44,8 +55,8 @@ public class Seeder implements CommandLineRunner {
 
     var group53 = saveGroup(53, "#ffa500", 10, java);
 
-    var wubbo = saveTeacher("Wubbo", "montuewedfri", group53);
-    var coen = saveTeacher("Coen", "monthu", group53);
+    var wubbo = saveTeacher("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)), 3, group53);
+    var coen = saveTeacher("Coen", new ArrayList<>(List.of(monday, thursday)), 2, group53);
 
     var lesson1 = saveLesson(group53, false);
     var lesson2 = saveLesson(group53, false);
@@ -62,6 +73,10 @@ public class Seeder implements CommandLineRunner {
     saveScheduledday(LocalDate.now(), classroom2, lesson5);
     saveScheduledday(LocalDate.now(), classroom1, lesson6);
     saveScheduledday(LocalDate.now().plusDays(1), classroom4, lesson7);
+  }
+
+  private MyDay saveDay(DayOfWeek day) {
+    return myDayRepository.save(new MyDay(day));
   }
 
   private Classroom saveClassroom(int capacity, boolean hasBeamer, boolean forPracticum) {
@@ -84,8 +99,8 @@ public class Seeder implements CommandLineRunner {
     return fieldRepository.save(new Field(name, daysPhase1, daysPhase2, daysPhase3));
   }
 
-  private Teacher saveTeacher(String name, String availability, Group... groups) {
-    Teacher teacher = new Teacher(name, availability);
+  private Teacher saveTeacher(String name, List<MyDay> availability, int maxDaysPerWeek, Group... groups) {
+    Teacher teacher = new Teacher(name, availability, maxDaysPerWeek);
     for (Group group : groups) {
       teacher.addGroup(group);
     }
