@@ -12,6 +12,8 @@ import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonRepository;
 import nl.itvitae.rooster.scheduledday.Scheduledday;
 import nl.itvitae.rooster.scheduledday.ScheduleddayRepository;
+import nl.itvitae.rooster.teacher.Teacher;
+import nl.itvitae.rooster.teacher.TeacherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +26,7 @@ public class Seeder implements CommandLineRunner {
   private final ScheduleddayRepository scheduleddayRepository;
   private final GroupRepository groupRepository;
   private final FieldRepository fieldRepository;
+  private final TeacherRepository teacherRepository;
 
   @Override
   public void run(String... args) throws Exception {
@@ -40,6 +43,9 @@ public class Seeder implements CommandLineRunner {
     var security = saveField("Security", 3, 3, 2);
 
     var group53 = saveGroup(53, "#ffa500", 10, java);
+
+    var wubbo = saveTeacher("Wubbo", "montuewedfri", group53);
+    var coen = saveTeacher("Coen", "monthu", group53);
 
     var lesson1 = saveLesson(group53, false);
     var lesson2 = saveLesson(group53, false);
@@ -70,12 +76,20 @@ public class Seeder implements CommandLineRunner {
     return scheduleddayRepository.save(new Scheduledday(date, classroom, lesson));
   }
 
-  private Group saveGroup(int groupNumber, String colour,int numberOfStudents, Field field) {
-    return groupRepository.save(new Group(groupNumber, colour, numberOfStudents, field, LocalDate.now(), 8, 12, 8));
+  private Group saveGroup(int groupNumber, String color,int numberOfStudents, Field field) {
+    return groupRepository.save(new Group(groupNumber, color, numberOfStudents, field, LocalDate.now(), 8, 12, 8));
   }
 
   private Field saveField(String name, int daysPhase1, int daysPhase2, int daysPhase3) {
     return fieldRepository.save(new Field(name, daysPhase1, daysPhase2, daysPhase3));
+  }
+
+  private Teacher saveTeacher(String name, String availability, Group... groups) {
+    Teacher teacher = new Teacher(name, availability);
+    for (Group group : groups) {
+      teacher.addGroup(group);
+    }
+    return teacherRepository.save(teacher);
   }
 
 }
