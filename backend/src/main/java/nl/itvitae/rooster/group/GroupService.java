@@ -77,8 +77,14 @@ public class GroupService {
         if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
           date = date.plusDays(2);
         }
-        final Lesson lesson = lessonService.createLesson(group, j < 2);
-        final Classroom classroom = classroomService.getById(j).get();
+        final Lesson lesson = lessonService.createLesson(group, !(j > daysPhase/2));
+        Classroom classroom;
+        if (lesson.isPracticum()){
+          System.out.println("test");
+          classroom = classroomService.getById(4).get();
+        } else {
+          classroom = classroomService.getById(1).get();
+        }
         scheduleddayService.addScheduledday(date,
             classroom, lesson);
       }
