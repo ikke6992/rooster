@@ -3,6 +3,7 @@ package nl.itvitae.rooster.group;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.field.FieldService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -18,6 +19,7 @@ import java.util.List;
 public class GroupController {
 
   private final GroupService groupService;
+  private final GroupRepository groupRepository;
   private final FieldService fieldService;
 
   @GetMapping("/")
@@ -26,17 +28,22 @@ public class GroupController {
   }
 
   @PostMapping("/new")
-  public ResponseEntity<Group> addGroup(@RequestBody GroupRequest request, UriComponentsBuilder ucb) {
-    List<Group> groups = getAll();
-    for (Group exists : groups) {
-      if (request.groupNumber() == exists.getGroupNumber()) {
-        return ResponseEntity.badRequest().build();
-      }
+  public ResponseEntity<?> addGroup(@RequestBody GroupRequest request,
+      UriComponentsBuilder ucb) {
+
+    if (groupRepository.findByGroupNumber(request.groupNumber()).isPresent()) {
+      return ResponseEntity.badRequest().build();
+    }
+    if (groupService.checkSimilarColour(request.color())) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("Colour is too similar to colour of other group.");
     }
     final Field field = fieldService.getById(request.field());
     final LocalDate startDate = LocalDate.parse(request.startDate());
-    final Group group = groupService.addGroup(request.groupNumber(), request.color(), request.numberOfStudents(), field, startDate, request.weeksPhase1(), request.weeksPhase2(), request.weeksPhase3());
-    URI locationOfGroup = ucb.path("/api/v1/groups").buildAndExpand(groups.size()).toUri();
+    final Group group = groupService.addGroup(request.groupNumber(), request.color(),
+        request.numberOfStudents(), field, startDate, request.weeksPhase1(), request.weeksPhase2(),
+        request.weeksPhase3());
+    groupService.scheduleGroup(group);
+    URI locationOfGroup = ucb.path("/api/v1/groups").buildAndExpand(group.getId()).toUri();
     return ResponseEntity.created(locationOfGroup).body(group);
   }
 }
