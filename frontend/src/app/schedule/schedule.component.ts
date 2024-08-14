@@ -27,12 +27,18 @@ export class ScheduleComponent {
       .fill(0)
       .map((_, index) => index + 1);
     const days: Day[] = [];
-    array.forEach((value, index) => (days[index] = {id: value, isWeekend: this.checkIfWeekend(year, month, value)}));
+    array.forEach(
+      (value, index) =>
+        (days[index] = {
+          id: value,
+          isWeekend: this.checkIfWeekend(year, month, value),
+        })
+    );
     return days;
   }
 
   checkIfWeekend(year: number, month: number, day: number): boolean {
-    const dayOfWeek = new Date(year, month-1, day);
+    const dayOfWeek = new Date(year, month - 1, day);
     return dayOfWeek.getDay() === 0 || dayOfWeek.getDay() === 6;
   }
 
@@ -42,27 +48,25 @@ export class ScheduleComponent {
   }
 
   public incrementMonth() {
-
-    
     if (this.month === 12) {
       this.year++;
+      this.month = 1;
       this.ngOnInit();
-      return (this.month = 1);
+      return;
     }
     this.month++;
     this.ngOnInit();
-    return this.month;
   }
 
   public decrementMonth() {
     if (this.month === 1) {
       this.year--;
+      this.month = 12;
       this.ngOnInit();
-      return (this.month = 12);
+      return;
     }
     this.month--;
     this.ngOnInit();
-    return this.month;
   }
 
   constructor(private dataService: DataService) {}
@@ -84,7 +88,7 @@ export interface Scheduledday {
   classroomId: number;
   groupNumber: number;
   groupColour: string;
-  name: string,
+  name: string;
 }
 
 interface Day {

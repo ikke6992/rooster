@@ -69,7 +69,6 @@ public class GroupService {
     // still to do
     // prevent conflicts -> move to different days
     // keep classrooms consistent per phase
-    // optional: don't schedule all days in a row
 
     for (int i = 1; i <= weeksPhase; i++) {
       for (int j = 1; j <= daysPhase; j++) {
