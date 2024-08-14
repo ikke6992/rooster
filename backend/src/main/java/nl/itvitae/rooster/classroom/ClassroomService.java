@@ -1,6 +1,7 @@
 package nl.itvitae.rooster.classroom;
 
 import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,5 +14,7 @@ public class ClassroomService {
     return classroomRepository.findAll();
   }
 
-
+  public Optional<Classroom> getById(long id) {
+    return classroomRepository.findById(id);
+  }
 }
