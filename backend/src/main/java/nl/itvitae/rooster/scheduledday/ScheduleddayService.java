@@ -41,7 +41,6 @@ public class ScheduleddayService {
       if (newClassroom.isPresent()) {
       scheduledday.setClassroom(newClassroom.get());
       } else {
-        // todo: should somehow change the practicum boolean on the next lesson to true
         scheduledday.getLesson().setPracticum(false);
         scheduledday.setClassroom(classroomRepository.findById(1L).get());
       }

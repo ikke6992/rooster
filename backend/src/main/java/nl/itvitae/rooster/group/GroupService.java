@@ -72,8 +72,7 @@ public class GroupService {
 
     for (int i = 1; i <= weeksPhase; i++) {
       for (int j = 1; j <= daysPhase; j++) {
-        // ternary to prevent scheduling all days in a row
-        LocalDate date = startDate.plusWeeks(i - 1).plusDays(j < daysPhase / 2 ? j - 1 : j);
+        LocalDate date = startDate.plusWeeks(i - 1).plusDays(j - 1);
 
         // prevents scheduling weekends
         if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
