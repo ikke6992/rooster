@@ -34,12 +34,14 @@ public class ScheduleddayService {
 
   private void preventConflicts(Scheduledday scheduledday){
     Classroom classroom = scheduledday.getClassroom();
-    if (scheduleddayRepository.existsByDateAndClassroom(scheduledday.getDate(), classroom)) {
+    boolean isClassroomFull = classroom.getCapacity() < scheduledday.getLesson().getGroup().getNumberOfStudents();
+    if (isClassroomFull || scheduleddayRepository.existsByDateAndClassroom(scheduledday.getDate(), classroom)) {
       int nextClassroomId = (classroom.getId() == 3 || classroom.getId() == 4) ? 2 : 1;
       Optional<Classroom> newClassroom = classroomRepository.findById(classroom.getId() + nextClassroomId);
       if (newClassroom.isPresent()) {
       scheduledday.setClassroom(newClassroom.get());
       } else {
+        // todo: should somehow change the practicum boolean on the next lesson to true
         scheduledday.getLesson().setPracticum(false);
         scheduledday.setClassroom(classroomRepository.findById(1L).get());
       }
