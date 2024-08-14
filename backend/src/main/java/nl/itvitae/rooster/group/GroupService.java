@@ -8,6 +8,7 @@ import nl.itvitae.rooster.classroom.ClassroomService;
 import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonService;
+import nl.itvitae.rooster.scheduledday.Scheduledday;
 import nl.itvitae.rooster.scheduledday.ScheduleddayService;
 import org.springframework.stereotype.Service;
 
@@ -68,20 +69,23 @@ public class GroupService {
   private void schedulePeriod(int weeksPhase, int daysPhase, LocalDate startDate, Group group) {
     // still to do
     // prevent conflicts -> move to different days
-    // keep classrooms consistent per phase
+
+    int[] classroomIDs = new int[daysPhase];
 
     for (int i = 1; i <= weeksPhase; i++) {
       for (int j = 1; j <= daysPhase; j++) {
         // ternary to prevent scheduling all days in a row
-        LocalDate date = startDate.plusWeeks(i - 1).plusDays(j < daysPhase/2 ? j - 1 : j);
+        LocalDate date = startDate.plusWeeks(i - 1).plusDays(j < daysPhase / 2 ? j - 1 : j);
         // prevents scheduling weekends
         if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
           date = date.plusDays(2);
         }
         final Lesson lesson = lessonService.createLesson(group, !(j > daysPhase / 2));
-        Classroom classroom = classroomService.getById(lesson.isPracticum() ? 4 : 1).get();
-        scheduleddayService.addScheduledday(date,
+        Classroom classroom = classroomService.getById(
+            classroomIDs[j - 1] != 0 ? classroomIDs[j - 1] : (lesson.isPracticum() ? 4 : 1)).get();
+        Scheduledday scheduledday = scheduleddayService.addScheduledday(date,
             classroom, lesson);
+        classroomIDs[j - 1] = scheduledday.getClassroom().getId().intValue();
       }
     }
   }
