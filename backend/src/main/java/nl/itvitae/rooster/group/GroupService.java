@@ -67,25 +67,31 @@ public class GroupService {
   }
 
   private void schedulePeriod(int weeksPhase, int daysPhase, LocalDate startDate, Group group) {
-    // still to do
-    // prevent conflicts -> move to different days
-
     int[] classroomIDs = new int[daysPhase];
+    boolean isPracticum = false;
 
     for (int i = 1; i <= weeksPhase; i++) {
       for (int j = 1; j <= daysPhase; j++) {
         // ternary to prevent scheduling all days in a row
         LocalDate date = startDate.plusWeeks(i - 1).plusDays(j < daysPhase / 2 ? j - 1 : j);
+
         // prevents scheduling weekends
         if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
           date = date.plusDays(2);
         }
-        final Lesson lesson = lessonService.createLesson(group, !(j > daysPhase / 2));
+        isPracticum = isPracticum || (j <= daysPhase / 2);
+        final Lesson lesson = lessonService.createLesson(group, isPracticum);
         Classroom classroom = classroomService.getById(
             classroomIDs[j - 1] != 0 ? classroomIDs[j - 1] : (lesson.isPracticum() ? 4 : 1)).get();
         Scheduledday scheduledday = scheduleddayService.addScheduledday(date,
             classroom, lesson);
+
+        // keeps classrooms consistent
         classroomIDs[j - 1] = scheduledday.getClassroom().getId().intValue();
+
+        // checks if the day was supposed to be a practicum day, and force the day to be practicum
+        // if the current day couldnt be due to full/occupied classrooms
+        isPracticum = isPracticum != scheduledday.getLesson().isPracticum();
       }
     }
   }
