@@ -1,5 +1,6 @@
 package nl.itvitae.rooster;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -25,6 +26,7 @@ public class MyDay {
   private DayOfWeek day;
 
   @ManyToMany(mappedBy="availability")
+  @JsonBackReference
   private List<Teacher> teachers;
 
   public MyDay(DayOfWeek day) {
