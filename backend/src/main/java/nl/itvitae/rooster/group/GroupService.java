@@ -68,13 +68,13 @@ public class GroupService {
   private void schedulePeriod(int weeksPhase, int daysPhase, LocalDate startDate, Group group) {
     // still to do
     // prevent conflicts -> move to different days
-    // assign classrooms based on capacity
     // keep classrooms consistent per phase
     // optional: don't schedule all days in a row
 
     for (int i = 1; i <= weeksPhase; i++) {
       for (int j = 1; j <= daysPhase; j++) {
-        LocalDate date = startDate.plusWeeks(i - 1).plusDays(j - 1);
+        // ternary to prevent scheduling all days in a row
+        LocalDate date = startDate.plusWeeks(i - 1).plusDays(j < daysPhase/2 ? j - 1 : j);
         // prevents scheduling weekends
         if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
           date = date.plusDays(2);
