@@ -31,7 +31,7 @@ public class TeacherService {
       newAvailability.add(myDayRepository.findByDay(DayOfWeek.valueOf(day)));
     }
     teacher.setAvailability(newAvailability);
-    teacher.setMaxDaysPerWeek(maxDaysPerWeek);
+    teacher.setMaxDaysPerWeek(Math.min(newAvailability.size(), maxDaysPerWeek));
     teacherRepository.save(teacher);
     return teacher;
   }
