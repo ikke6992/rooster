@@ -21,6 +21,6 @@ public class TeacherController {
 
   @PutMapping("/edit/{id}")
   public ResponseEntity<TeacherDTO> setAvailability(@PathVariable long id, @RequestBody AvailabilityRequest request) {
-    return ResponseEntity.ok(TeacherDTO.of(teacherService.setAvailability(id, request.availability(), request.maxDays())));
+    return ResponseEntity.ok(TeacherDTO.of(teacherService.setAvailability(id, request.availability(), request.maxDaysPerWeek())));
   }
 }

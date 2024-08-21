@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class DataService {
   private getTeachersUrl = 'http://localhost:8080/api/v1/teachers/';
-  private putAvailabilityUrl = 'http://localhost:8080/api/v1/teachers/change';
+  private putAvailabilityUrl = 'http://localhost:8080/api/v1/teachers/edit/';
 
   constructor(private http: HttpClient) {}
 
@@ -15,8 +15,8 @@ export class DataService {
     return this.http.get<any>(this.getTeachersUrl);
   }
 
-  putAvailability(data: any): Observable<any> {
-    return this.http.put<any>(this.putAvailabilityUrl, data, {
+  putAvailability(id: number, data: any): Observable<any> {
+    return this.http.put<any>(this.putAvailabilityUrl + id, data, {
       headers: new HttpHeaders({ 'Content-type': 'application/json' }),
     });
   }

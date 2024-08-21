@@ -7,9 +7,10 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
-public record TeacherDTO(String name, List<DayOfWeek> availability, int maxDaysPerWeek, List<String> groups) {
+public record TeacherDTO(long id, String name, List<DayOfWeek> availability, int maxDaysPerWeek, List<String> groups) {
 
   static TeacherDTO of(Teacher teacher) {
+    long id = teacher.getId();
     String name = teacher.getName();
     List<DayOfWeek> availability = new ArrayList<>();
     for (MyDay day : teacher.getAvailability()) {
@@ -21,6 +22,6 @@ public record TeacherDTO(String name, List<DayOfWeek> availability, int maxDaysP
       String groupName = "Group " + group.getGroupNumber() + " " + group.getField().getName();
       groups.add(groupName);
     }
-    return new TeacherDTO(name, availability, maxDaysPerWeek, groups);
+    return new TeacherDTO(id, name, availability, maxDaysPerWeek, groups);
   }
 }

@@ -23,15 +23,15 @@ export class ViewTeachersComponent {
     });
   }
 
-  showModal() {
-    let modal_t = document.getElementById('set-availability');
+  showModal(teacher: any) {
+    let modal_t = document.getElementById(teacher.name);
     if (modal_t !== null) {
       modal_t.classList.remove('hhidden');
       modal_t.classList.add('sshow');
     }
   }
-  closeModal() {
-    let modal_t = document.getElementById('set-availability');
+  closeModal(teacher: any) {
+    let modal_t = document.getElementById(teacher.name);
     if (modal_t !== null) {
       modal_t.classList.remove('sshow');
       modal_t.classList.add('hhidden');

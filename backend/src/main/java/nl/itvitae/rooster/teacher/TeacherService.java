@@ -5,6 +5,7 @@ import nl.itvitae.rooster.MyDay;
 import nl.itvitae.rooster.MyDayRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,16 +24,14 @@ public class TeacherService {
     return teacherRepository.findById(id).get();
   }
 
-  public Teacher setAvailability(long id, boolean[] availability, int maxDays) {
+  public Teacher setAvailability(long id, String[] availability, int maxDaysPerWeek) {
     Teacher teacher = getById(id);
-    List<MyDay> setAvailability = new ArrayList<>();
-    for (int i = 0; i < 5; i++) {
-      if (availability[i]) {
-        setAvailability.add(myDayRepository.findById((long)(i+1)).get());
-      }
+    List<MyDay> newAvailability = new ArrayList<>();
+    for (String day : availability) {
+      newAvailability.add(myDayRepository.findByDay(DayOfWeek.valueOf(day)));
     }
-    teacher.setAvailability(setAvailability);
-    teacher.setMaxDaysPerWeek(maxDays);
+    teacher.setAvailability(newAvailability);
+    teacher.setMaxDaysPerWeek(maxDaysPerWeek);
     teacherRepository.save(teacher);
     return teacher;
   }
