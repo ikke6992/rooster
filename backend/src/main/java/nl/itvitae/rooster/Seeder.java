@@ -41,7 +41,7 @@ public class Seeder implements CommandLineRunner {
   public void run(String... args) throws Exception {
 
     final HolidayManager holidayManager = HolidayManager.getInstance(ManagerParameters.create(NETHERLANDS));
-    final Set<Holiday> holidays = holidayManager.getHolidays(LocalDate.now().getYear());
+    final Set<Holiday> holidays = holidayManager.getHolidays(LocalDate.now(), LocalDate.now().plusYears(5));
     for (Holiday holiday: holidays) {
       freeDayRepository.save(new FreeDay(holiday.getDate()));
     }
