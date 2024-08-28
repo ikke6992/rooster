@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomService;
 import nl.itvitae.rooster.field.Field;
+import nl.itvitae.rooster.freeday.FreeDayRepository;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonService;
 import nl.itvitae.rooster.scheduledday.Scheduledday;
@@ -23,6 +24,7 @@ public class GroupService {
   private final ScheduleddayService scheduleddayService;
   private final LessonService lessonService;
   private final ClassroomService classroomService;
+  private final FreeDayRepository freeDayRepository;
 
   private static final int COLOUR_DISTANCE_THRESHOLD = 50;
 
@@ -73,6 +75,7 @@ public class GroupService {
     for (int i = 1; i <= weeksPhase; i++) {
       for (int j = 1; j <= daysPhase; j++) {
         LocalDate date = startDate.plusWeeks(i - 1).plusDays(j - 1);
+        if (freeDayRepository.existsByFreeDay(date)) continue;
 
         // prevents scheduling weekends
         if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {

@@ -11,6 +11,8 @@ import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
 import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.field.FieldRepository;
+import nl.itvitae.rooster.freeday.FreeDay;
+import nl.itvitae.rooster.freeday.FreeDayRepository;
 import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.group.GroupService;
 import nl.itvitae.rooster.teacher.Teacher;
@@ -33,11 +35,16 @@ public class Seeder implements CommandLineRunner {
   private final GroupService groupService;
   private final FieldRepository fieldRepository;
   private final TeacherRepository teacherRepository;
-
-
+  private final FreeDayRepository freeDayRepository;
 
   @Override
   public void run(String... args) throws Exception {
+
+    final HolidayManager holidayManager = HolidayManager.getInstance(ManagerParameters.create(NETHERLANDS));
+    final Set<Holiday> holidays = holidayManager.getHolidays(LocalDate.now().getYear());
+    for (Holiday holiday: holidays) {
+      freeDayRepository.save(new FreeDay(holiday.getDate()));
+    }
 
     var monday = saveDay(DayOfWeek.MONDAY);
     var tuesday = saveDay(DayOfWeek.TUESDAY);
@@ -61,13 +68,6 @@ public class Seeder implements CommandLineRunner {
 
     var wubbo = saveTeacher("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)), 3, group53);
     var coen = saveTeacher("Coen", new ArrayList<>(List.of(monday, thursday)), 2, group53);
-
-
-    final HolidayManager holidayManager = HolidayManager.getInstance(ManagerParameters.create(NETHERLANDS));
-    final Set<Holiday> holidays = holidayManager.getHolidays(2025);
-    for (Holiday holiday: holidays) {
-      System.out.println(holiday);
-    }
   }
 
   private MyDay saveDay(DayOfWeek day) {
