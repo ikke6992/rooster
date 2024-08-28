@@ -1,31 +1,43 @@
 <h1>Teachers</h1>
 <div *ngFor="let teacher of teachers">
   <h3>{{ teacher.name }}</h3>
+
   <h4>Availability:</h4>
   <div *ngFor="let day of teacher.availability">
     <p>- {{ day }}</p>
   </div>
   <p>max. {{ teacher.maxDaysPerWeek }} days per week</p>
   <button
-    (click)="showModal(teacher.name)"
+    (click)="showModal('set-availability-' + teacher.name)"
     class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400"
   >
     Set Availability
   </button>
+  <app-modal id="set-availability-{{ teacher.name }}" class="hhidden">
+    <app-set-availability [teacher]="teacher"></app-set-availability>
+    <button (click)="closeModal('set-availability-' + teacher.name)">Close</button>
+  </app-modal>
+
   <h4>Groups:</h4>
   <div *ngFor="let group of teacher.groups">
     <p>- {{ group }}</p>
   </div>
-  <app-modal id="{{ teacher.name }}" class="hhidden">
-    <app-set-availability [teacher]="teacher"></app-set-availability>
-    <button (click)="closeModal(teacher.name)">Close</button>
+  <button
+    (click)="showModal('add-group-' + teacher.name)"
+    class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400"
+  >
+    Add Group
+  </button>
+  <app-modal id="add-group-{{ teacher.name }}" class="hhidden">
+    <app-set-group [groups]="groups" [teacher]="teacher"></app-set-group>
+    <button (click)="closeModal('add-group-' + teacher.name)">Close</button>
   </app-modal>
 </div>
 
 <button
-    (click)="showModal('add-teacher')"
-    class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400"
-  >
+  (click)="showModal('add-teacher')"
+  class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400"
+>
   Add Teacher
 </button>
 <app-modal id="add-teacher" class="hhidden">

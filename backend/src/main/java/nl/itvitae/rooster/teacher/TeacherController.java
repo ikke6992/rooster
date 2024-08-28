@@ -1,6 +1,8 @@
 package nl.itvitae.rooster.teacher;
 
 import lombok.RequiredArgsConstructor;
+import nl.itvitae.rooster.group.Group;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -28,8 +30,19 @@ public class TeacherController {
     return ResponseEntity.created(locationOfTeacher).body(teacher);
   }
 
+  @PutMapping("/edit/{id}/addGroup/{groupNumber}")
+  public ResponseEntity<?> addGroup(@PathVariable long id, @PathVariable int groupNumber) {
+    for (Group group : teacherService.getById(id).getGroups()) {
+      if (group.getGroupNumber() == groupNumber) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Teacher is already assigned to this group.");
+      }
+    }
+    return ResponseEntity.ok(TeacherDTO.of(teacherService.addGroup(id, groupNumber)));
+  }
+
   @PutMapping("/edit/{id}")
   public ResponseEntity<TeacherDTO> setAvailability(@PathVariable long id, @RequestBody AvailabilityRequest request) {
     return ResponseEntity.ok(TeacherDTO.of(teacherService.setAvailability(id, request.availability(), request.maxDaysPerWeek())));
   }
+
 }

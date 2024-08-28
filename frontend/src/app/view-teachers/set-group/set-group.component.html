@@ -1,0 +1,11 @@
+<h1>{{ teacher.name }}</h1>
+<form [formGroup]="addGroup" (ngSubmit)="onSubmit()">
+  <label for="set-group">Group: </label>
+  <select id="set-group" formControlName="setGroup" required>
+    <option [ngValue]="null" disabled>Select Group</option>
+    <option *ngFor="let group of groups" [ngValue]="group.groupNumber">
+      Group {{ group.groupNumber }} {{ group.field }}
+    </option>
+  </select><br />
+  <button type="submit" [disabled]="!addGroup.valid">Submit</button>
+</form>

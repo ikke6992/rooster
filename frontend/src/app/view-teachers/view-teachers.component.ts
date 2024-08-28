@@ -4,15 +4,17 @@ import { ModalComponent } from '../modal/modal.component';
 import { DataService } from './data.service';
 import { SetAvailabilityComponent } from './set-availability/set-availability.component';
 import { AddTeacherComponent } from './add-teacher/add-teacher.component';
+import { SetGroupComponent } from './set-group/set-group.component';
 
 @Component({
   selector: 'app-view-teachers',
   standalone: true,
-  imports: [CommonModule, ModalComponent, SetAvailabilityComponent, AddTeacherComponent],
+  imports: [CommonModule, ModalComponent, SetAvailabilityComponent, SetGroupComponent, AddTeacherComponent],
   templateUrl: './view-teachers.component.html',
   styleUrl: './view-teachers.component.css',
 })
 export class ViewTeachersComponent {
+  groups: any[] = [];
   teachers: any[] = [];
 
   constructor(private dataService: DataService) {}
@@ -20,6 +22,11 @@ export class ViewTeachersComponent {
   ngOnInit(): void {
     this.dataService.getTeachers().subscribe((response: any[]) => {
       this.teachers = response;
+      console.log(response);
+    });
+
+    this.dataService.getGroups().subscribe((response: any[]) => {
+      this.groups = response;
       console.log(response);
     });
   }
