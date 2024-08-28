@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nl.itvitae.rooster.MyDay;
 import nl.itvitae.rooster.group.Group;
+import nl.itvitae.rooster.lesson.Lesson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,9 @@ public class Teacher {
   private List<MyDay> availability;
 
   private int maxDaysPerWeek;
+
+  @OneToMany
+  private List<Lesson> lessons;
 
   public Teacher(String name, boolean teachesPracticum, List<MyDay> availability, int maxDaysPerWeek) {
     this.name = name;

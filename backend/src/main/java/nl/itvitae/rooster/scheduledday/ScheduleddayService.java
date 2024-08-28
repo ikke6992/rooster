@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
+import nl.itvitae.rooster.MyDay;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
 import nl.itvitae.rooster.lesson.Lesson;
@@ -53,6 +54,19 @@ public class ScheduleddayService {
         scheduledday.getLesson().setPracticum(false);
         scheduledday.setClassroom(classroomRepository.findById(1L).get());
       }
+      preventConflicts(scheduledday);
+    }
+
+    //ensure teacher availability matches lesson scheduling
+    boolean teacherAvailable = false;
+    for (MyDay day : scheduledday.getLesson().getTeacher().getAvailability()) {
+      if (day.getDay().equals(scheduledday.getDate().getDayOfWeek())) {
+        teacherAvailable = true;
+        break;
+      }
+    }
+    if (!teacherAvailable) {
+      scheduledday.setDate(scheduledday.getDate().plusDays(1));
       preventConflicts(scheduledday);
     }
   }
