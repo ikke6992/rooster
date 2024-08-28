@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
@@ -17,6 +18,12 @@ import nl.itvitae.rooster.teacher.TeacherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import de.focus_shift.jollyday.core.Holiday;
+import de.focus_shift.jollyday.core.HolidayManager;
+import de.focus_shift.jollyday.core.ManagerParameters;
+
+import static de.focus_shift.jollyday.core.HolidayCalendar.NETHERLANDS;
+
 @Component
 @AllArgsConstructor
 public class Seeder implements CommandLineRunner {
@@ -27,8 +34,11 @@ public class Seeder implements CommandLineRunner {
   private final FieldRepository fieldRepository;
   private final TeacherRepository teacherRepository;
 
+
+
   @Override
   public void run(String... args) throws Exception {
+
     var monday = saveDay(DayOfWeek.MONDAY);
     var tuesday = saveDay(DayOfWeek.TUESDAY);
     var wednesday = saveDay(DayOfWeek.WEDNESDAY);
@@ -51,6 +61,13 @@ public class Seeder implements CommandLineRunner {
 
     var wubbo = saveTeacher("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)), 3, group53);
     var coen = saveTeacher("Coen", new ArrayList<>(List.of(monday, thursday)), 2, group53);
+
+
+    final HolidayManager holidayManager = HolidayManager.getInstance(ManagerParameters.create(NETHERLANDS));
+    final Set<Holiday> holidays = holidayManager.getHolidays(2025);
+    for (Holiday holiday: holidays) {
+      System.out.println(holiday);
+    }
   }
 
   private MyDay saveDay(DayOfWeek day) {

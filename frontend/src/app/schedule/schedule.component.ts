@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { DataService } from './data.service';
 import { ScheduledDayComponent } from '../scheduled-day/scheduled-day.component';
+import Holidays, { HolidaysTypes } from 'date-holidays';
 
 @Component({
   selector: 'app-schedule',
@@ -11,6 +12,7 @@ import { ScheduledDayComponent } from '../scheduled-day/scheduled-day.component'
   styleUrl: './schedule.component.css',
 })
 export class ScheduleComponent {
+  hd: Holidays = new Holidays('nl');
   data: Scheduledday[] = [];
 
   month = new Date().getMonth() + 1;
@@ -32,6 +34,7 @@ export class ScheduleComponent {
         (days[index] = {
           id: value,
           isWeekend: this.checkIfWeekend(year, month, value),
+          isFreeDay: this.checkIfFreeDay(year, month, value),
         })
     );
     return days;
@@ -40,6 +43,19 @@ export class ScheduleComponent {
   checkIfWeekend(year: number, month: number, day: number): boolean {
     const dayOfWeek = new Date(year, month - 1, day);
     return dayOfWeek.getDay() === 0 || dayOfWeek.getDay() === 6;
+  }
+
+  checkIfFreeDay(year: number, month: number, day: number): boolean {
+    this.hd
+      .getHolidays(2025)
+      .filter(
+        (holiday) =>
+          holiday.type == 'public' ||
+          holiday.name == 'Bevrijdingsdag' ||
+          holiday.name == 'Goede Vrijdag'
+      );
+    const holiday = this.hd.isHoliday(new Date(year, month - 1, day));
+    return holiday && holiday[0].type === "public";
   }
 
   getMonthName(monthNumber: number): string {
@@ -94,4 +110,5 @@ export interface Scheduledday {
 interface Day {
   id: number;
   isWeekend: boolean;
+  isFreeDay: boolean;
 }
