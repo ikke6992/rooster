@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
 import { DataService } from './data.service';
 import { SetAvailabilityComponent } from './set-availability/set-availability.component';
+import { AddTeacherComponent } from './add-teacher/add-teacher.component';
 
 @Component({
   selector: 'app-view-teachers',
   standalone: true,
-  imports: [CommonModule, ModalComponent, SetAvailabilityComponent],
+  imports: [CommonModule, ModalComponent, SetAvailabilityComponent, AddTeacherComponent],
   templateUrl: './view-teachers.component.html',
   styleUrl: './view-teachers.component.css',
 })
@@ -23,15 +24,15 @@ export class ViewTeachersComponent {
     });
   }
 
-  showModal(teacher: any) {
-    let modal_t = document.getElementById(teacher.name);
+  showModal(name: string) {
+    let modal_t = document.getElementById(name);
     if (modal_t !== null) {
       modal_t.classList.remove('hhidden');
       modal_t.classList.add('sshow');
     }
   }
-  closeModal(teacher: any) {
-    let modal_t = document.getElementById(teacher.name);
+  closeModal(name: string) {
+    let modal_t = document.getElementById(name);
     if (modal_t !== null) {
       modal_t.classList.remove('sshow');
       modal_t.classList.add('hhidden');

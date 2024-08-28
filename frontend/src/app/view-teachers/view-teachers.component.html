@@ -7,7 +7,7 @@
   </div>
   <p>max. {{ teacher.maxDaysPerWeek }} days per week</p>
   <button
-    (click)="showModal(teacher)"
+    (click)="showModal(teacher.name)"
     class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400"
   >
     Set Availability
@@ -18,6 +18,17 @@
   </div>
   <app-modal id="{{ teacher.name }}" class="hhidden">
     <app-set-availability [teacher]="teacher"></app-set-availability>
-    <button (click)="closeModal(teacher)">Close</button>
+    <button (click)="closeModal(teacher.name)">Close</button>
   </app-modal>
 </div>
+
+<button
+    (click)="showModal('add-teacher')"
+    class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400"
+  >
+  Add Teacher
+</button>
+<app-modal id="add-teacher" class="hhidden">
+  <app-add-teacher></app-add-teacher>
+  <button (click)="closeModal('add-teacher')">Close</button>
+</app-modal>
