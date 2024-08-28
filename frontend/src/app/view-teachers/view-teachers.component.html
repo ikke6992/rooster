@@ -1,0 +1,23 @@
+<h1>Teachers</h1>
+<div *ngFor="let teacher of teachers">
+  <h3>{{ teacher.name }}</h3>
+  <h4>Availability:</h4>
+  <div *ngFor="let day of teacher.availability">
+    <p>- {{ day }}</p>
+  </div>
+  <p>max. {{ teacher.maxDaysPerWeek }} days per week</p>
+  <button
+    (click)="showModal(teacher)"
+    class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400"
+  >
+    Set Availability
+  </button>
+  <h4>Groups:</h4>
+  <div *ngFor="let group of teacher.groups">
+    <p>- {{ group }}</p>
+  </div>
+  <app-modal id="{{ teacher.name }}" class="hhidden">
+    <app-set-availability [teacher]="teacher"></app-set-availability>
+    <button (click)="closeModal(teacher)">Close</button>
+  </app-modal>
+</div>

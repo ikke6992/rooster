@@ -23,8 +23,8 @@ public class GroupController {
   private final FieldService fieldService;
 
   @GetMapping("/")
-  public List<Group> getAll() {
-    return groupService.getAll();
+  public ResponseEntity<List<GroupDTO>> getAll() {
+    return ResponseEntity.ok(groupService.getAll().stream().map(GroupDTO::of).toList());
   }
 
   @PostMapping("/new")

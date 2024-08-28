@@ -1,0 +1,16 @@
+<h1>{{ teacher.name }}</h1>
+<form [formGroup]="setAvailability" (ngSubmit)="onSubmit()">
+  <label for="monday">Monday: </label>
+  <input id="monday" type="checkbox" formControlName="monday" /><br />
+  <label for="tuesday">Tuesday: </label>
+  <input id="tuesday" type="checkbox" formControlName="tuesday" /><br />
+  <label for="wednesday">Wednesday: </label>
+  <input id="wednesday" type="checkbox" formControlName="wednesday" /><br />
+  <label for="thursday">Thursday: </label>
+  <input id="thursday" type="checkbox" formControlName="thursday" /><br />
+  <label for="friday">Friday: </label>
+  <input id="friday" type="checkbox" formControlName="friday" /><br />
+  <label for="max-days">Max days per week: </label>
+  <input id="max-days" type="number" formControlName="maxDaysPerWeek" required /><br />
+  <button type="submit" [disabled]="!setAvailability.valid">Submit</button>
+</form>
