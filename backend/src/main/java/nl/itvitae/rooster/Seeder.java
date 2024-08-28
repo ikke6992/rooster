@@ -46,7 +46,7 @@ public class Seeder implements CommandLineRunner {
         LocalDate.now().plusYears(5));
     for (Holiday holiday : holidays) {
       freeDayRepository.save(new FreeDay(holiday.getDate(),
-          holiday.getDescription() + " " + holiday.getDate().getYear()));
+          holiday.getDescription()));
     }
 
     var monday = saveDay(DayOfWeek.MONDAY);

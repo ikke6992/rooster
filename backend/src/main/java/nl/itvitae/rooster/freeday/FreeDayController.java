@@ -3,6 +3,7 @@ package nl.itvitae.rooster.freeday;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,7 +23,7 @@ public class FreeDayController {
 
   @GetMapping
   public ResponseEntity<List<FreeDay>> getAll() {
-    return ResponseEntity.ok(freeDayRepository.findAll());
+    return ResponseEntity.ok(freeDayRepository.findAllByOrderByDateAsc());
   }
 
   @PostMapping
