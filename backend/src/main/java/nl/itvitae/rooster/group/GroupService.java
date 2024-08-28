@@ -1,7 +1,6 @@
 package nl.itvitae.rooster.group;
 
 import java.time.DayOfWeek;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomService;
