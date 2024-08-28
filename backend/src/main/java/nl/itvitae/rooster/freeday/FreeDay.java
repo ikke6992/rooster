@@ -18,9 +18,12 @@ public class FreeDay {
   @GeneratedValue
   private Long id;
 
-  private LocalDate freeDay;
+  private String name;
 
-  public FreeDay(LocalDate freeDay) {
-    this.freeDay = freeDay;
+  private LocalDate date;
+
+  public FreeDay(LocalDate date, String name) {
+    this.date = date;
+    this.name = name;
   }
 }

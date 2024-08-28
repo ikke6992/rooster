@@ -40,10 +40,13 @@ public class Seeder implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
 
-    final HolidayManager holidayManager = HolidayManager.getInstance(ManagerParameters.create(NETHERLANDS));
-    final Set<Holiday> holidays = holidayManager.getHolidays(LocalDate.now(), LocalDate.now().plusYears(5));
-    for (Holiday holiday: holidays) {
-      freeDayRepository.save(new FreeDay(holiday.getDate()));
+    final HolidayManager holidayManager = HolidayManager.getInstance(
+        ManagerParameters.create(NETHERLANDS));
+    final Set<Holiday> holidays = holidayManager.getHolidays(LocalDate.now(),
+        LocalDate.now().plusYears(5));
+    for (Holiday holiday : holidays) {
+      freeDayRepository.save(new FreeDay(holiday.getDate(),
+          holiday.getDescription() + " " + holiday.getDate().getYear()));
     }
 
     var monday = saveDay(DayOfWeek.MONDAY);
@@ -66,7 +69,8 @@ public class Seeder implements CommandLineRunner {
 
     var group53 = saveGroup(53, "#ffa500", 12, java);
 
-    var wubbo = saveTeacher("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)), 3, group53);
+    var wubbo = saveTeacher("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)),
+        3, group53);
     var coen = saveTeacher("Coen", new ArrayList<>(List.of(monday, thursday)), 2, group53);
   }
 
@@ -78,8 +82,9 @@ public class Seeder implements CommandLineRunner {
     return classroomRepository.save(new Classroom(capacity, hasBeamer, forPracticum));
   }
 
-  private Group saveGroup(int groupNumber, String color,int numberOfStudents, Field field) {
-    Group group = groupService.addGroup(groupNumber, color, numberOfStudents, field, LocalDate.now(), 8, 12, 8);
+  private Group saveGroup(int groupNumber, String color, int numberOfStudents, Field field) {
+    Group group = groupService.addGroup(groupNumber, color, numberOfStudents, field,
+        LocalDate.now(), 8, 12, 8);
     groupService.scheduleGroup(group);
     return group;
   }
@@ -88,7 +93,8 @@ public class Seeder implements CommandLineRunner {
     return fieldRepository.save(new Field(name, daysPhase1, daysPhase2, daysPhase3));
   }
 
-  private Teacher saveTeacher(String name, List<MyDay> availability, int maxDaysPerWeek, Group... groups) {
+  private Teacher saveTeacher(String name, List<MyDay> availability, int maxDaysPerWeek,
+      Group... groups) {
     Teacher teacher = new Teacher(name, availability, maxDaysPerWeek);
     for (Group group : groups) {
       teacher.addGroup(group);

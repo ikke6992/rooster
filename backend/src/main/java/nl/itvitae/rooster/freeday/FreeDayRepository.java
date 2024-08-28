@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FreeDayRepository  extends JpaRepository<FreeDay, Long> {
 
-  boolean existsByFreeDay(LocalDate date);
+  boolean existsByDate(LocalDate date);
 
 }
