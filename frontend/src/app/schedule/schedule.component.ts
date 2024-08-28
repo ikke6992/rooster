@@ -55,7 +55,12 @@ export class ScheduleComponent {
           holiday.name == 'Goede Vrijdag'
       );
     const holiday = this.hd.isHoliday(new Date(year, month - 1, day));
-    return holiday && holiday[0].type === "public";
+    return (
+      holiday &&
+      (holiday[0].type === 'public' ||
+        holiday[0].name === 'Bevrijdingsdag' ||
+        holiday[0].name === 'Goede Vrijdag')
+    );
   }
 
   getMonthName(monthNumber: number): string {
