@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './free-days.component.css'
 })
 export class FreeDaysComponent {
-  freeDays: any[] = [];
+  freeDays: FreeDays[] = [];
 
   constructor(private dataService: DataService) {}
 
@@ -20,4 +20,14 @@ export class FreeDaysComponent {
       console.log(response);
     });
   }
+
+  remove(id: number){
+    this.dataService.removeDay(id).subscribe();
+  }
+}
+
+interface FreeDays {
+  id: number;
+  name: string;
+  date: Date;
 }

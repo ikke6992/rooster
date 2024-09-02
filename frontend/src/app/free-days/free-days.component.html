@@ -1,5 +1,5 @@
 <h1>Free Days</h1>
 <br />
 <div *ngFor="let freeDay of freeDays">
-    <p>{{ freeDay.date }} - {{ freeDay.name }}</p>
+  <div>{{ freeDay.date }} - {{ freeDay.name }} <button class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400" (click)="remove(freeDay.id)">🗑</button></div>
 </div>
