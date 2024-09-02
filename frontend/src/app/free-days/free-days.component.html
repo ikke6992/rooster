@@ -1,5 +1,17 @@
 <h1>Free Days</h1>
+<button
+(click)="showModal()"
+class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400"
+>
+Add Free Days
+</button>
+
 <br />
+<app-modal id="add-free-days" class="hhidden">
+  <app-add-free-days [fields]="fields"></app-add-free-days>
+  <button (click)="closeModal()">Close</button>
+</app-modal>
+
 <div *ngFor="let freeDay of freeDays">
   <ng-container *ngIf="freeDay.isDeleted; else showDeleted"> Removed {{ freeDay.name }}  </ng-container>
   <ng-template #showDeleted>

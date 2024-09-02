@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,6 +12,12 @@ export class DataService {
 
   getData(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
+  }
+
+  addDay(data: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, data, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    });
   }
 
   removeDay(id: number): Observable<any> {
