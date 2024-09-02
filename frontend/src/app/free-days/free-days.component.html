@@ -1,5 +1,14 @@
 <h1>Free Days</h1>
 <br />
 <div *ngFor="let freeDay of freeDays">
-  <div>{{ freeDay.date }} - {{ freeDay.name }} <button class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400" (click)="remove(freeDay.id)">🗑</button></div>
+  <ng-container *ngIf="freeDay.isDeleted; else showDeleted"> Removed {{ freeDay.name }}  </ng-container>
+  <ng-template #showDeleted>
+    {{ freeDay.date }} - {{ freeDay.name }}
+    <button
+      class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400"
+      (click)="remove(freeDay.id)"
+    >
+      🗑
+    </button></ng-template
+  >
 </div>

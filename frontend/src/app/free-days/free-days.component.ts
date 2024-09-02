@@ -23,6 +23,7 @@ export class FreeDaysComponent {
 
   remove(id: number){
     this.dataService.removeDay(id).subscribe();
+    (this.freeDays.find((freeDay) => freeDay.id === id) || this.freeDays[id]).isDeleted = true;
   }
 }
 
@@ -30,4 +31,5 @@ interface FreeDays {
   id: number;
   name: string;
   date: Date;
+  isDeleted: boolean
 }
