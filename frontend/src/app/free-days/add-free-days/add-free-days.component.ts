@@ -1,32 +1,26 @@
 import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataService } from '../data-service';
 
 @Component({
   selector: 'app-add-free-days',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './add-free-days.component.html',
   styleUrl: './add-free-days.component.css'
 })
 export class AddFreeDaysComponent {
   @Input() fields: any[] = [];
 
-  addGroup = new FormGroup({
-    groupNumber: new FormControl(''),
-    color: new FormControl(''),
-    numberOfStudents: new FormControl(''),
-    field: new FormControl(''),
-    startDate: new FormControl(''),
-    weeksPhase1: new FormControl(''),
-    weeksPhase2: new FormControl(''),
-    weeksPhase3: new FormControl(''),
+  addFreeday = new FormGroup({
+    name: new FormControl(''),
+    date: new FormControl(''),
   });
 
   constructor(private dataService: DataService) {}
 
   onSubmit() {
-    const data = this.addGroup.value;
+    const data = this.addFreeday.value;
     console.log(data);
     this.dataService.addDay(data).subscribe(
       (response) => {
