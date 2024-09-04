@@ -35,11 +35,11 @@ public class ScheduleddayService {
 
   public Scheduledday addScheduledday(LocalDate date, Classroom classroom, Lesson lesson) {
     Scheduledday scheduledday = new Scheduledday(date, classroom, lesson);
-    preventConflicts(scheduledday);
+    preventConflicts(scheduledday, false);
     return scheduleddayRepository.save(scheduledday);
   }
 
-  private void preventConflicts(Scheduledday scheduledday) {
+  private void preventConflicts(Scheduledday scheduledday, boolean looped) {
     LocalDate date = scheduledday.getDate();
     Lesson lesson = scheduledday.getLesson();
     Classroom classroom = scheduledday.getClassroom();
@@ -49,10 +49,10 @@ public class ScheduleddayService {
         .getGroup())) {
       if (date.getDayOfWeek() != DayOfWeek.FRIDAY) {
         scheduledday.setDate(date.plusDays(1));
-        preventConflicts(scheduledday);
+        preventConflicts(scheduledday, looped);
       } else {
         scheduledday.setDate(date.minusDays(4));
-        preventConflicts(scheduledday);
+        preventConflicts(scheduledday, true);
       }
     }
     if (isClassroomFull || scheduleddayRepository.existsByDateAndClassroom(scheduledday.getDate(),
@@ -66,11 +66,11 @@ public class ScheduleddayService {
         lesson.setPracticum(false);
         scheduledday.setClassroom(classroomRepository.findById(1L).get());
       }
-      preventConflicts(scheduledday);
+      preventConflicts(scheduledday, looped);
     }
 
     //if a group has teachers available
-    if (lesson.getGroup().getTeachers().size() != 0) {
+    if (!looped && lesson.getGroup().getTeachers().size() != 0) {
       teacher: for (Teacher teacher : lesson.getGroup().getTeachers()) {
 
         //if teacher can be assigned, find an available date for the lesson and assign the teacher
@@ -105,7 +105,7 @@ public class ScheduleddayService {
 
           if (!teacherAvailable && date.getDayOfWeek() != DayOfWeek.FRIDAY) {
             scheduledday.setDate(date.plusDays(1));
-            preventConflicts(scheduledday);
+            preventConflicts(scheduledday, looped);
           }
         }
       }
