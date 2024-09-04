@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.MyDay;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
+import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonRepository;
 import nl.itvitae.rooster.teacher.Teacher;

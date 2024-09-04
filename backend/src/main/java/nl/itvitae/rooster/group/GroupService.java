@@ -6,12 +6,15 @@ import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomService;
 import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.lesson.Lesson;
+import nl.itvitae.rooster.lesson.LessonRepository;
 import nl.itvitae.rooster.lesson.LessonService;
 import nl.itvitae.rooster.scheduledday.Scheduledday;
+import nl.itvitae.rooster.scheduledday.ScheduleddayRepository;
 import nl.itvitae.rooster.scheduledday.ScheduleddayService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -20,7 +23,9 @@ public class GroupService {
 
   private final GroupRepository groupRepository;
   private final ScheduleddayService scheduleddayService;
+  private final ScheduleddayRepository scheduleddayRepository;
   private final LessonService lessonService;
+  private final LessonRepository lessonRepository;
   private final ClassroomService classroomService;
 
   private static final int COLOUR_DISTANCE_THRESHOLD = 50;
@@ -63,6 +68,34 @@ public class GroupService {
         group.getStartDate().plusWeeks(group.getWeeksPhase1()), group);
     schedulePeriod(group.getWeeksPhase3(), group.getField().getDaysPhase3(),
         group.getStartDate().plusWeeks(group.getWeeksPhase1() + group.getWeeksPhase2()), group);
+  }
+
+  public void rescheduleGroup(Group group) {
+    int weeks = (int)ChronoUnit.WEEKS.between(group.getStartDate(), LocalDate.now());
+    int weeksLeftPhase1 = group.getWeeksPhase1();
+    int weeksLeftPhase2 = group.getWeeksPhase2();
+    int weeksLeftPhase3 = group.getWeeksPhase3();
+
+    for (Scheduledday scheduledday : scheduleddayRepository.findByLessonGroup(group)) {
+      if (!scheduledday.getDate().isBefore(LocalDate.now())) {
+        scheduleddayRepository.delete(scheduledday);
+        lessonRepository.delete(scheduledday.getLesson());
+      }
+    }
+
+    if (weeks < weeksLeftPhase1) {
+      weeksLeftPhase1 -= weeks;
+      schedulePeriod(weeksLeftPhase1, group.getField().getDaysPhase1(), LocalDate.now(), group);
+      schedulePeriod(weeksLeftPhase2, group.getField().getDaysPhase2(), LocalDate.now().plusWeeks(weeksLeftPhase1), group);
+      schedulePeriod(weeksLeftPhase3, group.getField().getDaysPhase3(), LocalDate.now().plusWeeks(weeksLeftPhase1+weeksLeftPhase2), group);
+    } else if (weeks < weeksLeftPhase1 + weeksLeftPhase2) {
+      weeksLeftPhase2 -= (weeks + weeksLeftPhase1);
+      schedulePeriod(weeksLeftPhase2, group.getField().getDaysPhase2(), LocalDate.now(), group);
+      schedulePeriod(weeksLeftPhase3, group.getField().getDaysPhase3(), LocalDate.now().plusWeeks(weeksLeftPhase2), group);
+    } else if (weeks < weeksLeftPhase1 + weeksLeftPhase2 + weeksLeftPhase3) {
+      weeksLeftPhase3 -= (weeks + weeksLeftPhase1 + weeksLeftPhase2);
+      schedulePeriod(weeksLeftPhase3, group.getField().getDaysPhase3(), LocalDate.now(), group);
+    }
   }
 
   private void schedulePeriod(int weeksPhase, int daysPhase, LocalDate startDate, Group group) {

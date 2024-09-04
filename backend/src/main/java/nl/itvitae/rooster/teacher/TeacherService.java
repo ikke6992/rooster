@@ -5,6 +5,7 @@ import nl.itvitae.rooster.MyDay;
 import nl.itvitae.rooster.MyDayRepository;
 import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.group.GroupRepository;
+import nl.itvitae.rooster.group.GroupService;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -16,6 +17,7 @@ import java.util.List;
 public class TeacherService {
 
   private final TeacherRepository teacherRepository;
+  private final GroupService groupService;
   private final GroupRepository groupRepository;
   private final MyDayRepository myDayRepository;
 
@@ -37,6 +39,7 @@ public class TeacherService {
     Teacher teacher = getById(id);
     Group group = groupRepository.findByGroupNumber(groupNumber).get();
     teacher.addGroup(group);
+    groupService.rescheduleGroup(group);
     teacherRepository.save(teacher);
     return teacher;
   }

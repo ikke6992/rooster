@@ -13,4 +13,6 @@ public interface ScheduleddayRepository extends JpaRepository<Scheduledday, Long
   boolean existsByDateAndLessonGroup(LocalDate date, Group group);
 
   List<Scheduledday> findByDate(LocalDate date);
+
+  List<Scheduledday> findByLessonGroup(Group group);
 }

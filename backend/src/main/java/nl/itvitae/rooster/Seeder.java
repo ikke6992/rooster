@@ -62,8 +62,7 @@ public class Seeder implements CommandLineRunner {
   }
 
   private Group saveGroup(int groupNumber, String color,int numberOfStudents, Field field) {
-    Group group = groupService.addGroup(groupNumber, color, numberOfStudents, field, LocalDate.now(), 8, 12, 8);
-    return group;
+    return groupService.addGroup(groupNumber, color, numberOfStudents, field, LocalDate.now().minusWeeks(4), 8, 12, 8);
   }
 
   private Teacher saveTeacher(String name, boolean teachesPracticum, List<MyDay> availability, int maxDaysPerWeek, Group... groups) {
