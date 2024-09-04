@@ -1,10 +1,10 @@
 <h1>Free Days</h1>
-<button (click)="showModal()">Add Free Day</button>
+<button (click)="showModal()" class="button-action">Add Free Day</button>
 
 <br />
-<app-modal id="add-free-days" class="hhidden">
+<app-modal id="add-free-days" class="hhidden p-0">
   <app-add-free-days [fields]="fields"></app-add-free-days>
-  <button (click)="closeModal()">Close</button>
+  <button (click)="closeModal()"  class="button-action">Close</button>
 </app-modal>
 
 <div *ngFor="let freeDay of freeDays">
@@ -13,6 +13,6 @@
   </ng-container>
   <ng-template #showDeleted>
     {{ freeDay.date }} - {{ freeDay.name }}
-    <button (click)="remove(freeDay.id)">🗑</button></ng-template
+    <button (click)="remove(freeDay.id)"  class="button-action">🗑</button></ng-template
   >
 </div>

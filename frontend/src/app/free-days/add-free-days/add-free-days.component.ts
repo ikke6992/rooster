@@ -1,15 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataService } from '../data-service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-free-days',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './add-free-days.component.html',
   styleUrl: './add-free-days.component.css'
 })
 export class AddFreeDaysComponent {
+  addOne: boolean = true;
   @Input() fields: any[] = [];
 
   addFreeday = new FormGroup({

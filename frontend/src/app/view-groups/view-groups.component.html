@@ -20,6 +20,7 @@
   </div>
 </div>
 <button
+class="button-action"
   (click)="showModal()"
 >
   Add Group
@@ -27,5 +28,5 @@
 
 <app-modal id="add-group" class="hhidden">
   <app-add-group [fields]="fields"></app-add-group>
-  <button (click)="closeModal()">Close</button>
+  <button (click)="closeModal()"  class="button-action">Close</button>
 </app-modal>

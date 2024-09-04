@@ -14,7 +14,7 @@ public class TeacherController {
 
   private final TeacherService teacherService;
 
-  @GetMapping("/")
+  @GetMapping
   public ResponseEntity<List<TeacherDTO>> getAll() {
     return ResponseEntity.ok(teacherService.getAll().stream().map(TeacherDTO::of).toList());
   }

@@ -1,18 +1,34 @@
-<h1>Add Free Day</h1>
-<form [formGroup]="addFreeday" (ngSubmit)="onSubmit()">
-  <label for="name">Free day name: </label>
-  <input
-    id="group-number"
-    type="text"
-    formControlName="name"
-    required
-  /><br />
-  <label for="date">Date: </label>
-  <input
-    id="date"
-    type="date"
-    formControlName="date"
-    required
-  /><br />
-  <button type="submit" [disabled]="!addFreeday.valid">Submit</button>
-</form>
+<div class="flex w-full my-2">
+  <button
+    class="flex-1 py-2 px-4"
+    [ngClass]="addOne ? 'border-b border-blue-500' : ''"
+    (click)="addOne = true"
+  >
+    Add one free day
+  </button>
+  <button
+    class="flex-1 py-2 px-4"
+    [ngClass]="addOne ? '' : 'border-b border-blue-500'"
+    (click)="addOne = false"
+  >
+    Add multiple freedays
+  </button>
+</div>
+
+<ng-container *ngIf="addOne; else addMultiple">
+  <form [formGroup]="addFreeday" (ngSubmit)="onSubmit()">
+    <label for="name">Free day name: </label>
+    <input
+      id="group-number"
+      type="text"
+      formControlName="name"
+      required
+    /><br />
+    <label for="date">Date: </label>
+    <input id="date" type="date" formControlName="date" required /><br />
+    <button type="submit" [disabled]="!addFreeday.valid" class="button-action">
+      Submit
+    </button>
+  </form>
+</ng-container>
+<ng-template #addMultiple> mio xenoblade </ng-template>
