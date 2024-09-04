@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import nl.itvitae.rooster.scheduledday.ScheduleddayDTO;
-import org.springframework.data.domain.Sort;
+import nl.itvitae.rooster.scheduledday.Scheduledday;
+import nl.itvitae.rooster.scheduledday.ScheduleddayRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,6 +26,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class FreeDayController {
 
   private final FreeDayRepository freeDayRepository;
+  private final ScheduleddayRepository scheduleddayRepository;
 
   @GetMapping
   public ResponseEntity<List<FreeDay>> getAll() {
@@ -45,6 +46,8 @@ public class FreeDayController {
     if (freeDayRepository.existsByDate(freeDay.getDate())) {
       return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
+    List<Scheduledday> plannedOnFreeday = scheduleddayRepository.findByDate(freeDay.getDate());
+    scheduleddayRepository.deleteAll(plannedOnFreeday);
     URI locationOfFreeDay = ucb.path("/api/v1/groups").buildAndExpand(freeDay.getId()).toUri();
     return ResponseEntity.created(locationOfFreeDay).body(freeDayRepository.save(freeDay));
   }
