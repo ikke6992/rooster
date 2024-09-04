@@ -103,7 +103,7 @@ export interface Scheduledday {
   date: Date;
   classroomId: number;
   groupNumber: number;
-  groupColour: string;
+  groupColor: string;
   name: string;
 }
 
