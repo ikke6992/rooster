@@ -71,7 +71,7 @@ public class ScheduleddayService {
 
     //if a group has teachers available
     if (!looped && lesson.getGroup().getTeachers().size() != 0) {
-      teacher: for (Teacher teacher : lesson.getGroup().getTeachers()) {
+      for (Teacher teacher : lesson.getGroup().getTeachers()) {
 
         //if teacher can be assigned, find an available date for the lesson and assign the teacher
         if (teacher.isTeachesPracticum() == lesson.isPracticum()) {
@@ -86,14 +86,14 @@ public class ScheduleddayService {
             }
           }
           if (lessons >= teacher.getMaxDaysPerWeek()) {
-            break teacher;
+            break;
           }
-          day: for (MyDay day : teacher.getAvailability()) {
+          days: for (MyDay day : teacher.getAvailability()) {
             if (day.getDay().equals(date.getDayOfWeek())) {
               for (Scheduledday otherScheduledDay : scheduleddayRepository.findByDate(scheduledday.getDate())) {
                 Teacher otherTeacher = otherScheduledDay.getLesson().getTeacher();
                 if (otherTeacher != null && teacher.getId().equals(otherTeacher.getId())) {
-                  break day;
+                  break days;
                 }
               }
               lesson.setTeacher(teacher);
