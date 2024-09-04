@@ -10,7 +10,15 @@ public record ScheduleddayDTO(Long id, LocalDate date, Long classroomId, int gro
         scheduledday.getLesson().getGroup().getGroupNumber(),
         scheduledday.getLesson().getGroup().getColor(),
         scheduledday.getLesson().getGroup().getField().getName(),
-        scheduledday.getLesson().getTeacher().getName());
+        getTeacherName(scheduledday));
+  }
+
+  public static String getTeacherName(Scheduledday scheduledday) {
+    String teacher = "none";
+    if (scheduledday.getLesson().getTeacher() != null) {
+      teacher = scheduledday.getLesson().getTeacher().getName();
+    }
+    return teacher;
   }
 
 }

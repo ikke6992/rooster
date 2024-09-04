@@ -36,9 +36,8 @@ public class Lesson {
 
   private boolean isPracticum;
 
-  public Lesson(Group group, boolean isPracticum, Teacher teacher) {
+  public Lesson(Group group, boolean isPracticum) {
     this.group = group;
     this.isPracticum = isPracticum;
-    this.teacher = teacher;
   }
 }

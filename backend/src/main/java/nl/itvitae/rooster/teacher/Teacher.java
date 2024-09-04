@@ -41,7 +41,7 @@ public class Teacher {
   private int maxDaysPerWeek;
 
   @OneToMany
-  private List<Lesson> lessons;
+  private List<Lesson> lessons = new ArrayList<>();
 
   public Teacher(String name, boolean teachesPracticum, List<MyDay> availability, int maxDaysPerWeek) {
     this.name = name;
@@ -52,5 +52,9 @@ public class Teacher {
 
   public void addGroup(Group group) {
     groups.add(group);
+  }
+
+  public void addLesson(Lesson lesson) {
+    lessons.add(lesson);
   }
 }

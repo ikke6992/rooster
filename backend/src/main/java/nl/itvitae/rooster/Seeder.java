@@ -50,11 +50,15 @@ public class Seeder implements CommandLineRunner {
     var security = saveField("Security", 3, 3, 2);
 
     var group53 = saveGroup(53, "#ffa500", 12, java);
+    var group54 = saveGroup(54, "#ff0000", 8, data);
+    var group55 = saveGroup(55, "#00ff00", 10, java);
 
-    var wubbo = saveTeacher("Wubbo", true, new ArrayList<>(List.of(monday, tuesday, wednesday, friday)), 3, group53);
-    var coen = saveTeacher("Coen", false, new ArrayList<>(List.of(monday, thursday)), 2, group53);
+    var wubbo = saveTeacher("Wubbo", true, new ArrayList<>(List.of(monday, tuesday, wednesday, friday)), 3, group53, group55);
+    var coen = saveTeacher("Coen", false, new ArrayList<>(List.of(monday, thursday)), 2, group53, group55);
 
     groupService.scheduleGroup(group53);
+    groupService.scheduleGroup(group54);
+    groupService.scheduleGroup(group55);
   }
 
   private Group saveGroup(int groupNumber, String color,int numberOfStudents, Field field) {

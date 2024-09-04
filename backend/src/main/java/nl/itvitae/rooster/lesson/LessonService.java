@@ -20,12 +20,6 @@ public class LessonService {
   }
 
   public Lesson createLesson(Group group, boolean isPracticum){
-    Teacher lessonTeacher = null;
-    for (Teacher teacher : group.getTeachers()) {
-      if (teacher.isTeachesPracticum() == isPracticum) {
-        lessonTeacher = teacher;
-      }
-    }
-    return lessonRepository.save(new Lesson(group, isPracticum, lessonTeacher));
+    return lessonRepository.save(new Lesson(group, isPracticum));
   }
 }
