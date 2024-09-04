@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { DataService } from './data.service';
 import { ScheduledDayComponent } from '../scheduled-day/scheduled-day.component';
-import Holidays, { HolidaysTypes } from 'date-holidays';
 
 @Component({
   selector: 'app-schedule',
@@ -12,7 +11,7 @@ import Holidays, { HolidaysTypes } from 'date-holidays';
   styleUrl: './schedule.component.css',
 })
 export class ScheduleComponent {
-  // hd: Holidays = new Holidays('nl');
+
   data: Scheduledday[] = [];
   freeDays: FreeDay[] = [];
 
@@ -81,6 +80,8 @@ export class ScheduleComponent {
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
+
+    
     this.dataService
     .getScheduledDaysByMonth(this.month, this.year)
     .subscribe((response: any[]) => {

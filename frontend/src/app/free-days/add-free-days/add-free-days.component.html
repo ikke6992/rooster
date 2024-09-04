@@ -31,4 +31,22 @@
     </button>
   </form>
 </ng-container>
-<ng-template #addMultiple> mio xenoblade </ng-template>
+<ng-template #addMultiple>
+  <form [formGroup]="addMultipleFreedays" (ngSubmit)="onSubmit2()">
+    <label for="year">Year: </label>
+    <input id="number" type="number" formControlName="year" required /><br />
+    <div formArrayName="array">
+      <div *ngFor="let holiday of holidays; let i = index">
+        <label for="{{ holiday.name }}">{{ holiday.name }}: </label>
+        <input id="{{ holiday.name }}" type="checkbox" [formControlName]="i" /><br />
+      </div>
+    </div>
+    <button
+      type="submit"
+      [disabled]="!addMultipleFreedays.valid"
+      class="button-action"
+    >
+      Submit
+    </button>
+  </form>
+</ng-template>

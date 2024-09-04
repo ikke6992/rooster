@@ -20,6 +20,12 @@ export class DataService {
     });
   }
 
+  addMultipleDays(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/multi`, data, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    });
+  }
+
   removeDay(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
