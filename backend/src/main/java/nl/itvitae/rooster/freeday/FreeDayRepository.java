@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FreeDayRepository  extends JpaRepository<FreeDay, Long> {
 
+  List<FreeDay> findByDateBetween(LocalDate startDate, LocalDate endDate);
+
   boolean existsByDate(LocalDate date);
 
   List<FreeDay> findAllByOrderByDateAsc();

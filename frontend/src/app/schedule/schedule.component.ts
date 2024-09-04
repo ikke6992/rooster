@@ -12,8 +12,9 @@ import Holidays, { HolidaysTypes } from 'date-holidays';
   styleUrl: './schedule.component.css',
 })
 export class ScheduleComponent {
-  hd: Holidays = new Holidays('nl');
+  // hd: Holidays = new Holidays('nl');
   data: Scheduledday[] = [];
+  freeDays: FreeDay[] = [];
 
   month = new Date().getMonth() + 1;
   year = new Date().getFullYear();
@@ -24,7 +25,7 @@ export class ScheduleComponent {
     .fill(0)
     .map((_, index) => index + 1);
 
-  daysInMonth(year: number, month: number): Day[] {
+  daysInMonth(year: number, month: number): Day[] {    
     const array = Array(new Date(year, month, 0).getDate())
       .fill(0)
       .map((_, index) => index + 1);
@@ -45,22 +46,9 @@ export class ScheduleComponent {
     return dayOfWeek.getDay() === 0 || dayOfWeek.getDay() === 6;
   }
 
-  checkIfFreeDay(year: number, month: number, day: number): boolean {
-    this.hd
-      .getHolidays(2025)
-      .filter(
-        (holiday) =>
-          holiday.type == 'public' ||
-          holiday.name == 'Bevrijdingsdag' ||
-          holiday.name == 'Goede Vrijdag'
-      );
-    const holiday = this.hd.isHoliday(new Date(year, month - 1, day));
-    return (
-      holiday &&
-      (holiday[0].type === 'public' ||
-        holiday[0].name === 'Bevrijdingsdag' ||
-        holiday[0].name === 'Goede Vrijdag')
-    );
+  checkIfFreeDay(year: number, month: number, day: number) {
+    const fday = new Date(year, month -1, day);    
+    return !!this.freeDays.find((freeDay) => freeDay.date.getDate() == fday.getDate());
   }
 
   getMonthName(monthNumber: number): string {
@@ -93,13 +81,20 @@ export class ScheduleComponent {
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.days = this.daysInMonth(this.year, this.month);
     this.dataService
-      .getScheduledDaysByMonth(this.month, this.year)
-      .subscribe((response: any[]) => {
-        this.data = response;
-        this.data.map((item) => (item.date = new Date(item.date)));
-      });
+    .getScheduledDaysByMonth(this.month, this.year)
+    .subscribe((response: any[]) => {
+      this.data = response;
+      this.data.map((item) => (item.date = new Date(item.date)));
+    });
+    
+    this.dataService
+    .getFreeDaysByMonth(this.month, this.year)
+    .subscribe((response: any[]) => {
+      this.freeDays = response;
+      this.freeDays.map((item) => (item.date = new Date(item.date)));
+      this.days = this.daysInMonth(this.year, this.month);
+    });
   }
 }
 
@@ -117,3 +112,10 @@ interface Day {
   isWeekend: boolean;
   isFreeDay: boolean;
 }
+
+interface FreeDay {
+  id: number;
+  date: Date;
+  name: string;
+}
+
