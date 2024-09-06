@@ -20,6 +20,10 @@ public class ScheduleddayService {
     return scheduleddayRepository.findAll();
   }
 
+  public Scheduledday findById(long id) {
+    return scheduleddayRepository.findById(id).get();
+  }
+
   public List<Scheduledday> findAllByMonth(int month, int year) {
     LocalDate startDate = LocalDate.of(year, month, 1);
     LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
@@ -31,6 +35,30 @@ public class ScheduleddayService {
     Scheduledday scheduledday = new Scheduledday(date, classroom, lesson);
     preventConflicts(scheduledday);
     return scheduleddayRepository.save(scheduledday);
+  }
+
+  public Scheduledday overrideScheduling(Scheduledday scheduledday, LocalDate date, Classroom classroom, boolean adaptWeekly) {
+    LocalDate oldDate = scheduledday.getDate();
+    Classroom oldClassroom = scheduledday.getClassroom();
+    scheduledday.setDate(date);
+    scheduledday.setClassroom(classroom);
+    scheduleddayRepository.save(scheduledday);
+
+    if (adaptWeekly) {
+      oldDate = oldDate.plusWeeks(1);
+      while (scheduleddayRepository.existsByDateAndClassroom(oldDate, oldClassroom)) {
+        Scheduledday nextScheduledday = scheduleddayRepository.findByDateAndClassroom(oldDate, oldClassroom).get();
+        if (nextScheduledday.getLesson().getGroup().getGroupNumber() == scheduledday.getLesson().getGroup().getGroupNumber()) {
+          LocalDate newDate = date.plusWeeks(1);
+          nextScheduledday.setDate(newDate);
+          nextScheduledday.setClassroom(classroom);
+          scheduleddayRepository.save(nextScheduledday);
+        }
+        oldDate = oldDate.plusWeeks(1);
+      }
+    }
+
+    return scheduledday;
   }
 
   private void preventConflicts(Scheduledday scheduledday) {

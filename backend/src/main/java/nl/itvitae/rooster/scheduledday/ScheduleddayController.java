@@ -1,12 +1,12 @@
 package nl.itvitae.rooster.scheduledday;
 
 import lombok.AllArgsConstructor;
+import nl.itvitae.rooster.classroom.Classroom;
+import nl.itvitae.rooster.classroom.ClassroomService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ScheduleddayController {
 
   private final ScheduleddayService scheduleddayService;
+  private final ClassroomService classroomService;
 
   @GetMapping
   public ResponseEntity<?> getAll() {
@@ -24,5 +25,13 @@ public class ScheduleddayController {
   @GetMapping("/month/{month}/{year}")
   public ResponseEntity<?> getAllByMonth(@PathVariable int month, @PathVariable int year){
     return ResponseEntity.ok(scheduleddayService.findAllByMonth(month, year).stream().map(ScheduleddayDTO::new).toList());
+  }
+
+  @PutMapping("/override/{id}")
+  public ResponseEntity<?> overrideScheduling(@PathVariable long id, @RequestBody OverrideRequest overrideRequest) {
+    Scheduledday scheduledday = scheduleddayService.findById(id);
+    LocalDate date = LocalDate.parse(overrideRequest.date());
+    Classroom classroom = classroomService.getById(overrideRequest.classroomId()).get();
+    return ResponseEntity.ok(scheduleddayService.overrideScheduling(scheduledday, date, classroom, overrideRequest.adaptWeekly()));
   }
 }
