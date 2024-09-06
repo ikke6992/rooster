@@ -72,10 +72,6 @@ public class Seeder implements CommandLineRunner {
     var wubbo = saveTeacher("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)),
         3, group53);
     var coen = saveTeacher("Coen", new ArrayList<>(List.of(monday, thursday)), 2, group53);
-
-    for (Holiday holiday: holidays) {
-      System.out.println(holiday);
-    }
   }
 
   private MyDay saveDay(DayOfWeek day) {

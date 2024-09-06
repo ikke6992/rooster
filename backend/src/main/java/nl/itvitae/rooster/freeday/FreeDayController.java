@@ -1,9 +1,17 @@
 package nl.itvitae.rooster.freeday;
 
+import static de.focus_shift.jollyday.core.HolidayCalendar.NETHERLANDS;
+
+import de.focus_shift.jollyday.core.Holiday;
+import de.focus_shift.jollyday.core.HolidayManager;
+import de.focus_shift.jollyday.core.ManagerParameters;
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.scheduledday.Scheduledday;
 import nl.itvitae.rooster.scheduledday.ScheduleddayRepository;
@@ -48,8 +56,30 @@ public class FreeDayController {
     }
     List<Scheduledday> plannedOnFreeday = scheduleddayRepository.findByDate(freeDay.getDate());
     scheduleddayRepository.deleteAll(plannedOnFreeday);
-    URI locationOfFreeDay = ucb.path("/api/v1/groups").buildAndExpand(freeDay.getId()).toUri();
+    URI locationOfFreeDay = ucb.path("/api/v1/freedays").buildAndExpand(freeDay.getId()).toUri();
     return ResponseEntity.created(locationOfFreeDay).body(freeDayRepository.save(freeDay));
+  }
+
+  public record MultiFreeDaysDTO(int year, boolean[] array){}
+  @PostMapping("/multi")
+  public ResponseEntity<?> addFreeDays(@RequestBody MultiFreeDaysDTO dto, UriComponentsBuilder ucb) {
+    final HolidayManager holidayManager = HolidayManager.getInstance(
+        ManagerParameters.create(NETHERLANDS));
+    final List<Holiday> holidays = new ArrayList<>(holidayManager.getHolidays(dto.year));
+    holidays.sort(Comparator.comparing(Holiday::getDate));
+
+    for (int i = 0; i < holidays.size(); i++) {
+      Holiday holiday = holidays.get(i);
+      if (freeDayRepository.existsByDate(holiday.getDate()) || !dto.array[i]) continue;
+      freeDayRepository.save(new FreeDay(holiday.getDate(),
+          holiday.getDescription()));
+      List<Scheduledday> plannedOnFreeday = scheduleddayRepository.findByDate(holiday.getDate());
+      scheduleddayRepository.deleteAll(plannedOnFreeday);
+    }
+
+
+    URI locationOfFreeDays = ucb.path("/api/v1/freedays").build().toUri();
+    return ResponseEntity.created(locationOfFreeDays).body(holidays);
   }
 
   @DeleteMapping("/{id}")

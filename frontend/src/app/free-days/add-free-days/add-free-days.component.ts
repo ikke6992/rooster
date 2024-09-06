@@ -60,7 +60,7 @@ export class AddFreeDaysComponent {
   onSubmit2() {
     const data = this.addMultipleFreedays .value;
     console.log(data);
-    this.dataService.addDay(data).subscribe(
+    this.dataService.addMultipleDays(data).subscribe(
       (response) => {
         console.log('Response:', response);
         window.location.reload();
