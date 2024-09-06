@@ -51,15 +51,16 @@ public class ScheduleddayService {
 
     if (adaptWeekly) {
       oldDate = oldDate.plusWeeks(1);
+      LocalDate newDate = date.plusWeeks(1);
       while (scheduleddayRepository.existsByDateAndClassroom(oldDate, oldClassroom)) {
         Scheduledday nextScheduledday = scheduleddayRepository.findByDateAndClassroom(oldDate, oldClassroom).get();
         if (nextScheduledday.getLesson().getGroup().getGroupNumber() == scheduledday.getLesson().getGroup().getGroupNumber()) {
-          LocalDate newDate = date.plusWeeks(1);
           nextScheduledday.setDate(newDate);
           nextScheduledday.setClassroom(classroom);
           scheduleddayRepository.save(nextScheduledday);
         }
         oldDate = oldDate.plusWeeks(1);
+        newDate = newDate.plusWeeks(1);
       }
     }
 
