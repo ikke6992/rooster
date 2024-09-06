@@ -2,12 +2,13 @@ package nl.itvitae.rooster.scheduledday;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.MyDay;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
+import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonRepository;
 import nl.itvitae.rooster.teacher.Teacher;
@@ -42,29 +43,52 @@ public class ScheduleddayService {
     return scheduleddayRepository.save(scheduledday);
   }
 
-  public Scheduledday overrideScheduling(Scheduledday scheduledday, LocalDate date, Classroom classroom, boolean adaptWeekly) {
+  public OverrideDTO overrideScheduling(Scheduledday scheduledday, LocalDate date, Classroom classroom, boolean adaptWeekly) {
+
+    //create successes list and failures map for the OverrideDTO
+    List<ScheduleddayDTO> successes = new ArrayList<>();
+    Map<ScheduleddayDTO, String> failures = new HashMap<>();
+
+    //save original date and classroom for later use
     LocalDate oldDate = scheduledday.getDate();
     Classroom oldClassroom = scheduledday.getClassroom();
+
+    //override scheduledday, validity of override already checked in controller
     scheduledday.setDate(date);
     scheduledday.setClassroom(classroom);
     scheduleddayRepository.save(scheduledday);
+    successes.add(new ScheduleddayDTO(scheduledday));
 
+    //if requested, keep overriding the scheduledday weekly
     if (adaptWeekly) {
       oldDate = oldDate.plusWeeks(1);
       LocalDate newDate = date.plusWeeks(1);
+      Group group = scheduledday.getLesson().getGroup();
       while (scheduleddayRepository.existsByDateAndClassroom(oldDate, oldClassroom)) {
         Scheduledday nextScheduledday = scheduleddayRepository.findByDateAndClassroom(oldDate, oldClassroom).get();
-        if (nextScheduledday.getLesson().getGroup().getGroupNumber() == scheduledday.getLesson().getGroup().getGroupNumber()) {
-          nextScheduledday.setDate(newDate);
-          nextScheduledday.setClassroom(classroom);
-          scheduleddayRepository.save(nextScheduledday);
+        //check if the nextScheduledday found is a scheduledday for the correct group
+        if (nextScheduledday.getLesson().getGroup().getGroupNumber() == group.getGroupNumber()) {
+          //try to override nextScheduledday, add to successes list if it can be done, add to failures map if it can't be done
+          try {
+            if (scheduleddayRepository.existsByDateAndClassroom(newDate, classroom)) {
+              throw new OverrideException(String.format("Classroom %d already in use on %s", classroom.getId(), newDate));
+            } else if (!newDate.equals(oldDate) && scheduleddayRepository.existsByDateAndLessonGroup(newDate, group)) {
+              throw new OverrideException(String.format("Group %d already has a lesson on %s", group.getGroupNumber(), newDate));
+            }
+            nextScheduledday.setDate(newDate);
+            nextScheduledday.setClassroom(classroom);
+            scheduleddayRepository.save(nextScheduledday);
+            successes.add(new ScheduleddayDTO(nextScheduledday));
+          } catch (OverrideException e) {
+            failures.put(new ScheduleddayDTO(nextScheduledday), e.getMessage());
+          }
         }
         oldDate = oldDate.plusWeeks(1);
         newDate = newDate.plusWeeks(1);
       }
     }
 
-    return scheduledday;
+    return new OverrideDTO(successes, failures);
   }
 
   private void preventConflicts(Scheduledday scheduledday, boolean looped) {
@@ -149,4 +173,10 @@ public class ScheduleddayService {
     }
   }
 
+}
+
+class OverrideException extends Exception {
+  public OverrideException(String msg) {
+    super(msg);
+  }
 }

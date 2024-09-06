@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @RequestMapping("api/v1/scheduleddays")
 public class ScheduleddayController {
 
+  private final ScheduleddayRepository scheduleddayRepository;
   private final ScheduleddayService scheduleddayService;
   private final ClassroomService classroomService;
 
@@ -32,6 +33,9 @@ public class ScheduleddayController {
     Scheduledday scheduledday = scheduleddayService.findById(id);
     LocalDate date = LocalDate.parse(overrideRequest.date());
     Classroom classroom = classroomService.getById(overrideRequest.classroomId()).get();
+    if (scheduleddayRepository.existsByDateAndClassroom(date, classroom)) {
+      return ResponseEntity.badRequest().build();
+    }
     return ResponseEntity.ok(scheduleddayService.overrideScheduling(scheduledday, date, classroom, overrideRequest.adaptWeekly()));
   }
 }
