@@ -1,17 +1,20 @@
 <div class="mx-2">Currently viewing: {{ getMonthName(month) }} {{ year }}</div>
 <button (click)="decrementMonth()" class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400">Previous Month</button>
 <button (click)="incrementMonth()" class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400">Next Month</button>
-<table class="w-full">
-  <tr>
-    <th>Date</th>
-    <th *ngFor="let number of TOTAL_CLASSROOMS">Classroom {{ number }}</th>
-  </tr>
-  <tr class="text-center border-2" *ngFor="let day of days">
-    <td [ngClass]="day.isWeekend ? 'bg-[#b5e6a2]':  'bg-[#28A8EA]'" style="width: 5%;">{{ day.id }}/{{ month }}/{{ year }}</td>
-    <td *ngFor="let number of TOTAL_CLASSROOMS" [ngClass]="day.isWeekend ? 'bg-[#b5e6a2]':  'bg-white'">
-      <div *ngFor="let item of data">
-        <app-scheduled-day [item]="item" [day]="day.id" [classroom]="number" />
-      </div>
-    </td>
-  </tr>
-</table>
+<button (click)="print()" class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400">Print schedule</button>
+<div id="schedule">
+  <table class="w-full">
+    <tr>
+      <th>Date</th>
+      <th *ngFor="let number of TOTAL_CLASSROOMS">Classroom {{ number }}</th>
+    </tr>
+    <tr class="text-center border-2" *ngFor="let day of days">
+      <td [ngClass]="day.isWeekend ? 'bg-[#b5e6a2]':  'bg-[#28A8EA]'" style="width: 5%;">{{ day.id }}/{{ month }}/{{ year }}</td>
+      <td *ngFor="let number of TOTAL_CLASSROOMS" [ngClass]="day.isWeekend ? 'bg-[#b5e6a2]':  'bg-white'">
+        <div *ngFor="let item of data">
+          <app-scheduled-day [item]="item" [day]="day.id" [classroom]="number" />
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

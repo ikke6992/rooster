@@ -69,6 +69,10 @@ export class ScheduleComponent {
     this.ngOnInit();
   }
 
+  print() {
+    window.print();
+  }
+
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
@@ -89,7 +93,7 @@ export interface Scheduledday {
   groupNumber: number;
   groupColour: string;
   field: string;
-  teacher: string,
+  teacher: string;
 }
 
 interface Day {
