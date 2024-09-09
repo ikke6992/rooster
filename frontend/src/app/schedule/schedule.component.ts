@@ -105,7 +105,8 @@ export interface Scheduledday {
   classroomId: number;
   groupNumber: number;
   groupColor: string;
-  name: string;
+  field: string;
+  teacher: string,
 }
 
 interface Day {

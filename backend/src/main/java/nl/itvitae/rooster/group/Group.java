@@ -2,6 +2,7 @@ package nl.itvitae.rooster.group;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,7 @@ public class Group {
   @OneToMany
   private List<Lesson> lessons;
   @ManyToMany(mappedBy = "groups")
-  private List<Teacher> teachers;
+  private List<Teacher> teachers = new ArrayList<>();
 
   @ManyToOne
   private Field field;
@@ -60,5 +61,9 @@ public class Group {
     this.weeksPhase1 = weeksPhase1;
     this.weeksPhase2 = weeksPhase2;
     this.weeksPhase3 = weeksPhase3;
+  }
+
+  public void addTeacher(Teacher teacher) {
+    teachers.add(teacher);
   }
 }

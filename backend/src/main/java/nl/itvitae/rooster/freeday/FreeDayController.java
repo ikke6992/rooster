@@ -34,6 +34,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class FreeDayController {
 
   private final FreeDayRepository freeDayRepository;
+  private final FreeDayService freeDayService;
   private final ScheduleddayRepository scheduleddayRepository;
 
   @GetMapping
@@ -54,30 +55,25 @@ public class FreeDayController {
     if (freeDayRepository.existsByDate(freeDay.getDate())) {
       return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
-    List<Scheduledday> plannedOnFreeday = scheduleddayRepository.findByDate(freeDay.getDate());
-    scheduleddayRepository.deleteAll(plannedOnFreeday);
+    FreeDay savedFreeday = freeDayService.addFreeDay(freeDay);
     URI locationOfFreeDay = ucb.path("/api/v1/freedays").buildAndExpand(freeDay.getId()).toUri();
-    return ResponseEntity.created(locationOfFreeDay).body(freeDayRepository.save(freeDay));
+    return ResponseEntity.created(locationOfFreeDay).body(savedFreeday);
   }
 
-  public record MultiFreeDaysDTO(int year, boolean[] array){}
+
   @PostMapping("/multi")
-  public ResponseEntity<?> addFreeDays(@RequestBody MultiFreeDaysDTO dto, UriComponentsBuilder ucb) {
+  public ResponseEntity<?> addFreeDays(@RequestBody MultiFreeDaysRequest request, UriComponentsBuilder ucb) {
     final HolidayManager holidayManager = HolidayManager.getInstance(
         ManagerParameters.create(NETHERLANDS));
-    final List<Holiday> holidays = new ArrayList<>(holidayManager.getHolidays(dto.year));
+    final List<Holiday> holidays = new ArrayList<>(holidayManager.getHolidays(request.year()));
     holidays.sort(Comparator.comparing(Holiday::getDate));
 
     for (int i = 0; i < holidays.size(); i++) {
       Holiday holiday = holidays.get(i);
-      if (freeDayRepository.existsByDate(holiday.getDate()) || !dto.array[i]) continue;
-      freeDayRepository.save(new FreeDay(holiday.getDate(),
+      if (freeDayRepository.existsByDate(holiday.getDate()) || !request.array()[i]) continue;
+      freeDayService.addFreeDay(new FreeDay(holiday.getDate(),
           holiday.getDescription()));
-      List<Scheduledday> plannedOnFreeday = scheduleddayRepository.findByDate(holiday.getDate());
-      scheduleddayRepository.deleteAll(plannedOnFreeday);
     }
-
-
     URI locationOfFreeDays = ucb.path("/api/v1/freedays").build().toUri();
     return ResponseEntity.created(locationOfFreeDays).body(holidays);
   }

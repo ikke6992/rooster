@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.scheduledday.Scheduledday;
+import nl.itvitae.rooster.teacher.Teacher;
 
 @Getter
 @Setter
@@ -30,8 +31,8 @@ public class Lesson {
   @ManyToOne
   private Group group;
 
-//  @ManyToOne
-//  private Teacher teacher;
+  @ManyToOne
+  private Teacher teacher;
 
   private boolean isPracticum;
 
