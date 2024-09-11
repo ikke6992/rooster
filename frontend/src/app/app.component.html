@@ -1,26 +1,28 @@
-<nav class="sticky top-0 w-full z-10 px-4 bg-nav text-white">
-  <div class="width-medium mx-auto h-12 flex items-center gap-4">
-    <a
-      class="hover:border-b border-white"
-      routerLink="/schedule"
-      routerLinkActive="active"
-      ariaCurrentWhenActive="page"
-      >View schedule</a
-    >
-    <a
-      class="hover:border-b border-white"
-      routerLink="/groups"
-      routerLinkActive="active"
-      ariaCurrentWhenActive="page"
-      >View Groups</a
-    >
-    <a
-      class="hover:border-b border-white"
-      routerLink="/teachers"
-      routerLinkActive="active"
-      ariaCurrentWhenActive="page"
-      >View Teachers</a
-    >
-  </div>
-</nav>
-<router-outlet />
+<div class="non-printable">
+  <nav class="sticky top-0 w-full z-10 px-4 bg-nav text-white">
+    <div class="width-medium mx-auto h-12 flex items-center gap-4">
+      <a
+        class="hover:border-b border-white"
+        routerLink="/schedule"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        >View schedule</a
+      >
+      <a
+        class="hover:border-b border-white"
+        routerLink="/groups"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        >View Groups</a
+      >
+      <a
+        class="hover:border-b border-white"
+        routerLink="/teachers"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        >View Teachers</a
+      >
+    </div>
+  </nav>
+  <router-outlet />
+</div>

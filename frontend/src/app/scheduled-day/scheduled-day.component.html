@@ -1,3 +1,11 @@
 <div *ngIf="item.date.getDate() === day">
-  <div *ngIf="item.classroomId === classroom" style="backgroundColor: {{ item.groupColour }}">Group {{ item.groupNumber }} {{ item.field }} - teacher: {{item.teacher}}</div>
+  <div *ngIf="item.classroomId === classroom" style="backgroundColor: {{ item.groupColour }}">
+    <div class="flex justify-center items-center">
+      Group {{ item.groupNumber }} {{ item.field }} 
+      <div class="non-printable ml-1">
+        - Teacher: {{item.teacher}}
+      </div>
+    </div>
+
+  </div>
 </div>

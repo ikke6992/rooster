@@ -9,7 +9,7 @@ body {
 
 @media print{
     
-  nav{
+  .non-printable{
     visibility: hidden;
   }
 }
