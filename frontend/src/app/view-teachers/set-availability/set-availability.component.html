@@ -11,6 +11,17 @@
   <label for="friday">Friday: </label>
   <input id="friday" type="checkbox" formControlName="friday" /><br />
   <label for="max-days">Max days per week: </label>
-  <input id="max-days" type="number" formControlName="maxDaysPerWeek" required /><br />
-  <button type="submit" [disabled]="!setAvailability.valid">Submit</button>
+  <input
+    id="max-days"
+    type="number"
+    formControlName="maxDaysPerWeek"
+    required
+  /><br />
+  <button
+    type="submit"
+    [disabled]="!setAvailability.valid"
+    class="button-action"
+  >
+    Submit
+  </button>
 </form>
