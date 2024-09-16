@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.MyDay;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
+import nl.itvitae.rooster.freeday.FreeDayRepository;
 import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonRepository;
@@ -21,6 +22,7 @@ public class ScheduleddayService {
   private final ScheduleddayRepository scheduleddayRepository;
   private final ClassroomRepository classroomRepository;
   private final LessonRepository lessonRepository;
+  private final FreeDayRepository freeDayRepository;
 
   public List<Scheduledday> findAll() {
     return scheduleddayRepository.findAll();

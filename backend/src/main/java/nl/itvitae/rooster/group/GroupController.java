@@ -34,8 +34,8 @@ public class GroupController {
     if (groupRepository.findByGroupNumber(request.groupNumber()).isPresent()) {
       return ResponseEntity.badRequest().build();
     }
-    if (groupService.checkSimilarColour(request.color())) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).body("Colour is too similar to colour of other group.");
+    if (groupService.checkSimilarColor(request.color())) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("Color is too similar to color of other group.");
     }
     final Field field = fieldService.getById(request.field());
     final LocalDate startDate = LocalDate.parse(request.startDate());

@@ -8,8 +8,8 @@
   </div>
   <p>max. {{ teacher.maxDaysPerWeek }} days per week</p>
   <button
+    class="button-action"
     (click)="showModal('set-availability-' + teacher.name)"
-    class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400"
   >
     Set Availability
   </button>
@@ -24,7 +24,7 @@
   </div>
   <button
     (click)="showModal('add-group-' + teacher.name)"
-    class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400"
+    class="button-action"
   >
     Add Group
   </button>
@@ -36,7 +36,7 @@
 
 <button
   (click)="showModal('add-teacher')"
-  class="mx-2 rounded-md border-2 bg-gray-300 hover:bg-gray-400"
+  class="button-action"
 >
   Add Teacher
 </button>

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrl = 'http://localhost:8080/api/v1/scheduleddays';
+  private apiUrl = 'http://localhost:8080/api/v1/';
 
   constructor(private http: HttpClient) {}
 
@@ -15,7 +15,12 @@ export class DataService {
   }
 
   getScheduledDaysByMonth(month: number, year: number): Observable<any> {
-    const url = `${this.apiUrl}/month/${month}/${year}`
+    const url = `${this.apiUrl}scheduleddays/month/${month}/${year}`
+    return this.http.get<any>(url);
+  }
+
+  getFreeDaysByMonth(month: number, year: number): Observable<any> {
+    const url = `${this.apiUrl}freedays/month/${month}/${year}`
     return this.http.get<any>(url);
   }
 } 
