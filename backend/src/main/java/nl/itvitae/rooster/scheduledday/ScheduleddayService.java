@@ -22,7 +22,7 @@ public class ScheduleddayService {
   private final ScheduleddayRepository scheduleddayRepository;
   private final ClassroomRepository classroomRepository;
   private final LessonRepository lessonRepository;
-  private final     FreeDayRepository freeDayRepository;
+  private final FreeDayRepository freeDayRepository;
 
   public List<Scheduledday> findAll() {
     return scheduleddayRepository.findAll();
