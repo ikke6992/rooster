@@ -3,9 +3,11 @@ package nl.itvitae.rooster.scheduledday;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomService;
+import nl.itvitae.rooster.freeday.FreeDayRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 @RestController
@@ -17,6 +19,7 @@ public class ScheduleddayController {
   private final ScheduleddayRepository scheduleddayRepository;
   private final ScheduleddayService scheduleddayService;
   private final ClassroomService classroomService;
+  private final FreeDayRepository freeDayRepository;
 
   @GetMapping
   public ResponseEntity<?> getAll() {
@@ -33,7 +36,8 @@ public class ScheduleddayController {
     Scheduledday scheduledday = scheduleddayService.findById(id);
     LocalDate date = LocalDate.parse(overrideRequest.date());
     Classroom classroom = classroomService.getById(overrideRequest.classroomId()).get();
-    if (scheduleddayRepository.existsByDateAndClassroom(date, classroom)
+    if (date.getDayOfWeek().equals(DayOfWeek.SATURDAY) || date.getDayOfWeek().equals(DayOfWeek.SUNDAY)
+        || freeDayRepository.existsByDate(date) || scheduleddayRepository.existsByDateAndClassroom(date, classroom)
         || (!date.equals(scheduledday.getDate()) && scheduleddayRepository.existsByDateAndLessonGroup(date, scheduledday.getLesson().getGroup()))) {
       return ResponseEntity.badRequest().build();
     }

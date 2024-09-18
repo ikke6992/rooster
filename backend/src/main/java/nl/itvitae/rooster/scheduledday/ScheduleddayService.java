@@ -66,23 +66,36 @@ public class ScheduleddayService {
       oldDate = oldDate.plusWeeks(1);
       LocalDate newDate = date.plusWeeks(1);
       Group group = scheduledday.getLesson().getGroup();
-      while (scheduleddayRepository.existsByDateAndClassroom(oldDate, oldClassroom)) {
-        Scheduledday nextScheduledday = scheduleddayRepository.findByDateAndClassroom(oldDate, oldClassroom).get();
-        //check if the nextScheduledday found is a scheduledday for the correct group
-        if (nextScheduledday.getLesson().getGroup().getGroupNumber() == group.getGroupNumber()) {
-          //try to override nextScheduledday, add to successes list if it can be done, add to failures map if it can't be done
-          try {
-            if (scheduleddayRepository.existsByDateAndClassroom(newDate, classroom)) {
-              throw new OverrideException(String.format("Classroom %d already in use on %s", classroom.getId(), newDate));
-            } else if (!newDate.equals(oldDate) && scheduleddayRepository.existsByDateAndLessonGroup(newDate, group)) {
-              throw new OverrideException(String.format("Group %d already has a lesson on %s", group.getGroupNumber(), newDate));
+
+      //continue checking as long as scheduling exists on this date and classroom or the date is a free day
+      while (scheduleddayRepository.existsByDateAndClassroom(oldDate, oldClassroom) || freeDayRepository.existsByDate(oldDate)) {
+        if (scheduleddayRepository.existsByDateAndClassroom(oldDate, oldClassroom)) {
+          Scheduledday nextScheduledday = scheduleddayRepository.findByDateAndClassroom(oldDate, oldClassroom).get();
+
+          //check if the nextScheduledday found is a scheduledday for the correct group
+          if (nextScheduledday.getLesson().getGroup().getGroupNumber() == group.getGroupNumber()) {
+
+            //if newDate is a free day, delete scheduling and add to successes list
+            if (freeDayRepository.existsByDate(newDate)) {
+              scheduleddayRepository.delete(nextScheduledday);
+              successes.add(new ScheduleddayDTO(nextScheduledday));
+            } else {
+
+              //try to override nextScheduledday, add to successes list if it can be done, add to failures map if it can't be done
+              try {
+                if (scheduleddayRepository.existsByDateAndClassroom(newDate, classroom)) {
+                  throw new OverrideException(String.format("Classroom %d already in use on %s", classroom.getId(), newDate));
+                } else if (!newDate.equals(oldDate) && scheduleddayRepository.existsByDateAndLessonGroup(newDate, group)) {
+                  throw new OverrideException(String.format("Group %d already has a lesson on %s", group.getGroupNumber(), newDate));
+                }
+                nextScheduledday.setDate(newDate);
+                nextScheduledday.setClassroom(classroom);
+                scheduleddayRepository.save(nextScheduledday);
+                successes.add(new ScheduleddayDTO(nextScheduledday));
+              } catch (OverrideException e) {
+                failures.put(new ScheduleddayDTO(nextScheduledday), e.getMessage());
+              }
             }
-            nextScheduledday.setDate(newDate);
-            nextScheduledday.setClassroom(classroom);
-            scheduleddayRepository.save(nextScheduledday);
-            successes.add(new ScheduleddayDTO(nextScheduledday));
-          } catch (OverrideException e) {
-            failures.put(new ScheduleddayDTO(nextScheduledday), e.getMessage());
           }
         }
         oldDate = oldDate.plusWeeks(1);
