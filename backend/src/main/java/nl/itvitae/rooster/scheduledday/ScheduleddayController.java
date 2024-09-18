@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -35,12 +36,12 @@ public class ScheduleddayController {
   public ResponseEntity<?> overrideScheduling(@PathVariable long id, @RequestBody OverrideRequest overrideRequest) {
     Scheduledday scheduledday = scheduleddayService.findById(id);
     LocalDate date = LocalDate.parse(overrideRequest.date());
-    Classroom classroom = classroomService.getById(overrideRequest.classroomId()).get();
-    if (date.getDayOfWeek().equals(DayOfWeek.SATURDAY) || date.getDayOfWeek().equals(DayOfWeek.SUNDAY)
-        || freeDayRepository.existsByDate(date) || scheduleddayRepository.existsByDateAndClassroom(date, classroom)
+    Optional<Classroom> classroom = classroomService.getById(overrideRequest.classroomId());
+    if (classroom.isEmpty() || date.getDayOfWeek().equals(DayOfWeek.SATURDAY) || date.getDayOfWeek().equals(DayOfWeek.SUNDAY)
+        || freeDayRepository.existsByDate(date) || scheduleddayRepository.existsByDateAndClassroom(date, classroom.get())
         || (!date.equals(scheduledday.getDate()) && scheduleddayRepository.existsByDateAndLessonGroup(date, scheduledday.getLesson().getGroup()))) {
       return ResponseEntity.badRequest().build();
     }
-    return ResponseEntity.ok(scheduleddayService.overrideScheduling(scheduledday, date, classroom, overrideRequest.adaptWeekly()));
+    return ResponseEntity.ok(scheduleddayService.overrideScheduling(scheduledday, date, classroom.get(), overrideRequest.adaptWeekly()));
   }
 }
