@@ -2,9 +2,6 @@ package nl.itvitae.rooster.scheduledday;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -14,15 +11,14 @@ import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.MyDay;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
-import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonRepository;
 import nl.itvitae.rooster.teacher.Teacher;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -133,7 +129,7 @@ public class ScheduleddayService {
   }
 
   public ByteArrayInputStream createExcel() throws IOException {
-    Workbook workbook = new HSSFWorkbook();
+    Workbook workbook = new XSSFWorkbook();
 
     Sheet sheet = workbook.createSheet("2024");
     Row header = sheet.createRow(0);
