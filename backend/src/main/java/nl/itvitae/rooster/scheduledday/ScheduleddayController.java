@@ -1,6 +1,10 @@
 package nl.itvitae.rooster.scheduledday;
 
+import java.io.IOException;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,5 +28,14 @@ public class ScheduleddayController {
   @GetMapping("/month/{month}/{year}")
   public ResponseEntity<?> getAllByMonth(@PathVariable int month, @PathVariable int year){
     return ResponseEntity.ok(scheduleddayService.findAllByMonth(month, year).stream().map(ScheduleddayDTO::new).toList());
+  }
+
+  @GetMapping("/export")
+  public ResponseEntity<?> exportExcel() throws IOException {
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Content-Disposition", "attachment; filename=scheduleddays.xlsx");
+    var body = scheduleddayService.createExcel();
+
+    return ResponseEntity.ok().headers(headers).contentType(MediaType.parseMediaType("application/vnd.ms-excel")).body(new InputStreamResource(body));
   }
 }

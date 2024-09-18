@@ -8,7 +8,6 @@ body {
   }
 
 @media print{
-    
   .non-printable{
     visibility: hidden;
   }
