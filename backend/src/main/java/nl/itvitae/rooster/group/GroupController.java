@@ -3,6 +3,7 @@ package nl.itvitae.rooster.group;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.field.FieldService;
+import nl.itvitae.rooster.group.vacation.VacationRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,5 +46,11 @@ public class GroupController {
     groupService.scheduleGroup(group);
     URI locationOfGroup = ucb.path("/api/v1/groups").buildAndExpand(group.getId()).toUri();
     return ResponseEntity.created(locationOfGroup).body(group);
+  }
+
+  @PutMapping("/{id}/vacation")
+  public ResponseEntity<?> addVacation(@PathVariable int number, @RequestBody VacationRequest request) {
+    Group group = groupRepository.findByGroupNumber(number).get();
+    return ResponseEntity.ok(groupService.addVacation(group, LocalDate.parse(request.startDate()), request.weeks()));
   }
 }

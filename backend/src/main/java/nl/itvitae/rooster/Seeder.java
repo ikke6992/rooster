@@ -78,6 +78,8 @@ public class Seeder implements CommandLineRunner {
           holiday.getDescription()));
     }
     freeDayService.addFreeDay(new FreeDay(LocalDate.now(), "test"));
+
+    groupService.addVacation(group53, LocalDate.now().plusMonths(1), 2);
   }
 
   private Group saveGroup(int groupNumber, String color,int numberOfStudents, Field field) {
