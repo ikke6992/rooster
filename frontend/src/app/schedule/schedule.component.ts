@@ -73,6 +73,10 @@ export class ScheduleComponent {
     window.print();
   }
 
+  exportExcel(){
+    this.dataService.getExcel().subscribe();
+  }
+
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
