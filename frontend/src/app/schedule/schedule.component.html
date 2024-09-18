@@ -1,16 +1,48 @@
 <div class="mx-2">Currently viewing: {{ getMonthName(month) }} {{ year }}</div>
-<button (click)="decrementMonth()"  class="button-action">Previous Month</button>
-<button (click)="incrementMonth()"  class="button-action">Next Month</button>
+<button (click)="decrementMonth()" class="button-action">Previous Month</button>
+<button (click)="incrementMonth()" class="button-action">Next Month</button>
 <table class="w-full">
   <tr>
     <th>Date</th>
     <th *ngFor="let number of TOTAL_CLASSROOMS">Classroom {{ number }}</th>
   </tr>
   <tr class="text-center border-2" *ngFor="let day of days">
-    <td [ngClass]="day.isFreeDay ? 'bg-[#ffff00]':  (day.isWeekend ? 'bg-[#b5e6a2]': 'bg-[#28A8EA]')" style="width: 5%;">{{ day.id }}/{{ month }}/{{ year }}</td>
-    <td *ngFor="let number of TOTAL_CLASSROOMS" [ngClass]="day.isFreeDay ? 'bg-[#ffff00]':  (day.isWeekend ? 'bg-[#b5e6a2]': 'bg-white')">
-      <div *ngFor="let item of data">
+    <td
+      [ngClass]="
+        day.isFreeDay
+          ? 'bg-yellow'
+          : day.isWeekend
+          ? 'bg-light-green'
+          : 'bg-blue'
+      "
+      style="width: 5%"
+    >
+      {{ day.id }}/{{ month }}/{{ year }}
+    </td>
+    <td
+      *ngFor="let number of TOTAL_CLASSROOMS"
+      [ngClass]="
+        day.isFreeDay
+          ? 'bg-yellow'
+          : day.isWeekend
+          ? 'bg-light-green'
+          : 'bg-white'
+      "
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop($event, day, number)"
+    >
+      <div
+        *ngFor="let item of data"
+        draggable="true"
+        (dragstart)="onDragStart($event, item)"
+      >
         <app-scheduled-day [item]="item" [day]="day.id" [classroom]="number" />
+        <app-modal id="override-{{ item.id }}" class="hhidden">
+          <ng-container *ngIf="selectedModal && selectedModal === item.id">
+            <app-override [scheduledday]="item" [date]="destinationdate" [classroomId]="destinationclassroom"></app-override>
+            <button (click)="closeModal('override-' + item.id)">Close</button>
+          </ng-container>
+        </app-modal>
       </div>
     </td>
   </tr>

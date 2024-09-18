@@ -32,7 +32,7 @@ export class AddGroupComponent {
     this.dataService.postGroup(data).subscribe(
       (response) => {
         console.log('Response:', response);
-        window.location.reload();
+        //window.location.reload();
       },
       (error) => {
         console.error('Error:', error);

@@ -1,0 +1,25 @@
+/* Define background colors for weekends, free days, and regular days */
+.bg-yellow { 
+  background-color: #ffff00; /* Free Day */
+}
+
+.bg-light-green { 
+  background-color: #b5e6a2; /* Weekend */
+}
+
+.bg-blue { 
+  background-color: #28A8EA; /* Regular Day */
+}
+
+.bg-white { 
+  background-color: white; /* Default for classrooms */
+}
+
+/** this makes the .modal visible */
+.sshow {
+    display: block;
+}
+/** this makes the element hidden/invisible */
+.hhidden {
+    display: none;
+}

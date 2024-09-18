@@ -33,7 +33,8 @@ public class ScheduleddayController {
     Scheduledday scheduledday = scheduleddayService.findById(id);
     LocalDate date = LocalDate.parse(overrideRequest.date());
     Classroom classroom = classroomService.getById(overrideRequest.classroomId()).get();
-    if (scheduleddayRepository.existsByDateAndClassroom(date, classroom)) {
+    if (scheduleddayRepository.existsByDateAndClassroom(date, classroom)
+        || scheduleddayRepository.existsByDateAndLessonGroup(date, scheduledday.getLesson().getGroup())) {
       return ResponseEntity.badRequest().build();
     }
     return ResponseEntity.ok(scheduleddayService.overrideScheduling(scheduledday, date, classroom, overrideRequest.adaptWeekly()));
