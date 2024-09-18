@@ -1,0 +1,15 @@
+<h1>Group {{ scheduledday.groupNumber }} {{ scheduledday.field }}</h1>
+<form [formGroup]="override" (ngSubmit)="onSubmit()">
+  <label for="date">Date: </label>
+  <input id="date" type="date" formControlName="date" required /><br />
+  <label for="classroom">Classroom: </label>
+  <input
+    id="classroom"
+    type="number"
+    formControlName="classroomId"
+    required
+  /><br />
+  <label for="adapt-weekly">Adapt Weekly: </label>
+  <input id="adapt-weekly" type="checkbox" formControlName="adaptWeekly" /><br />
+  <button type="submit" class="button-action">Submit</button>
+</form>
