@@ -132,22 +132,26 @@ public class ScheduleddayService {
   }
 
   public ByteArrayInputStream createExcel(int year) throws IOException {
-    List<Scheduledday> scheduledDays = scheduleddayRepository.findByDateBetween(LocalDate.of(year, 1, 1), LocalDate.of(year, 12, 31));
+    List<Scheduledday> scheduledDays = scheduleddayRepository.findByDateBetween(
+        LocalDate.of(year, 1, 1), LocalDate.of(year, 12, 31));
     Workbook workbook = new XSSFWorkbook();
-
     for (int i = 1; i <= 12; i++) {
       LocalDate currentDate = LocalDate.of(year, i, 1);
       Sheet sheet = workbook.createSheet(currentDate.getMonth().toString() + year);
 
       Row header = sheet.createRow(0);
-      for (int j = 1; j <= currentDate.lengthOfMonth(); j++) {
-        for (int k = 1; k <= 6; k++) {
-          Cell cell = header.createCell(k);
-          if (j == 1) {
-            cell.setCellValue("Lokaal " + k);
-          }
-        }
-        header = sheet.createRow(j);
+      for (int j = 1; j <= 6; j++) {
+        Cell cell = header.createCell(j);
+        cell.setCellValue("Lokaal " + j);
+      }
+      int monthLength = currentDate.lengthOfMonth();
+      for (int j = 1; j <= monthLength; j++) {
+        Row row = sheet.createRow(j);
+
+        Cell cell = row.createCell(0);
+        cell.setCellValue(currentDate.toString());
+
+        currentDate = currentDate.plusDays(1);
       }
     }
 
