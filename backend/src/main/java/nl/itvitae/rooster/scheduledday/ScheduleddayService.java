@@ -16,9 +16,14 @@ import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonRepository;
 import nl.itvitae.rooster.teacher.Teacher;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Color;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
@@ -155,13 +160,24 @@ public class ScheduleddayService {
           Cell cell1 = row.createCell(k);
           LocalDate finalCurrentDate = currentDate;
           int finalK = k;
-          List<Scheduledday> scheduleddaysFiltered = scheduledDays.stream().filter(day -> day.getDate().equals(finalCurrentDate) && day.getClassroom().getId() == finalK).toList();
-          if (!scheduleddaysFiltered.isEmpty()){
+          List<Scheduledday> scheduleddaysFiltered = scheduledDays.stream().filter(
+                  day -> day.getDate().equals(finalCurrentDate) && day.getClassroom().getId() == finalK)
+              .toList();
+          if (!scheduleddaysFiltered.isEmpty()) {
             Scheduledday scheduledday = scheduleddaysFiltered.getFirst();
-            cell1.setCellValue("Group " + scheduledday.getLesson().getGroup().getGroupNumber() + " " + scheduledday.getLesson().getGroup().getField().getName());
+            cell1.setCellValue("Group " + scheduledday.getLesson().getGroup().getGroupNumber() + " "
+                + scheduledday.getLesson().getGroup().getField());
+            String hexColour = scheduledday.getLesson().getGroup().getColor();
+            int hexR = Integer.valueOf(hexColour.substring(1, 3), 16);
+            int hexG = Integer.valueOf(hexColour.substring(3, 5), 16);
+            int hexB = Integer.valueOf(hexColour.substring(5, 7), 16);
+            CellStyle cellStyle = workbook.createCellStyle();
+            cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            org.apache.poi.ss.usermodel.Color color = new XSSFColor(new java.awt.Color(hexR, hexG, hexB), new DefaultIndexedColorMap());
+            cellStyle.setFillForegroundColor(color);
+            cell1.setCellStyle(cellStyle);
           }
         }
-
         currentDate = currentDate.plusDays(1);
       }
     }
