@@ -24,7 +24,6 @@ public class Seeder implements CommandLineRunner {
 
   private final MyDayRepository myDayRepository;
   private final ClassroomRepository classroomRepository;
-  private final GroupRepository groupRepository;
   private final GroupService groupService;
   private final FieldRepository fieldRepository;
   private final TeacherRepository teacherRepository;
@@ -62,7 +61,7 @@ public class Seeder implements CommandLineRunner {
   }
 
   private Group saveGroup(int groupNumber, String color,int numberOfStudents, Field field) {
-    return groupService.addGroup(groupNumber, color, numberOfStudents, field, LocalDate.now().minusWeeks(4), 8, 12, 8);
+    return groupService.addGroup(groupNumber, color, numberOfStudents, field, LocalDate.of(2024, 1, 1), 8, 12, 8);
   }
 
   private Teacher saveTeacher(String name, boolean teachesPracticum, List<MyDay> availability, int maxDaysPerWeek, Group... groups) {

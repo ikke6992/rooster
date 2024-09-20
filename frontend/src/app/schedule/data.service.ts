@@ -21,8 +21,8 @@ export class DataService {
     return this.http.get<any>(url);
   }
 
-  getExcel(): Observable<any> {
-    return this.http.get(this.apiUrl + '/export', { responseType: 'blob' }).pipe(
+  getExcel(year: number): Observable<any> {
+    return this.http.get(this.apiUrl + `/export/${year}`, { responseType: 'blob' }).pipe(
       map((response: Blob) => {
         saveAs(response, 'scheduleddays.xlsx');
         return response;

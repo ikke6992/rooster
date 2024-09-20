@@ -33,11 +33,11 @@ public class ScheduleddayController {
             .toList());
   }
 
-  @GetMapping("/export")
-  public ResponseEntity<?> exportExcel() throws IOException {
+  @GetMapping("/export/{year}")
+  public ResponseEntity<?> exportExcel(@PathVariable int year) throws IOException {
     HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Disposition", "attachment; filename=scheduleddays.xlsx");
-    var body = scheduleddayService.createExcel();
+    var body = scheduleddayService.createExcel(year);
 
     return ResponseEntity.ok().headers(headers)
         .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))

@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -88,7 +89,7 @@ public class ScheduleddayService {
           int lessons = 0;
           int dayOfWeek = date.getDayOfWeek().getValue();
           for (Scheduledday otherScheduledDay : scheduleddayRepository.findByDateBetween(
-              date.minusDays(dayOfWeek-1), date.plusDays(5-dayOfWeek))) {
+              date.minusDays(dayOfWeek - 1), date.plusDays(5 - dayOfWeek))) {
             Teacher otherTeacher = otherScheduledDay.getLesson().getTeacher();
             if (otherTeacher != null && teacher.getId().equals(otherTeacher.getId())) {
               lessons++;
@@ -97,13 +98,15 @@ public class ScheduleddayService {
           if (lessons >= teacher.getMaxDaysPerWeek()) {
             break;
           }
-          
+
           //check whether teacher is available to work this day
-          days: for (MyDay day : teacher.getAvailability()) {
+          days:
+          for (MyDay day : teacher.getAvailability()) {
             if (day.getDay().equals(date.getDayOfWeek())) {
 
               //check if teacher is already teaching another lesson this day
-              for (Scheduledday otherScheduledDay : scheduleddayRepository.findByDate(scheduledday.getDate())) {
+              for (Scheduledday otherScheduledDay : scheduleddayRepository.findByDate(
+                  scheduledday.getDate())) {
                 Teacher otherTeacher = otherScheduledDay.getLesson().getTeacher();
                 if (otherTeacher != null && teacher.getId().equals(otherTeacher.getId())) {
                   break days;
@@ -128,13 +131,25 @@ public class ScheduleddayService {
     }
   }
 
-  public ByteArrayInputStream createExcel() throws IOException {
+  public ByteArrayInputStream createExcel(int year) throws IOException {
+    List<Scheduledday> scheduledDays = scheduleddayRepository.findByDateBetween(LocalDate.of(year, 1, 1), LocalDate.of(year, 12, 31));
     Workbook workbook = new XSSFWorkbook();
 
-    Sheet sheet = workbook.createSheet("2024");
-    Row header = sheet.createRow(0);
-    Cell headerCell = header.createCell(0);
-    headerCell.setCellValue("hello!");
+    for (int i = 1; i <= 12; i++) {
+      LocalDate currentDate = LocalDate.of(year, i, 1);
+      Sheet sheet = workbook.createSheet(currentDate.getMonth().toString() + year);
+
+      Row header = sheet.createRow(0);
+      for (int j = 1; j <= currentDate.lengthOfMonth(); j++) {
+        for (int k = 1; k <= 6; k++) {
+          Cell cell = header.createCell(k);
+          if (j == 1) {
+            cell.setCellValue("Lokaal " + k);
+          }
+        }
+        header = sheet.createRow(j);
+      }
+    }
 
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     workbook.write(outputStream);

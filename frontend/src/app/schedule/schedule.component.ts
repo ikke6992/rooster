@@ -66,7 +66,7 @@ export class ScheduleComponent {
       return;
     }
     this.month--;
-    this.ngOnInit();
+    this.ngOnInit();  
   }
 
   print() {
@@ -74,7 +74,7 @@ export class ScheduleComponent {
   }
 
   exportExcel(){
-    this.dataService.getExcel().subscribe();
+    this.dataService.getExcel(this.year).subscribe();
   }
 
   constructor(private dataService: DataService) {}
