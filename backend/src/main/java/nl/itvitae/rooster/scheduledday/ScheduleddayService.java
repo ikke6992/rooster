@@ -151,6 +151,17 @@ public class ScheduleddayService {
         Cell cell = row.createCell(0);
         cell.setCellValue(currentDate.toString());
 
+        for (int k = 1; k <= 6; k++) {
+          Cell cell1 = row.createCell(k);
+          LocalDate finalCurrentDate = currentDate;
+          int finalK = k;
+          List<Scheduledday> scheduleddaysFiltered = scheduledDays.stream().filter(day -> day.getDate().equals(finalCurrentDate) && day.getClassroom().getId() == finalK).toList();
+          if (!scheduleddaysFiltered.isEmpty()){
+            Scheduledday scheduledday = scheduleddaysFiltered.getFirst();
+            cell1.setCellValue("Group " + scheduledday.getLesson().getGroup().getGroupNumber() + " " + scheduledday.getLesson().getGroup().getField().getName());
+          }
+        }
+
         currentDate = currentDate.plusDays(1);
       }
     }
