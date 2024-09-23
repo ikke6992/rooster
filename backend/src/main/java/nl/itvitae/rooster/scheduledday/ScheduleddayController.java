@@ -44,6 +44,9 @@ public class ScheduleddayController {
     HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Disposition", "attachment; filename=scheduleddays.xlsx");
     var body = scheduleddayService.createExcel(year);
+    if (body == null) {
+      return ResponseEntity.badRequest().body("No days planned for this year");
+    }
 
     return ResponseEntity.ok().headers(headers)
         .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))

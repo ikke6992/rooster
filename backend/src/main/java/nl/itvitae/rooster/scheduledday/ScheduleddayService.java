@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.MyDay;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
+import nl.itvitae.rooster.freeday.FreeDay;
 import nl.itvitae.rooster.freeday.FreeDayRepository;
 import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.lesson.Lesson;
@@ -206,8 +207,11 @@ public class ScheduleddayService {
   }
 
   public ByteArrayInputStream createExcel(int year) throws IOException {
-    List<Scheduledday> scheduledDays = scheduleddayRepository.findByDateBetween(
-        LocalDate.of(year, 1, 1), LocalDate.of(year, 12, 31));
+    LocalDate startDate = LocalDate.of(year, 1, 1);
+    LocalDate endDate = LocalDate.of(year, 12, 31);
+    List<Scheduledday> scheduledDays = scheduleddayRepository.findByDateBetween(startDate, endDate);
+    if (scheduledDays.isEmpty()) return null;
+    List<FreeDay> freedays = freeDayRepository.findByDateBetween(startDate, endDate);
     Workbook workbook = new XSSFWorkbook();
     for (int i = 1; i <= 12; i++) {
       LocalDate currentDate = LocalDate.of(year, i, 1);
@@ -225,6 +229,7 @@ public class ScheduleddayService {
 
         Cell cell = row.createCell(0);
         cell.setCellValue(currentDate.toString());
+        LocalDate finalCurrentDate = currentDate;
         if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY || currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
           CellStyle weekendGreen = workbook.createCellStyle();
           weekendGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
@@ -239,11 +244,25 @@ public class ScheduleddayService {
           currentDate = currentDate.plusDays(1);
           continue;
         }
+        if (freedays.stream().anyMatch((freeDay -> freeDay.getDate().equals(finalCurrentDate)))) {
+          CellStyle freeDayYellow = workbook.createCellStyle();
+          freeDayYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+          org.apache.poi.ss.usermodel.Color color = new XSSFColor(
+              new java.awt.Color(255, 255, 0), new DefaultIndexedColorMap());
+          freeDayYellow.setFillForegroundColor(color);
+          cell.setCellStyle(freeDayYellow);
+          for (int k = 1; k <= 6; k++) {
+            Cell cell1 = row.createCell(k);
+            cell1.setCellStyle(freeDayYellow);
+          }
+          currentDate = currentDate.plusDays(1);
+          continue;
+        }
 
         for (int k = 1; k <= 6; k++) {
           sheet.setColumnWidth(k, 25 * 256);
           Cell cell1 = row.createCell(k);
-          LocalDate finalCurrentDate = currentDate;
+
           int finalK = k;
           List<Scheduledday> scheduleddaysFiltered = scheduledDays.stream().filter(
                   day -> day.getDate().equals(finalCurrentDate) && day.getClassroom().getId() == finalK)

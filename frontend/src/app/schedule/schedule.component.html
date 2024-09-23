@@ -4,50 +4,58 @@
 <button (click)="print()" class="button-action">Print schedule</button>
 <button (click)="exportExcel()" class="button-action">Download Excel</button>
 <div id="schedule">
-<table class="w-full">
-  <tr>
-    <th>Date</th>
-    <th *ngFor="let number of TOTAL_CLASSROOMS">Classroom {{ number }}</th>
-  </tr>
-  <tr class="text-center border-2" *ngFor="let day of days">
-    <td
-      [ngClass]="
-        day.isFreeDay
-          ? 'bg-yellow'
-          : day.isWeekend
-          ? 'bg-light-green'
-          : 'bg-blue'
-      "
-      style="width: 5%"
-    >
-      {{ day.id }}/{{ month }}/{{ year }}
-    </td>
-    <td
-      *ngFor="let number of TOTAL_CLASSROOMS"
-      [ngClass]="
-        day.isFreeDay
-          ? 'bg-yellow'
-          : day.isWeekend
-          ? 'bg-light-green'
-          : 'bg-white'
-      "
-      (dragover)="onDragOver($event)"
-      (drop)="onDrop($event, day, number)"
-    >
-      <div
-        *ngFor="let item of data"
-        draggable="true"
-        (dragstart)="onDragStart($event, item)"
+  <table class="w-full">
+    <tr>
+      <th>Date</th>
+      <th *ngFor="let number of TOTAL_CLASSROOMS">Classroom {{ number }}</th>
+    </tr>
+    <tr class="text-center border-2" *ngFor="let day of days">
+      <td
+        [ngClass]="
+          day.isFreeDay
+            ? 'bg-yellow'
+            : day.isWeekend
+            ? 'bg-light-green'
+            : 'bg-blue'
+        "
+        style="width: 5%"
       >
-        <app-scheduled-day [item]="item" [day]="day.id" [classroom]="number" />
-        <app-modal id="override-{{ item.id }}" class="hhidden">
-          <ng-container *ngIf="selectedModal && selectedModal === item.id">
-            <app-override [scheduledday]="item" [date]="destinationdate" [classroomId]="destinationclassroom"></app-override>
-            <button (click)="closeModal('override-' + item.id)">Close</button>
-          </ng-container>
-        </app-modal>
-      </div>
-    </td>
-  </tr>
-</table>
+        {{ day.id }}/{{ month }}/{{ year }}
+      </td>
+      <td
+        *ngFor="let number of TOTAL_CLASSROOMS"
+        [ngClass]="
+          day.isFreeDay
+            ? 'bg-yellow'
+            : day.isWeekend
+            ? 'bg-light-green'
+            : 'bg-white'
+        "
+        (dragover)="onDragOver($event)"
+        (drop)="onDrop($event, day, number)"
+      >
+        <div
+          *ngFor="let item of data"
+          draggable="true"
+          (dragstart)="onDragStart($event, item)"
+        >
+          <app-scheduled-day
+            [item]="item"
+            [day]="day.id"
+            [classroom]="number"
+          />
+          <app-modal id="override-{{ item.id }}" class="hhidden">
+            <ng-container *ngIf="selectedModal && selectedModal === item.id">
+              <app-override
+                [scheduledday]="item"
+                [date]="destinationdate"
+                [classroomId]="destinationclassroom"
+              ></app-override>
+              <button (click)="closeModal('override-' + item.id)">Close</button>
+            </ng-container>
+          </app-modal>
+        </div>
+      </td>
+    </tr>
+  </table>
 </div>
