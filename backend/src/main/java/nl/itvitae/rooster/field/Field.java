@@ -28,4 +28,9 @@ public class Field {
     this.daysPhase2 = daysPhase2;
     this.daysPhase3 = daysPhase3;
   }
+
+  @Override
+  public String toString(){
+    return getName();
+  }
 }
