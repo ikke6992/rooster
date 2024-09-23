@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomService;
 import nl.itvitae.rooster.field.Field;
+import nl.itvitae.rooster.freeday.FreeDayRepository;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonRepository;
 import nl.itvitae.rooster.lesson.LessonService;
@@ -27,8 +28,9 @@ public class GroupService {
   private final LessonService lessonService;
   private final LessonRepository lessonRepository;
   private final ClassroomService classroomService;
+  private final FreeDayRepository freeDayRepository;
 
-  private static final int COLOUR_DISTANCE_THRESHOLD = 50;
+  private static final int COLOR_DISTANCE_THRESHOLD = 50;
 
   public List<Group> getAll() {
     return groupRepository.findAll();
@@ -41,10 +43,10 @@ public class GroupService {
             weeksPhase3));
   }
 
-  public boolean checkSimilarColour(String hexColour) {
-    int hexR = Integer.valueOf(hexColour.substring(1, 3), 16);
-    int hexG = Integer.valueOf(hexColour.substring(3, 5), 16);
-    int hexB = Integer.valueOf(hexColour.substring(5, 7), 16);
+  public boolean checkSimilarColor(String hexColor) {
+    int hexR = Integer.valueOf(hexColor.substring(1, 3), 16);
+    int hexG = Integer.valueOf(hexColor.substring(3, 5), 16);
+    int hexB = Integer.valueOf(hexColor.substring(5, 7), 16);
     List<Group> groups = getAll();
     for (Group group : groups) {
       int hexGroupR = Integer.valueOf(group.getColor().substring(1, 3), 16);
@@ -53,7 +55,7 @@ public class GroupService {
       double distance = Math.sqrt(
           Math.pow((hexGroupR - hexR), 2) + Math.pow((hexGroupG - hexG), 2) + Math.pow(
               (hexGroupB - hexB), 2));
-      if (distance < COLOUR_DISTANCE_THRESHOLD) {
+      if (distance < COLOR_DISTANCE_THRESHOLD) {
         return true;
       }
     }
@@ -110,6 +112,7 @@ public class GroupService {
         if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
           date = date.plusDays(2);
         }
+        if (freeDayRepository.existsByDate(date)) continue;
         isPracticum = isPracticum || (j <= daysPhase / 2);
         final Lesson lesson = lessonService.createLesson(group, isPracticum);
         Classroom classroom = classroomService.getById(

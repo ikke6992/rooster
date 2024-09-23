@@ -5,18 +5,26 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
 import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.field.FieldRepository;
+import nl.itvitae.rooster.freeday.FreeDay;
+import nl.itvitae.rooster.freeday.FreeDayService;
 import nl.itvitae.rooster.group.Group;
-import nl.itvitae.rooster.group.GroupRepository;
 import nl.itvitae.rooster.group.GroupService;
 import nl.itvitae.rooster.teacher.Teacher;
 import nl.itvitae.rooster.teacher.TeacherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import de.focus_shift.jollyday.core.Holiday;
+import de.focus_shift.jollyday.core.HolidayManager;
+import de.focus_shift.jollyday.core.ManagerParameters;
+
+import static de.focus_shift.jollyday.core.HolidayCalendar.NETHERLANDS;
 
 @Component
 @AllArgsConstructor
@@ -27,9 +35,11 @@ public class Seeder implements CommandLineRunner {
   private final GroupService groupService;
   private final FieldRepository fieldRepository;
   private final TeacherRepository teacherRepository;
+  private final FreeDayService freeDayService;
 
   @Override
   public void run(String... args) throws Exception {
+
     var monday = saveDay(DayOfWeek.MONDAY);
     var tuesday = saveDay(DayOfWeek.TUESDAY);
     var wednesday = saveDay(DayOfWeek.WEDNESDAY);
@@ -58,10 +68,20 @@ public class Seeder implements CommandLineRunner {
     groupService.scheduleGroup(group53);
     groupService.scheduleGroup(group54);
     groupService.scheduleGroup(group55);
+
+    final HolidayManager holidayManager = HolidayManager.getInstance(
+        ManagerParameters.create(NETHERLANDS));
+    final Set<Holiday> holidays = holidayManager.getHolidays(LocalDate.now(),
+        LocalDate.now().plusYears(2));
+    for (Holiday holiday : holidays) {
+      freeDayService.addFreeDay(new FreeDay(holiday.getDate(),
+          holiday.getDescription()));
+    }
+    freeDayService.addFreeDay(new FreeDay(LocalDate.now(), "test"));
   }
 
   private Group saveGroup(int groupNumber, String color,int numberOfStudents, Field field) {
-    return groupService.addGroup(groupNumber, color, numberOfStudents, field, LocalDate.of(2024, 1, 1), 8, 12, 8);
+    return groupService.addGroup(groupNumber, color, numberOfStudents, field, LocalDate.now().minusWeeks(4), 8, 12, 8);
   }
 
   private Teacher saveTeacher(String name, boolean teachesPracticum, List<MyDay> availability, int maxDaysPerWeek, Group... groups) {

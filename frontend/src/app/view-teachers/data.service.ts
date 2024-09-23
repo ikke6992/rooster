@@ -6,35 +6,33 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private getGroupsUrl = 'http://localhost:8080/api/v1/groups/';
-  private getTeachersUrl = 'http://localhost:8080/api/v1/teachers/';
-  private postTeacherUrl = 'http://localhost:8080/api/v1/teachers/new';
-  private putUrl = 'http://localhost:8080/api/v1/teachers/edit/';
+  private apiUrlTeachers = 'http://localhost:8080/api/v1/teachers';
+  private apiUrlGroups = 'http://localhost:8080/api/v1/groups/';
 
   constructor(private http: HttpClient) {}
 
   getGroups(): Observable<any> {
-    return this.http.get<any>(this.getGroupsUrl);
+    return this.http.get<any>(this.apiUrlGroups);
   }
 
   getTeachers(): Observable<any> {
-    return this.http.get<any>(this.getTeachersUrl);
+    return this.http.get<any>(this.apiUrlTeachers);
   }
 
   postTeacher(data: any): Observable<any> {
-    return this.http.post<any>(this.postTeacherUrl, data, {
+    return this.http.post<any>(this.apiUrlTeachers + '/new', data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
   }
 
   putAvailability(id: number, data: any): Observable<any> {
-    return this.http.put<any>(this.putUrl + id, data, {
+    return this.http.put<any>(this.apiUrlTeachers + '/edit/' + id, data, {
       headers: new HttpHeaders({ 'Content-type': 'application/json' }),
     });
   }
 
   putGroup(id: number, groupId: number): Observable<any> {
-    return this.http.put<any>(this.putUrl + id + '/addGroup/' + groupId, {
+    return this.http.put<any>(this.apiUrlTeachers + '/edit/' + id + '/addGroup/' + groupId, {
       headers: new HttpHeaders({ 'Content-type': 'application/json' }),
     });
   }
