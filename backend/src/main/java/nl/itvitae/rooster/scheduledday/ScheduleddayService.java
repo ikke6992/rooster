@@ -152,11 +152,27 @@ public class ScheduleddayService {
       int monthLength = currentDate.lengthOfMonth();
       for (int j = 1; j <= monthLength; j++) {
         Row row = sheet.createRow(j);
+        sheet.setColumnWidth(0, 15 * 256);
 
         Cell cell = row.createCell(0);
         cell.setCellValue(currentDate.toString());
+        if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY || currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+          CellStyle weekendGreen = workbook.createCellStyle();
+          weekendGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+          org.apache.poi.ss.usermodel.Color color = new XSSFColor(
+              new java.awt.Color(181, 230, 162), new DefaultIndexedColorMap());
+          weekendGreen.setFillForegroundColor(color);
+          cell.setCellStyle(weekendGreen);
+          for (int k = 1; k <= 6; k++) {
+            Cell cell1 = row.createCell(k);
+            cell1.setCellStyle(weekendGreen);
+          }
+          currentDate = currentDate.plusDays(1);
+          continue;
+        }
 
         for (int k = 1; k <= 6; k++) {
+          sheet.setColumnWidth(k, 25 * 256);
           Cell cell1 = row.createCell(k);
           LocalDate finalCurrentDate = currentDate;
           int finalK = k;
@@ -173,7 +189,8 @@ public class ScheduleddayService {
             int hexB = Integer.valueOf(hexColour.substring(5, 7), 16);
             CellStyle cellStyle = workbook.createCellStyle();
             cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-            org.apache.poi.ss.usermodel.Color color = new XSSFColor(new java.awt.Color(hexR, hexG, hexB), new DefaultIndexedColorMap());
+            org.apache.poi.ss.usermodel.Color color = new XSSFColor(
+                new java.awt.Color(hexR, hexG, hexB), new DefaultIndexedColorMap());
             cellStyle.setFillForegroundColor(color);
             cell1.setCellStyle(cellStyle);
           }
