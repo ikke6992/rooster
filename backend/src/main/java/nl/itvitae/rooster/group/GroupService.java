@@ -74,6 +74,14 @@ public class GroupService {
     return false;
   }
 
+  public void scheduleReturnDay(Group group) {
+    LocalDate date = group.getStartDate();
+    for (int i = 0; i < 104; i++) {
+      if (freeDayRepository.existsByDate(date)) continue;
+      scheduleddayService.addScheduledday(date.plusWeeks(i), classroomService.getById(4L).get(), lessonService.createLesson(group, true));
+    }
+  }
+
   public void scheduleGroup(Group group) {
     // could be improved with lambdas, passing functions etc
     schedulePeriod(group.getWeeksPhase1(), group.getField().getDaysPhase1(), group.getStartDate(),
