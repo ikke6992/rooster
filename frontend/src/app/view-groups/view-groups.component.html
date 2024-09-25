@@ -21,12 +21,15 @@
     <div *ngFor="let vacation of group.vacations">
       <p>- {{ vacation }}</p>
     </div>
-    <button class="button-action" (click)="showModal('add-vacation')">
+    <button
+      class="button-action"
+      (click)="showModal('add-vacation-' + group.groupNumber)"
+    >
       Add Vacation
     </button>
-    <app-modal id="add-vacation" class="hhidden">
-      <app-add-vacation></app-add-vacation>
-      <button (click)="closeModal('add-vacation')" class="button-action">
+    <app-modal id="add-vacation-{{ group.groupNumber }}" class="hhidden">
+      <app-add-vacation [group]="group"></app-add-vacation>
+      <button (click)="closeModal('add-vacation-' + group.groupNumber)">
         Close
       </button>
     </app-modal>

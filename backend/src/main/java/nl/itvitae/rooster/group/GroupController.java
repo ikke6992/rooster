@@ -23,7 +23,7 @@ public class GroupController {
   private final GroupRepository groupRepository;
   private final FieldService fieldService;
 
-  @GetMapping("/")
+  @GetMapping
   public ResponseEntity<List<GroupDTO>> getAll() {
     return ResponseEntity.ok(groupService.getAll().stream().map(GroupDTO::of).toList());
   }
@@ -48,9 +48,9 @@ public class GroupController {
     return ResponseEntity.created(locationOfGroup).body(group);
   }
 
-  @PutMapping("/{id}/vacation")
+  @PutMapping("/{number}/addVacation")
   public ResponseEntity<?> addVacation(@PathVariable int number, @RequestBody VacationRequest request) {
     Group group = groupRepository.findByGroupNumber(number).get();
-    return ResponseEntity.ok(groupService.addVacation(group, LocalDate.parse(request.startDate()), request.weeks()));
+    return ResponseEntity.ok(GroupDTO.of(groupService.addVacation(group, LocalDate.parse(request.startDate()), request.weeks())));
   }
 }

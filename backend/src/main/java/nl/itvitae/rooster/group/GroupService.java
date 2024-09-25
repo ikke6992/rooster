@@ -46,13 +46,13 @@ public class GroupService {
             weeksPhase3));
   }
 
-  public Vacation addVacation(Group group, LocalDate startDate, int weeks) {
+  public Group addVacation(Group group, LocalDate startDate, int weeks) {
     Vacation vacation = new Vacation(startDate, weeks, group);
     vacationRepository.save(vacation);
     group.addVacation(vacation);
     groupRepository.save(group);
     rescheduleGroup(group, startDate);
-    return vacation;
+    return group;
   }
 
   public boolean checkSimilarColor(String hexColor) {

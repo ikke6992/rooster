@@ -6,23 +6,32 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private getFieldsUrl = 'http://localhost:8080/api/v1/fields/';
-  private getGroupsUrl = 'http://localhost:8080/api/v1/groups/';
-  private postGroupUrl = 'http://localhost:8080/api/v1/groups/new';
+  private apiUrlFields = 'http://localhost:8080/api/v1/fields';
+  private apiUrlGroups = 'http://localhost:8080/api/v1/groups';
 
   constructor(private http: HttpClient) {}
 
   getFields(): Observable<any> {
-    return this.http.get<any>(this.getFieldsUrl);
+    return this.http.get<any>(this.apiUrlFields);
   }
 
   getGroups(): Observable<any> {
-    return this.http.get<any>(this.getGroupsUrl);
+    return this.http.get<any>(this.apiUrlGroups);
   }
 
   postGroup(data: any): Observable<any> {
-    return this.http.post<any>(this.postGroupUrl, data, {
+    return this.http.post<any>(this.apiUrlGroups + '/new', data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
+  }
+
+  addVacation(groupNumber: number, data: any): Observable<any> {
+    return this.http.put<any>(
+      this.apiUrlGroups + '/' + groupNumber + '/addVacation',
+      data,
+      {
+        headers: new HttpHeaders({ 'Content-type': 'application/json' }),
+      }
+    );
   }
 }
