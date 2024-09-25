@@ -13,7 +13,7 @@ public class FieldController {
 
   private final FieldService fieldService;
 
-  @GetMapping("/")
+  @GetMapping
   public List<Field> getAll() {
     return fieldService.getAll();
   }

@@ -9,6 +9,7 @@ import nl.itvitae.rooster.group.GroupService;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class TeacherService {
     Teacher teacher = getById(id);
     Group group = groupRepository.findByGroupNumber(groupNumber).get();
     teacher.addGroup(group);
-    groupService.rescheduleGroup(group);
+    groupService.rescheduleGroup(group, LocalDate.now());
     teacherRepository.save(teacher);
     return teacher;
   }

@@ -1,6 +1,11 @@
 package nl.itvitae.rooster.group;
 
-public record GroupDTO(int groupNumber, String color, int numberOfStudents, String field, String startDate, int weeksPhase1, int weeksPhase2, int weeksPhase3, int daysPhase1, int daysPhase2, int daysPhase3, String[] teachers) {
+import nl.itvitae.rooster.group.vacation.Vacation;
+
+public record GroupDTO(
+    int groupNumber, String color, int numberOfStudents, String field,
+    String startDate, int weeksPhase1, int weeksPhase2, int weeksPhase3, int daysPhase1, int daysPhase2, int daysPhase3,
+    String[] teachers, String[] vacations) {
 
   static GroupDTO of(Group group) {
     int groupNumber = group.getGroupNumber();
@@ -18,6 +23,12 @@ public record GroupDTO(int groupNumber, String color, int numberOfStudents, Stri
     for (int i = 0; i < teachers.length; i++) {
       teachers[i] = group.getTeachers().get(i).getName();
     }
-    return new GroupDTO(groupNumber, color, numberOfStudents, field, startDate, weeksPhase1, weeksPhase2, weeksPhase3, daysPhase1, daysPhase2, daysPhase3, teachers);
+    String[] vacations = new String[group.getVacations().size()];
+    for (int i = 0; i < vacations.length; i++) {
+      Vacation vacation = group.getVacations().get(i);
+      vacations[i] = String.format("%d weeks vacation starting %s", vacation.getWeeks(), vacation.getStartDate().toString());
+    }
+    return new GroupDTO(groupNumber, color, numberOfStudents, field,
+        startDate, weeksPhase1, weeksPhase2, weeksPhase3, daysPhase1, daysPhase2, daysPhase3, teachers, vacations);
   }
 }
