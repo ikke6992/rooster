@@ -95,6 +95,11 @@ public class GroupService {
 
     //reschedule
     int weeks = (int)ChronoUnit.WEEKS.between(group.getStartDate(), startDate);
+    for (Vacation vacation : group.getVacations()) {
+      if (vacation.getStartDate().isBefore(startDate)) {
+        weeks -= vacation.getWeeks();
+      }
+    }
     LocalDate previousStartDate = startDate;
     LocalDate nextStartDate = schedulePeriod(Math.max(group.getWeeksPhase1() - weeks, 0), group.getField().getDaysPhase1(), startDate, group);
     if (nextStartDate.equals(previousStartDate)) {
@@ -139,6 +144,7 @@ public class GroupService {
             classroom, lesson);
         if (freeDayRepository.existsByDate(scheduledday.getDate())) {
           scheduleddayRepository.delete(scheduledday);
+          lessonRepository.delete(scheduledday.getLesson());
         }
 
         // keeps classrooms consistent
