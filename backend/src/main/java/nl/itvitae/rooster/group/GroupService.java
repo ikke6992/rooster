@@ -85,11 +85,7 @@ public class GroupService {
   }
 
   public void rescheduleGroup(Group group, LocalDate startDate) {
-    int weeks = (int)ChronoUnit.WEEKS.between(group.getStartDate(), startDate);
-    int weeksLeftPhase1 = group.getWeeksPhase1();
-    int weeksLeftPhase2 = group.getWeeksPhase2();
-    int weeksLeftPhase3 = group.getWeeksPhase3();
-
+    // delete old scheduling
     for (Scheduledday scheduledday : scheduleddayRepository.findByLessonGroup(group)) {
       if (!scheduledday.getDate().isBefore(startDate)) {
         scheduleddayRepository.delete(scheduledday);
@@ -97,27 +93,29 @@ public class GroupService {
       }
     }
 
-    if (weeks < weeksLeftPhase1) {
-      weeksLeftPhase1 -= weeks;
-      schedulePeriod(weeksLeftPhase1, group.getField().getDaysPhase1(), startDate, group);
-      schedulePeriod(weeksLeftPhase2, group.getField().getDaysPhase2(), startDate.plusWeeks(weeksLeftPhase1), group);
-      schedulePeriod(weeksLeftPhase3, group.getField().getDaysPhase3(), startDate.plusWeeks(weeksLeftPhase1+weeksLeftPhase2), group);
-    } else if (weeks < weeksLeftPhase1 + weeksLeftPhase2) {
-      weeksLeftPhase2 -= (weeks + weeksLeftPhase1);
-      schedulePeriod(weeksLeftPhase2, group.getField().getDaysPhase2(), startDate, group);
-      schedulePeriod(weeksLeftPhase3, group.getField().getDaysPhase3(), startDate.plusWeeks(weeksLeftPhase2), group);
-    } else if (weeks < weeksLeftPhase1 + weeksLeftPhase2 + weeksLeftPhase3) {
-      weeksLeftPhase3 -= (weeks + weeksLeftPhase1 + weeksLeftPhase2);
-      schedulePeriod(weeksLeftPhase3, group.getField().getDaysPhase3(), startDate, group);
+    //reschedule
+    int weeks = (int)ChronoUnit.WEEKS.between(group.getStartDate(), startDate);
+    LocalDate previousStartDate = startDate;
+    LocalDate nextStartDate = schedulePeriod(Math.max(group.getWeeksPhase1() - weeks, 0), group.getField().getDaysPhase1(), startDate, group);
+    if (nextStartDate.equals(previousStartDate)) {
+      nextStartDate = schedulePeriod(Math.max(group.getWeeksPhase2() - (weeks - group.getWeeksPhase1()), 0), group.getField().getDaysPhase2(), nextStartDate, group);
+    } else {
+      previousStartDate = nextStartDate;
+      nextStartDate = schedulePeriod(group.getWeeksPhase2(), group.getField().getDaysPhase2(), nextStartDate, group);
+    }
+    if (nextStartDate.equals(previousStartDate)) {
+      schedulePeriod(Math.max(group.getWeeksPhase3() - (weeks - group.getWeeksPhase1() - group.getWeeksPhase2()), 0), group.getField().getDaysPhase3(), nextStartDate, group);
+    } else {
+      schedulePeriod(group.getWeeksPhase3(), group.getField().getDaysPhase3(), nextStartDate, group);
     }
   }
 
-  private void schedulePeriod(int weeksPhase, int daysPhase, LocalDate startDate, Group group) {
+  private LocalDate schedulePeriod(int weeksPhase, int daysPhase, LocalDate startDate, Group group) {
     int[] classroomIDs = new int[daysPhase];
     boolean isPracticum = false;
 
     for (int i = 1; i <= weeksPhase; i++) {
-      for (int j = 1; j <= daysPhase; j++) {
+      vacation: for (int j = 1; j <= daysPhase; j++) {
         LocalDate date = startDate.plusWeeks(i - 1).plusDays(j - 1);
 
         // prevents scheduling vacations
@@ -125,6 +123,7 @@ public class GroupService {
           if ((date.isAfter(vacation.getStartDate()) || date.isEqual(vacation.getStartDate())) &&
               date.isBefore(vacation.getStartDate().plusWeeks(vacation.getWeeks()))) {
             weeksPhase += 1;
+            break vacation;
           }
         }
         // prevents scheduling weekends
@@ -147,5 +146,6 @@ public class GroupService {
         isPracticum = isPracticum != scheduledday.getLesson().isPracticum();
       }
     }
+    return startDate.plusWeeks(weeksPhase);
   }
 }
