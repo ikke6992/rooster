@@ -6,7 +6,7 @@
     "frontend": {
       "i18n":{
         "sourceLocale": "en-US",
-        "locales": {"nl": "src/locale/messages.nl.json"}
+        "locales": {"nl": "src/locale/messages.nl.xlf"}
       },
       "projectType": "application",
       "schematics": {},

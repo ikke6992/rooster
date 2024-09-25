@@ -2,14 +2,14 @@
   <button
     class="flex-1 py-2 px-4"
     [ngClass]="addOne ? 'border-b border-blue-500' : ''"
-    (click)="addOne = true"
+    (click)="addOne = true" i18n
   >
     Add one free day
   </button>
   <button
     class="flex-1 py-2 px-4"
     [ngClass]="addOne ? '' : 'border-b border-blue-500'"
-    (click)="addOne = false"
+    (click)="addOne = false" i18n
   >
     Add multiple common freedays
   </button>
@@ -17,23 +17,23 @@
 
 <ng-container *ngIf="addOne; else addMultiple">
   <form [formGroup]="addFreeday" (ngSubmit)="onSubmit()">
-    <label for="name">Free day name: </label>
+    <label for="name" i18n>Free day name: </label>
     <input
       id="group-number"
       type="text"
       formControlName="name"
       required
     /><br />
-    <label for="date">Date: </label>
+    <label for="date" i18n>Date: </label>
     <input id="date" type="date" formControlName="date" required /><br />
-    <button type="submit" [disabled]="!addFreeday.valid" class="button-action">
+    <button type="submit" [disabled]="!addFreeday.valid" class="button-action" i18n>
       Submit
     </button>
   </form>
 </ng-container>
 <ng-template #addMultiple>
   <form [formGroup]="addMultipleFreedays" (ngSubmit)="onSubmit2()">
-    <label for="year">Year: </label>
+    <label for="year" i18n>Year: </label>
     <input id="number" type="number" formControlName="year" required /><br />
     <div formArrayName="array">
       <div *ngFor="let holiday of holidays; let i = index">
@@ -44,7 +44,7 @@
     <button
       type="submit"
       [disabled]="!addMultipleFreedays.valid"
-      class="button-action"
+      class="button-action" i18n
     >
       Submit
     </button>

@@ -1,50 +1,50 @@
-<h1>Add Group</h1>
+<h1 i18n>Add Group</h1>
 <form [formGroup]="addGroup" (ngSubmit)="onSubmit()">
-  <label for="group-number">Group number: </label>
+  <label for="group-number" i18n>Group number: </label>
   <input
     id="group-number"
     type="number"
     formControlName="groupNumber"
     required
   /><br />
-  <label for="color">Color: </label>
+  <label for="color" i18n>Color: </label>
   <input id="color" type="color" formControlName="color" required /><br />
-  <label for="number-of-students">Number of students: </label>
+  <label for="number-of-students" i18n>Number of students: </label>
   <input
     id="number-of-students"
     type="number"
     formControlName="numberOfStudents"
     required
   /><br />
-  <label for="field">Field: </label>
+  <label for="field" i18n>Field: </label>
   <select id="field" formControlName="field" required>
-    <option [ngValue]="null" disabled>Select Field</option>
+    <option [ngValue]="null" disabled i18n>Select Field</option>
     <option *ngFor="let field of fields" [ngValue]="field.id">
       {{ field.name }}
     </option></select
   ><br />
-  <label for="start-date">Start Date: </label>
+  <label for="start-date" i18n>Start Date: </label>
   <input
     id="start-date"
     type="date"
     formControlName="startDate"
     required
   /><br />
-  <label for="weeks-phase-1">Weeks Phase 1: </label>
+  <label for="weeks-phase-1" i18n>Weeks Phase 1: </label>
   <input
     id="weeks-phase-1"
     type="number"
     formControlName="weeksPhase1"
     required
   /><br />
-  <label for="weeks-phase-2">Weeks Phase 2: </label>
+  <label for="weeks-phase-2" i18n>Weeks Phase 2: </label>
   <input
     id="weeks-phase-2"
     type="number"
     formControlName="weeksPhase2"
     required
   /><br />
-  <label for="weeks-phase-3">Weeks Phase 2: </label>
+  <label for="weeks-phase-3" i18n>Weeks Phase 2: </label>
   <input
     id="weeks-phase-3"
     type="number"
@@ -52,5 +52,5 @@
     required
   /><br />
 
-  <button type="submit" [disabled]="!addGroup.valid"  class="button-action">Submit</button>
+  <button type="submit" [disabled]="!addGroup.valid"  class="button-action" i18n>Submit</button>
 </form>

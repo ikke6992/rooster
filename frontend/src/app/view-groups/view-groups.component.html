@@ -1,19 +1,19 @@
-<h1>Groups</h1>
+<h1 i18n>Groups</h1>
 <div *ngFor="let group of groups">
   <div style="color: {{ group.color }}">
-    <h3>Group {{ group.groupNumber }} {{ group.field }}</h3>
-    <p>Number of students: {{ group.numberOfStudents }}</p>
-    <p>Startdate: {{ group.startDate }}</p>
-    <p>
+    <h3 i18n>Group {{ group.groupNumber }} {{ group.field }}</h3>
+    <p i18n>Number of students: {{ group.numberOfStudents }}</p>
+    <p i18n>Startdate: {{ group.startDate }}</p>
+    <p i18n>
       Phase 1: {{ group.daysPhase1 }} days for {{ group.weeksPhase1 }} weeks
     </p>
-    <p>
+    <p i18n>
       Phase 2: {{ group.daysPhase2 }} days for {{ group.weeksPhase2 }} weeks
     </p>
-    <p>
+    <p i18n>
       Phase 3: {{ group.daysPhase3 }} days for {{ group.weeksPhase3 }} weeks
     </p>
-    <h4>Teachers:</h4>
+    <h4 i18n>Teachers:</h4>
     <div *ngFor="let teacher of group.teachers">
       <p>- {{ teacher }}</p>
     </div>
@@ -21,12 +21,12 @@
 </div>
 <button
 class="button-action"
-  (click)="showModal()"
+  (click)="showModal()" i18n
 >
   Add Group
 </button>
 
 <app-modal id="add-group" class="hhidden">
   <app-add-group [fields]="fields"></app-add-group>
-  <button (click)="closeModal()"  class="button-action">Close</button>
+  <button (click)="closeModal()"  class="button-action" i18n>Close</button>
 </app-modal>
