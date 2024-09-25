@@ -137,6 +137,9 @@ public class GroupService {
             classroomIDs[j - 1] != 0 ? classroomIDs[j - 1] : (lesson.isPracticum() ? 4 : 1)).get();
         Scheduledday scheduledday = scheduleddayService.addScheduledday(date,
             classroom, lesson);
+        if (freeDayRepository.existsByDate(scheduledday.getDate())) {
+          scheduleddayRepository.delete(scheduledday);
+        }
 
         // keeps classrooms consistent
         classroomIDs[j - 1] = scheduledday.getClassroom().getId().intValue();
