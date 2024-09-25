@@ -1,18 +1,34 @@
 package nl.itvitae.rooster.scheduledday;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
+
 
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.MyDay;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
+import nl.itvitae.rooster.freeday.FreeDay;
 import nl.itvitae.rooster.freeday.FreeDayRepository;
 import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonRepository;
 import nl.itvitae.rooster.teacher.Teacher;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Color;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -148,7 +164,7 @@ public class ScheduleddayService {
           int lessons = 0;
           int dayOfWeek = date.getDayOfWeek().getValue();
           for (Scheduledday otherScheduledDay : scheduleddayRepository.findByDateBetween(
-              date.minusDays(dayOfWeek-1), date.plusDays(5-dayOfWeek))) {
+              date.minusDays(dayOfWeek - 1), date.plusDays(5 - dayOfWeek))) {
             Teacher otherTeacher = otherScheduledDay.getLesson().getTeacher();
             if (otherTeacher != null && teacher.getId().equals(otherTeacher.getId())) {
               lessons++;
@@ -157,13 +173,15 @@ public class ScheduleddayService {
           if (lessons >= teacher.getMaxDaysPerWeek()) {
             break;
           }
-          
+
           //check whether teacher is available to work this day
-          days: for (MyDay day : teacher.getAvailability()) {
+          days:
+          for (MyDay day : teacher.getAvailability()) {
             if (day.getDay().equals(date.getDayOfWeek())) {
 
               //check if teacher is already teaching another lesson this day
-              for (Scheduledday otherScheduledDay : scheduleddayRepository.findByDate(scheduledday.getDate())) {
+              for (Scheduledday otherScheduledDay : scheduleddayRepository.findByDate(
+                  scheduledday.getDate())) {
                 Teacher otherTeacher = otherScheduledDay.getLesson().getTeacher();
                 if (otherTeacher != null && teacher.getId().equals(otherTeacher.getId())) {
                   break days;
@@ -186,6 +204,93 @@ public class ScheduleddayService {
         }
       }
     }
+  }
+
+  public ByteArrayInputStream createExcel(int year) throws IOException {
+    LocalDate startDate = LocalDate.of(year, 1, 1);
+    LocalDate endDate = LocalDate.of(year, 12, 31);
+    List<Scheduledday> scheduledDays = scheduleddayRepository.findByDateBetween(startDate, endDate);
+    if (scheduledDays.isEmpty()) return null;
+    List<FreeDay> freedays = freeDayRepository.findByDateBetween(startDate, endDate);
+    Workbook workbook = new XSSFWorkbook();
+    for (int i = 1; i <= 12; i++) {
+      LocalDate currentDate = LocalDate.of(year, i, 1);
+      Sheet sheet = workbook.createSheet(currentDate.getMonth().toString() + year);
+
+      Row header = sheet.createRow(0);
+      for (int j = 1; j <= 6; j++) {
+        Cell cell = header.createCell(j);
+        cell.setCellValue("Lokaal " + j);
+      }
+      int monthLength = currentDate.lengthOfMonth();
+      for (int j = 1; j <= monthLength; j++) {
+        Row row = sheet.createRow(j);
+        sheet.setColumnWidth(0, 15 * 256);
+
+        Cell cell = row.createCell(0);
+        cell.setCellValue(currentDate.toString());
+        LocalDate finalCurrentDate = currentDate;
+        if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY || currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+          CellStyle weekendGreen = workbook.createCellStyle();
+          weekendGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+          org.apache.poi.ss.usermodel.Color color = new XSSFColor(
+              new java.awt.Color(181, 230, 162), new DefaultIndexedColorMap());
+          weekendGreen.setFillForegroundColor(color);
+          cell.setCellStyle(weekendGreen);
+          for (int k = 1; k <= 6; k++) {
+            Cell cell1 = row.createCell(k);
+            cell1.setCellStyle(weekendGreen);
+          }
+          currentDate = currentDate.plusDays(1);
+          continue;
+        }
+        if (freedays.stream().anyMatch((freeDay -> freeDay.getDate().equals(finalCurrentDate)))) {
+          CellStyle freeDayYellow = workbook.createCellStyle();
+          freeDayYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+          org.apache.poi.ss.usermodel.Color color = new XSSFColor(
+              new java.awt.Color(255, 255, 0), new DefaultIndexedColorMap());
+          freeDayYellow.setFillForegroundColor(color);
+          cell.setCellStyle(freeDayYellow);
+          for (int k = 1; k <= 6; k++) {
+            Cell cell1 = row.createCell(k);
+            cell1.setCellStyle(freeDayYellow);
+          }
+          currentDate = currentDate.plusDays(1);
+          continue;
+        }
+
+        for (int k = 1; k <= 6; k++) {
+          sheet.setColumnWidth(k, 25 * 256);
+          Cell cell1 = row.createCell(k);
+
+          int finalK = k;
+          List<Scheduledday> scheduleddaysFiltered = scheduledDays.stream().filter(
+                  day -> day.getDate().equals(finalCurrentDate) && day.getClassroom().getId() == finalK)
+              .toList();
+          if (!scheduleddaysFiltered.isEmpty()) {
+            Scheduledday scheduledday = scheduleddaysFiltered.getFirst();
+            cell1.setCellValue("Group " + scheduledday.getLesson().getGroup().getGroupNumber() + " "
+                + scheduledday.getLesson().getGroup().getField());
+            String hexColour = scheduledday.getLesson().getGroup().getColor();
+            int hexR = Integer.valueOf(hexColour.substring(1, 3), 16);
+            int hexG = Integer.valueOf(hexColour.substring(3, 5), 16);
+            int hexB = Integer.valueOf(hexColour.substring(5, 7), 16);
+            CellStyle cellStyle = workbook.createCellStyle();
+            cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            org.apache.poi.ss.usermodel.Color color = new XSSFColor(
+                new java.awt.Color(hexR, hexG, hexB), new DefaultIndexedColorMap());
+            cellStyle.setFillForegroundColor(color);
+            cell1.setCellStyle(cellStyle);
+          }
+        }
+        currentDate = currentDate.plusDays(1);
+      }
+    }
+
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    workbook.write(outputStream);
+    workbook.close();
+    return new ByteArrayInputStream(outputStream.toByteArray());
   }
 
 }

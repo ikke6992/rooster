@@ -1,3 +1,12 @@
+@media print {
+  #schedule {
+    visibility: visible;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-color: white;
+  }
+}
 /* Define background colors for weekends, free days, and regular days */
 .bg-yellow { 
   background-color: #ffff00; /* Free Day */

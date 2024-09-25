@@ -86,7 +86,15 @@ export class ScheduleComponent {
       return;
     }
     this.month--;
-    this.ngOnInit();
+    this.ngOnInit();  
+  }
+
+  print() {
+    window.print();
+  }
+
+  exportExcel(){
+    this.dataService.getExcel(this.year).subscribe();
   }
 
   constructor(private dataService: DataService) {}
