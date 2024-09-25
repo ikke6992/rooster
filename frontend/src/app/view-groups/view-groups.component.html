@@ -17,16 +17,26 @@
     <div *ngFor="let teacher of group.teachers">
       <p>- {{ teacher }}</p>
     </div>
+    <h4>Vacations:</h4>
+    <div *ngFor="let vacation of group.vacations">
+      <p>- {{ vacation }}</p>
+    </div>
+    <button class="button-action" (click)="showModal('add-vacation')">
+      Add Vacation
+    </button>
+    <app-modal id="add-vacation" class="hhidden">
+      <app-add-vacation></app-add-vacation>
+      <button (click)="closeModal('add-vacation')" class="button-action">
+        Close
+      </button>
+    </app-modal>
   </div>
 </div>
-<button
-class="button-action"
-  (click)="showModal()"
->
+<button class="button-action" (click)="showModal('add-group')">
   Add Group
 </button>
 
 <app-modal id="add-group" class="hhidden">
   <app-add-group [fields]="fields"></app-add-group>
-  <button (click)="closeModal()"  class="button-action">Close</button>
+  <button (click)="closeModal('add-group')" class="button-action">Close</button>
 </app-modal>

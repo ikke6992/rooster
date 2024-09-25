@@ -3,11 +3,17 @@ import { DataService } from './data.service';
 import { ModalComponent } from '../modal/modal.component';
 import { AddGroupComponent } from './add-group/add-group.component';
 import { CommonModule } from '@angular/common';
+import { AddVacationComponent } from './add-vacation/add-vacation.component';
 
 @Component({
   selector: 'app-view-groups',
   standalone: true,
-  imports: [CommonModule, ModalComponent, AddGroupComponent],
+  imports: [
+    CommonModule,
+    ModalComponent,
+    AddGroupComponent,
+    AddVacationComponent,
+  ],
   templateUrl: './view-groups.component.html',
   styleUrl: './view-groups.component.css',
 })
@@ -29,15 +35,15 @@ export class ViewGroupsComponent {
     });
   }
 
-  showModal() {
-    let modal_t = document.getElementById('add-group');
+  showModal(name: string) {
+    let modal_t = document.getElementById(name);
     if (modal_t !== null) {
       modal_t.classList.remove('hhidden');
       modal_t.classList.add('sshow');
     }
   }
-  closeModal() {
-    let modal_t = document.getElementById('add-group');
+  closeModal(name: string) {
+    let modal_t = document.getElementById(name);
     if (modal_t !== null) {
       modal_t.classList.remove('sshow');
       modal_t.classList.add('hhidden');
