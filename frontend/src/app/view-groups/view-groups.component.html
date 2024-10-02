@@ -26,13 +26,16 @@
       (click)="showModal('add-vacation-' + group.groupNumber)"
     >
       Add Vacation
-    </button>
+    </button><br />
     <app-modal id="add-vacation-{{ group.groupNumber }}" class="hhidden">
       <app-add-vacation [group]="group"></app-add-vacation>
       <button (click)="closeModal('add-vacation-' + group.groupNumber)">
         Close
       </button>
     </app-modal>
+    <button class="button-action" (click)="reschedule(group.groupNumber)">
+      Reschedule Group
+    </button><br />
   </div>
 </div>
 <button class="button-action" (click)="showModal('add-group')">

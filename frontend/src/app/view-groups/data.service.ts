@@ -25,6 +25,12 @@ export class DataService {
     });
   }
 
+  rescheduleGroup(groupNumber: number): Observable<any> {
+    return this.http.put<any>(this.apiUrlGroups + '/' + groupNumber + '/reschedule', {
+        headers: new HttpHeaders({ 'Content-type': 'application/json' }),
+      })
+  }
+
   addVacation(groupNumber: number, data: any): Observable<any> {
     return this.http.put<any>(
       this.apiUrlGroups + '/' + groupNumber + '/addVacation',

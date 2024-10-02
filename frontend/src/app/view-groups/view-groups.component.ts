@@ -35,6 +35,18 @@ export class ViewGroupsComponent {
     });
   }
 
+  reschedule(number: number) {
+    this.dataService.rescheduleGroup(number).subscribe(
+      (response) => {
+        console.log('Response:', response);
+        window.location.reload();
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+    );
+  }
+
   showModal(name: string) {
     let modal_t = document.getElementById(name);
     if (modal_t !== null) {

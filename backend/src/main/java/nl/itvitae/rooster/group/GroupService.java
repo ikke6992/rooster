@@ -76,10 +76,16 @@ public class GroupService {
 
   public void scheduleReturnDay(Group group) {
     LocalDate date = group.getStartDate();
-    for (int i = 0; i < 104; i++) {
+    for (int i = 0; i < (group.getWeeksPhase1() + group.getWeeksPhase2() + group.getWeeksPhase3()); i++) {
       if (freeDayRepository.existsByDate(date)) continue;
       scheduleddayService.addScheduledday(date.plusWeeks(i), classroomService.getById(4L).get(), lessonService.createLesson(group, true));
     }
+  }
+
+  public Group rescheduleReturnDay (Group group) {
+    group.setStartDate(group.getStartDate().plusWeeks(group.getWeeksPhase1() + group.getWeeksPhase2() + group.getWeeksPhase3()));
+    scheduleReturnDay(group);
+    return group;
   }
 
   public void scheduleGroup(Group group) {
@@ -92,7 +98,7 @@ public class GroupService {
         group.getStartDate().plusWeeks(group.getWeeksPhase1() + group.getWeeksPhase2()), group);
   }
 
-  public void rescheduleGroup(Group group, LocalDate startDate) {
+  public Group rescheduleGroup(Group group, LocalDate startDate) {
     // delete old scheduling
     for (Scheduledday scheduledday : scheduleddayRepository.findByLessonGroup(group)) {
       if (!scheduledday.getDate().isBefore(startDate)) {
@@ -121,6 +127,7 @@ public class GroupService {
     } else {
       schedulePeriod(group.getWeeksPhase3(), group.getField().getDaysPhase3(), nextStartDate, group);
     }
+    return group;
   }
 
   private LocalDate schedulePeriod(int weeksPhase, int daysPhase, LocalDate startDate, Group group) {
