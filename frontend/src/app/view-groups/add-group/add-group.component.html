@@ -52,5 +52,11 @@
     required
   /><br />
 
-  <button type="submit" [disabled]="!addGroup.valid"  class="button-action">Submit</button>
+  <button
+    [ngClass]="addGroup.valid ? 'button-action' : 'button-incomplete'"
+    type="submit"
+    [disabled]="!addGroup.valid"
+  >
+    Submit
+  </button>
 </form>
