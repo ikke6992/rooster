@@ -58,10 +58,16 @@ public class ScheduleddayController {
     Scheduledday scheduledday = scheduleddayService.findById(id);
     LocalDate date = LocalDate.parse(overrideRequest.date());
     Optional<Classroom> classroom = classroomService.getById(overrideRequest.classroomId());
-    if (classroom.isEmpty() || date.getDayOfWeek().equals(DayOfWeek.SATURDAY) || date.getDayOfWeek().equals(DayOfWeek.SUNDAY)
-        || freeDayRepository.existsByDate(date) || scheduleddayRepository.existsByDateAndClassroom(date, classroom.get())
+    if (classroom.isEmpty()) {
+      return ResponseEntity.badRequest().body("Classroom does not exist");
+    }
+    if (date.getDayOfWeek().equals(DayOfWeek.SATURDAY) || date.getDayOfWeek().equals(DayOfWeek.SUNDAY)
+        || freeDayRepository.existsByDate(date)){
+      return ResponseEntity.badRequest().body("Day cannot be scheduled on weekends on freedays");
+    }
+    if (scheduleddayRepository.existsByDateAndClassroom(date, classroom.get())
         || (!date.equals(scheduledday.getDate()) && scheduleddayRepository.existsByDateAndLessonGroup(date, scheduledday.getLesson().getGroup()))) {
-      return ResponseEntity.badRequest().build();
+      return ResponseEntity.badRequest().body("Day + Classroom are already scheduled");
     }
     return ResponseEntity.ok(scheduleddayService.overrideScheduling(scheduledday, date, classroom.get(), overrideRequest.adaptWeekly()));
   }
