@@ -29,3 +29,17 @@ body {
   background-color: #9ca3af;
   cursor: not-allowed;
 }
+
+input {
+  border-width: 1px;
+  border-color: black;
+}
+
+/** this makes the .modal visible */
+.sshow {
+  display: block;
+}
+/** this makes the element hidden/invisible */
+.hhidden {
+  display: none;
+}
