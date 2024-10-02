@@ -41,12 +41,12 @@ public class ScheduleddayController {
 
   @GetMapping("/export/{year}")
   public ResponseEntity<?> exportExcel(@PathVariable int year) throws IOException {
-    HttpHeaders headers = new HttpHeaders();
-    headers.add("Content-Disposition", "attachment; filename=scheduleddays.xlsx");
     var body = scheduleddayService.createExcel(year);
     if (body == null) {
       return ResponseEntity.badRequest().body("No days planned for this year");
     }
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Content-Disposition", "attachment; filename=scheduleddays.xlsx");
 
     return ResponseEntity.ok().headers(headers)
         .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
