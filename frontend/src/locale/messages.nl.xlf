@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US">
+  <file id="ngi18n" original="ng.template">
+    <unit id="1386476281664639257">
+      <notes>
+        <note category="location">src/app/app.component.html:10,11</note>
+      </notes>
+      <segment>
+        <source>View schedule</source>
+        <target>Rooster bekijken</target>
+      </segment>
+    </unit>
+    <unit id="617578924717842115">
+      <notes>
+        <note category="location">src/app/app.component.html:18,19</note>
+      </notes>
+      <segment>
+        <source>View Groups</source>
+        <target>Groepen bekijken</target>
+      </segment>
+    </unit>
+    <unit id="5108433400701140066">
+      <notes>
+        <note category="location">src/app/app.component.html:26,27</note>
+      </notes>
+      <segment>
+        <source>View Teachers</source>
+        <target>Docenten bekijken</target>
+      </segment>
+    </unit>
+    <unit id="4094388602891901631">
+      <notes>
+        <note category="location">src/app/app.component.html:34,35</note>
+      </notes>
+      <segment>
+        <source>View Free Days</source>
+        <target>Vrije dagen bekijken</target>
+      </segment>
+    </unit>
+    <unit id="8402297709136511605">
+      <notes>
+        <note category="location">src/app/free-days/add-free-days/add-free-days.component.html:7,8</note>
+      </notes>
+      <segment>
+        <source> Add one free day </source>
+        <target> Één vrije dag toevoegen</target>
+      </segment>
+    </unit>
+    <unit id="4539138390637899238">
+      <notes>
+        <note category="location">src/app/free-days/add-free-days/add-free-days.component.html:14,15</note>
+      </notes>
+      <segment>
+        <source> Add multiple common freedays </source>
+        <target> Meerdere vrije dagen toevoegen</target>
+      </segment>
+    </unit>
+    <unit id="721969814050790921">
+      <notes>
+        <note category="location">src/app/free-days/add-free-days/add-free-days.component.html:20,21</note>
+      </notes>
+      <segment>
+        <source>Free day name: </source>
+        <target>Vrije dag naam: </target>
+      </segment>
+    </unit>
+    <unit id="6735318627194228061">
+      <notes>
+        <note category="location">src/app/free-days/add-free-days/add-free-days.component.html:27,28</note>
+        <note category="location">src/app/schedule/override/override.component.html:3,4</note>
+      </notes>
+      <segment>
+        <source>Date: </source>
+        <target>Datum: </target>
+      </segment>
+    </unit>
+    <unit id="4943998242904350511">
+      <notes>
+        <note category="location">src/app/free-days/add-free-days/add-free-days.component.html:30,31</note>
+        <note category="location">src/app/free-days/add-free-days/add-free-days.component.html:49,50</note>
+        <note category="location">src/app/view-teachers/set-availability/set-availability.component.html:25,26</note>
+      </notes>
+      <segment>
+        <source> Submit </source>
+        <target> Verstuur</target>
+      </segment>
+    </unit>
+    <unit id="2476251429306026469">
+      <notes>
+        <note category="location">src/app/free-days/add-free-days/add-free-days.component.html:36,37</note>
+      </notes>
+      <segment>
+        <source>Year: </source>
+        <target>Jaar: </target>
+      </segment>
+    </unit>
+    <unit id="3854539566990922474">
+      <notes>
+        <note category="location">src/app/free-days/free-days.component.html:1,2</note>
+      </notes>
+      <segment>
+        <source>Free Days</source>
+        <target>Vrije dagen</target>
+      </segment>
+    </unit>
+    <unit id="4775951916261613143">
+      <notes>
+        <note category="location">src/app/free-days/free-days.component.html:2,3</note>
+      </notes>
+      <segment>
+        <source>Add Free Day</source>
+        <target>Vrije dag toevoegen</target>
+      </segment>
+    </unit>
+    <unit id="7819314041543176992">
+      <notes>
+        <note category="location">src/app/free-days/free-days.component.html:7,8</note>
+        <note category="location">src/app/schedule/schedule.component.html:54,55</note>
+        <note category="location">src/app/view-groups/view-groups.component.html:31,32</note>
+        <note category="location">src/app/view-teachers/view-teachers.component.html:18,19</note>
+        <note category="location">src/app/view-teachers/view-teachers.component.html:33,34</note>
+        <note category="location">src/app/view-teachers/view-teachers.component.html:45,46</note>
+      </notes>
+      <segment>
+        <source>Close</source>
+        <target>Sluiten</target>
+      </segment>
+    </unit>
+    <unit id="5227326580783851704">
+      <notes>
+        <note category="location">src/app/free-days/free-days.component.html:12,13</note>
+      </notes>
+      <segment>
+        <source> Removed <ph id="0" equiv="INTERPOLATION" disp="{{ freeDay.name }}"/> </source>
+        <target> <ph id="0" equiv="INTERPOLATION" disp="{{ freeDay.name }}"/>  Verwijderd </target>
+      </segment>
+    </unit>
+    <unit id="6808796603154039874">
+      <notes>
+        <note category="location">src/app/schedule/override/override.component.html:5,6</note>
+      </notes>
+      <segment>
+        <source>Classroom: </source>
+        <target>Lokaal: </target>
+      </segment>
+    </unit>
+    <unit id="8434949161407876797">
+      <notes>
+        <note category="location">src/app/schedule/override/override.component.html:12,13</note>
+      </notes>
+      <segment>
+        <source>Adapt Weekly: </source>
+        <target>Aanpassen voor komende weken: </target>
+      </segment>
+    </unit>
+    <unit id="935187492052582731">
+      <notes>
+        <note category="location">src/app/schedule/override/override.component.html:14,15</note>
+        <note category="location">src/app/view-groups/add-group/add-group.component.html:55,56</note>
+        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:19,20</note>
+        <note category="location">src/app/view-teachers/set-group/set-group.component.html:10,11</note>
+      </notes>
+      <segment>
+        <source>Submit</source>
+        <target>Verstuur</target>
+      </segment>
+    </unit>
+    <unit id="3314245895634017103">
+      <notes>
+        <note category="location">src/app/schedule/schedule.component.html:2,3</note>
+      </notes>
+      <segment>
+        <source>Previous Month</source>
+        <target>Vorige maand</target>
+      </segment>
+    </unit>
+    <unit id="5356491740033235590">
+      <notes>
+        <note category="location">src/app/schedule/schedule.component.html:3,4</note>
+      </notes>
+      <segment>
+        <source>Next Month</source>
+        <target>Volgende maand</target>
+      </segment>
+    </unit>
+    <unit id="5298179909452540880">
+      <notes>
+        <note category="location">src/app/schedule/schedule.component.html:4,5</note>
+      </notes>
+      <segment>
+        <source>Print schedule</source>
+        <target>Rooster printen</target>
+      </segment>
+    </unit>
+    <unit id="3010647078476647776">
+      <notes>
+        <note category="location">src/app/schedule/schedule.component.html:5,6</note>
+      </notes>
+      <segment>
+        <source>Download Excel</source>
+      </segment>
+    </unit>
+    <unit id="3973931101896534797">
+      <notes>
+        <note category="location">src/app/schedule/schedule.component.html:9,10</note>
+      </notes>
+      <segment>
+        <source>Date</source>
+        <target>Datum</target>
+      </segment>
+    </unit>
+    <unit id="5908588864162839605">
+      <notes>
+        <note category="location">src/app/schedule/schedule.component.html:10,11</note>
+      </notes>
+      <segment>
+        <source>Classroom <ph id="0" equiv="INTERPOLATION" disp="{{ number }}"/></source>
+        <target>Lokaal <ph id="0" equiv="INTERPOLATION" disp="{{ number }}"/></target>
+      </segment>
+    </unit>
+    <unit id="4195472677282961776">
+      <notes>
+        <note category="location">src/app/scheduled-day/scheduled-day.component.html:4,9</note>
+      </notes>
+      <segment>
+        <source> Group <ph id="0" equiv="INTERPOLATION" disp="{{ item.groupNumber }}"/> <ph id="1" equiv="INTERPOLATION_1" disp="{{ item.field }}"/> <pc id="2" equivStart="START_TAG_DIV" equivEnd="CLOSE_TAG_DIV" type="other" dispStart="&lt;div class=&quot;non-printable ml-1&quot;&gt;" dispEnd="&lt;/div&gt;"> - Teacher: <ph id="3" equiv="INTERPOLATION_2" disp="{{item.teacher}}"/> </pc></source>
+        <target> Groep <ph id="0" equiv="INTERPOLATION" disp="{{ item.groupNumber }}"/> <ph id="1" equiv="INTERPOLATION_1" disp="{{ item.field }}"/> <pc id="2" equivStart="START_TAG_DIV" equivEnd="CLOSE_TAG_DIV" type="other" dispStart="&lt;div class=&quot;non-printable ml-1&quot;&gt;" dispEnd="&lt;/div&gt;"> - Docent: <ph id="3" equiv="INTERPOLATION_2" disp="{{item.teacher}}"/> </pc></target>
+      </segment>
+    </unit>
+    <unit id="9124347207158517893">
+      <notes>
+        <note category="location">src/app/view-groups/add-group/add-group.component.html:1,2</note>
+      </notes>
+      <segment>
+        <source>Add Group</source>
+        <target>Groep toevoegen</target>
+      </segment>
+    </unit>
+    <unit id="7694411860880695392">
+      <notes>
+        <note category="location">src/app/view-groups/add-group/add-group.component.html:3,4</note>
+      </notes>
+      <segment>
+        <source>Group number: </source>
+        <target>Groep nummer: </target>
+      </segment>
+    </unit>
+    <unit id="5817350616201369494">
+      <notes>
+        <note category="location">src/app/view-groups/add-group/add-group.component.html:10,11</note>
+      </notes>
+      <segment>
+        <source>Color: </source>
+        <target>Kleur: </target>
+      </segment>
+    </unit>
+    <unit id="7912769833508560865">
+      <notes>
+        <note category="location">src/app/view-groups/add-group/add-group.component.html:12,13</note>
+      </notes>
+      <segment>
+        <source>Number of students: </source>
+        <target>Aantal studenten: </target>
+      </segment>
+    </unit>
+    <unit id="4031733163488184701">
+      <notes>
+        <note category="location">src/app/view-groups/add-group/add-group.component.html:19,20</note>
+      </notes>
+      <segment>
+        <source>Field: </source>
+        <target>Richting: </target>
+      </segment>
+    </unit>
+    <unit id="4148662983516763897">
+      <notes>
+        <note category="location">src/app/view-groups/add-group/add-group.component.html:21,22</note>
+      </notes>
+      <segment>
+        <source>Select Field</source>
+        <target>Kies een richting</target>
+      </segment>
+    </unit>
+    <unit id="6918871917201353101">
+      <notes>
+        <note category="location">src/app/view-groups/add-group/add-group.component.html:26,27</note>
+      </notes>
+      <segment>
+        <source>Start Date: </source>
+        <target>Start datum: </target>
+      </segment>
+    </unit>
+    <unit id="3968404992664316753">
+      <notes>
+        <note category="location">src/app/view-groups/add-group/add-group.component.html:33,34</note>
+      </notes>
+      <segment>
+        <source>Weeks Phase 1: </source>
+        <target>Aantal weken fase 1: </target>
+      </segment>
+    </unit>
+    <unit id="9007104510859228932">
+      <notes>
+        <note category="location">src/app/view-groups/add-group/add-group.component.html:40,41</note>
+      </notes>
+      <segment>
+        <source>Weeks Phase 2: </source>
+        <target>Aantal weken fase 2: </target>
+      </segment>
+    </unit>
+    <unit id="4889181358781656862">
+      <notes>
+        <note category="location">src/app/view-groups/add-group/add-group.component.html:47,48</note>
+      </notes>
+      <segment>
+        <source>Weeks Phase 3: </source>
+        <target>Aantal weken fase 3: </target>
+      </segment>
+    </unit>
+    <unit id="5944812089887969249">
+      <notes>
+        <note category="location">src/app/view-groups/view-groups.component.html:1,2</note>
+      </notes>
+      <segment>
+        <source>Groups</source>
+        <target>Groepen</target>
+      </segment>
+    </unit>
+    <unit id="1602915982833367902">
+      <notes>
+        <note category="location">src/app/view-groups/view-groups.component.html:4,5</note>
+      </notes>
+      <segment>
+        <source>Group <ph id="0" equiv="INTERPOLATION" disp="{{ group.groupNumber }}"/> <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.field }}"/></source>
+        <target>Groep <ph id="0" equiv="INTERPOLATION" disp="{{ group.groupNumber }}"/> <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.field }}"/></target>
+      </segment>
+    </unit>
+    <unit id="6343854631088621632">
+      <notes>
+        <note category="location">src/app/view-groups/view-groups.component.html:5,6</note>
+      </notes>
+      <segment>
+        <source>Number of students: <ph id="0" equiv="INTERPOLATION" disp="{{ group.numberOfStudents }}"/></source>
+        <target>Aantal studenten: <ph id="0" equiv="INTERPOLATION" disp="{{ group.numberOfStudents }}"/></target>
+      </segment>
+    </unit>
+    <unit id="6013523957514998774">
+      <notes>
+        <note category="location">src/app/view-groups/view-groups.component.html:6,7</note>
+      </notes>
+      <segment>
+        <source>Startdate: <ph id="0" equiv="INTERPOLATION" disp="{{ group.startDate }}"/></source>
+        <target>Start datum: <ph id="0" equiv="INTERPOLATION" disp="{{ group.startDate }}"/></target>
+      </segment>
+    </unit>
+    <unit id="1714431618876568614">
+      <notes>
+        <note category="location">src/app/view-groups/view-groups.component.html:8,10</note>
+      </notes>
+      <segment>
+        <source> Phase 1: <ph id="0" equiv="INTERPOLATION" disp="{{ group.daysPhase1 }}"/> days for <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.weeksPhase1 }}"/> weeks </source>
+        <target> Fase 1: <ph id="0" equiv="INTERPOLATION" disp="{{ group.daysPhase1 }}"/> dagen voor <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.weeksPhase1 }}"/> weken </target>
+      </segment>
+    </unit>
+    <unit id="7242829187000762029">
+      <notes>
+        <note category="location">src/app/view-groups/view-groups.component.html:11,13</note>
+      </notes>
+      <segment>
+        <source> Phase 2: <ph id="0" equiv="INTERPOLATION" disp="{{ group.daysPhase2 }}"/> days for <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.weeksPhase2 }}"/> weeks </source>
+        <target> Fase 2: <ph id="0" equiv="INTERPOLATION" disp="{{ group.daysPhase2 }}"/> dagen voor <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.weeksPhase2 }}"/> weken </target>
+      </segment>
+    </unit>
+    <unit id="5582181687997116292">
+      <notes>
+        <note category="location">src/app/view-groups/view-groups.component.html:14,16</note>
+      </notes>
+      <segment>
+        <source> Phase 3: <ph id="0" equiv="INTERPOLATION" disp="{{ group.daysPhase3 }}"/> days for <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.weeksPhase3 }}"/> weeks </source>
+        <target> Fase 3: <ph id="0" equiv="INTERPOLATION" disp="{{ group.daysPhase3 }}"/> dagen voor <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.weeksPhase3 }}"/> weken</target>
+      </segment>
+    </unit>
+    <unit id="1202339917691175840">
+      <notes>
+        <note category="location">src/app/view-groups/view-groups.component.html:16,17</note>
+      </notes>
+      <segment>
+        <source>Teachers:</source>
+        <target>Docenten: </target>
+      </segment>
+    </unit>
+    <unit id="2239161057931062116">
+      <notes>
+        <note category="location">src/app/view-groups/view-groups.component.html:26,27</note>
+      </notes>
+      <segment>
+        <source> Add Group</source>
+        <target> Groep toevoegen</target>
+      </segment>
+    </unit>
+    <unit id="402785015655073812">
+      <notes>
+        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:3,4</note>
+      </notes>
+      <segment>
+        <source>Name: </source>
+        <target>Naam: </target>
+      </segment>
+    </unit>
+    <unit id="2837249951441622560">
+      <notes>
+        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:5,6</note>
+      </notes>
+      <segment>
+        <source>Teaches practicum: </source>
+        <target>Practicum docent: </target>
+      </segment>
+    </unit>
+    <unit id="2298382585162629649">
+      <notes>
+        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:7,8</note>
+        <note category="location">src/app/view-teachers/set-availability/set-availability.component.html:3,4</note>
+      </notes>
+      <segment>
+        <source>Monday: </source>
+        <target>Maandag: </target>
+      </segment>
+    </unit>
+    <unit id="3031050102315323127">
+      <notes>
+        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:9,10</note>
+        <note category="location">src/app/view-teachers/set-availability/set-availability.component.html:5,6</note>
+      </notes>
+      <segment>
+        <source>Tuesday: </source>
+        <target>Dinsdag: </target>
+      </segment>
+    </unit>
+    <unit id="1307018129652114887">
+      <notes>
+        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:11,12</note>
+        <note category="location">src/app/view-teachers/set-availability/set-availability.component.html:7,8</note>
+      </notes>
+      <segment>
+        <source>Wednesday: </source>
+        <target>Woensdag: </target>
+      </segment>
+    </unit>
+    <unit id="2668028374839342230">
+      <notes>
+        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:13,14</note>
+        <note category="location">src/app/view-teachers/set-availability/set-availability.component.html:9,10</note>
+      </notes>
+      <segment>
+        <source>Thursday: </source>
+        <target>Donderdag: </target>
+      </segment>
+    </unit>
+    <unit id="4490342843012301515">
+      <notes>
+        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:15,16</note>
+        <note category="location">src/app/view-teachers/set-availability/set-availability.component.html:11,12</note>
+      </notes>
+      <segment>
+        <source>Friday: </source>
+        <target>Vrijdag: </target>
+      </segment>
+    </unit>
+    <unit id="1967441180913476652">
+      <notes>
+        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:17,18</note>
+        <note category="location">src/app/view-teachers/set-availability/set-availability.component.html:13,14</note>
+      </notes>
+      <segment>
+        <source>Max days per week: </source>
+        <target>Max aantal dagen per week: </target>
+      </segment>
+    </unit>
+    <unit id="6035313748381399832">
+      <notes>
+        <note category="location">src/app/view-teachers/set-group/set-group.component.html:3,4</note>
+      </notes>
+      <segment>
+        <source>Group: </source>
+        <target>Groep: </target>
+      </segment>
+    </unit>
+    <unit id="7316113874732599634">
+      <notes>
+        <note category="location">src/app/view-teachers/set-group/set-group.component.html:7,9</note>
+      </notes>
+      <segment>
+        <source> Group <ph id="0" equiv="INTERPOLATION" disp="{{ group.groupNumber }}"/> <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.field }}"/> </source>
+        <target> Groep <ph id="0" equiv="INTERPOLATION" disp="{{ group.groupNumber }}"/> <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.field }}"/> </target>
+      </segment>
+    </unit>
+    <unit id="4494957391104569472">
+      <notes>
+        <note category="location">src/app/view-teachers/view-teachers.component.html:1,2</note>
+      </notes>
+      <segment>
+        <source>Teachers</source>
+        <target>Docenten</target>
+      </segment>
+    </unit>
+    <unit id="8013335369410808318">
+      <notes>
+        <note category="location">src/app/view-teachers/view-teachers.component.html:5,6</note>
+      </notes>
+      <segment>
+        <source>Availability:</source>
+        <target>Beschikbaarheid:</target>
+      </segment>
+    </unit>
+    <unit id="7724285606730447230">
+      <notes>
+        <note category="location">src/app/view-teachers/view-teachers.component.html:9,11</note>
+      </notes>
+      <segment>
+        <source>max. <ph id="0" equiv="INTERPOLATION" disp="{{ teacher.maxDaysPerWeek }}"/> days per week</source>
+        <target>Max <ph id="0" equiv="INTERPOLATION" disp="{{ teacher.maxDaysPerWeek }}"/> dagen per week</target>
+      </segment>
+    </unit>
+    <unit id="5691249662476054955">
+      <notes>
+        <note category="location">src/app/view-teachers/view-teachers.component.html:14,15</note>
+      </notes>
+      <segment>
+        <source> Set Availability </source>
+        <target> Beschikbaarheid aanpassen</target>
+      </segment>
+    </unit>
+    <unit id="239911470633002624">
+      <notes>
+        <note category="location">src/app/view-teachers/view-teachers.component.html:21,22</note>
+      </notes>
+      <segment>
+        <source>Groups:</source>
+        <target>Groepen:</target>
+      </segment>
+    </unit>
+    <unit id="4980067665411228515">
+      <notes>
+        <note category="location">src/app/view-teachers/view-teachers.component.html:29,30</note>
+      </notes>
+      <segment>
+        <source> Add Group </source>
+        <target> Groep toevoegen </target>
+      </segment>
+    </unit>
+    <unit id="8309793787195819258">
+      <notes>
+        <note category="location">src/app/view-teachers/view-teachers.component.html:41,42</note>
+      </notes>
+      <segment>
+        <source> Add Teacher</source>
+        <target> Docent toevoegen</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>
