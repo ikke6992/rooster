@@ -62,7 +62,7 @@
   
 </form>
 
-<app-modal id="error" class="hhidden">
-  <p>{{errorMsg}}</p>
-  <button (click)="closeModal('error')" class="button-action">Close</button>
+<app-modal id="feedback" class="hhidden">
+  <p>{{ this.feedbackMsg }}</p>
+  <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : window.location.reload()">Close</button>
 </app-modal>

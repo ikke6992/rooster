@@ -12,7 +12,8 @@ import { ModalComponent } from "../../modal/modal.component";
   styleUrl: './add-group.component.css',
 })
 export class AddGroupComponent {
-  errorMsg!: string;
+  feedbackMsg!: string;
+  window = window;
   
   @Input() fields: any[] = [];
 
@@ -35,12 +36,13 @@ export class AddGroupComponent {
     this.dataService.postGroup(data).subscribe(
       (response) => {
         console.log('Response:', response);
-        window.location.reload();
+        this.feedbackMsg = `Group ${response.groupNumber} ${response.field.name} succesfully added and scheduled starting ${response.startDate}`;
+        this.showModal('feedback')
       },
       (error) => {
         console.error('Error:', error);
-        this.errorMsg = error.error;
-        this.showModal('error')
+        this.feedbackMsg = `Error: ${error.error}`;
+        this.showModal('feedback')
       }
     );
   }
