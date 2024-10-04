@@ -30,7 +30,7 @@ export class ViewGroupsComponent {
     });
 
     this.dataService.getFields().subscribe((response: any[]) => {
-      this.fields = response;
+      this.fields = response.filter((field) => field.name !== 'Returnday');
       console.log(response);
     });
   }
