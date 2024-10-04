@@ -2,20 +2,22 @@
 <div *ngFor="let group of groups">
   <div style="color: {{ group.color }}">
     <h3>Group {{ group.groupNumber }} {{ group.field }}</h3>
-    <p>Number of students: {{ group.numberOfStudents }}</p>
-    <p>Startdate: {{ group.startDate }}</p>
-    <p>
-      Phase 1: {{ group.daysPhase1 }} days for {{ group.weeksPhase1 }} weeks
-    </p>
-    <p>
-      Phase 2: {{ group.daysPhase2 }} days for {{ group.weeksPhase2 }} weeks
-    </p>
-    <p>
-      Phase 3: {{ group.daysPhase3 }} days for {{ group.weeksPhase3 }} weeks
-    </p>
-    <h4>Teachers:</h4>
-    <div *ngFor="let teacher of group.teachers">
-      <p>- {{ teacher }}</p>
+    <div *ngIf="group.groupNumber != 0">
+      <p>Number of students: {{ group.numberOfStudents }}</p>
+      <p>Startdate: {{ group.startDate }}</p>
+      <p>
+        Phase 1: {{ group.daysPhase1 }} days for {{ group.weeksPhase1 }} weeks
+      </p>
+      <p>
+        Phase 2: {{ group.daysPhase2 }} days for {{ group.weeksPhase2 }} weeks
+      </p>
+      <p>
+        Phase 3: {{ group.daysPhase3 }} days for {{ group.weeksPhase3 }} weeks
+      </p>
+      <h4>Teachers:</h4>
+      <div *ngFor="let teacher of group.teachers">
+        <p>- {{ teacher }}</p>
+      </div>
     </div>
     <h4>Vacations:</h4>
     <div *ngFor="let vacation of group.vacations">
@@ -25,8 +27,8 @@
       class="button-action"
       (click)="showModal('add-vacation-' + group.groupNumber)"
     >
-      Add Vacation
-    </button><br />
+      Add Vacation</button
+    ><br />
     <app-modal id="add-vacation-{{ group.groupNumber }}" class="hhidden">
       <app-add-vacation [group]="group"></app-add-vacation>
       <button (click)="closeModal('add-vacation-' + group.groupNumber)">
@@ -34,8 +36,8 @@
       </button>
     </app-modal>
     <button class="button-action" (click)="reschedule(group.groupNumber)">
-      Reschedule Group
-    </button><br />
+      Reschedule Group</button
+    ><br />
   </div>
 </div>
 <button class="button-action" (click)="showModal('add-group')">
