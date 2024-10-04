@@ -1,5 +1,6 @@
 /** this holds the CSS display of the modal */
 .mmodal {
+  color: black;
   /** makes it hover above all elements */
   z-index: 1000;
   position: fixed;
