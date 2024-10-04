@@ -16,13 +16,12 @@ export class AddTeacherComponent {
 
   addTeacher = new FormGroup({
     name: new FormControl(''),
-    teachesPracticum: new FormControl(false),
     monday: new FormControl(true),
     tuesday: new FormControl(true),
     wednesday: new FormControl(true),
     thursday: new FormControl(true),
     friday: new FormControl(true),
-    maxDaysPerWeek: new FormControl(0),
+    maxDaysPerWeek: new FormControl(''),
   });
 
   onSubmit() {
@@ -39,7 +38,6 @@ export class AddTeacherComponent {
 
     const data = {
       name: formValue.name,
-      teachesPracticum: formValue.teachesPracticum,
       availability: availability,
       maxDaysPerWeek: formValue.maxDaysPerWeek,
     }

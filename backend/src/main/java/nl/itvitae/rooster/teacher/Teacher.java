@@ -22,7 +22,6 @@ public class Teacher {
   private Long id;
 
   private String name;
-  private boolean teachesPracticum;
 
   @ManyToMany
   @JoinTable(
@@ -43,9 +42,8 @@ public class Teacher {
   @OneToMany
   private List<Lesson> lessons = new ArrayList<>();
 
-  public Teacher(String name, boolean teachesPracticum, List<MyDay> availability, int maxDaysPerWeek) {
+  public Teacher(String name, List<MyDay> availability, int maxDaysPerWeek) {
     this.name = name;
-    this.teachesPracticum = teachesPracticum;
     this.availability = availability;
     this.maxDaysPerWeek = maxDaysPerWeek;
   }

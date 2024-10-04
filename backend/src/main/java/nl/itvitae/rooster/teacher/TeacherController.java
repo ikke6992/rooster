@@ -25,7 +25,7 @@ public class TeacherController {
 
   @PostMapping("/new")
   public ResponseEntity<?> addTeacher(@RequestBody TeacherRequest request, UriComponentsBuilder ucb) {
-    final Teacher teacher = teacherService.addTeacher(request.name(), request.teachesPracticum(), request.availability(), request.maxDaysPerWeek());
+    final Teacher teacher = teacherService.addTeacher(request.name(), request.availability(), request.maxDaysPerWeek());
     URI locationOfTeacher = ucb.path("/api/v1/teachers").buildAndExpand(teacher.getId()).toUri();
     return ResponseEntity.created(locationOfTeacher).body(teacher);
   }
