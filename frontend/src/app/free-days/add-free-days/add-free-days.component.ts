@@ -64,8 +64,8 @@ export class AddFreeDaysComponent {
       },
       (error) => {
         console.error('Error:', error);
+        this.feedbackMsg = "Error: " + error.error;
         this.showModal('feedback');
-        this.feedbackMsg = error.error;
       }
     );
   }

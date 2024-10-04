@@ -54,12 +54,7 @@
     </button>
   </form>
 </ng-template>
-<app-modal id="error" class="hhidden">
-  <p>{{ this.feedbackMsg }}</p>
-  <button class="button-action" (click)="closeModal('error')">Close</button>
-</app-modal>
-
 <app-modal id="feedback" class="hhidden">
   <p>{{ this.feedbackMsg }}</p>
-  <button class="button-action" (click)="reload()">Close</button>
+  <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : reload()">Close</button>
 </app-modal>
