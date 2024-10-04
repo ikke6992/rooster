@@ -74,17 +74,26 @@ public class GroupService {
     return false;
   }
 
-  public void scheduleReturnDay(Group group) {
-    LocalDate date = group.getStartDate();
+  public void scheduleReturnDay(Group group, long classroomId, DayOfWeek dayOfWeek) {
+    LocalDate date = group.getStartDate().minusDays(group.getStartDate().getDayOfWeek().getValue()).plusDays(dayOfWeek.getValue());
     for (int i = 0; i < (group.getWeeksPhase1() + group.getWeeksPhase2() + group.getWeeksPhase3()); i++) {
       if (freeDayRepository.existsByDate(date)) continue;
-      scheduleddayService.addScheduledday(date.plusWeeks(i), classroomService.getById(4L).get(), lessonService.createLesson(group, true));
+      scheduleddayService.addScheduledday(date.plusWeeks(i), classroomService.getById(classroomId).get(), lessonService.createLesson(group, true));
     }
   }
 
   public Group rescheduleReturnDay (Group group) {
     group.setStartDate(group.getStartDate().plusWeeks(group.getWeeksPhase1() + group.getWeeksPhase2() + group.getWeeksPhase3()));
-    scheduleReturnDay(group);
+
+    List<Scheduledday> scheduledreturndays = scheduleddayRepository.findByLessonGroup(group);
+    Scheduledday latestScheduledreturnday = scheduledreturndays.get(0);
+    for (Scheduledday scheduledreturnday : scheduledreturndays) {
+      if (scheduledreturnday.getDate().isAfter(latestScheduledreturnday.getDate())) {
+        latestScheduledreturnday = scheduledreturnday;
+      }
+    }
+    
+    scheduleReturnDay(group, latestScheduledreturnday.getClassroom().getId(), latestScheduledreturnday.getDate().getDayOfWeek());
     return group;
   }
 
