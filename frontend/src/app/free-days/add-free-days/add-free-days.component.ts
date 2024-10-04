@@ -31,6 +31,7 @@ export class AddFreeDaysComponent {
 
   addMultipleFreedays: FormGroup;
   feedbackMsg!: string;
+  window: any = window;
 
   constructor(private dataService: DataService, private fb: FormBuilder) {
     this.holidays = this.hd
@@ -64,7 +65,7 @@ export class AddFreeDaysComponent {
       },
       (error) => {
         console.error('Error:', error);
-        this.feedbackMsg = "Error: " + error.error;
+        this.feedbackMsg = 'Error: ' + error.error;
         this.showModal('feedback');
       }
     );
@@ -97,9 +98,5 @@ export class AddFreeDaysComponent {
       modal_t.classList.remove('sshow');
       modal_t.classList.add('hhidden');
     }
-  }
-
-  reload() {
-    window.location.reload();
   }
 }
