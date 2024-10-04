@@ -78,7 +78,7 @@ public class GroupService {
     LocalDate date = group.getStartDate().minusDays(group.getStartDate().getDayOfWeek().getValue()).plusDays(dayOfWeek.getValue());
     for (int i = 0; i < (group.getWeeksPhase1() + group.getWeeksPhase2() + group.getWeeksPhase3()); i++) {
       if (freeDayRepository.existsByDate(date)) continue;
-      scheduleddayService.addScheduledday(date.plusWeeks(i), classroomService.getById(classroomId).get(), lessonService.createLesson(group, true));
+      scheduleddayService.addScheduledday(date.plusWeeks(i), classroomService.getById(classroomId).get(), lessonService.createLesson(group));
     }
   }
 
@@ -92,7 +92,7 @@ public class GroupService {
         latestScheduledreturnday = scheduledreturnday;
       }
     }
-    
+
     scheduleReturnDay(group, latestScheduledreturnday.getClassroom().getId(), latestScheduledreturnday.getDate().getDayOfWeek());
     return group;
   }
@@ -141,7 +141,6 @@ public class GroupService {
 
   private LocalDate schedulePeriod(int weeksPhase, int daysPhase, LocalDate startDate, Group group) {
     int[] classroomIDs = new int[daysPhase];
-    boolean isPracticum = false;
 
     for (int i = 1; i <= weeksPhase; i++) {
       vacation: for (int j = 1; j <= daysPhase; j++) {
@@ -160,10 +159,8 @@ public class GroupService {
           date = date.plusDays(2);
         }
         if (freeDayRepository.existsByDate(date)) continue;
-        isPracticum = isPracticum || (j <= daysPhase / 2);
-        final Lesson lesson = lessonService.createLesson(group, isPracticum);
-        Classroom classroom = classroomService.getById(
-            classroomIDs[j - 1] != 0 ? classroomIDs[j - 1] : (lesson.isPracticum() ? 4 : 1)).get();
+        final Lesson lesson = lessonService.createLesson(group);
+        Classroom classroom = classroomService.getById(classroomIDs[j - 1] != 0 ? classroomIDs[j - 1] : 1).get();
         Scheduledday scheduledday = scheduleddayService.addScheduledday(date,
             classroom, lesson);
         if (freeDayRepository.existsByDate(scheduledday.getDate())) {
@@ -173,10 +170,6 @@ public class GroupService {
 
         // keeps classrooms consistent
         classroomIDs[j - 1] = scheduledday.getClassroom().getId().intValue();
-
-        // checks if the day was supposed to be a practicum day, and force the day to be practicum
-        // if the current day couldnt be due to full/occupied classrooms
-        isPracticum = isPracticum != scheduledday.getLesson().isPracticum();
       }
     }
     return startDate.plusWeeks(weeksPhase);

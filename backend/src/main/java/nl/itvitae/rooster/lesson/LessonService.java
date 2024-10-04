@@ -19,7 +19,7 @@ public class LessonService {
     return lessonRepository.save(new Lesson());
   }
 
-  public Lesson createLesson(Group group, boolean isPracticum){
-    return lessonRepository.save(new Lesson(group, isPracticum));
+  public Lesson createLesson(Group group){
+    return lessonRepository.save(new Lesson(group));
   }
 }

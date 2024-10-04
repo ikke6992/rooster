@@ -65,8 +65,8 @@ public class Seeder implements CommandLineRunner {
     var group54 = saveGroup(54, "#ff0000", 8, data);
     var group55 = saveGroup(55, "#00ff00", 10, java);
 
-    var wubbo = saveTeacher("Wubbo", true, new ArrayList<>(List.of(monday, tuesday, wednesday, friday)), 3, group53, group55);
-    var coen = saveTeacher("Coen", false, new ArrayList<>(List.of(monday, thursday)), 2, group53, group55);
+    var wubbo = saveTeacher("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)), 3, group53, group55);
+    var coen = saveTeacher("Coen", new ArrayList<>(List.of(monday, thursday)), 2, group53, group55);
 
     groupService.scheduleReturnDay(returnDay, 4L, DayOfWeek.WEDNESDAY);
     groupService.scheduleGroup(group53);
@@ -90,8 +90,8 @@ public class Seeder implements CommandLineRunner {
     return groupService.addGroup(groupNumber, color, numberOfStudents, field, LocalDate.now().minusWeeks(4), 8, 12, 8);
   }
 
-  private Teacher saveTeacher(String name, boolean teachesPracticum, List<MyDay> availability, int maxDaysPerWeek, Group... groups) {
-    Teacher teacher = new Teacher(name, teachesPracticum, availability, maxDaysPerWeek);
+  private Teacher saveTeacher(String name, List<MyDay> availability, int maxDaysPerWeek, Group... groups) {
+    Teacher teacher = new Teacher(name, availability, maxDaysPerWeek);
     for (Group group : groups) {
       teacher.addGroup(group);
       group.addTeacher(teacher);
