@@ -59,3 +59,8 @@
     </tr>
   </table>
 </div>
+<app-modal id="error" class="hhidden">
+  <p>{{errorMsg}}</p>
+  <button (click)="closeModal('error')" class="button-action">Close</button>
+</app-modal>
+

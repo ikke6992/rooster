@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataService } from '../data.service';
+import { ModalComponent } from "../../modal/modal.component";
 
 @Component({
   selector: 'app-set-group',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ModalComponent],
   templateUrl: './set-group.component.html',
   styleUrl: './set-group.component.css'
 })
@@ -17,6 +18,7 @@ export class SetGroupComponent {
   addGroup = new FormGroup({
     setGroup: new FormControl(),
   });
+errorMsg!: string;
 
   constructor(private dataService: DataService) {}
 
@@ -30,8 +32,24 @@ export class SetGroupComponent {
       },
       (error) => {
         console.error('Error:', error);
+        this.errorMsg = error.error;
+        this.showModal('error');
       }
     );
   }
 
+  showModal(name: string) {
+    let modal_t = document.getElementById(name);
+    if (modal_t !== null) {
+      modal_t.classList.remove('hhidden');
+      modal_t.classList.add('sshow');
+    }
+  }
+  closeModal(name: string) {
+    let modal_t = document.getElementById(name);
+    if (modal_t !== null) {
+      modal_t.classList.remove('sshow');
+      modal_t.classList.add('hhidden');
+    }
+  }
 }

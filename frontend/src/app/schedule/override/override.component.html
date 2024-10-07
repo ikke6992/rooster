@@ -13,3 +13,8 @@
   <input id="adapt-weekly" type="checkbox" formControlName="adaptWeekly" /><br />
   <button type="submit" class="button-action">Submit</button>
 </form>
+<app-modal id="error" class="hhidden">
+  <p>{{this.errorMsg}}</p>
+  <button (click)="closeModal('error')">Close</button>
+</app-modal>
+

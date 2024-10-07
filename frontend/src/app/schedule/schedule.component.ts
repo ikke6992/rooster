@@ -30,6 +30,8 @@ export class ScheduleComponent {
   destinationdate: string = '';
   destinationclassroom: number = 0;
 
+  errorMsg!: string;
+
   TOTAL_CLASSROOMS: number[] = Array(6)
     .fill(0)
     .map((_, index) => index + 1);
@@ -93,8 +95,13 @@ export class ScheduleComponent {
     window.print();
   }
 
-  exportExcel() {
-    this.dataService.getExcel(this.year).subscribe();
+  exportExcel(){
+    this.dataService.getExcel(this.year).subscribe((response: any)=> {}, (error) => {
+        console.error('Error:', error);
+        // hardcoded ""temporary"" solution, error gets returned as incorrect type (blob)
+        this.errorMsg = "No days planned for this year";
+        this.showModal('error');
+    });
   }
 
   constructor(private dataService: DataService) {}
@@ -105,6 +112,10 @@ export class ScheduleComponent {
       .subscribe((response: any[]) => {
         this.data = response;
         this.data.map((item) => (item.date = new Date(item.date)));
+      }, (error) => {
+        console.error('Error:', error);
+        this.errorMsg = error.error;
+        this.showModal('error');
       });
 
     this.dataService
@@ -113,6 +124,10 @@ export class ScheduleComponent {
         this.freeDays = response;
         this.freeDays.map((item) => (item.date = new Date(item.date)));
         this.days = this.daysInMonth(this.year, this.month);
+      }, (error) => {
+        console.error('Error:', error);
+        this.errorMsg = error.error;
+        this.showModal('error');
       });
   }
 
