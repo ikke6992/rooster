@@ -176,6 +176,7 @@ export interface Scheduledday {
   groupColor: string;
   field: string;
   teacher: string;
+  note: string;
 }
 
 interface Day {
