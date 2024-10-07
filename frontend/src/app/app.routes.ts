@@ -5,7 +5,7 @@ import { ViewTeachersComponent } from './view-teachers/view-teachers.component';
 import { FreeDaysComponent } from './free-days/free-days.component';
 
 export const routes: Routes = [
-  { path: 'schedule', component: ScheduleComponent },
+  { path: '', component: ScheduleComponent },
   { path: 'groups', component: ViewGroupsComponent },
   { path: 'teachers', component: ViewTeachersComponent },
   { path: 'free-days', component: FreeDaysComponent}

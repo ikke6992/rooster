@@ -57,7 +57,10 @@ public class Seeder implements CommandLineRunner {
     var data = saveField("Data", 3, 4, 3);
     var cloud = saveField("Cloud", 2, 4, 2);
     var security = saveField("Security", 3, 3, 2);
+    var returning = saveField("Returnday", 1, 1, 1);
 
+    LocalDate returnDate = LocalDate.of(LocalDate.now().getYear(), 1, 1);
+    var returnDay = groupService.addGroup(0, "#d3d3d3", 0, returning, returnDate, 52, 52, 52);
     var group53 = saveGroup(53, "#ffa500", 12, java);
     var group54 = saveGroup(54, "#ff0000", 8, data);
     var group55 = saveGroup(55, "#00ff00", 10, java);
@@ -65,6 +68,7 @@ public class Seeder implements CommandLineRunner {
     var wubbo = saveTeacher("Wubbo", true, new ArrayList<>(List.of(monday, tuesday, wednesday, friday)), 3, group53, group55);
     var coen = saveTeacher("Coen", false, new ArrayList<>(List.of(monday, thursday)), 2, group53, group55);
 
+    groupService.scheduleReturnDay(returnDay, 4L, DayOfWeek.WEDNESDAY);
     groupService.scheduleGroup(group53);
     groupService.scheduleGroup(group54);
     groupService.scheduleGroup(group55);

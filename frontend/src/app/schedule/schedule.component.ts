@@ -88,7 +88,7 @@ export class ScheduleComponent {
       return;
     }
     this.month--;
-    this.ngOnInit();  
+    this.ngOnInit();
   }
 
   print() {
@@ -141,7 +141,6 @@ export class ScheduleComponent {
   }
 
   onDrop(event: DragEvent, day: Day, classroom: number) {
-
     const indexOfItemBeingDragged = Number(
       event?.dataTransfer?.getData('text')
     );
@@ -149,12 +148,17 @@ export class ScheduleComponent {
       return;
     }
     const draggedObject = this.data[indexOfItemBeingDragged];
-    if (!day.isFreeDay && !day.isWeekend) {
-      
-    console.log(this.month);
-    console.log(day);
-      this.destinationdate = new Date(this.year, this.month-1, day.id+1).toISOString().split('T')[0];
-      console.log(this.destinationdate);
+    if (
+      !day.isFreeDay &&
+      !day.isWeekend &&
+      !(
+        day.id === draggedObject.date.getDay() - 1 &&
+        classroom === draggedObject.classroomId
+      )
+    ) {
+      this.destinationdate = new Date(this.year, this.month - 1, day.id + 1)
+        .toISOString()
+        .split('T')[0];
       this.destinationclassroom = classroom;
       this.selectedModal = draggedObject.id;
       this.showModal('override-' + draggedObject.id);

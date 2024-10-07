@@ -12,6 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -46,6 +47,18 @@ public class GroupController {
     groupService.scheduleGroup(group);
     URI locationOfGroup = ucb.path("/api/v1/groups").buildAndExpand(group.getId()).toUri();
     return ResponseEntity.created(locationOfGroup).body(group);
+  }
+
+  @PutMapping("/{number}/reschedule")
+  public ResponseEntity<?> rescheduleGroup(@PathVariable int number) {
+    Optional<Group> group = groupRepository.findByGroupNumber(number);
+    if (group.isEmpty()) {
+      return ResponseEntity.badRequest().build();
+    } else if (number == 0) {
+      return ResponseEntity.ok(GroupDTO.of(groupService.rescheduleReturnDay(group.get())));
+    } else {
+      return ResponseEntity.ok(GroupDTO.of(groupService.rescheduleGroup(group.get(), LocalDate.now())));
+    }
   }
 
   @PutMapping("/{number}/addVacation")

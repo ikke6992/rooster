@@ -74,6 +74,29 @@ public class GroupService {
     return false;
   }
 
+  public void scheduleReturnDay(Group group, long classroomId, DayOfWeek dayOfWeek) {
+    LocalDate date = group.getStartDate().minusDays(group.getStartDate().getDayOfWeek().getValue()).plusDays(dayOfWeek.getValue());
+    for (int i = 0; i < (group.getWeeksPhase1() + group.getWeeksPhase2() + group.getWeeksPhase3()); i++) {
+      if (freeDayRepository.existsByDate(date)) continue;
+      scheduleddayService.addScheduledday(date.plusWeeks(i), classroomService.getById(classroomId).get(), lessonService.createLesson(group, true));
+    }
+  }
+
+  public Group rescheduleReturnDay (Group group) {
+    group.setStartDate(group.getStartDate().plusWeeks(group.getWeeksPhase1() + group.getWeeksPhase2() + group.getWeeksPhase3()));
+
+    List<Scheduledday> scheduledreturndays = scheduleddayRepository.findByLessonGroup(group);
+    Scheduledday latestScheduledreturnday = scheduledreturndays.get(0);
+    for (Scheduledday scheduledreturnday : scheduledreturndays) {
+      if (scheduledreturnday.getDate().isAfter(latestScheduledreturnday.getDate())) {
+        latestScheduledreturnday = scheduledreturnday;
+      }
+    }
+    
+    scheduleReturnDay(group, latestScheduledreturnday.getClassroom().getId(), latestScheduledreturnday.getDate().getDayOfWeek());
+    return group;
+  }
+
   public void scheduleGroup(Group group) {
     // could be improved with lambdas, passing functions etc
     schedulePeriod(group.getWeeksPhase1(), group.getField().getDaysPhase1(), group.getStartDate(),
@@ -84,7 +107,7 @@ public class GroupService {
         group.getStartDate().plusWeeks(group.getWeeksPhase1() + group.getWeeksPhase2()), group);
   }
 
-  public void rescheduleGroup(Group group, LocalDate startDate) {
+  public Group rescheduleGroup(Group group, LocalDate startDate) {
     // delete old scheduling
     for (Scheduledday scheduledday : scheduleddayRepository.findByLessonGroup(group)) {
       if (!scheduledday.getDate().isBefore(startDate)) {
@@ -113,6 +136,7 @@ public class GroupService {
     } else {
       schedulePeriod(group.getWeeksPhase3(), group.getField().getDaysPhase3(), nextStartDate, group);
     }
+    return group;
   }
 
   private LocalDate schedulePeriod(int weeksPhase, int daysPhase, LocalDate startDate, Group group) {
