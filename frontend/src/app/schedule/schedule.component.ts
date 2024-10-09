@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { DataService } from './data.service';
-import { ScheduledDayComponent } from '../scheduled-day/scheduled-day.component';
+import { ScheduledDayComponent } from './scheduled-day/scheduled-day.component';
 import { ModalComponent } from '../modal/modal.component';
 import { OverrideComponent } from './override/override.component';
 
