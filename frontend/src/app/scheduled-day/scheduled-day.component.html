@@ -1,10 +1,13 @@
 <div *ngIf="item.date.getDate() === day">
-  <div *ngIf="item.classroomId === classroom" style="backgroundColor: {{ item.groupColor }}">
-    <div class="flex justify-center items-center">
-      Group {{ item.groupNumber }} {{ item.field }} 
-      <div class="non-printable ml-1">
-        - Teacher: {{item.teacher}}
-        <div>{{item.note}}</div>
+  <div
+    *ngIf="item.classroomId === classroom"
+    style="backgroundColor: {{ item.groupColor }}"
+  >
+    <div class="popup" (click)="myFunction()">
+      <div class="flex justify-center items-center">
+        Group {{ item.groupNumber }} {{ item.field }}
+        <div class="non-printable ml-1">- Teacher: {{ item.teacher }}</div>
+        <div class="popuptext" id="myPopup{{ item.id }}">{{ item.note }}</div>
       </div>
     </div>
   </div>

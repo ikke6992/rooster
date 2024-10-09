@@ -24,7 +24,9 @@ export class ScheduledDayComponent {
 
  @Input() classroom: number = 0
  
-
+ myFunction() {
+  document.getElementById(`myPopup${this.item.id}`)?.classList.toggle("show");
+}
 }
 
 export interface Scheduledday {
