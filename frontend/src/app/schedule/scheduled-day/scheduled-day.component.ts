@@ -10,36 +10,35 @@ import { CommonModule } from '@angular/common';
 })
 export class ScheduledDayComponent {
   @Input() item: Scheduledday = {
-  id: 0,
-  date: new Date(),
-  classroomId: 0,
-  groupNumber: 0,
-  groupColor: "#000000",
-  field: '',
-  teacher: '',
-  note: ''
- }
+    id: 0,
+    date: new Date(),
+    classroomId: 0,
+    groupNumber: 0,
+    groupColor: '#000000',
+    field: '',
+    teacher: '',
+    note: '',
+  };
 
- @Input() day: number = 0
+  @Input() day: number = 0;
 
- @Input() classroom: number = 0
- 
- myFunction() {
-  document.getElementById(`myPopup${this.item.id}`)?.classList.toggle("show");
-}
+  @Input() classroom: number = 0;
+
+  showNote() {
+    document.getElementById(`myPopup${this.item.id}`)?.classList.toggle('show');
+  }
 }
 
 export interface Scheduledday {
-  id: number,
-  date: Date,
-  classroomId: number,
-  groupNumber: number,
-  groupColor: string,
-  field: string,
-  teacher: string,
-  note: string
+  id: number;
+  date: Date;
+  classroomId: number;
+  groupNumber: number;
+  groupColor: string;
+  field: string;
+  teacher: string;
+  note: string;
 }
-
 
 // export interface Classroom {
 //   id: number

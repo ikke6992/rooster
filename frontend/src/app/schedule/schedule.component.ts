@@ -67,7 +67,7 @@ export class ScheduleComponent {
     return new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
   }
 
-  public incrementMonth() {
+  incrementMonth() {
     if (this.month === 12) {
       this.year++;
       this.month = 1;
@@ -78,7 +78,7 @@ export class ScheduleComponent {
     this.ngOnInit();
   }
 
-  public decrementMonth() {
+  decrementMonth() {
     if (this.month === 1) {
       this.year--;
       this.month = 12;
@@ -165,6 +165,12 @@ export class ScheduleComponent {
       modal_t.classList.add('hhidden');
       this.selectedModal = null;
     }
+  }
+
+  filterData(data: Scheduledday[], day: Day) {
+    return data.filter(
+      (scheduledDay) => scheduledDay.date.getDate() === day.id
+    );
   }
 }
 
