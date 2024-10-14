@@ -8,9 +8,20 @@
         Group {{ item.groupNumber }} {{ item.field }}
         <div class="non-printable ml-1">- Teacher: {{ item.teacher }}</div>
         <div class="popuptext" id="myPopup{{ item.id }}">
-          <ng-container *ngIf="item.note !== null; else showNoNote">{{item.note}}</ng-container>
-          <ng-template #showNoNote>No note</ng-template>
+          <ng-container *ngIf="item.note !== null; else showNoNote">
+            <div>{{item.note}}</div>
+            <button (click)="showModal()" class="button-action">Edit note</button>
+          </ng-container>
+          <ng-template #showNoNote>
+            <div>No note</div>
+            <button (click)="showModal()" class="button-action">Add note</button>
+            </ng-template>
+        </div>
       </div>
     </div>
   </div>
-</div>
+  
+  <app-modal id="add-note" class="hhidden">
+    <div>test</div>
+    <button class="button-action" (click)="closeModal()">Close</button>
+  </app-modal>

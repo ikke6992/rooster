@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ModalComponent } from "../../modal/modal.component";
 
 @Component({
   selector: 'app-scheduled-day',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ModalComponent],
   templateUrl: './scheduled-day.component.html',
   styleUrl: './scheduled-day.component.css',
 })
@@ -26,6 +27,21 @@ export class ScheduledDayComponent {
 
   showNote() {
     document.getElementById(`myPopup${this.item.id}`)?.classList.toggle('show');
+  }
+
+  showModal() {
+    let modal_t = document.getElementById('add-note');
+    if (modal_t !== null) {
+      modal_t.classList.remove('hhidden');
+      modal_t.classList.add('sshow');
+    }
+  }
+  closeModal() {
+    let modal_t = document.getElementById('add-note');
+    if (modal_t !== null) {
+      modal_t.classList.remove('sshow');
+      modal_t.classList.add('hhidden');
+    }
   }
 }
 
