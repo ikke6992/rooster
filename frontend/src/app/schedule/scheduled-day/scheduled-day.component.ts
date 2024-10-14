@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalComponent } from "../../modal/modal.component";
+import { ModalComponent } from '../../modal/modal.component';
 
 @Component({
   selector: 'app-scheduled-day',
@@ -25,8 +25,21 @@ export class ScheduledDayComponent {
 
   @Input() classroom: number = 0;
 
+  timerId: any;
+
   showNote() {
-    document.getElementById(`myPopup${this.item.id}`)?.classList.toggle('show');
+    document.getElementById(`myPopup${this.item.id}`)?.classList.add('show');
+    this.timerId = setTimeout(() => {
+      document
+        .getElementById(`myPopup${this.item.id}`)
+        ?.classList.remove('show');
+    }, 2000);
+  }
+
+  pauseTimeout() {
+    if (this.timerId) {
+      clearTimeout(this.timerId);
+    }
   }
 
   showModal() {
