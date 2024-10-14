@@ -39,12 +39,12 @@ public class LessonController {
   }
 
   @PutMapping("/note/{id}")
-  public ResponseEntity<?> addNote(@PathVariable Long id, @RequestBody NoteRequest note) {
+  public ResponseEntity<?> addNote(@PathVariable Long id, @RequestBody String note) {
       Optional<Lesson> lesson = lessonRepository.findById(id);
     if (lesson.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson with Id: " + id + " does not exist");
     }
-    lesson.get().setNote(note.note());
+    lesson.get().setNote(note);
     return ResponseEntity.ok(lessonRepository.save(lesson.get()));
   }
 }

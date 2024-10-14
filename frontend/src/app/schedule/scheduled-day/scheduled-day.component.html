@@ -3,25 +3,41 @@
     *ngIf="item.classroomId === classroom"
     style="backgroundColor: {{ item.groupColor }}"
   >
-    <div class="popup" (click)="showNote()">
+    <div class="popup" (click)="showNote()" (mouseover)="pauseTimeout()">
       <div class="flex justify-center items-center">
         Group {{ item.groupNumber }} {{ item.field }}
         <div class="non-printable ml-1">- Teacher: {{ item.teacher }}</div>
-        <div class="popuptext" id="myPopup{{ item.id }}" (mouseover)="pauseTimeout()" (mouseleave)="showNote()">
+        <div
+          class="popuptext"
+          id="myPopup{{ item.id }}"
+          (mouseover)="pauseTimeout()"
+          (mouseleave)="showNote()"
+        >
           <ng-container *ngIf="item.note !== null; else showNoNote">
-            <div>{{item.note}}</div>
-            <button (click)="showModal()" class="button-action">Edit note</button>
+            <div>{{ item.note }}</div>
+            <button (click)="showModal()" class="button-action">
+              Edit note
+            </button>
           </ng-container>
           <ng-template #showNoNote>
             <div>No note</div>
-            <button (click)="showModal()" class="button-action">Add note</button>
-            </ng-template>
+            <button (click)="showModal()" class="button-action">
+              Add note
+            </button>
+          </ng-template>
         </div>
       </div>
     </div>
   </div>
-  
+
   <app-modal id="add-note" class="hhidden">
-    <div>test</div>
+    <form [formGroup]="addNote" (ngSubmit)="onSubmit()">
+      <label for="note">Note: </label>
+      <input id="note" type="text" formControlName="note" /><br />
+      <button [disabled]="!addNote.valid" type="submit" class="button-action">
+        Submit
+      </button>
+    </form>
     <button class="button-action" (click)="closeModal()">Close</button>
   </app-modal>
+</div>

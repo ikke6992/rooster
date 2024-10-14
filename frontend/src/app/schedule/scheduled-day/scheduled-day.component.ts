@@ -1,11 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../../modal/modal.component';
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-scheduled-day',
   standalone: true,
-  imports: [CommonModule, ModalComponent],
+  imports: [CommonModule, ModalComponent, ReactiveFormsModule],
   templateUrl: './scheduled-day.component.html',
   styleUrl: './scheduled-day.component.css',
 })
@@ -25,7 +27,13 @@ export class ScheduledDayComponent {
 
   @Input() classroom: number = 0;
 
+  addNote = new FormGroup({
+    note: new FormControl(''),
+  });
+
   timerId: any;
+
+  constructor(private dataService: DataService) {}
 
   showNote() {
     document.getElementById(`myPopup${this.item.id}`)?.classList.add('show');
@@ -55,6 +63,19 @@ export class ScheduledDayComponent {
       modal_t.classList.remove('sshow');
       modal_t.classList.add('hhidden');
     }
+  }
+  onSubmit() {
+    const data = this.addNote.value.note;
+    console.log(data);
+    this.dataService.editNote(this.item.id, data ? data : '').subscribe(
+      (response: any) => {
+        console.log('Response:', response);
+        // window.location.reload();
+      },
+      (error: any) => {
+        console.error('Error:', error);
+      }
+    );
   }
 }
 
