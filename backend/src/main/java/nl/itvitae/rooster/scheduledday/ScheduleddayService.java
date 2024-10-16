@@ -18,6 +18,7 @@ import nl.itvitae.rooster.freeday.FreeDayRepository;
 import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonRepository;
+import nl.itvitae.rooster.teacher.GroupTeacher;
 import nl.itvitae.rooster.teacher.Teacher;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -152,23 +153,28 @@ public class ScheduleddayService {
     }
 
     //if a group has teachers available
-    /**if (!looped && lesson.getGroup().getGroupTeachers().size() != 0) {
-      for (Teacher teacher : lesson.getGroup().getTeachers()) {
+    if (!looped && lesson.getGroup().getGroupTeachers().size() != 0) {
+      for (GroupTeacher groupTeacher : lesson.getGroup().getGroupTeachers()) {
+        Teacher teacher = groupTeacher.getTeacher();
 
         //if teacher can be assigned, find an available date for the lesson and assign the teacher
         boolean teacherAvailable = false;
 
         //check whether teacher is already working maximum amount of days this week
         int lessons = 0;
+        int lessonsForThisGroup = 0;
         int dayOfWeek = date.getDayOfWeek().getValue();
         for (Scheduledday otherScheduledDay : scheduleddayRepository.findByDateBetween(
             date.minusDays(dayOfWeek - 1), date.plusDays(5 - dayOfWeek))) {
           Teacher otherTeacher = otherScheduledDay.getLesson().getTeacher();
           if (otherTeacher != null && teacher.getId().equals(otherTeacher.getId())) {
             lessons++;
+            if (otherScheduledDay.getLesson().getGroup().equals(lesson.getGroup())) {
+              lessonsForThisGroup++;
+            }
           }
         }
-        if (lessons >= teacher.getMaxDaysPerWeek()) {
+        if (lessons >= teacher.getMaxDaysPerWeek() || lessonsForThisGroup >= groupTeacher.getDaysPhase1()) {
           break;
         }
 
@@ -200,7 +206,7 @@ public class ScheduleddayService {
           preventConflicts(scheduledday, looped);
         }
       }
-    }*/
+    }
   }
 
   public ByteArrayInputStream createExcel(int year) throws IOException {
