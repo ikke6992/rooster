@@ -29,17 +29,3 @@
 .popup .show {
   visibility: visible;
 }
-
-/** this makes the .modal visible */
-.sshow {
-  display: block;
-}
-/** this makes the element hidden/invisible */
-.hhidden {
-  display: none;
-}
-
-input {
-  border-width: 1px;
-  border-color: black;
-}

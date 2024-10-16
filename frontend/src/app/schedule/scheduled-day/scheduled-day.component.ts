@@ -28,6 +28,9 @@ export class ScheduledDayComponent {
   @Input() classroom: number = 0;
 
 
+  addNote!: FormGroup;
+  feedbackMsg!: string;
+  window: any = window;
   timerId: any;
 
   constructor(private dataService: DataService) {}
@@ -47,15 +50,17 @@ export class ScheduledDayComponent {
     }
   }
 
-  showModal(id: number) {
-    let modal_t = document.getElementById(`add-note-${id}`);
+  showModal(name: string) {
+    console.log(name);
+    
+    let modal_t = document.getElementById(name);
     if (modal_t !== null) {
       modal_t.classList.remove('hhidden');
       modal_t.classList.add('sshow');
     }
   }
-  closeModal(id: number) {
-    let modal_t = document.getElementById(`add-note-${id}`);
+  closeModal(name: string) {
+    let modal_t = document.getElementById(name);
     if (modal_t !== null) {
       modal_t.classList.remove('sshow');
       modal_t.classList.add('hhidden');
@@ -65,17 +70,18 @@ export class ScheduledDayComponent {
     const data = this.addNote.value.note;
     console.log(data);
     this.dataService.editNote(this.item.id, data ? data : '').subscribe(
-      (response: any) => {
+      (response) => {
         console.log('Response:', response);
-        window.location.reload();
+        this.feedbackMsg = `Note ${data} successfully added`;
+        this.showModal(`feedback-${this.item.id}`);
       },
-      (error: any) => {
+      (error) => {
         console.error('Error:', error);
+        this.feedbackMsg = 'Error: ' + error.error;
+        this.showModal(`feedback-${this.item.id}`);
       }
     );
   }
-
-  addNote!: FormGroup;
 
   ngOnInit() {
     this.initializeForm();

@@ -15,13 +15,13 @@
         >
           <ng-container *ngIf="item.note !== null; else showNoNote">
             <div>{{ item.note }}</div>
-            <button (click)="showModal(item.id)" class="button-action">
+            <button (click)="showModal('add-note-' + item.id)" class="button-action">
               Edit note
             </button>
           </ng-container>
           <ng-template #showNoNote>
             <div>No note</div>
-            <button (click)="showModal(item.id)" class="button-action">
+            <button (click)="showModal('add-note-' + item.id)" class="button-action">
               Add note
             </button>
           </ng-template>
@@ -37,6 +37,11 @@
         Submit
       </button>
     </form>
-    <button class="button-action" (click)="closeModal(item.id)">Close</button>
+    <button class="button-action" (click)="closeModal('add-note-' + item.id)">Close</button>
+    <app-modal id="feedback-{{item.id}}" class="hhidden">
+      <p>{{ this.feedbackMsg }}</p>
+      <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : window.location.reload()">Close</button>
+    </app-modal>
+    
   </app-modal>
 </div>
