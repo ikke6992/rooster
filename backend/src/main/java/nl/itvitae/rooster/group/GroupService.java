@@ -78,7 +78,7 @@ public class GroupService {
     LocalDate date = group.getStartDate().minusDays(group.getStartDate().getDayOfWeek().getValue()).plusDays(dayOfWeek.getValue());
     for (int i = 0; i < (group.getWeeksPhase1() + group.getWeeksPhase2() + group.getWeeksPhase3()); i++) {
       if (freeDayRepository.existsByDate(date)) continue;
-      scheduleddayService.addScheduledday(date.plusWeeks(i), classroomService.getById(classroomId).get(), lessonService.createLesson(group));
+      scheduleddayService.addScheduledday(1, date.plusWeeks(i), classroomService.getById(classroomId).get(), lessonService.createLesson(group));
     }
   }
 
@@ -99,11 +99,11 @@ public class GroupService {
 
   public void scheduleGroup(Group group) {
     // could be improved with lambdas, passing functions etc
-    schedulePeriod(group.getWeeksPhase1(), group.getField().getDaysPhase1(), group.getStartDate(),
+    schedulePeriod(1, group.getWeeksPhase1(), group.getField().getDaysPhase1(), group.getStartDate(),
         group);
-    schedulePeriod(group.getWeeksPhase2(), group.getField().getDaysPhase2(),
+    schedulePeriod(2, group.getWeeksPhase2(), group.getField().getDaysPhase2(),
         group.getStartDate().plusWeeks(group.getWeeksPhase1()), group);
-    schedulePeriod(group.getWeeksPhase3(), group.getField().getDaysPhase3(),
+    schedulePeriod(3, group.getWeeksPhase3(), group.getField().getDaysPhase3(),
         group.getStartDate().plusWeeks(group.getWeeksPhase1() + group.getWeeksPhase2()), group);
   }
 
@@ -124,22 +124,22 @@ public class GroupService {
       }
     }
     LocalDate previousStartDate = startDate;
-    LocalDate nextStartDate = schedulePeriod(Math.max(group.getWeeksPhase1() - weeks, 0), group.getField().getDaysPhase1(), startDate, group);
+    LocalDate nextStartDate = schedulePeriod(1, Math.max(group.getWeeksPhase1() - weeks, 0), group.getField().getDaysPhase1(), startDate, group);
     if (nextStartDate.equals(previousStartDate)) {
-      nextStartDate = schedulePeriod(Math.max(group.getWeeksPhase2() - (weeks - group.getWeeksPhase1()), 0), group.getField().getDaysPhase2(), nextStartDate, group);
+      nextStartDate = schedulePeriod(2, Math.max(group.getWeeksPhase2() - (weeks - group.getWeeksPhase1()), 0), group.getField().getDaysPhase2(), nextStartDate, group);
     } else {
       previousStartDate = nextStartDate;
-      nextStartDate = schedulePeriod(group.getWeeksPhase2(), group.getField().getDaysPhase2(), nextStartDate, group);
+      nextStartDate = schedulePeriod(2, group.getWeeksPhase2(), group.getField().getDaysPhase2(), nextStartDate, group);
     }
     if (nextStartDate.equals(previousStartDate)) {
-      schedulePeriod(Math.max(group.getWeeksPhase3() - (weeks - group.getWeeksPhase1() - group.getWeeksPhase2()), 0), group.getField().getDaysPhase3(), nextStartDate, group);
+      schedulePeriod(3, Math.max(group.getWeeksPhase3() - (weeks - group.getWeeksPhase1() - group.getWeeksPhase2()), 0), group.getField().getDaysPhase3(), nextStartDate, group);
     } else {
-      schedulePeriod(group.getWeeksPhase3(), group.getField().getDaysPhase3(), nextStartDate, group);
+      schedulePeriod(3, group.getWeeksPhase3(), group.getField().getDaysPhase3(), nextStartDate, group);
     }
     return group;
   }
 
-  private LocalDate schedulePeriod(int weeksPhase, int daysPhase, LocalDate startDate, Group group) {
+  private LocalDate schedulePeriod(int phase, int weeksPhase, int daysPhase, LocalDate startDate, Group group) {
     int[] classroomIDs = new int[daysPhase];
 
     for (int i = 1; i <= weeksPhase; i++) {
@@ -161,7 +161,7 @@ public class GroupService {
         if (freeDayRepository.existsByDate(date)) continue;
         final Lesson lesson = lessonService.createLesson(group);
         Classroom classroom = classroomService.getById(classroomIDs[j - 1] != 0 ? classroomIDs[j - 1] : 1).get();
-        Scheduledday scheduledday = scheduleddayService.addScheduledday(date,
+        Scheduledday scheduledday = scheduleddayService.addScheduledday(phase, date,
             classroom, lesson);
         if (freeDayRepository.existsByDate(scheduledday.getDate())) {
           scheduleddayRepository.delete(scheduledday);

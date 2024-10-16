@@ -71,8 +71,8 @@ public class Seeder implements CommandLineRunner {
     var group54 = saveGroup(54, "#ff0000", 8, data);
     var group55 = saveGroup(55, "#00ff00", 10, java);
 
-    var wubbo = saveTeacher("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)), 3, group53, group55);
-    var coen = saveTeacher("Coen", new ArrayList<>(List.of(monday, thursday)), 2, group53, group55);
+    var wubbo = saveTeacher("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)), 3, 1, 2, 2, group53, group55);
+    var coen = saveTeacher("Coen", new ArrayList<>(List.of(monday, thursday)), 2, 2, 2, 1, group53, group55);
 
     groupService.scheduleReturnDay(returnDay, 4L, DayOfWeek.WEDNESDAY);
     groupService.scheduleGroup(group53);
@@ -96,11 +96,11 @@ public class Seeder implements CommandLineRunner {
     return groupService.addGroup(groupNumber, color, numberOfStudents, field, LocalDate.now().minusWeeks(4), 8, 12, 8);
   }
 
-  private Teacher saveTeacher(String name, List<MyDay> availability, int maxDaysPerWeek, Group... groups) {
+  private Teacher saveTeacher(String name, List<MyDay> availability, int maxDaysPerWeek, int daysPhase1, int daysPhase2, int daysPhase3, Group... groups) {
     Teacher teacher = new Teacher(name, availability, maxDaysPerWeek);
     teacherRepository.save(teacher);
     for (Group group : groups) {
-      GroupTeacher groupTeacher = new GroupTeacher(group, teacher, 2, 2, 2);
+      GroupTeacher groupTeacher = new GroupTeacher(group, teacher, daysPhase1, daysPhase2, daysPhase3);
       groupTeacherRepository.save(groupTeacher);
       group.addGroupTeacher(groupTeacher);
       groupRepository.save(group);

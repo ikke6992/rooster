@@ -56,9 +56,9 @@ public class ScheduleddayService {
     return scheduleddayRepository.findByDateBetween(startDate, endDate);
   }
 
-  public Scheduledday addScheduledday(LocalDate date, Classroom classroom, Lesson lesson) {
+  public Scheduledday addScheduledday(int phase, LocalDate date, Classroom classroom, Lesson lesson) {
     Scheduledday scheduledday = new Scheduledday(date, classroom, lesson);
-    preventConflicts(scheduledday, false);
+    preventConflicts(phase, scheduledday, false);
     return scheduleddayRepository.save(scheduledday);
   }
 
@@ -123,7 +123,7 @@ public class ScheduleddayService {
     return new OverrideDTO(successes, failures);
   }
 
-  private void preventConflicts(Scheduledday scheduledday, boolean looped) {
+  private void preventConflicts(int phase, Scheduledday scheduledday, boolean looped) {
     LocalDate date = scheduledday.getDate();
     Lesson lesson = scheduledday.getLesson();
     Classroom classroom = scheduledday.getClassroom();
@@ -133,10 +133,10 @@ public class ScheduleddayService {
         .getGroup())) {
       if (date.getDayOfWeek() != DayOfWeek.FRIDAY) {
         scheduledday.setDate(date.plusDays(1));
-        preventConflicts(scheduledday, looped);
+        preventConflicts(phase, scheduledday, looped);
       } else {
         scheduledday.setDate(date.minusDays(4));
-        preventConflicts(scheduledday, true);
+        preventConflicts(phase, scheduledday, true);
       }
     }
     if (isClassroomFull || scheduleddayRepository.existsByDateAndClassroom(scheduledday.getDate(),
@@ -149,7 +149,7 @@ public class ScheduleddayService {
       } else {
         scheduledday.setClassroom(classroomRepository.findById(1L).get());
       }
-      preventConflicts(scheduledday, looped);
+      preventConflicts(phase, scheduledday, looped);
     }
 
     //if a group has teachers available
@@ -169,12 +169,15 @@ public class ScheduleddayService {
           Teacher otherTeacher = otherScheduledDay.getLesson().getTeacher();
           if (otherTeacher != null && teacher.getId().equals(otherTeacher.getId())) {
             lessons++;
-            if (otherScheduledDay.getLesson().getGroup().equals(lesson.getGroup())) {
+            if (otherScheduledDay.getLesson().getGroup().getGroupNumber() == lesson.getGroup().getGroupNumber()) {
               lessonsForThisGroup++;
             }
           }
         }
-        if (lessons >= teacher.getMaxDaysPerWeek() || lessonsForThisGroup >= groupTeacher.getDaysPhase1()) {
+        if (lessons >= teacher.getMaxDaysPerWeek() ||
+            (phase == 1 && lessonsForThisGroup >= groupTeacher.getDaysPhase1()) ||
+            (phase == 2 && lessonsForThisGroup >= groupTeacher.getDaysPhase2()) ||
+            (phase == 3 && lessonsForThisGroup >= groupTeacher.getDaysPhase3())) {
           break;
         }
 
@@ -203,7 +206,7 @@ public class ScheduleddayService {
         //if teacher isn't available and it's not the end of the week, check the next day
         if (!teacherAvailable && date.getDayOfWeek() != DayOfWeek.FRIDAY) {
           scheduledday.setDate(date.plusDays(1));
-          preventConflicts(scheduledday, looped);
+          preventConflicts(phase, scheduledday, looped);
         }
       }
     }
