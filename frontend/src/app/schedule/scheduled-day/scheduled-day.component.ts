@@ -27,9 +27,6 @@ export class ScheduledDayComponent {
 
   @Input() classroom: number = 0;
 
-  addNote = new FormGroup({
-    note: new FormControl(''),
-  });
 
   timerId: any;
 
@@ -76,6 +73,18 @@ export class ScheduledDayComponent {
         console.error('Error:', error);
       }
     );
+  }
+
+  addNote!: FormGroup;
+
+  ngOnInit() {
+    this.initializeForm();
+  }
+
+  private initializeForm() {
+    this.addNote = new FormGroup({
+      note: new FormControl(this.item.note),
+    });
   }
 }
 

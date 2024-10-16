@@ -45,7 +45,7 @@ public class LessonController {
   public ResponseEntity<?> addNote(@PathVariable Long id, @RequestBody String note) {
     Optional<Scheduledday> scheduledday = scheduleddayRepository.findById(id);
     if (scheduledday.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson with Id: " + id + " does not exist");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Scheduled day with Id: " + id + " does not exist");
     }
     Lesson lesson = scheduledday.get().getLesson();
     lesson.setNote(note);
