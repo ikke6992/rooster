@@ -1,6 +1,7 @@
 package nl.itvitae.rooster.lesson;
 
 import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.teacher.Teacher;
@@ -13,10 +14,6 @@ public class LessonService {
 
   public List<Lesson> findAll() {
     return lessonRepository.findAll();
-  }
-
-  public Lesson createTestLesson(){
-    return lessonRepository.save(new Lesson());
   }
 
   public Lesson createLesson(Group group, boolean isPracticum){

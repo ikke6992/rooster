@@ -35,7 +35,7 @@
         (drop)="onDrop($event, day, number)"
       >
         <div
-          *ngFor="let item of data"
+          *ngFor="let item of filterData(data, day)"
           draggable="true"
           (dragstart)="onDragStart($event, item)"
         >

@@ -36,6 +36,8 @@ public class Lesson {
 
   private boolean isPracticum;
 
+  private String note;
+
   public Lesson(Group group, boolean isPracticum) {
     this.group = group;
     this.isPracticum = isPracticum;

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { DataService } from './data.service';
-import { ScheduledDayComponent } from '../scheduled-day/scheduled-day.component';
+import { ScheduledDayComponent } from './scheduled-day/scheduled-day.component';
 import { ModalComponent } from '../modal/modal.component';
 import { OverrideComponent } from './override/override.component';
 
@@ -69,7 +69,7 @@ export class ScheduleComponent {
     return new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
   }
 
-  public incrementMonth() {
+  incrementMonth() {
     if (this.month === 12) {
       this.year++;
       this.month = 1;
@@ -80,7 +80,7 @@ export class ScheduleComponent {
     this.ngOnInit();
   }
 
-  public decrementMonth() {
+  decrementMonth() {
     if (this.month === 1) {
       this.year--;
       this.month = 12;
@@ -181,6 +181,12 @@ export class ScheduleComponent {
       this.selectedModal = null;
     }
   }
+
+  filterData(data: Scheduledday[], day: Day) {
+    return data.filter(
+      (scheduledDay) => scheduledDay.date.getDate() === day.id
+    );
+  }
 }
 
 export interface Scheduledday {
@@ -191,6 +197,7 @@ export interface Scheduledday {
   groupColor: string;
   field: string;
   teacher: string;
+  note: string;
 }
 
 interface Day {
