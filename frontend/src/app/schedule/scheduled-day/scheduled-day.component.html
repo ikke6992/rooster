@@ -31,19 +31,22 @@
       </div>
     </div>
   </div>
-  <app-modal id="add-note-{{item.id}}" class="hhidden">
-    <form [formGroup]="addNote" (ngSubmit)="onSubmit()">
-      <label for="note">Note: </label>
-      <input id="note" type="text" formControlName="note" /><br />
-      <button [disabled]="!addNote.valid" type="submit" class="button-action">
-        Submit
-      </button>
-    </form>
-    <button class="button-action" (click)="closeModal('add-note-' + item.id)">Close</button>
-    <app-modal id="feedback-{{item.id}}" class="hhidden">
-      <p>{{ this.feedbackMsg }}</p>
-      <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback-' + item.id) : window.location.reload()">Close</button>
+  <div draggable="true" (dragstart)="preventDrag($event)">
+    <app-modal id="add-note-{{item.id}}" class="hhidden" >
+      <form [formGroup]="addNote" (ngSubmit)="onSubmit()">
+        <label for="note">Note: </label>
+        <input id="note" type="text" formControlName="note" /><br />
+        <button [disabled]="!addNote.valid" type="submit" class="button-action">
+          Submit
+        </button>
+      </form>
+      <button class="button-action" (click)="closeModal('add-note-' + item.id)">Close</button>
+      <app-modal id="feedback-{{item.id}}" class="hhidden">
+        <p>{{ this.feedbackMsg }}</p>
+        <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback-' + item.id) : window.location.reload()">Close</button>
+      </app-modal>
+      
     </app-modal>
-    
-  </app-modal>
+  </div>
+
 </div>

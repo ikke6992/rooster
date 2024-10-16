@@ -134,6 +134,8 @@ export class ScheduleComponent {
   onDragStart(event: DragEvent, draggedObject: Scheduledday) {
     const index = this.data.findIndex((l) => l.id === draggedObject.id);
     event?.dataTransfer?.setData('text', index.toString());
+    var img = new Image();
+    event.dataTransfer?.setDragImage(img, 0 ,0);
   }
 
   onDragOver(event: DragEvent) {

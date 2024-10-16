@@ -98,7 +98,6 @@ export class ScheduledDayComponent {
 
   preventDrag(event: DragEvent){
     event.preventDefault();
-    // event.stopPropagation();
   }
 }
 
