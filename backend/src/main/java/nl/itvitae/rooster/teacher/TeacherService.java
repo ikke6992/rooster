@@ -21,6 +21,7 @@ public class TeacherService {
   private final GroupService groupService;
   private final GroupRepository groupRepository;
   private final MyDayRepository myDayRepository;
+  private final GroupTeacherRepository groupTeacherRepository;
 
   public List<Teacher> getAll() {
     return teacherRepository.findAll();
@@ -30,16 +31,17 @@ public class TeacherService {
     return teacherRepository.findById(id).get();
   }
 
-  public Teacher addTeacher(String name, boolean teachesPracticum, String[] availability, int maxDaysPerWeek) {
+  public Teacher addTeacher(String name, String[] availability, int maxDaysPerWeek) {
     List<MyDay> newAvailability = getAvailability(availability);
     int realMaxDaysPerWeek = Math.min(newAvailability.size(), maxDaysPerWeek);
-    return teacherRepository.save(new Teacher(name, teachesPracticum, newAvailability, realMaxDaysPerWeek));
+    return teacherRepository.save(new Teacher(name, newAvailability, realMaxDaysPerWeek));
   }
 
-  public Teacher addGroup(long id, int groupNumber) {
+  public Teacher addGroup(long id, int groupNumber, int daysPhase1, int daysPhase2, int daysPhase3) {
     Teacher teacher = getById(id);
     Group group = groupRepository.findByGroupNumber(groupNumber).get();
-    teacher.addGroup(group);
+    GroupTeacher groupTeacher = new GroupTeacher(group, teacher, daysPhase1, daysPhase2, daysPhase3);
+    groupTeacherRepository.save(groupTeacher);
     groupService.rescheduleGroup(group, LocalDate.now());
     teacherRepository.save(teacher);
     return teacher;
