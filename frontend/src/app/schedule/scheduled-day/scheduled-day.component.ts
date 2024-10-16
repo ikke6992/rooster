@@ -50,15 +50,15 @@ export class ScheduledDayComponent {
     }
   }
 
-  showModal() {
-    let modal_t = document.getElementById('add-note');
+  showModal(id: number) {
+    let modal_t = document.getElementById(`add-note-${id}`);
     if (modal_t !== null) {
       modal_t.classList.remove('hhidden');
       modal_t.classList.add('sshow');
     }
   }
-  closeModal() {
-    let modal_t = document.getElementById('add-note');
+  closeModal(id: number) {
+    let modal_t = document.getElementById(`add-note-${id}`);
     if (modal_t !== null) {
       modal_t.classList.remove('sshow');
       modal_t.classList.add('hhidden');
@@ -70,7 +70,7 @@ export class ScheduledDayComponent {
     this.dataService.editNote(this.item.id, data ? data : '').subscribe(
       (response: any) => {
         console.log('Response:', response);
-        // window.location.reload();
+        window.location.reload();
       },
       (error: any) => {
         console.error('Error:', error);

@@ -3,6 +3,8 @@ package nl.itvitae.rooster.lesson;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.field.Field;
+import nl.itvitae.rooster.scheduledday.Scheduledday;
+import nl.itvitae.rooster.scheduledday.ScheduleddayRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +25,7 @@ public class LessonController {
 
   private final LessonService lessonService;
   private final LessonRepository lessonRepository;
+  private final ScheduleddayRepository scheduleddayRepository;
 
   @GetMapping
   public ResponseEntity<?> getAll() {
@@ -40,11 +43,12 @@ public class LessonController {
 
   @PutMapping("/note/{id}")
   public ResponseEntity<?> addNote(@PathVariable Long id, @RequestBody String note) {
-      Optional<Lesson> lesson = lessonRepository.findById(id);
-    if (lesson.isEmpty()) {
+    Optional<Scheduledday> scheduledday = scheduleddayRepository.findById(id);
+    if (scheduledday.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson with Id: " + id + " does not exist");
     }
-    lesson.get().setNote(note);
-    return ResponseEntity.ok(lessonRepository.save(lesson.get()));
+    Lesson lesson = scheduledday.get().getLesson();
+    lesson.setNote(note);
+    return ResponseEntity.ok(lessonRepository.save(lesson));
   }
 }

@@ -15,13 +15,13 @@
         >
           <ng-container *ngIf="item.note !== null; else showNoNote">
             <div>{{ item.note }}</div>
-            <button (click)="showModal()" class="button-action">
+            <button (click)="showModal(item.id)" class="button-action">
               Edit note
             </button>
           </ng-container>
           <ng-template #showNoNote>
             <div>No note</div>
-            <button (click)="showModal()" class="button-action">
+            <button (click)="showModal(item.id)" class="button-action">
               Add note
             </button>
           </ng-template>
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <app-modal id="add-note" class="hhidden">
+  <app-modal id="add-note-{{item.id}}" class="hhidden">
     <form [formGroup]="addNote" (ngSubmit)="onSubmit()">
       <label for="note">Note: </label>
       <input id="note" type="text" formControlName="note" /><br />
@@ -38,6 +38,6 @@
         Submit
       </button>
     </form>
-    <button class="button-action" (click)="closeModal()">Close</button>
+    <button class="button-action" (click)="closeModal(item.id)">Close</button>
   </app-modal>
 </div>
