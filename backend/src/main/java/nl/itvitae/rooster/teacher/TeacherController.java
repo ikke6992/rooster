@@ -31,13 +31,13 @@ public class TeacherController {
   }
 
   @PutMapping("/edit/{id}/addGroup/{groupNumber}")
-  public ResponseEntity<?> addGroup(@PathVariable long id, @PathVariable int groupNumber) {
+  public ResponseEntity<?> addGroup(@PathVariable long id, @PathVariable int groupNumber, @RequestBody DaysAssignedRequest request) {
     for (GroupTeacher groupTeacher : teacherService.getById(id).getGroupTeachers()) {
       if (groupTeacher.getGroup().getGroupNumber() == groupNumber) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body("Teacher is already assigned to this group.");
       }
     }
-    return ResponseEntity.ok(TeacherDTO.of(teacherService.addGroup(id, groupNumber, 2, 2, 2)));
+    return ResponseEntity.ok(TeacherDTO.of(teacherService.addGroup(id, groupNumber, request.daysPhase1(), request.daysPhase2(), request.daysPhase3())));
   }
 
   @PutMapping("/edit/{id}")

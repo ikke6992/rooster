@@ -21,6 +21,7 @@ public class TeacherService {
   private final GroupService groupService;
   private final GroupRepository groupRepository;
   private final MyDayRepository myDayRepository;
+  private final GroupTeacherRepository groupTeacherRepository;
 
   public List<Teacher> getAll() {
     return teacherRepository.findAll();
@@ -40,6 +41,7 @@ public class TeacherService {
     Teacher teacher = getById(id);
     Group group = groupRepository.findByGroupNumber(groupNumber).get();
     GroupTeacher groupTeacher = new GroupTeacher(group, teacher, daysPhase1, daysPhase2, daysPhase3);
+    groupTeacherRepository.save(groupTeacher);
     groupService.rescheduleGroup(group, LocalDate.now());
     teacherRepository.save(teacher);
     return teacher;
