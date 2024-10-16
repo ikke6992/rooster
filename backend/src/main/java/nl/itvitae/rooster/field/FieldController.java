@@ -8,6 +8,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -36,5 +37,15 @@ public class FieldController {
     final Field field = fieldService.addField(request.name(), request.daysPhase1(), request.daysPhase2(), request.daysPhase3());
     URI locationOfField = ucb.path("/api/v1/fields").buildAndExpand(field.getId()).toUri();
     return ResponseEntity.created(locationOfField).body(field);
+  }
+
+  @PutMapping("/{id}/edit")
+  public ResponseEntity<?> editField(@PathVariable long id, @RequestBody FieldRequest request) {
+    Optional<Field> field = fieldRepository.findById(id);
+    if (field.isEmpty()) {
+      return ResponseEntity.badRequest().build();
+    } else {
+      return ResponseEntity.ok(fieldService.editField(field.get(), request.name(), request.daysPhase1(), request.daysPhase2(), request.daysPhase3()));
+    }
   }
 }

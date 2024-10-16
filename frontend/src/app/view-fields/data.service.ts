@@ -19,4 +19,14 @@ export class DataService {
       headers: new HttpHeaders({ 'Content-type': 'application/json' }),
     });
   }
+
+  putField(fieldId: number, data: any): Observable<any> {
+    return this.http.put<any>(
+      this.apiUrlFields + '/' + fieldId + '/edit',
+      data,
+      {
+        headers: new HttpHeaders({ 'Content-type': 'application/json' }),
+      }
+    );
+  }
 }

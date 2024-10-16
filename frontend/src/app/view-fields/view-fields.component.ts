@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
 import { DataService } from './data.service';
 import { AddFieldComponent } from './add-field/add-field.component';
+import { EditFieldComponent } from './edit-field/edit-field.component';
 
 @Component({
   selector: 'app-view-fields',
   standalone: true,
-  imports: [CommonModule, ModalComponent, AddFieldComponent],
+  imports: [CommonModule, ModalComponent, AddFieldComponent, EditFieldComponent],
   templateUrl: './view-fields.component.html',
   styleUrl: './view-fields.component.css',
 })

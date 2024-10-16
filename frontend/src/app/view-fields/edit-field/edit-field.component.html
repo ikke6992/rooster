@@ -1,0 +1,40 @@
+<h1>Edit Field {{ field.name }}</h1>
+<form [formGroup]="editField" (ngSubmit)="onSubmit()">
+  <label for="name">Name: </label>
+  <input id="name" type="text" formControlName="name" required /><br />
+  <label for="days-phase-1">Days Phase 1: </label>
+  <input
+    id="days-phase-1"
+    type="number"
+    formControlName="daysPhase1"
+    required
+  /><br />
+  <label for="days-phase-2">Days Phase 2: </label>
+  <input
+    id="days-phase-2"
+    type="number"
+    formControlName="daysPhase2"
+    required
+  /><br />
+  <label for="days-phase-3">Days Phase 2: </label>
+  <input
+    id="days-phase-3"
+    type="number"
+    formControlName="daysPhase3"
+    required
+  /><br />
+
+  <button
+    [ngClass]="editField.valid ? 'button-action' : 'button-incomplete'"
+    type="submit"
+    [disabled]="!editField.valid"
+  >
+    Submit
+  </button>
+  
+</form>
+
+<app-modal id="feedback" class="hhidden">
+  <p>{{ this.feedbackMsg }}</p>
+  <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : window.location.reload()">Close</button>
+</app-modal>
