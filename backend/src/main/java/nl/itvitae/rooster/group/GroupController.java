@@ -34,7 +34,7 @@ public class GroupController {
       UriComponentsBuilder ucb) {
 
     if (groupRepository.findByGroupNumber(request.groupNumber()).isPresent()) {
-      return ResponseEntity.badRequest().build();
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("Group with number " + request.groupNumber() + " already exists.");
     }
     if (groupService.checkSimilarColor(request.color())) {
       return ResponseEntity.status(HttpStatus.CONFLICT).body("Color is too similar to color of other group.");

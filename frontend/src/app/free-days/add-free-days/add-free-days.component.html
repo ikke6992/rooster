@@ -38,7 +38,11 @@
     <div formArrayName="array">
       <div *ngFor="let holiday of holidays; let i = index">
         <label for="{{ holiday.name }}">{{ holiday.name }}: </label>
-        <input id="{{ holiday.name }}" type="checkbox" [formControlName]="i" /><br />
+        <input
+          id="{{ holiday.name }}"
+          type="checkbox"
+          [formControlName]="i"
+        /><br />
       </div>
     </div>
     <button
@@ -50,3 +54,7 @@
     </button>
   </form>
 </ng-template>
+<app-modal id="feedback" class="hhidden">
+  <p>{{ this.feedbackMsg }}</p>
+  <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : window.location.reload()">Close</button>
+</app-modal>

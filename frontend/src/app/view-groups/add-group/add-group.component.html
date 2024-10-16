@@ -52,7 +52,17 @@
     required
   /><br />
 
-  <button type="submit" [disabled]="!addGroup.valid" class="button-action">
+  <button
+    [ngClass]="addGroup.valid ? 'button-action' : 'button-incomplete'"
+    type="submit"
+    [disabled]="!addGroup.valid"
+  >
     Submit
   </button>
+  
 </form>
+
+<app-modal id="feedback" class="hhidden">
+  <p>{{ this.feedbackMsg }}</p>
+  <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : window.location.reload()">Close</button>
+</app-modal>
