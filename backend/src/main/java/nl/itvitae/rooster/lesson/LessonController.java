@@ -42,7 +42,7 @@ public class LessonController {
   }
 
   @PutMapping("/note/{id}")
-  public ResponseEntity<?> addNote(@PathVariable Long id, @RequestBody String note) {
+  public ResponseEntity<?> addNote(@PathVariable Long id, @RequestBody(required = false) String note) {
     Optional<Scheduledday> scheduledday = scheduleddayRepository.findById(id);
     if (scheduledday.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Scheduled day with Id: " + id + " does not exist");

@@ -45,25 +45,17 @@ export class ScheduledDayComponent {
   }
 
   startTimer(){
-    console.log("start");
-    
-    this.timerId = setTimeout(() => {document.getElementById(`myPopup${this.item.id}`)?.classList.remove('show');
-    console.log("end");
-    
+    this.timerId = setTimeout(() => {document.getElementById(`myPopup${this.item.id}`)?.classList.remove('show');    
     }, 2000);
   }
 
   pauseTimeout() {
-    console.log("pause");
-    
     if (this.timerId) {
       clearTimeout(this.timerId);
     }
   }
 
-  showModal(name: string) {
-    console.log(name);
-    
+  showModal(name: string) {    
     let modal_t = document.getElementById(name);
     if (modal_t !== null) {
       modal_t.classList.remove('hhidden');
@@ -83,7 +75,7 @@ export class ScheduledDayComponent {
     this.dataService.editNote(this.item.id, data ? data : '').subscribe(
       (response) => {
         console.log('Response:', response);
-        this.feedbackMsg = `Note ${data} successfully added`;
+        this.feedbackMsg = data === '' ? `Note successfully removed` : `Note ${data} successfully added`;
         this.showModal(`feedback-${this.item.id}`);
       },
       (error) => {

@@ -40,7 +40,7 @@
     <button class="button-action" (click)="closeModal('add-note-' + item.id)">Close</button>
     <app-modal id="feedback-{{item.id}}" class="hhidden">
       <p>{{ this.feedbackMsg }}</p>
-      <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : window.location.reload()">Close</button>
+      <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback-' + item.id) : window.location.reload()">Close</button>
     </app-modal>
     
   </app-modal>
