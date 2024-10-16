@@ -6,4 +6,11 @@
   <p>Phase 2: {{ field.daysPhase3 }} days per week</p>
   <button class="button-action">Edit</button>
 </div>
-<button class="button-action">Add Field</button>
+<button class="button-action" (click)="showModal('add-field')">
+  Add Field
+</button>
+
+<app-modal id="add-field" class="hhidden">
+  <app-add-field></app-add-field>
+  <button (click)="closeModal('add-field')" class="button-action">Close</button>
+</app-modal>
