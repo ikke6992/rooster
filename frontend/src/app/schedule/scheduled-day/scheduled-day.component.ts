@@ -95,6 +95,11 @@ export class ScheduledDayComponent {
       note: new FormControl(this.item.note),
     });
   }
+
+  preventDrag(event: DragEvent){
+    event.preventDefault();
+    // event.stopPropagation();
+  }
 }
 
 export interface Scheduledday {

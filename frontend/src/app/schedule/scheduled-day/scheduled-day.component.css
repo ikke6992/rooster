@@ -4,6 +4,7 @@
 }
 
 .popup .popuptext {
+  cursor: default;
   visibility: hidden;
   background-color: #555;
   color: #fff;

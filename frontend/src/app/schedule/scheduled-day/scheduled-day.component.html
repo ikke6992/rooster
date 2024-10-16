@@ -12,6 +12,8 @@
           id="myPopup{{ item.id }}"
           (mouseover)="pauseTimeout()"
           (mouseleave)="startTimer()"
+          (dragstart)="preventDrag($event)"
+          draggable="true"
         >
           <ng-container *ngIf="item.note !== null; else showNoNote" >
             <div>{{ item.note }}</div>
