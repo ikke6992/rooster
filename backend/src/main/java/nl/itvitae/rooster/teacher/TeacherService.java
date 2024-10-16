@@ -30,10 +30,10 @@ public class TeacherService {
     return teacherRepository.findById(id).get();
   }
 
-  public Teacher addTeacher(String name, boolean teachesPracticum, String[] availability, int maxDaysPerWeek) {
+  public Teacher addTeacher(String name, String[] availability, int maxDaysPerWeek) {
     List<MyDay> newAvailability = getAvailability(availability);
     int realMaxDaysPerWeek = Math.min(newAvailability.size(), maxDaysPerWeek);
-    return teacherRepository.save(new Teacher(name, teachesPracticum, newAvailability, realMaxDaysPerWeek));
+    return teacherRepository.save(new Teacher(name, newAvailability, realMaxDaysPerWeek));
   }
 
   public Teacher addGroup(long id, int groupNumber, int daysPhase1, int daysPhase2, int daysPhase3) {
