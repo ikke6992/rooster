@@ -36,15 +36,26 @@ export class ScheduledDayComponent {
   constructor(private dataService: DataService) {}
 
   showNote() {
-    document.getElementById(`myPopup${this.item.id}`)?.classList.add('show');
-    this.timerId = setTimeout(() => {
-      document
-        .getElementById(`myPopup${this.item.id}`)
-        ?.classList.remove('show');
+    var popup = document.getElementById(`myPopup${this.item.id}`)
+    if (popup?.classList.contains('show')) {
+      popup?.classList.remove('show')
+    } else {
+      popup?.classList.add('show');
+    }
+  }
+
+  startTimer(){
+    console.log("start");
+    
+    this.timerId = setTimeout(() => {document.getElementById(`myPopup${this.item.id}`)?.classList.remove('show');
+    console.log("end");
+    
     }, 2000);
   }
 
   pauseTimeout() {
+    console.log("pause");
+    
     if (this.timerId) {
       clearTimeout(this.timerId);
     }
