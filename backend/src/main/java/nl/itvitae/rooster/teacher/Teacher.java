@@ -24,12 +24,8 @@ public class Teacher {
   private String name;
   private boolean teachesPracticum;
 
-  @ManyToMany
-  @JoinTable(
-      name = "group_teacher",
-      joinColumns = @JoinColumn(name = "teacher_id"),
-      inverseJoinColumns = @JoinColumn(name = "group_id"))
-  private List<Group> groups = new ArrayList<>();
+  @OneToMany(mappedBy="teacher")
+  private List<GroupTeacher> groupTeachers = new ArrayList<>();
 
   @ManyToMany
   @JoinTable(
@@ -50,8 +46,8 @@ public class Teacher {
     this.maxDaysPerWeek = maxDaysPerWeek;
   }
 
-  public void addGroup(Group group) {
-    groups.add(group);
+  public void addGroupTeacher(GroupTeacher groupTeacher) {
+    groupTeachers.add(groupTeacher);
   }
 
   public void addLesson(Lesson lesson) {

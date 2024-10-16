@@ -153,7 +153,7 @@ public class ScheduleddayService {
     }
 
     //if a group has teachers available
-    if (!looped && lesson.getGroup().getTeachers().size() != 0) {
+    /**if (!looped && lesson.getGroup().getGroupTeachers().size() != 0) {
       for (Teacher teacher : lesson.getGroup().getTeachers()) {
 
         //if teacher can be assigned, find an available date for the lesson and assign the teacher
@@ -203,7 +203,7 @@ public class ScheduleddayService {
           }
         }
       }
-    }
+    }*/
   }
 
   public ByteArrayInputStream createExcel(int year) throws IOException {

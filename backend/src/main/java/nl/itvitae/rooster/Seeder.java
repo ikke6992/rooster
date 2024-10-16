@@ -14,7 +14,10 @@ import nl.itvitae.rooster.field.FieldRepository;
 import nl.itvitae.rooster.freeday.FreeDay;
 import nl.itvitae.rooster.freeday.FreeDayService;
 import nl.itvitae.rooster.group.Group;
+import nl.itvitae.rooster.group.GroupRepository;
 import nl.itvitae.rooster.group.GroupService;
+import nl.itvitae.rooster.teacher.GroupTeacher;
+import nl.itvitae.rooster.teacher.GroupTeacherRepository;
 import nl.itvitae.rooster.teacher.Teacher;
 import nl.itvitae.rooster.teacher.TeacherRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -32,9 +35,12 @@ public class Seeder implements CommandLineRunner {
 
   private final MyDayRepository myDayRepository;
   private final ClassroomRepository classroomRepository;
-  private final GroupService groupService;
   private final FieldRepository fieldRepository;
   private final TeacherRepository teacherRepository;
+  private final GroupRepository groupRepository;
+  private final GroupTeacherRepository groupTeacherRepository;
+
+  private final GroupService groupService;
   private final FreeDayService freeDayService;
 
   @Override
@@ -92,11 +98,16 @@ public class Seeder implements CommandLineRunner {
 
   private Teacher saveTeacher(String name, boolean teachesPracticum, List<MyDay> availability, int maxDaysPerWeek, Group... groups) {
     Teacher teacher = new Teacher(name, teachesPracticum, availability, maxDaysPerWeek);
+    teacherRepository.save(teacher);
     for (Group group : groups) {
-      teacher.addGroup(group);
-      group.addTeacher(teacher);
+      GroupTeacher groupTeacher = new GroupTeacher(group, teacher, 2, 2, 2);
+      groupTeacherRepository.save(groupTeacher);
+      group.addGroupTeacher(groupTeacher);
+      groupRepository.save(group);
+      teacher.addGroupTeacher(groupTeacher);
+      teacherRepository.save(teacher);
     }
-    return teacherRepository.save(teacher);
+    return teacher;
   }
 
   private MyDay saveDay(DayOfWeek day) {

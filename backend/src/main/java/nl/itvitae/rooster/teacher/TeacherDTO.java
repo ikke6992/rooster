@@ -18,8 +18,8 @@ public record TeacherDTO(long id, String name, List<DayOfWeek> availability, int
     }
     int maxDaysPerWeek = teacher.getMaxDaysPerWeek();
     List<String> groups = new ArrayList<>();
-    for (Group group : teacher.getGroups()) {
-      String groupName = "Group " + group.getGroupNumber() + " " + group.getField().getName();
+    for (GroupTeacher groupTeacher : teacher.getGroupTeachers()) {
+      String groupName = "Group " + groupTeacher.getGroup().getGroupNumber() + " " + groupTeacher.getGroup().getField().getName();
       groups.add(groupName);
     }
     return new TeacherDTO(id, name, availability, maxDaysPerWeek, groups);

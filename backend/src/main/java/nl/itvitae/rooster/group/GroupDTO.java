@@ -19,9 +19,9 @@ public record GroupDTO(
     int daysPhase1 = group.getField().getDaysPhase1();
     int daysPhase2 = group.getField().getDaysPhase2();
     int daysPhase3 = group.getField().getDaysPhase3();
-    String[] teachers = new String[group.getTeachers().size()];
+    String[] teachers = new String[group.getGroupTeachers().size()];
     for (int i = 0; i < teachers.length; i++) {
-      teachers[i] = group.getTeachers().get(i).getName();
+      teachers[i] = group.getGroupTeachers().get(i).getTeacher().getName();
     }
     String[] vacations = new String[group.getVacations().size()];
     for (int i = 0; i < vacations.length; i++) {
