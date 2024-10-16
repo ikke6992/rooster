@@ -18,4 +18,8 @@ public class FieldService {
   public Field getById(long id) {
     return fieldRepository.findById(id).get();
   }
+
+  public Field addField(String name, int daysPhase1, int daysPhase2, int daysPhase3) {
+    return fieldRepository.save(new Field(name, daysPhase1, daysPhase2, daysPhase3));
+  }
 }

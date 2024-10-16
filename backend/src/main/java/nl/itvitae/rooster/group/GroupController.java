@@ -30,8 +30,7 @@ public class GroupController {
   }
 
   @PostMapping("/new")
-  public ResponseEntity<?> addGroup(@RequestBody GroupRequest request,
-      UriComponentsBuilder ucb) {
+  public ResponseEntity<?> addGroup(@RequestBody GroupRequest request, UriComponentsBuilder ucb) {
 
     if (groupRepository.findByGroupNumber(request.groupNumber()).isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT).body("Group with number " + request.groupNumber() + " already exists.");
