@@ -108,50 +108,56 @@ export class ScheduleComponent {
     window.print();
   }
 
-  exportExcel(){
-    this.dataService.getExcel(this.year).subscribe((response: any)=> {}, (error) => {
+  exportExcel() {
+    this.dataService.getExcel(this.year).subscribe(
+      (response: any) => {},
+      (error) => {
         console.error('Error:', error);
         // hardcoded ""temporary"" solution, error gets returned as incorrect type (blob)
-        this.errorMsg = "No days planned for this year";
+        this.errorMsg = 'No days planned for this year';
         this.showModal('error');
-    });
+      }
+    );
   }
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService
-      .getScheduledDaysByMonth(this.month, this.year)
-      .subscribe((response: any[]) => {
+    this.dataService.getScheduledDaysByMonth(this.month, this.year).subscribe(
+      (response: any[]) => {
         this.data = response;
         this.data.map((item) => (item.date = new Date(item.date)));
-      }, (error) => {
+      },
+      (error) => {
         console.error('Error:', error);
         this.errorMsg = error.error;
         this.showModal('error');
-      });
+      }
+    );
 
-    this.dataService
-      .getFreeDaysByMonth(this.month, this.year)
-      .subscribe((response: any[]) => {
+    this.dataService.getFreeDaysByMonth(this.month, this.year).subscribe(
+      (response: any[]) => {
         this.freeDays = response;
         this.freeDays.map((item) => (item.date = new Date(item.date)));
         this.days = this.daysInMonth(this.year, this.month);
-      }, (error) => {
+      },
+      (error) => {
         console.error('Error:', error);
         this.errorMsg = error.error;
         this.showModal('error');
-      });
+      }
+    );
   }
 
   onDragStart(event: DragEvent, draggedObject: Scheduledday) {
-    this.draggedItem = draggedObject;
-    setTimeout(() =>{
-      event?.dataTransfer?.setDragImage(this.dragImage.nativeElement, 0, 0);
-    }, 1);
+
+    event?.dataTransfer?.setDragImage(this.dragImage.nativeElement, 0, 0);
     const index = this.data.findIndex((l) => l.id === draggedObject.id);
     event?.dataTransfer?.setData('text', index.toString());
+  }
 
+  setDraggedItem(item: Scheduledday){
+    this.draggedItem = item;
   }
 
   onDragOver(event: DragEvent) {
