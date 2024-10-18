@@ -64,3 +64,10 @@
   <button (click)="closeModal('error')" class="button-action">Close</button>
 </app-modal>
 
+<div #dragImage class="custom-drag-image">
+  <div style="backgroundColor: {{ draggedItem.groupColor }}">
+    <div class="flex justify-center items-center">
+      Group {{ draggedItem.groupNumber }} {{ draggedItem.field }} - Teacher: {{draggedItem.teacher}}
+    </div>
+  </div>
+</div>

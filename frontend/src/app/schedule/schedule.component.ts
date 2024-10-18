@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DataService } from './data.service';
 import { ScheduledDayComponent } from './scheduled-day/scheduled-day.component';
 import { ModalComponent } from '../modal/modal.component';
@@ -31,6 +31,19 @@ export class ScheduleComponent {
   destinationclassroom: number = 0;
 
   errorMsg!: string;
+
+  draggedItem: Scheduledday = {
+    id: 0,
+    date: new Date(),
+    classroomId: 0,
+    groupNumber: 0,
+    groupColor: '#fff',
+    field: '',
+    teacher: 'none',
+    note: '',
+  };
+
+  @ViewChild('dragImage', { static: false }) dragImage!: ElementRef;
 
   TOTAL_CLASSROOMS: number[] = Array(6)
     .fill(0)
@@ -132,10 +145,13 @@ export class ScheduleComponent {
   }
 
   onDragStart(event: DragEvent, draggedObject: Scheduledday) {
+    this.draggedItem = draggedObject;
+    setTimeout(() =>{
+      event?.dataTransfer?.setDragImage(this.dragImage.nativeElement, 0, 0);
+    }, 1);
     const index = this.data.findIndex((l) => l.id === draggedObject.id);
     event?.dataTransfer?.setData('text', index.toString());
-    var img = new Image();
-    event.dataTransfer?.setDragImage(img, 0 ,0);
+
   }
 
   onDragOver(event: DragEvent) {
