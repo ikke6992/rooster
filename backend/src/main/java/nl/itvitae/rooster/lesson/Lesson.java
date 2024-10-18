@@ -34,6 +34,8 @@ public class Lesson {
   @ManyToOne
   private Teacher teacher;
 
+  private String note;
+
   public Lesson(Group group) {
     this.group = group;
   }

@@ -1,6 +1,7 @@
 package nl.itvitae.rooster.lesson;
 
 import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.teacher.Teacher;

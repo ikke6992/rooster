@@ -18,6 +18,8 @@ import nl.itvitae.rooster.group.GroupRepository;
 import nl.itvitae.rooster.group.GroupService;
 import nl.itvitae.rooster.teacher.GroupTeacher;
 import nl.itvitae.rooster.teacher.GroupTeacherRepository;
+import nl.itvitae.rooster.lesson.Lesson;
+import nl.itvitae.rooster.lesson.LessonRepository;
 import nl.itvitae.rooster.teacher.Teacher;
 import nl.itvitae.rooster.teacher.TeacherRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -42,6 +44,7 @@ public class Seeder implements CommandLineRunner {
 
   private final GroupService groupService;
   private final FreeDayService freeDayService;
+  private final LessonRepository lessonRepository;
 
   @Override
   public void run(String... args) throws Exception {
@@ -90,6 +93,8 @@ public class Seeder implements CommandLineRunner {
     freeDayService.addFreeDay(new FreeDay(LocalDate.now(), "test"));
 
     groupService.addVacation(group53, LocalDate.now().plusMonths(1), 2);
+
+    addNote(352L, "Linux les 3/10");
   }
 
   private Group saveGroup(int groupNumber, String color,int numberOfStudents, Field field) {
@@ -120,5 +125,11 @@ public class Seeder implements CommandLineRunner {
 
   private Field saveField(String name, int daysPhase1, int daysPhase2, int daysPhase3) {
     return fieldRepository.save(new Field(name, daysPhase1, daysPhase2, daysPhase3));
+  }
+
+  private void addNote(Long id, String note){
+    Lesson lesson = lessonRepository.findById(id).get();
+    lesson.setNote(note);
+    lessonRepository.save(lesson);
   }
 }
