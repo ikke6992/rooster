@@ -31,9 +31,9 @@ export class DataService {
     });
   }
 
-  putGroup(id: number, groupId: number): Observable<any> {
+  putGroup(id: number, groupId: number, data: any): Observable<any> {
     return this.http.put<any>(
-      this.apiUrlTeachers + '/edit/' + id + '/addGroup/' + groupId,
+      this.apiUrlTeachers + '/edit/' + id + '/addGroup/' + groupId, data, 
       {
         headers: new HttpHeaders({ 'Content-type': 'application/json' }),
       }

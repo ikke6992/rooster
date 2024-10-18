@@ -26,7 +26,7 @@ export class ViewTeachersComponent {
     });
 
     this.dataService.getGroups().subscribe((response: any[]) => {
-      this.groups = response;
+      this.groups = response.filter((group) => group.groupNumber !== 0);
       console.log(response);
     });
   }
