@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DataService } from './data.service';
-import { ScheduledDayComponent } from '../scheduled-day/scheduled-day.component';
+import { ScheduledDayComponent } from './scheduled-day/scheduled-day.component';
 import { ModalComponent } from '../modal/modal.component';
 import { OverrideComponent } from './override/override.component';
 
@@ -31,6 +31,19 @@ export class ScheduleComponent {
   destinationclassroom: number = 0;
 
   errorMsg!: string;
+
+  draggedItem: Scheduledday = {
+    id: 0,
+    date: new Date(),
+    classroomId: 0,
+    groupNumber: 0,
+    groupColor: '#fff',
+    field: '',
+    teacher: 'none',
+    note: '',
+  };
+
+  @ViewChild('dragImage', { static: false }) dragImage!: ElementRef;
 
   TOTAL_CLASSROOMS: number[] = Array(6)
     .fill(0)
@@ -69,7 +82,7 @@ export class ScheduleComponent {
     return new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
   }
 
-  public incrementMonth() {
+  incrementMonth() {
     if (this.month === 12) {
       this.year++;
       this.month = 1;
@@ -80,7 +93,7 @@ export class ScheduleComponent {
     this.ngOnInit();
   }
 
-  public decrementMonth() {
+  decrementMonth() {
     if (this.month === 1) {
       this.year--;
       this.month = 12;
@@ -95,45 +108,56 @@ export class ScheduleComponent {
     window.print();
   }
 
-  exportExcel(){
-    this.dataService.getExcel(this.year).subscribe((response: any)=> {}, (error) => {
+  exportExcel() {
+    this.dataService.getExcel(this.year).subscribe(
+      (response: any) => {},
+      (error) => {
         console.error('Error:', error);
         // hardcoded ""temporary"" solution, error gets returned as incorrect type (blob)
-        this.errorMsg = "No days planned for this year";
+        this.errorMsg = 'No days planned for this year';
         this.showModal('error');
-    });
+      }
+    );
   }
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService
-      .getScheduledDaysByMonth(this.month, this.year)
-      .subscribe((response: any[]) => {
+    this.dataService.getScheduledDaysByMonth(this.month, this.year).subscribe(
+      (response: any[]) => {
         this.data = response;
         this.data.map((item) => (item.date = new Date(item.date)));
-      }, (error) => {
+      },
+      (error) => {
         console.error('Error:', error);
         this.errorMsg = error.error;
         this.showModal('error');
-      });
+      }
+    );
 
-    this.dataService
-      .getFreeDaysByMonth(this.month, this.year)
-      .subscribe((response: any[]) => {
+    this.dataService.getFreeDaysByMonth(this.month, this.year).subscribe(
+      (response: any[]) => {
         this.freeDays = response;
         this.freeDays.map((item) => (item.date = new Date(item.date)));
         this.days = this.daysInMonth(this.year, this.month);
-      }, (error) => {
+      },
+      (error) => {
         console.error('Error:', error);
         this.errorMsg = error.error;
         this.showModal('error');
-      });
+      }
+    );
   }
 
   onDragStart(event: DragEvent, draggedObject: Scheduledday) {
+
+    event?.dataTransfer?.setDragImage(this.dragImage.nativeElement, 0, 0);
     const index = this.data.findIndex((l) => l.id === draggedObject.id);
     event?.dataTransfer?.setData('text', index.toString());
+  }
+
+  setDraggedItem(item: Scheduledday){
+    this.draggedItem = item;
   }
 
   onDragOver(event: DragEvent) {
@@ -181,6 +205,12 @@ export class ScheduleComponent {
       this.selectedModal = null;
     }
   }
+
+  filterData(data: Scheduledday[], day: Day) {
+    return data.filter(
+      (scheduledDay) => scheduledDay.date.getDate() === day.id
+    );
+  }
 }
 
 export interface Scheduledday {
@@ -191,6 +221,7 @@ export interface Scheduledday {
   groupColor: string;
   field: string;
   teacher: string;
+  note: string;
 }
 
 interface Day {
