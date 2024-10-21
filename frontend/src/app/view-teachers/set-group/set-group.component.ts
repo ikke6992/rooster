@@ -33,7 +33,7 @@ errorMsg!: string;
       (error) => {
         console.error('Error:', error);
         this.errorMsg = error.error;
-        this.showModal('error');
+        this.showModal('error-'+this.teacher.name);
       }
     );
   }

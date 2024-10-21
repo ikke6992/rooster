@@ -31,10 +31,18 @@
   >
     Submit
   </button>
-  
 </form>
 
-<app-modal id="feedback" class="hhidden">
+<app-modal id="feedback-{{ field.name }}" class="hhidden">
   <p>{{ this.feedbackMsg }}</p>
-  <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : window.location.reload()">Close</button>
+  <button
+    class="button-action"
+    (click)="
+      this.feedbackMsg.startsWith('Error: ')
+        ? closeModal('feedback-' + field.name)
+        : window.location.reload()
+    "
+  >
+    Close
+  </button>
 </app-modal>

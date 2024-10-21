@@ -4,10 +4,7 @@
   <p>Phase 1: {{ field.daysPhase1 }} days per week</p>
   <p>Phase 2: {{ field.daysPhase2 }} days per week</p>
   <p>Phase 2: {{ field.daysPhase3 }} days per week</p>
-  <button
-    class="button-action"
-    (click)="showModal('edit-field-' + field.name)"
-  >
+  <button class="button-action" (click)="showModal('edit-field-' + field.name)">
     Edit
   </button>
   <app-modal id="edit-field-{{ field.name }}" class="hhidden">

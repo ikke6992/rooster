@@ -5,12 +5,13 @@
     <option [ngValue]="null" disabled>Select Group</option>
     <option *ngFor="let group of groups" [ngValue]="group.groupNumber">
       Group {{ group.groupNumber }} {{ group.field }}
-    </option>
-  </select><br />
+    </option></select
+  ><br />
   <button type="submit" [disabled]="!addGroup.valid">Submit</button>
 </form>
-<app-modal id="error" class="hhidden">
-  <p>{{errorMsg}}</p>
-  <button (click)="closeModal('error')" class="button-action">Close</button>
+<app-modal id="error-{{ teacher.name }}" class="hhidden">
+  <p>{{ errorMsg }}</p>
+  <button (click)="closeModal('error-' + teacher.name)" class="button-action">
+    Close
+  </button>
 </app-modal>
-

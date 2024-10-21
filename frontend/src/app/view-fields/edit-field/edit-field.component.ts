@@ -46,12 +46,12 @@ export class EditFieldComponent {
       (response) => {
         console.log('Response:', response);
         this.feedbackMsg = `Field ${response.name} succesfully edited`;
-        this.showModal('feedback');
+        this.showModal('feedback-' + this.field.name);
       },
       (error) => {
         console.error('Error:', error);
         this.feedbackMsg = `Error: ${error.error}`;
-        this.showModal('feedback');
+        this.showModal('feedback-' + this.field.name);
       }
     );
   }
