@@ -26,7 +26,8 @@ public record GroupDTO(
     String[] vacations = new String[group.getVacations().size()];
     for (int i = 0; i < vacations.length; i++) {
       Vacation vacation = group.getVacations().get(i);
-      vacations[i] = String.format("%d weeks vacation starting %s", vacation.getWeeks(), vacation.getStartDate().toString());
+      vacations[i] = String.format(
+          "%d weeks vacation starting %s", vacation.getWeeks(), vacation.getStartDate().toString());
     }
     return new GroupDTO(groupNumber, color, numberOfStudents, field,
         startDate, weeksPhase1, weeksPhase2, weeksPhase3, daysPhase1, daysPhase2, daysPhase3, teachers, vacations);
