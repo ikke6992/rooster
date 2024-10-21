@@ -10,6 +10,7 @@ import lombok.Setter;
 import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.group.vacation.Vacation;
 import nl.itvitae.rooster.lesson.Lesson;
+import nl.itvitae.rooster.teacher.GroupTeacher;
 import nl.itvitae.rooster.teacher.Teacher;
 
 @Getter
@@ -29,8 +30,8 @@ public class Group {
   private List<Lesson> lessons;
   @OneToMany
   private List<Vacation> vacations = new ArrayList<>();
-  @ManyToMany(mappedBy = "groups")
-  private List<Teacher> teachers = new ArrayList<>();
+  @OneToMany(mappedBy = "group")
+  private List<GroupTeacher> groupTeachers = new ArrayList<>();
 
   @ManyToOne
   private Field field;
@@ -66,10 +67,10 @@ public class Group {
     this.weeksPhase3 = weeksPhase3;
   }
 
+  public void addGroupTeacher(GroupTeacher groupTeacher) {
+    groupTeachers.add(groupTeacher);
+  }
   public void addVacation(Vacation vacation) {
     vacations.add(vacation);
-  }
-  public void addTeacher(Teacher teacher) {
-    teachers.add(teacher);
   }
 }
