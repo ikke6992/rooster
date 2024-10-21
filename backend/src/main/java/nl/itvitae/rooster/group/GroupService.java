@@ -99,11 +99,11 @@ public class GroupService {
 
   public void scheduleGroup(Group group) {
     // could be improved with lambdas, passing functions etc
-    schedulePeriod(1, group.getWeeksPhase1(), group.getField().getDaysPhase1(), group.getStartDate(),
+    schedulePeriod(1, group.getWeeksPhase1(), group.getDaysPhase1(), group.getStartDate(),
         group);
-    schedulePeriod(2, group.getWeeksPhase2(), group.getField().getDaysPhase2(),
+    schedulePeriod(2, group.getWeeksPhase2(), group.getDaysPhase2(),
         group.getStartDate().plusWeeks(group.getWeeksPhase1()), group);
-    schedulePeriod(3, group.getWeeksPhase3(), group.getField().getDaysPhase3(),
+    schedulePeriod(3, group.getWeeksPhase3(), group.getDaysPhase3(),
         group.getStartDate().plusWeeks(group.getWeeksPhase1() + group.getWeeksPhase2()), group);
   }
 
@@ -124,17 +124,17 @@ public class GroupService {
       }
     }
     LocalDate previousStartDate = startDate;
-    LocalDate nextStartDate = schedulePeriod(1, Math.max(group.getWeeksPhase1() - weeks, 0), group.getField().getDaysPhase1(), startDate, group);
+    LocalDate nextStartDate = schedulePeriod(1, Math.max(group.getWeeksPhase1() - weeks, 0), group.getDaysPhase1(), startDate, group);
     if (nextStartDate.equals(previousStartDate)) {
-      nextStartDate = schedulePeriod(2, Math.max(group.getWeeksPhase2() - (weeks - group.getWeeksPhase1()), 0), group.getField().getDaysPhase2(), nextStartDate, group);
+      nextStartDate = schedulePeriod(2, Math.max(group.getWeeksPhase2() - (weeks - group.getWeeksPhase1()), 0), group.getDaysPhase2(), nextStartDate, group);
     } else {
       previousStartDate = nextStartDate;
-      nextStartDate = schedulePeriod(2, group.getWeeksPhase2(), group.getField().getDaysPhase2(), nextStartDate, group);
+      nextStartDate = schedulePeriod(2, group.getWeeksPhase2(), group.getDaysPhase2(), nextStartDate, group);
     }
     if (nextStartDate.equals(previousStartDate)) {
-      schedulePeriod(3, Math.max(group.getWeeksPhase3() - (weeks - group.getWeeksPhase1() - group.getWeeksPhase2()), 0), group.getField().getDaysPhase3(), nextStartDate, group);
+      schedulePeriod(3, Math.max(group.getWeeksPhase3() - (weeks - group.getWeeksPhase1() - group.getWeeksPhase2()), 0), group.getDaysPhase3(), nextStartDate, group);
     } else {
-      schedulePeriod(3, group.getWeeksPhase3(), group.getField().getDaysPhase3(), nextStartDate, group);
+      schedulePeriod(3, group.getWeeksPhase3(), group.getDaysPhase3(), nextStartDate, group);
     }
     return group;
   }

@@ -30,14 +30,16 @@ public class GroupController {
   }
 
   @PostMapping("/new")
-  public ResponseEntity<?> addGroup(@RequestBody GroupRequest request,
-      UriComponentsBuilder ucb) {
+  public ResponseEntity<?> addGroup(@RequestBody GroupRequest request, UriComponentsBuilder ucb) {
 
     if (groupRepository.findByGroupNumber(request.groupNumber()).isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT).body("Group with number " + request.groupNumber() + " already exists.");
     }
     if (groupService.checkSimilarColor(request.color())) {
       return ResponseEntity.status(HttpStatus.CONFLICT).body("Color is too similar to color of other group.");
+    }
+    if (request.weeksPhase1() < 1 || request.weeksPhase2() < 1 || request.weeksPhase3() < 1) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of weeks needs to be greater than 0");
     }
     final Field field = fieldService.getById(request.field());
     final LocalDate startDate = LocalDate.parse(request.startDate());
@@ -63,6 +65,9 @@ public class GroupController {
 
   @PutMapping("/{number}/addVacation")
   public ResponseEntity<?> addVacation(@PathVariable int number, @RequestBody VacationRequest request) {
+    if (request.weeks() < 1) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of weeks needs to be greater than 0");
+    }
     Group group = groupRepository.findByGroupNumber(number).get();
     return ResponseEntity.ok(GroupDTO.of(groupService.addVacation(group, LocalDate.parse(request.startDate()), request.weeks())));
   }

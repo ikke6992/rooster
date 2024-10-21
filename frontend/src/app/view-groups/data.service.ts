@@ -21,7 +21,7 @@ export class DataService {
 
   postGroup(data: any): Observable<any> {
     return this.http.post<any>(this.apiUrlGroups + '/new', data, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      headers: new HttpHeaders({ 'Content-type': 'application/json' }),
     });
   }
 

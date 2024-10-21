@@ -37,8 +37,11 @@ public class Group {
   private Field field;
 
   private LocalDate startDate;
+  private int daysPhase1;
   private int weeksPhase1;
+  private int daysPhase2;
   private int weeksPhase2;
+  private int daysPhase3;
   private int weeksPhase3;
 
   public Group(int groupNumber, String color, int numberOfStudents) {
@@ -62,8 +65,11 @@ public class Group {
     this.numberOfStudents = numberOfStudents;
     this.field = field;
     this.startDate = startDate;
+    this.daysPhase1 = field.getDaysPhase1();
     this.weeksPhase1 = weeksPhase1;
+    this.daysPhase2 = field.getDaysPhase2();
     this.weeksPhase2 = weeksPhase2;
+    this.daysPhase3 = field.getDaysPhase3();
     this.weeksPhase3 = weeksPhase3;
   }
 
