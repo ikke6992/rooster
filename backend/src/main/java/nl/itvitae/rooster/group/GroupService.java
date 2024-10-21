@@ -46,6 +46,19 @@ public class GroupService {
             weeksPhase3));
   }
 
+  public Group editGroup(Group group, int groupNumber, String color, int numberOfStudents, Field field,
+                         LocalDate startDate, int weeksPhase1, int weeksPhase2, int weeksPhase3) {
+    group.setGroupNumber(groupNumber);
+    group.setColor(color);
+    group.setNumberOfStudents(numberOfStudents);
+    group.setField(field);
+    group.setStartDate(startDate);
+    group.setWeeksPhase1(weeksPhase1);
+    group.setWeeksPhase2(weeksPhase2);
+    group.setWeeksPhase3(weeksPhase3);
+    return groupRepository.save(group);
+  }
+
   public Group addVacation(Group group, LocalDate startDate, int weeks) {
     Vacation vacation = new Vacation(startDate, weeks, group);
     vacationRepository.save(vacation);
@@ -75,15 +88,18 @@ public class GroupService {
   }
 
   public void scheduleReturnDay(Group group, long classroomId, DayOfWeek dayOfWeek) {
-    LocalDate date = group.getStartDate().minusDays(group.getStartDate().getDayOfWeek().getValue()).plusDays(dayOfWeek.getValue());
+    LocalDate date = group.getStartDate()
+        .minusDays(group.getStartDate().getDayOfWeek().getValue()).plusDays(dayOfWeek.getValue());
     for (int i = 0; i < (group.getWeeksPhase1() + group.getWeeksPhase2() + group.getWeeksPhase3()); i++) {
       if (freeDayRepository.existsByDate(date)) continue;
-      scheduleddayService.addScheduledday(date.plusWeeks(i), classroomService.getById(classroomId).get(), lessonService.createLesson(group, true));
+      scheduleddayService.addScheduledday(date.plusWeeks(i), classroomService.getById(classroomId).get(),
+          lessonService.createLesson(group, true));
     }
   }
 
   public Group rescheduleReturnDay (Group group) {
-    group.setStartDate(group.getStartDate().plusWeeks(group.getWeeksPhase1() + group.getWeeksPhase2() + group.getWeeksPhase3()));
+    group.setStartDate(group.getStartDate().plusWeeks(
+        group.getWeeksPhase1() + group.getWeeksPhase2() + group.getWeeksPhase3()));
 
     List<Scheduledday> scheduledreturndays = scheduleddayRepository.findByLessonGroup(group);
     Scheduledday latestScheduledreturnday = scheduledreturndays.get(0);
@@ -93,7 +109,8 @@ public class GroupService {
       }
     }
     
-    scheduleReturnDay(group, latestScheduledreturnday.getClassroom().getId(), latestScheduledreturnday.getDate().getDayOfWeek());
+    scheduleReturnDay(group, latestScheduledreturnday.getClassroom().getId(),
+        latestScheduledreturnday.getDate().getDayOfWeek());
     return group;
   }
 
@@ -124,15 +141,18 @@ public class GroupService {
       }
     }
     LocalDate previousStartDate = startDate;
-    LocalDate nextStartDate = schedulePeriod(Math.max(group.getWeeksPhase1() - weeks, 0), group.getField().getDaysPhase1(), startDate, group);
+    LocalDate nextStartDate = schedulePeriod(Math.max(group.getWeeksPhase1() - weeks, 0),
+        group.getField().getDaysPhase1(), startDate, group);
     if (nextStartDate.equals(previousStartDate)) {
-      nextStartDate = schedulePeriod(Math.max(group.getWeeksPhase2() - (weeks - group.getWeeksPhase1()), 0), group.getField().getDaysPhase2(), nextStartDate, group);
+      nextStartDate = schedulePeriod(Math.max(group.getWeeksPhase2() - (weeks - group.getWeeksPhase1()), 0),
+          group.getField().getDaysPhase2(), nextStartDate, group);
     } else {
       previousStartDate = nextStartDate;
       nextStartDate = schedulePeriod(group.getWeeksPhase2(), group.getField().getDaysPhase2(), nextStartDate, group);
     }
     if (nextStartDate.equals(previousStartDate)) {
-      schedulePeriod(Math.max(group.getWeeksPhase3() - (weeks - group.getWeeksPhase1() - group.getWeeksPhase2()), 0), group.getField().getDaysPhase3(), nextStartDate, group);
+      schedulePeriod(Math.max(group.getWeeksPhase3() - (weeks - group.getWeeksPhase1() - group.getWeeksPhase2()), 0),
+          group.getField().getDaysPhase3(), nextStartDate, group);
     } else {
       schedulePeriod(group.getWeeksPhase3(), group.getField().getDaysPhase3(), nextStartDate, group);
     }

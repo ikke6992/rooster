@@ -49,6 +49,20 @@ public class GroupController {
     return ResponseEntity.created(locationOfGroup).body(group);
   }
 
+  @PutMapping("/{number}/edit")
+  public ResponseEntity<?> editGroup(@PathVariable int number, @RequestBody GroupRequest request) {
+    Optional<Group> existingGroup = groupRepository.findByGroupNumber(number);
+    if (existingGroup.isEmpty()) {
+      return ResponseEntity.badRequest().build();
+    } else {
+      final Group group = groupService.editGroup(existingGroup.get(), request.groupNumber(), request.color(),
+          request.numberOfStudents(), fieldService.getById(request.field()), LocalDate.parse(request.startDate()),
+          request.weeksPhase1(), request.weeksPhase2(), request.weeksPhase3());
+      groupService.rescheduleGroup(group, LocalDate.now());
+      return ResponseEntity.ok(GroupDTO.of(group));
+    }
+  }
+
   @PutMapping("/{number}/reschedule")
   public ResponseEntity<?> rescheduleGroup(@PathVariable int number) {
     Optional<Group> group = groupRepository.findByGroupNumber(number);
