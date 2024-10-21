@@ -37,7 +37,8 @@ public class FieldController {
         || request.daysPhase2() > 5 || request.daysPhase3() < 1 || request.daysPhase3() > 5) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of days needs to be between 1 and 5");
     } else {
-      final Field field = fieldService.addField(request.name(), request.daysPhase1(), request.daysPhase2(), request.daysPhase3());
+      final Field field = fieldService.addField(
+          request.name(), request.daysPhase1(), request.daysPhase2(), request.daysPhase3());
       URI locationOfField = ucb.path("/api/v1/fields").buildAndExpand(field.getId()).toUri();
       return ResponseEntity.created(locationOfField).body(field);
     }
@@ -52,7 +53,8 @@ public class FieldController {
         || request.daysPhase2() > 5 || request.daysPhase3() < 1 || request.daysPhase3() > 5) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of days needs to be between 1 and 5");
     } else {
-      return ResponseEntity.ok(fieldService.editField(field.get(), request.name(), request.daysPhase1(), request.daysPhase2(), request.daysPhase3()));
+      return ResponseEntity.ok(fieldService.editField(
+          field.get(), request.name(), request.daysPhase1(), request.daysPhase2(), request.daysPhase3()));
     }
   }
 }
