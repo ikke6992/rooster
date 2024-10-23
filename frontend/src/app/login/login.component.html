@@ -1,0 +1,18 @@
+<h1>Login</h1>
+<form [formGroup]="login" (ngSubmit)="onSubmit()">
+  <label for="username">Username: </label>
+  <input
+    id="username"
+    type="text"
+    formControlName="username"
+    required
+  /><br />
+  <label for="password">Password: </label>
+  <input id="password" type="password" formControlName="password" required /><br />
+  <button type="submit" [disabled]="!login.valid">Submit</button>
+</form>
+
+<app-modal id="feedback" class="hhidden">
+    <p>{{ this.feedbackMsg }}</p>
+    <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : window.location.reload()">Close</button>
+  </app-modal>

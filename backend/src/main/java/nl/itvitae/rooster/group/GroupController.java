@@ -34,10 +34,12 @@ public class GroupController {
       UriComponentsBuilder ucb) {
 
     if (groupRepository.findByGroupNumber(request.groupNumber()).isPresent()) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).body("Group with number " + request.groupNumber() + " already exists.");
+      return ResponseEntity.status(HttpStatus.CONFLICT)
+          .body("Group with number " + request.groupNumber() + " already exists.");
     }
     if (groupService.checkSimilarColor(request.color())) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).body("Color is too similar to color of other group.");
+      return ResponseEntity.status(HttpStatus.CONFLICT)
+          .body("Color is too similar to color of other group.");
     }
     final Field field = fieldService.getById(request.field());
     final LocalDate startDate = LocalDate.parse(request.startDate());
@@ -54,16 +56,19 @@ public class GroupController {
     Optional<Group> group = groupRepository.findByGroupNumber(number);
     if (group.isEmpty()) {
       return ResponseEntity.badRequest().build();
-    } else if (number == 0) {
-      return ResponseEntity.ok(GroupDTO.of(groupService.rescheduleReturnDay(group.get())));
-    } else {
-      return ResponseEntity.ok(GroupDTO.of(groupService.rescheduleGroup(group.get(), LocalDate.now())));
     }
+    if (number == 0) {
+      return ResponseEntity.ok(GroupDTO.of(groupService.rescheduleReturnDay(group.get())));
+    }
+    return ResponseEntity.ok(
+        GroupDTO.of(groupService.rescheduleGroup(group.get(), LocalDate.now())));
   }
 
   @PutMapping("/{number}/addVacation")
-  public ResponseEntity<?> addVacation(@PathVariable int number, @RequestBody VacationRequest request) {
+  public ResponseEntity<?> addVacation(@PathVariable int number,
+      @RequestBody VacationRequest request) {
     Group group = groupRepository.findByGroupNumber(number).get();
-    return ResponseEntity.ok(GroupDTO.of(groupService.addVacation(group, LocalDate.parse(request.startDate()), request.weeks())));
+    return ResponseEntity.ok(GroupDTO.of(
+        groupService.addVacation(group, LocalDate.parse(request.startDate()), request.weeks())));
   }
 }

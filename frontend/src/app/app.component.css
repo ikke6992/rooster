@@ -1,3 +1,13 @@
 .bg-nav {
   background-color: #05a8bf;
 }
+
+.nav-button {
+  border-bottom-width: 1px;
+  border-color: #05a8bf;
+}
+
+.nav-button:hover {
+  border-bottom-width: 1px;
+  border-color: #ffffff;
+}
