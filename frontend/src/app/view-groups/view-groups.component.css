@@ -1,3 +1,9 @@
 button {
   color: black;
 }
+
+#add-group-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
