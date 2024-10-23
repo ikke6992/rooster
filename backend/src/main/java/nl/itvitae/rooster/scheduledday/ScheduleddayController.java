@@ -66,9 +66,11 @@ public class ScheduleddayController {
       return ResponseEntity.badRequest().body("Day cannot be scheduled on weekends on freedays");
     }
     if (scheduleddayRepository.existsByDateAndClassroom(date, classroom.get())
-        || (!date.equals(scheduledday.getDate()) && scheduleddayRepository.existsByDateAndLessonGroup(date, scheduledday.getLesson().getGroup()))) {
+        || (!date.equals(scheduledday.getDate()) && scheduleddayRepository.existsByDateAndLessonGroup(
+            date, scheduledday.getLesson().getGroup()))) {
       return ResponseEntity.badRequest().body("Day + Classroom are already scheduled");
     }
-    return ResponseEntity.ok(scheduleddayService.overrideScheduling(scheduledday, date, classroom.get(), overrideRequest.adaptWeekly()));
+    return ResponseEntity.ok(scheduleddayService.overrideScheduling(
+        scheduledday, date, classroom.get(), overrideRequest.adaptWeekly()));
   }
 }

@@ -1,23 +1,32 @@
 <h1>Fields</h1>
 <div *ngFor="let field of fields">
-  <p>{{ field.name }}</p>
-  <p>Phase 1: {{ field.daysPhase1 }} days per week</p>
-  <p>Phase 2: {{ field.daysPhase2 }} days per week</p>
-  <p>Phase 2: {{ field.daysPhase3 }} days per week</p>
-  <button class="button-action" (click)="showModal('edit-field-' + field.name)">
-    Edit
-  </button>
-  <app-modal id="edit-field-{{ field.name }}" class="hhidden">
-    <app-edit-field [field]="field"></app-edit-field>
+  <div>
+    <p>{{ field.name }}</p>
+    <p>Phase 1: {{ field.daysPhase1 }} days per week</p>
+    <p>Phase 2: {{ field.daysPhase2 }} days per week</p>
+    <p>Phase 2: {{ field.daysPhase3 }} days per week</p>
     <button
-      (click)="closeModal('edit-field-' + field.name)"
       class="button-action"
+      (click)="showModal('edit-field-' + field.name)"
     >
-      Close
+      Edit
     </button>
-  </app-modal>
+    <app-modal id="edit-field-{{ field.name }}" class="hhidden">
+      <app-edit-field [field]="field"></app-edit-field>
+      <button
+        (click)="closeModal('edit-field-' + field.name)"
+        class="button-action"
+      >
+        Close
+      </button>
+    </app-modal>
+  </div><br />
 </div>
-<button class="button-action" (click)="showModal('add-field')">
+<button
+  (click)="showModal('add-field')"
+  class="button-action"
+  id="add-field-button"
+>
   Add Field
 </button>
 

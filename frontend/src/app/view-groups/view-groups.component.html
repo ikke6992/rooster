@@ -38,9 +38,32 @@
     <button class="button-action" (click)="reschedule(group.groupNumber)">
       Reschedule Group</button
     ><br />
+    <div *ngIf="group.groupNumber != 0">
+      <button
+        class="button-action"
+        (click)="showModal('edit-group-' + group.groupNumber)"
+      >
+        Edit Group
+      </button>
+
+      <app-modal id="edit-group-{{ group.groupNumber }}" class="hhidden">
+        <app-edit-group [group]="group" [fields]="fields"></app-edit-group>
+        <button
+          (click)="closeModal('edit-group-' + group.groupNumber)"
+          class="button-action"
+        >
+          Close
+        </button>
+      </app-modal>
+    </div>
   </div>
+  <br />
 </div>
-<button class="button-action" (click)="showModal('add-group')">
+<button
+  (click)="showModal('add-group')"
+  class="button-action"
+  id="add-group-button"
+>
   Add Group
 </button>
 
