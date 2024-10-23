@@ -17,7 +17,11 @@ import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.group.GroupService;
 import nl.itvitae.rooster.teacher.Teacher;
 import nl.itvitae.rooster.teacher.TeacherRepository;
+import nl.itvitae.rooster.user.User;
+import nl.itvitae.rooster.user.User.Role;
+import nl.itvitae.rooster.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import de.focus_shift.jollyday.core.Holiday;
@@ -36,6 +40,8 @@ public class Seeder implements CommandLineRunner {
   private final FieldRepository fieldRepository;
   private final TeacherRepository teacherRepository;
   private final FreeDayService freeDayService;
+  private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @Override
   public void run(String... args) throws Exception {
@@ -84,6 +90,8 @@ public class Seeder implements CommandLineRunner {
     freeDayService.addFreeDay(new FreeDay(LocalDate.now(), "test"));
 
     groupService.addVacation(group53, LocalDate.now().plusMonths(1), 2);
+
+    userRepository.save(new User("admin", passwordEncoder.encode("admin"), Role.ROLE_ADMIN));
   }
 
   private Group saveGroup(int groupNumber, String color,int numberOfStudents, Field field) {
