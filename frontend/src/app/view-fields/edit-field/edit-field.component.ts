@@ -26,7 +26,7 @@ export class EditFieldComponent {
   }
 
   ngOnChanges(changes: any) {
-    if (changes.teacher && !changes.teacher.firstChange) {
+    if (changes.field && !changes.field.firstChange) {
       this.initializeForm();
     }
   }

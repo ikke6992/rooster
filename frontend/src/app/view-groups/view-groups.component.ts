@@ -4,6 +4,7 @@ import { ModalComponent } from '../modal/modal.component';
 import { AddGroupComponent } from './add-group/add-group.component';
 import { CommonModule } from '@angular/common';
 import { AddVacationComponent } from './add-vacation/add-vacation.component';
+import { EditGroupComponent } from './edit-group/edit-group.component';
 
 @Component({
   selector: 'app-view-groups',
@@ -13,6 +14,7 @@ import { AddVacationComponent } from './add-vacation/add-vacation.component';
     ModalComponent,
     AddGroupComponent,
     AddVacationComponent,
+    EditGroupComponent,
   ],
   templateUrl: './view-groups.component.html',
   styleUrl: './view-groups.component.css',
