@@ -13,11 +13,25 @@
   <label for="friday">Friday: </label>
   <input id="friday" type="checkbox" formControlName="friday" /><br />
   <label for="max-days">Max days per week: </label>
-  <input id="max-days" type="number" formControlName="maxDaysPerWeek" required /><br />
+  <input
+    id="max-days"
+    type="number"
+    formControlName="maxDaysPerWeek"
+    required
+  /><br />
   <button type="submit" [disabled]="!addTeacher.valid">Submit</button>
 </form>
 
 <app-modal id="feedback" class="hhidden">
   <p>{{ this.feedbackMsg }}</p>
-  <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : window.location.reload()">Close</button>
+  <button
+    class="button-action"
+    (click)="
+      this.feedbackMsg.startsWith('Error: ')
+        ? closeModal('feedback')
+        : window.location.reload()
+    "
+  >
+    Close
+  </button>
 </app-modal>
