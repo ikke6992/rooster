@@ -31,16 +31,15 @@ public class GroupController {
 
   @PostMapping("/new")
   public ResponseEntity<?> addGroup(@RequestBody GroupRequest request, UriComponentsBuilder ucb) {
-
+    if (request.weeksPhase1() < 1 || request.weeksPhase2() < 1 || request.weeksPhase3() < 1) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of weeks needs to be greater than 0");
+    }
     if (groupRepository.findByGroupNumber(request.groupNumber()).isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT)
           .body("Group with number " + request.groupNumber() + " already exists.");
     }
     if (groupService.checkSimilarColor(request.color())) {
       return ResponseEntity.status(HttpStatus.CONFLICT).body("Color is too similar to color of other group.");
-    }
-    if (request.weeksPhase1() < 1 || request.weeksPhase2() < 1 || request.weeksPhase3() < 1) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of weeks needs to be greater than 0");
     }
     final Field field = fieldService.getById(request.field());
     final LocalDate startDate = LocalDate.parse(request.startDate());
@@ -54,9 +53,13 @@ public class GroupController {
 
   @PutMapping("/{number}/edit")
   public ResponseEntity<?> editGroup(@PathVariable int number, @RequestBody GroupRequest request) {
+    if (request.weeksPhase1() < 1 || request.weeksPhase2() < 1 || request.weeksPhase3() < 1) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of weeks needs to be greater than 0");
+    }
+
     Optional<Group> existingGroup = groupRepository.findByGroupNumber(number);
     if (existingGroup.isEmpty()) {
-      return ResponseEntity.badRequest().build();
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Group " + number + " does not exist");
     } else {
       final Group group = groupService.editGroup(existingGroup.get(), request.groupNumber(), request.color(),
           request.numberOfStudents(), fieldService.getById(request.field()), LocalDate.parse(request.startDate()),
