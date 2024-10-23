@@ -22,14 +22,9 @@ public class Teacher {
   private Long id;
 
   private String name;
-  private boolean teachesPracticum;
 
-  @ManyToMany
-  @JoinTable(
-      name = "group_teacher",
-      joinColumns = @JoinColumn(name = "teacher_id"),
-      inverseJoinColumns = @JoinColumn(name = "group_id"))
-  private List<Group> groups = new ArrayList<>();
+  @OneToMany(mappedBy="teacher")
+  private List<GroupTeacher> groupTeachers = new ArrayList<>();
 
   @ManyToMany
   @JoinTable(
@@ -43,15 +38,14 @@ public class Teacher {
   @OneToMany
   private List<Lesson> lessons = new ArrayList<>();
 
-  public Teacher(String name, boolean teachesPracticum, List<MyDay> availability, int maxDaysPerWeek) {
+  public Teacher(String name, List<MyDay> availability, int maxDaysPerWeek) {
     this.name = name;
-    this.teachesPracticum = teachesPracticum;
     this.availability = availability;
     this.maxDaysPerWeek = maxDaysPerWeek;
   }
 
-  public void addGroup(Group group) {
-    groups.add(group);
+  public void addGroupTeacher(GroupTeacher groupTeacher) {
+    groupTeachers.add(groupTeacher);
   }
 
   public void addLesson(Lesson lesson) {

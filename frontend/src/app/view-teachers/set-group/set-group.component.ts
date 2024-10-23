@@ -2,14 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataService } from '../data.service';
-import { ModalComponent } from "../../modal/modal.component";
+import { ModalComponent } from '../../modal/modal.component';
 
 @Component({
   selector: 'app-set-group',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ModalComponent],
   templateUrl: './set-group.component.html',
-  styleUrl: './set-group.component.css'
+  styleUrl: './set-group.component.css',
 })
 export class SetGroupComponent {
   @Input() groups: any[] = [];
@@ -17,25 +17,34 @@ export class SetGroupComponent {
 
   addGroup = new FormGroup({
     setGroup: new FormControl(),
+    daysPhase1: new FormControl(),
+    daysPhase2: new FormControl(),
+    daysPhase3: new FormControl(),
   });
-errorMsg!: string;
+  errorMsg!: string;
 
   constructor(private dataService: DataService) {}
 
   onSubmit() {
-    const data = this.addGroup.value;
-    console.log(data);
-    this.dataService.putGroup(this.teacher.id, data.setGroup).subscribe(
-      (response) => {
-        console.log('Response:', response);
-        window.location.reload();
-      },
-      (error) => {
-        console.error('Error:', error);
-        this.errorMsg = error.error;
-        this.showModal('error');
-      }
-    );
+    const formValue = this.addGroup.value;
+    const data = {
+      daysPhase1: formValue.daysPhase1,
+      daysPhase2: formValue.daysPhase2,
+      daysPhase3: formValue.daysPhase3,
+    };
+    this.dataService
+      .putGroup(this.teacher.id, formValue.setGroup, data)
+      .subscribe(
+        (response) => {
+          console.log('Response:', response);
+          window.location.reload();
+        },
+        (error) => {
+          console.error('Error:', error);
+          this.errorMsg = error.error;
+          this.showModal('error');
+        }
+      );
   }
 
   showModal(name: string) {

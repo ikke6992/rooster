@@ -18,6 +18,7 @@ import nl.itvitae.rooster.freeday.FreeDayRepository;
 import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonRepository;
+import nl.itvitae.rooster.teacher.GroupTeacher;
 import nl.itvitae.rooster.teacher.Teacher;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -55,9 +56,9 @@ public class ScheduleddayService {
     return scheduleddayRepository.findByDateBetween(startDate, endDate);
   }
 
-  public Scheduledday addScheduledday(LocalDate date, Classroom classroom, Lesson lesson) {
+  public Scheduledday addScheduledday(int phase, LocalDate date, Classroom classroom, Lesson lesson) {
     Scheduledday scheduledday = new Scheduledday(date, classroom, lesson);
-    preventConflicts(scheduledday, false);
+    preventConflicts(phase, scheduledday, false);
     return scheduleddayRepository.save(scheduledday);
   }
 
@@ -127,7 +128,7 @@ public class ScheduleddayService {
     return new OverrideDTO(successes, failures);
   }
 
-  private void preventConflicts(Scheduledday scheduledday, boolean looped) {
+  private void preventConflicts(int phase, Scheduledday scheduledday, boolean looped) {
     LocalDate date = scheduledday.getDate();
     Lesson lesson = scheduledday.getLesson();
     Classroom classroom = scheduledday.getClassroom();
@@ -137,10 +138,10 @@ public class ScheduleddayService {
         .getGroup())) {
       if (date.getDayOfWeek() != DayOfWeek.FRIDAY) {
         scheduledday.setDate(date.plusDays(1));
-        preventConflicts(scheduledday, looped);
+        preventConflicts(phase, scheduledday, looped);
       } else {
         scheduledday.setDate(date.minusDays(4));
-        preventConflicts(scheduledday, true);
+        preventConflicts(phase, scheduledday, true);
       }
     }
     if (isClassroomFull || scheduleddayRepository.existsByDateAndClassroom(scheduledday.getDate(),
@@ -151,61 +152,66 @@ public class ScheduleddayService {
       if (newClassroom.isPresent()) {
         scheduledday.setClassroom(newClassroom.get());
       } else {
-        lesson.setPracticum(false);
         scheduledday.setClassroom(classroomRepository.findById(1L).get());
       }
-      preventConflicts(scheduledday, looped);
+      preventConflicts(phase, scheduledday, looped);
     }
 
     //if a group has teachers available
-    if (!looped && lesson.getGroup().getTeachers().size() != 0) {
-      for (Teacher teacher : lesson.getGroup().getTeachers()) {
+    if (!looped && lesson.getGroup().getGroupTeachers().size() != 0) {
+      for (GroupTeacher groupTeacher : lesson.getGroup().getGroupTeachers()) {
+        Teacher teacher = groupTeacher.getTeacher();
 
         //if teacher can be assigned, find an available date for the lesson and assign the teacher
-        if (teacher.isTeachesPracticum() == lesson.isPracticum()) {
-          boolean teacherAvailable = false;
+        boolean teacherAvailable = false;
 
-          //check whether teacher is already working maximum amount of days this week
-          int lessons = 0;
-          int dayOfWeek = date.getDayOfWeek().getValue();
-          for (Scheduledday otherScheduledDay : scheduleddayRepository.findByDateBetween(
-              date.minusDays(dayOfWeek - 1), date.plusDays(5 - dayOfWeek))) {
-            Teacher otherTeacher = otherScheduledDay.getLesson().getTeacher();
-            if (otherTeacher != null && teacher.getId().equals(otherTeacher.getId())) {
-              lessons++;
+        //check whether teacher is already working maximum amount of days this week
+        int lessons = 0;
+        int lessonsForThisGroup = 0;
+        int dayOfWeek = date.getDayOfWeek().getValue();
+        for (Scheduledday otherScheduledDay : scheduleddayRepository.findByDateBetween(
+            date.minusDays(dayOfWeek - 1), date.plusDays(5 - dayOfWeek))) {
+          Teacher otherTeacher = otherScheduledDay.getLesson().getTeacher();
+          if (otherTeacher != null && teacher.getId().equals(otherTeacher.getId())) {
+            lessons++;
+            if (otherScheduledDay.getLesson().getGroup().getGroupNumber() == lesson.getGroup().getGroupNumber()) {
+              lessonsForThisGroup++;
             }
           }
-          if (lessons >= teacher.getMaxDaysPerWeek()) {
+        }
+        if (lessons >= teacher.getMaxDaysPerWeek() ||
+            (phase == 1 && lessonsForThisGroup >= groupTeacher.getDaysPhase1()) ||
+            (phase == 2 && lessonsForThisGroup >= groupTeacher.getDaysPhase2()) ||
+            (phase == 3 && lessonsForThisGroup >= groupTeacher.getDaysPhase3())) {
+          break;
+        }
+
+        //check whether teacher is available to work this day
+        days:
+        for (MyDay day : teacher.getAvailability()) {
+          if (day.getDay().equals(date.getDayOfWeek())) {
+
+            //check if teacher is already teaching another lesson this day
+            for (Scheduledday otherScheduledDay : scheduleddayRepository.findByDate(
+                scheduledday.getDate())) {
+              Teacher otherTeacher = otherScheduledDay.getLesson().getTeacher();
+              if (otherTeacher != null && teacher.getId().equals(otherTeacher.getId())) {
+                break days;
+              }
+            }
+
+            //assign teacher to this lesson
+            lesson.setTeacher(teacher);
+            lessonRepository.save(lesson);
+            teacherAvailable = true;
             break;
           }
+        }
 
-          //check whether teacher is available to work this day
-          days:
-          for (MyDay day : teacher.getAvailability()) {
-            if (day.getDay().equals(date.getDayOfWeek())) {
-
-              //check if teacher is already teaching another lesson this day
-              for (Scheduledday otherScheduledDay : scheduleddayRepository.findByDate(
-                  scheduledday.getDate())) {
-                Teacher otherTeacher = otherScheduledDay.getLesson().getTeacher();
-                if (otherTeacher != null && teacher.getId().equals(otherTeacher.getId())) {
-                  break days;
-                }
-              }
-
-              //assign teacher to this lesson
-              lesson.setTeacher(teacher);
-              lessonRepository.save(lesson);
-              teacherAvailable = true;
-              break;
-            }
-          }
-
-          //if teacher isn't available and it's not the end of the week, check the next day
-          if (!teacherAvailable && date.getDayOfWeek() != DayOfWeek.FRIDAY) {
-            scheduledday.setDate(date.plusDays(1));
-            preventConflicts(scheduledday, looped);
-          }
+        //if teacher isn't available and it's not the end of the week, check the next day
+        if (!teacherAvailable && date.getDayOfWeek() != DayOfWeek.FRIDAY) {
+          scheduledday.setDate(date.plusDays(1));
+          preventConflicts(phase, scheduledday, looped);
         }
       }
     }
