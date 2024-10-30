@@ -98,7 +98,7 @@ public class Seeder implements CommandLineRunner {
 
     addNote(352L, "Linux les 3/10");
 
-    //groupService.deleteGroup(group52);
+    groupService.deleteGroup(group52);
   }
 
   private Group saveGroup(int groupNumber, String color,int numberOfStudents, Field field) {
