@@ -59,7 +59,10 @@ public class ScheduleddayService {
   public Scheduledday addScheduledday(int phase, LocalDate date, Classroom classroom, Lesson lesson) {
     Scheduledday scheduledday = new Scheduledday(date, classroom, lesson);
     preventConflicts(phase, scheduledday, false);
-    return scheduleddayRepository.save(scheduledday);
+    scheduleddayRepository.save(scheduledday);
+    lesson.setScheduledday(scheduledday);
+    lessonRepository.save(lesson);
+    return scheduledday;
   }
 
   public OverrideDTO overrideScheduling(

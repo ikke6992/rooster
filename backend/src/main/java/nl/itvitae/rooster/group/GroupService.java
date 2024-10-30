@@ -1,19 +1,20 @@
 package nl.itvitae.rooster.group;
 
 import java.time.DayOfWeek;
+
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomService;
 import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.freeday.FreeDayRepository;
+import nl.itvitae.rooster.group.vacation.ArchivedVacation;
+import nl.itvitae.rooster.group.vacation.ArchivedVacationRepository;
 import nl.itvitae.rooster.group.vacation.Vacation;
 import nl.itvitae.rooster.group.vacation.VacationRepository;
-import nl.itvitae.rooster.lesson.Lesson;
-import nl.itvitae.rooster.lesson.LessonRepository;
-import nl.itvitae.rooster.lesson.LessonService;
-import nl.itvitae.rooster.scheduledday.Scheduledday;
-import nl.itvitae.rooster.scheduledday.ScheduleddayRepository;
-import nl.itvitae.rooster.scheduledday.ScheduleddayService;
+import nl.itvitae.rooster.lesson.*;
+import nl.itvitae.rooster.scheduledday.*;
+import nl.itvitae.rooster.teacher.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,7 +25,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GroupService {
 
+  private final ArchivedGroupRepository archivedGroupRepository;
+  private final ArchivedGroupTeacherRepository archivedGroupTeacherRepository;
+  private final ArchivedLessonRepository archivedLessonRepository;
+  private final ArchivedScheduleddayRepository archivedScheduleddayRepository;
+  private final ArchivedVacationRepository archivedVacationRepository;
   private final GroupRepository groupRepository;
+  private final GroupTeacherRepository groupTeacherRepository;
+  private final TeacherRepository teacherRepository;
   private final ScheduleddayService scheduleddayService;
   private final ScheduleddayRepository scheduleddayRepository;
   private final LessonService lessonService;
@@ -37,6 +45,10 @@ public class GroupService {
 
   public List<Group> getAll() {
     return groupRepository.findAll();
+  }
+
+  public List<ArchivedGroup> getArchived() {
+    return archivedGroupRepository.findAll();
   }
 
   public Group addGroup(int groupNumber, String color, int numberOfStudents, Field field,
@@ -57,6 +69,39 @@ public class GroupService {
     group.setWeeksPhase2(weeksPhase2);
     group.setWeeksPhase3(weeksPhase3);
     return groupRepository.save(group);
+  }
+
+  public ArchivedGroup deleteGroup(Group group) {
+    ArchivedGroup archivedGroup = new ArchivedGroup(group);
+    archivedGroupRepository.save(archivedGroup);
+    for (Lesson lesson : lessonRepository.findByGroup(group)) {
+      ArchivedLesson archivedLesson = new ArchivedLesson(lesson, archivedGroup);
+      archivedLessonRepository.save(archivedLesson);
+      Scheduledday scheduledday = lesson.getScheduledday();
+      archivedScheduleddayRepository.save(new ArchivedScheduledday(scheduledday, archivedLesson));
+      lesson.setScheduledday(null);
+      lessonRepository.save(lesson);
+      scheduleddayRepository.delete(scheduledday);
+      Teacher teacher = lesson.getTeacher();
+      if (teacher != null) {
+        teacher.removeLesson(lesson);
+        teacher.addArchivedLesson(archivedLesson);
+        teacherRepository.save(teacher);
+      }
+      group.removeLesson(lesson);
+      lessonRepository.delete(lesson);
+    }
+    for (Vacation vacation : group.getVacations()) {
+      archivedVacationRepository.save(new ArchivedVacation(vacation, archivedGroup));
+      vacationRepository.delete(vacation);
+    }
+    for (GroupTeacher groupTeacher : group.getGroupTeachers()) {
+      ArchivedGroupTeacher archivedGroupTeacher = new ArchivedGroupTeacher(groupTeacher, archivedGroup);
+      archivedGroupTeacherRepository.save(archivedGroupTeacher);
+      groupTeacherRepository.delete(groupTeacher);
+    }
+    groupRepository.delete(group);
+    return archivedGroup;
   }
 
   public Group addVacation(Group group, LocalDate startDate, int weeks) {
@@ -127,8 +172,11 @@ public class GroupService {
     // delete old scheduling
     for (Scheduledday scheduledday : scheduleddayRepository.findByLessonGroup(group)) {
       if (!scheduledday.getDate().isBefore(startDate)) {
+        Lesson lesson = scheduledday.getLesson();
+        lesson.setScheduledday(null);
+        lessonRepository.save(lesson);
         scheduleddayRepository.delete(scheduledday);
-        lessonRepository.delete(scheduledday.getLesson());
+        lessonRepository.delete(lesson);
       }
     }
 
@@ -184,8 +232,11 @@ public class GroupService {
         Scheduledday scheduledday = scheduleddayService.addScheduledday(phase, date,
             classroom, lesson);
         if (freeDayRepository.existsByDate(scheduledday.getDate())) {
+          Lesson scheduledLesson = scheduledday.getLesson();
+          scheduledLesson.setScheduledday(null);
+          lessonRepository.save(scheduledLesson);
           scheduleddayRepository.delete(scheduledday);
-          lessonRepository.delete(scheduledday.getLesson());
+          lessonRepository.delete(scheduledLesson);
         }
 
         // keeps classrooms consistent

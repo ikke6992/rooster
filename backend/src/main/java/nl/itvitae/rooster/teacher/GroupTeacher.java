@@ -9,19 +9,19 @@ import nl.itvitae.rooster.group.Group;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name="group_teacher")
+@Entity(name= "group_teacher")
 public class GroupTeacher {
 
   @Id
   @GeneratedValue
-  private long id;
+  private Long id;
 
   @ManyToOne
-  @JoinColumn(name="group_id")
+  @JoinColumn(name = "group_id")
   private Group group;
 
   @ManyToOne
-  @JoinColumn(name="teacher_id")
+  @JoinColumn(name = "teacher_id")
   private Teacher teacher;
 
   private int daysPhase1;

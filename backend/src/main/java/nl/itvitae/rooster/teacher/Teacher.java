@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nl.itvitae.rooster.MyDay;
 import nl.itvitae.rooster.group.Group;
+import nl.itvitae.rooster.lesson.ArchivedLesson;
 import nl.itvitae.rooster.lesson.Lesson;
 
 import java.util.ArrayList;
@@ -23,8 +24,10 @@ public class Teacher {
 
   private String name;
 
-  @OneToMany(mappedBy="teacher")
+  @OneToMany(mappedBy = "teacher")
   private List<GroupTeacher> groupTeachers = new ArrayList<>();
+  @OneToMany(mappedBy = "teacher")
+  private List<ArchivedGroupTeacher> archivedGroupTeachers = new ArrayList<>();
 
   @ManyToMany
   @JoinTable(
@@ -37,6 +40,8 @@ public class Teacher {
 
   @OneToMany
   private List<Lesson> lessons = new ArrayList<>();
+  @OneToMany
+  private List<ArchivedLesson> archivedLessons = new ArrayList<>();
 
   public Teacher(String name, List<MyDay> availability, int maxDaysPerWeek) {
     this.name = name;
@@ -50,5 +55,13 @@ public class Teacher {
 
   public void addLesson(Lesson lesson) {
     lessons.add(lesson);
+  }
+
+  public void removeLesson(Lesson lesson) {
+    lessons.remove(lesson);
+  }
+
+  public void addArchivedLesson(ArchivedLesson lesson) {
+    archivedLessons.add(lesson);
   }
 }
