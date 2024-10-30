@@ -32,7 +32,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 }
 
-export const loggingInterceptor: HttpInterceptorFn = (
+export const tokenInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ) => {

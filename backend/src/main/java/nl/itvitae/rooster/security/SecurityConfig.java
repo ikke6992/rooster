@@ -2,6 +2,7 @@ package nl.itvitae.rooster.security;
 
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.user.MyUserDetailsService;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -42,6 +43,7 @@ public class SecurityConfig {
         .cors(CorsConfigurer::disable)
         .csrf(CsrfConfigurer::disable)
         .authorizeHttpRequests(requests -> requests
+            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .requestMatchers(HttpMethod.POST, ADMIN_ONLY_POST).hasRole(ROLE_ADMIN)
             .requestMatchers(HttpMethod.DELETE, ADMIN_ONLY_DELETE).hasRole(ROLE_ADMIN)
             .requestMatchers(HttpMethod.PUT, ADMIN_ONLY_PUT).hasRole(ROLE_ADMIN)

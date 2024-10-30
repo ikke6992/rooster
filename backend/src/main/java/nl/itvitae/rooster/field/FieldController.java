@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("http://localhost:4200")
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/fields")
 public class FieldController {
