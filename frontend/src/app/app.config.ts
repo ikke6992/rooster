@@ -9,8 +9,7 @@ import {
   withInterceptors,
 } from '@angular/common/http';
 import { routes } from './app.routes';
-import { multicast, Observable } from 'rxjs';
-// import { AuthInterceptor } from './auth-interceptor';
+import { Observable } from 'rxjs';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,7 +24,7 @@ export function tokenInterceptor(
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {
   // temp hardcoded token
-  const token: string = "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W3siYXV0aG9yaXR5IjoiUk9MRV9BRE1JTiJ9XSwic3ViIjoiYWRtaW4iLCJpYXQiOjE3MzAyOTI4MzAsImV4cCI6MTczMDI5NjQzMH0.SBq5J8t3J8gQiti8O4DhuwBQtOPlozz4x54txxU296AnSFuiAp3A74dPv-fczQPfa94ddQSqCcif7WNzR3nx9Q"
+  const token: string | null = localStorage.getItem('token')
   if (!token) {
     return next(req);
   }

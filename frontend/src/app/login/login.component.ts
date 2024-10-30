@@ -30,6 +30,7 @@ export class LoginComponent {
         this.showModal('feedback')
       },
       (error) => {
+        localStorage.setItem('token', error.error.text)
         console.error('Error:', error);
         this.feedbackMsg = `Error: ${error.error}`;
         this.showModal('feedback')

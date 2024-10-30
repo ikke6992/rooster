@@ -25,18 +25,15 @@ public class UserController {
 
   @PostMapping("login")
   public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-    try {
-      Authentication authentication = authenticationManager.authenticate(
-          new UsernamePasswordAuthenticationToken(loginRequest.username(),
-              loginRequest.password()));
 
-      if (!authentication.isAuthenticated()) {
-        return new ResponseEntity<>("invalid username/password", HttpStatus.UNAUTHORIZED);
-      }
+    Authentication authentication = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(loginRequest.username(),
+            loginRequest.password()));
 
-      return new ResponseEntity<>(jwtService.generateJwt(loginRequest.username()), HttpStatus.OK);
-    } catch (AuthenticationException authException) {
+    if (!authentication.isAuthenticated()) {
       return new ResponseEntity<>("invalid username/password", HttpStatus.UNAUTHORIZED);
     }
+    return ResponseEntity.ok(jwtService.generateJwt(loginRequest.username()));
+
   }
 }
