@@ -10,11 +10,23 @@
     required
   /><br />
   <label for="adapt-weekly">Adapt Weekly: </label>
-  <input id="adapt-weekly" type="checkbox" formControlName="adaptWeekly" /><br />
+  <input
+    id="adapt-weekly"
+    type="checkbox"
+    formControlName="adaptWeekly"
+  /><br />
   <button type="submit" class="button-action">Submit</button>
 </form>
-<app-modal id="error" class="hhidden">
-  <p>{{this.errorMsg}}</p>
-  <button (click)="closeModal('error')">Close</button>
+<app-modal id="feedback" class="hhidden">
+  <div [innerHTML]="feedbackMsg"></div>
+  <button
+    (click)="
+      this.feedbackMsg.startsWith('Error: ')
+        ? closeModal('feedback')
+        : window.location.reload()
+    "
+    class="button-action"
+  >
+    Close
+  </button>
 </app-modal>
-

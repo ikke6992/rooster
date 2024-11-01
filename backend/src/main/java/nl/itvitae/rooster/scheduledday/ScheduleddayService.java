@@ -5,8 +5,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Optional;
 
 
 import lombok.AllArgsConstructor;
@@ -22,7 +23,6 @@ import nl.itvitae.rooster.teacher.GroupTeacher;
 import nl.itvitae.rooster.teacher.Teacher;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Color;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -66,8 +66,8 @@ public class ScheduleddayService {
       Scheduledday scheduledday, LocalDate date, Classroom classroom, boolean adaptWeekly) {
 
     //create successes list and failures map for the OverrideDTO
-    List<ScheduleddayDTO> successes = new ArrayList<>();
-    Map<ScheduleddayDTO, String> failures = new HashMap<>();
+    List<String> successes = new ArrayList<>();
+    List<String> failures = new ArrayList<>();
 
     //save original date and classroom for later use
     LocalDate oldDate = scheduledday.getDate();
@@ -77,7 +77,8 @@ public class ScheduleddayService {
     scheduledday.setDate(date);
     scheduledday.setClassroom(classroom);
     scheduleddayRepository.save(scheduledday);
-    successes.add(new ScheduleddayDTO(scheduledday));
+    successes.add(String.format("Lesson moved from classroom %d on %s to classroom %d on %s",
+        oldClassroom.getId(), oldDate, classroom.getId(), date));
 
     //if requested, keep overriding the scheduledday weekly
     if (adaptWeekly) {
@@ -97,9 +98,10 @@ public class ScheduleddayService {
             //if newDate is a free day, delete scheduling and add to successes list
             if (freeDayRepository.existsByDate(newDate)) {
               scheduleddayRepository.delete(nextScheduledday);
-              successes.add(new ScheduleddayDTO(nextScheduledday));
+              successes.add(String.format(
+                  "Lesson removed from classroom %d on %s, no new lesson because %s is a free day",
+                  oldClassroom.getId(), oldDate, newDate));
             } else {
-
               //try to override nextScheduledday, add to successes if it can be done or to failures if it can't be done
               try {
                 if (scheduleddayRepository.existsByDateAndClassroom(newDate, classroom)) {
@@ -113,9 +115,10 @@ public class ScheduleddayService {
                 nextScheduledday.setDate(newDate);
                 nextScheduledday.setClassroom(classroom);
                 scheduleddayRepository.save(nextScheduledday);
-                successes.add(new ScheduleddayDTO(nextScheduledday));
+                successes.add(String.format("Lesson moved from classroom %d on %s to classroom %d on %s",
+                    oldClassroom.getId(), oldDate, classroom.getId(), newDate));
               } catch (OverrideException e) {
-                failures.put(new ScheduleddayDTO(nextScheduledday), e.getMessage());
+                failures.add(e.getMessage());
               }
             }
           }
