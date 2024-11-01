@@ -34,10 +34,9 @@ public class Lesson {
   @ManyToOne
   private Teacher teacher;
 
-  private boolean isPracticum;
+  private String note;
 
-  public Lesson(Group group, boolean isPracticum) {
+  public Lesson(Group group) {
     this.group = group;
-    this.isPracticum = isPracticum;
   }
 }

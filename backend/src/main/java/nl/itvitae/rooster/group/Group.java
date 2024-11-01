@@ -10,6 +10,7 @@ import lombok.Setter;
 import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.group.vacation.Vacation;
 import nl.itvitae.rooster.lesson.Lesson;
+import nl.itvitae.rooster.teacher.GroupTeacher;
 import nl.itvitae.rooster.teacher.Teacher;
 
 @Getter
@@ -29,15 +30,18 @@ public class Group {
   private List<Lesson> lessons;
   @OneToMany
   private List<Vacation> vacations = new ArrayList<>();
-  @ManyToMany(mappedBy = "groups")
-  private List<Teacher> teachers = new ArrayList<>();
+  @OneToMany(mappedBy = "group")
+  private List<GroupTeacher> groupTeachers = new ArrayList<>();
 
   @ManyToOne
   private Field field;
 
   private LocalDate startDate;
+  private int daysPhase1;
   private int weeksPhase1;
+  private int daysPhase2;
   private int weeksPhase2;
+  private int daysPhase3;
   private int weeksPhase3;
 
   public Group(int groupNumber, String color, int numberOfStudents) {
@@ -61,15 +65,18 @@ public class Group {
     this.numberOfStudents = numberOfStudents;
     this.field = field;
     this.startDate = startDate;
+    this.daysPhase1 = field.getDaysPhase1();
     this.weeksPhase1 = weeksPhase1;
+    this.daysPhase2 = field.getDaysPhase2();
     this.weeksPhase2 = weeksPhase2;
+    this.daysPhase3 = field.getDaysPhase3();
     this.weeksPhase3 = weeksPhase3;
   }
 
+  public void addGroupTeacher(GroupTeacher groupTeacher) {
+    groupTeachers.add(groupTeacher);
+  }
   public void addVacation(Vacation vacation) {
     vacations.add(vacation);
-  }
-  public void addTeacher(Teacher teacher) {
-    teachers.add(teacher);
   }
 }

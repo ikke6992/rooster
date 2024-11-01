@@ -3,14 +3,14 @@ package nl.itvitae.rooster.scheduledday;
 import java.time.LocalDate;
 
 public record ScheduleddayDTO(Long id, LocalDate date, Long classroomId, int groupNumber,
-                              String groupColor, String field, String teacher) {
+                              String groupColor, String field, String teacher, String note) {
 
   public ScheduleddayDTO(Scheduledday scheduledday) {
     this(scheduledday.getId(), scheduledday.getDate(), scheduledday.getClassroom().getId(),
         scheduledday.getLesson().getGroup().getGroupNumber(),
         scheduledday.getLesson().getGroup().getColor(),
         scheduledday.getLesson().getGroup().getField().getName(),
-        getTeacherName(scheduledday));
+        getTeacherName(scheduledday), scheduledday.getLesson().getNote());
   }
 
   public static String getTeacherName(Scheduledday scheduledday) {

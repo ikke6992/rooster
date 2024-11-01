@@ -1,11 +1,17 @@
-<div class="mx-2">Currently viewing: {{ getMonthName(month) }} {{ year }}</div>
-<button (click)="decrementMonth()" class="button-action">Previous Month</button>
-<button (click)="incrementMonth()" class="button-action">Next Month</button>
-<button (click)="print()" class="button-action">Print schedule</button>
-<button (click)="exportExcel()" class="button-action">Download Excel</button>
+<div class="sticky top-12 w-full z-10 px-4 bg-white">
+  <div class="mx-2">
+    Currently viewing: {{ getMonthName(month) }} {{ year }}
+  </div>
+  <button (click)="decrementMonth()" class="button-action">
+    Previous Month
+  </button>
+  <button (click)="incrementMonth()" class="button-action">Next Month</button>
+  <button (click)="print()" class="button-action">Print schedule</button>
+  <button (click)="exportExcel()" class="button-action">Download Excel</button>
+</div>
 <div id="schedule">
   <table class="w-full">
-    <tr>
+    <tr class="sticky" style="top: 100px; background-color: white; z-index: 10;">
       <th>Date</th>
       <th *ngFor="let number of TOTAL_CLASSROOMS">Classroom {{ number }}</th>
     </tr>
@@ -35,32 +41,44 @@
         (drop)="onDrop($event, day, number)"
       >
         <div
-          *ngFor="let item of data"
+          *ngFor="let item of filterData(data, day)"
           draggable="true"
           (dragstart)="onDragStart($event, item)"
         >
-          <app-scheduled-day
-            [item]="item"
-            [day]="day.id"
-            [classroom]="number"
-          />
-          <app-modal id="override-{{ item.id }}" class="hhidden">
-            <ng-container *ngIf="selectedModal && selectedModal === item.id">
-              <app-override
-                [scheduledday]="item"
-                [date]="destinationdate"
-                [classroomId]="destinationclassroom"
-              ></app-override>
-              <button (click)="closeModal('override-' + item.id)">Close</button>
-            </ng-container>
-          </app-modal>
+          <div (mouseover)="setDraggedItem(item)">
+            <app-scheduled-day
+              [item]="item"
+              [day]="day.id"
+              [classroom]="number"
+            />
+            <app-modal id="override-{{ item.id }}" class="hhidden">
+              <ng-container *ngIf="selectedModal && selectedModal === item.id">
+                <app-override
+                  [scheduledday]="item"
+                  [date]="destinationdate"
+                  [classroomId]="destinationclassroom"
+                ></app-override>
+                <button (click)="closeModal('override-' + item.id)">
+                  Close
+                </button>
+              </ng-container>
+            </app-modal>
+          </div>
         </div>
       </td>
     </tr>
   </table>
 </div>
 <app-modal id="error" class="hhidden">
-  <p>{{errorMsg}}</p>
+  <p>{{ errorMsg }}</p>
   <button (click)="closeModal('error')" class="button-action">Close</button>
 </app-modal>
 
+<div #dragImage class="custom-drag-image">
+  <div style="backgroundColor: {{ draggedItem.groupColor }}">
+    <div class="flex justify-center items-center">
+      Group {{ draggedItem.groupNumber }} {{ draggedItem.field }} - Teacher:
+      {{ draggedItem.teacher }}
+    </div>
+  </div>
+</div>

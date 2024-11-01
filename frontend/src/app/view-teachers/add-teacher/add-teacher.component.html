@@ -2,8 +2,6 @@
 <form [formGroup]="addTeacher" (ngSubmit)="onSubmit()">
   <label for="name">Name: </label>
   <input id="name" type="text" formControlName="name" required /><br />
-  <label for="teaches-practicum">Teaches practicum: </label>
-  <input id="teaches-practicum" type="checkbox" formControlName="teachesPracticum" /><br />
   <label for="monday">Monday: </label>
   <input id="monday" type="checkbox" formControlName="monday" /><br />
   <label for="tuesday">Tuesday: </label>
@@ -15,11 +13,25 @@
   <label for="friday">Friday: </label>
   <input id="friday" type="checkbox" formControlName="friday" /><br />
   <label for="max-days">Max days per week: </label>
-  <input id="max-days" type="number" formControlName="maxDaysPerWeek" required /><br />
+  <input
+    id="max-days"
+    type="number"
+    formControlName="maxDaysPerWeek"
+    required
+  /><br />
   <button type="submit" [disabled]="!addTeacher.valid">Submit</button>
 </form>
 
 <app-modal id="feedback" class="hhidden">
   <p>{{ this.feedbackMsg }}</p>
-  <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : window.location.reload()">Close</button>
+  <button
+    class="button-action"
+    (click)="
+      this.feedbackMsg.startsWith('Error: ')
+        ? closeModal('feedback')
+        : window.location.reload()
+    "
+  >
+    Close
+  </button>
 </app-modal>

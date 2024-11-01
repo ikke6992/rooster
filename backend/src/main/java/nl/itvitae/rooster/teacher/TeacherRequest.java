@@ -1,4 +1,4 @@
 package nl.itvitae.rooster.teacher;
 
-public record TeacherRequest(String name, boolean teachesPracticum, String[] availability, int maxDaysPerWeek) {
+public record TeacherRequest(String name, String[] availability, int maxDaysPerWeek) {
 }

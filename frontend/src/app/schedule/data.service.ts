@@ -41,4 +41,11 @@ export class DataService {
       headers: new HttpHeaders({ 'Content-type': 'application/json' }),
     });
   }
+
+  editNote(id: number, note: string){
+    const url = `${this.apiUrl}lessons/note/${id}`;
+    return this.http.put<any>(url, note, {
+      headers: new HttpHeaders({ 'Content-type': 'application/json' }),
+    });
+  }
 } 

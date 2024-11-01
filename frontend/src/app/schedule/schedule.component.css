@@ -23,3 +23,9 @@
 .bg-white { 
   background-color: white; /* Default for classrooms */
 }
+
+.custom-drag-image {
+  position: absolute;
+  text-align: center;
+  top: -9999px; 
+}
