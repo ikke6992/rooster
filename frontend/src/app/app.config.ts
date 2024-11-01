@@ -23,7 +23,6 @@ export function tokenInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {
-  // temp hardcoded token
   const token: string | null = localStorage.getItem('token')
   if (!token) {
     return next(req);

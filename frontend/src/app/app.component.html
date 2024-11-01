@@ -10,7 +10,9 @@
         ariaCurrentWhenActive="page"
         >View schedule</a
       >
+
       <a
+        *ngIf="isLoggedIn"
         class="nav-button"
         routerLink="/groups"
         routerLinkActive="active"
@@ -18,6 +20,7 @@
         >View Groups</a
       >
       <a
+        *ngIf="isLoggedIn"
         class="nav-button"
         routerLink="/teachers"
         routerLinkActive="active"
@@ -31,7 +34,12 @@
         ariaCurrentWhenActive="page"
         >View Free Days</a
       >
-      <button class="nav-button" (click)="showModal('login')">Login</button>
+      <ng-container *ngIf="isLoggedIn; else showLogout">
+        <button class="nav-button" (click)="logout()">Logout</button>
+      </ng-container>
+      <ng-template #showLogout>
+        <button class="nav-button" (click)="showModal('login')">Login</button>
+      </ng-template>
     </div>
   </nav>
   <app-modal id="login" class="hhidden">

@@ -14,6 +14,8 @@ import { LoginComponent } from "./login/login.component";
 export class AppComponent {
   title = "frontend"
 
+  isLoggedIn: boolean = localStorage.getItem('token') !== null
+
   showModal(name: string) {
     let modal_t = document.getElementById(name);
     if (modal_t !== null) {
@@ -27,6 +29,11 @@ export class AppComponent {
       modal_t.classList.remove('sshow');
       modal_t.classList.add('hhidden');
     }
+  }
+
+  logout(){
+    localStorage.clear();
+    window.location.reload()
   }
 }
 

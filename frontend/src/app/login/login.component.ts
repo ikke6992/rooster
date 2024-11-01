@@ -26,11 +26,11 @@ export class LoginComponent {
     this.dataService.login(data).subscribe(
       (response) => {
         console.log('Response:', response);
+        localStorage.setItem('token', response)
         this.feedbackMsg = `Successfully logged in as ${this.login.value.username}`;
         this.showModal('feedback')
       },
       (error) => {
-        localStorage.setItem('token', error.error.text)
         console.error('Error:', error);
         this.feedbackMsg = `Error: ${error.error}`;
         this.showModal('feedback')

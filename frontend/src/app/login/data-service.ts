@@ -11,8 +11,6 @@ export class DataService {
   constructor(private http: HttpClient) {}
 
   login(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, data, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    });
+    return this.http.post(`${this.apiUrl}/login`, data, {responseType: 'text'});
   }
 } 
