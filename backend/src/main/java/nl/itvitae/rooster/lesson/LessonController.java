@@ -49,6 +49,6 @@ public class LessonController {
     }
     Lesson lesson = scheduledday.get().getLesson();
     lesson.setNote(note);
-    return ResponseEntity.ok(lessonRepository.save(lesson));
+    return ResponseEntity.ok(lessonRepository.save(lesson).getNote());
   }
 }

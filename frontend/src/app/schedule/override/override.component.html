@@ -17,12 +17,12 @@
   /><br />
   <button type="submit" class="button-action">Submit</button>
 </form>
-<app-modal id="feedback" class="hhidden">
+<app-modal id="feedback-override" class="hhidden">
   <div [innerHTML]="feedbackMsg"></div>
   <button
     (click)="
       this.feedbackMsg.startsWith('Error: ')
-        ? closeModal('feedback')
+        ? closeModal('feedback-override')
         : window.location.reload()
     "
     class="button-action"
