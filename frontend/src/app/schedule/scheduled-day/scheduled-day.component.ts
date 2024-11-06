@@ -91,10 +91,16 @@ export class ScheduledDayComponent {
     this.initializeForm();
   }
 
+
+  invertHex(hex: string){
+    return (Number(`0x1${hex.substring(1)}`) ^ 0xFFFFFF).toString(16).substr(1).toUpperCase()
+  }
+
+
   private initializeForm() {
     this.addNote = new FormGroup({
       note: new FormControl(this.item.note),
-      exam: new FormControl(this.item.isExam)
+      isExam: new FormControl(this.item.isExam)
     });
   }
 
