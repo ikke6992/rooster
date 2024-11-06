@@ -21,6 +21,7 @@ export class ScheduledDayComponent {
     field: '',
     teacher: '',
     note: '',
+    isExam: true,
   };
 
   @Input() day: number = 0;
@@ -70,12 +71,12 @@ export class ScheduledDayComponent {
     }
   }
   onSubmit() {
-    const data = this.addNote.value.note;
+    const data = this.addNote.value;
     console.log(data);
-    this.dataService.editNote(this.item.id, data ? data : '').subscribe(
+    this.dataService.editNote(this.item.id, data).subscribe(
       (response) => {
         console.log('Response:', response);
-        this.feedbackMsg = data === '' ? `Note successfully removed` : `Note ${data} successfully added`;
+        this.feedbackMsg = this.addNote.value.note === '' ? `Note successfully removed` : `Note ${data} successfully added`;
         this.showModal(`feedback-${this.item.id}`);
       },
       (error) => {
@@ -93,6 +94,7 @@ export class ScheduledDayComponent {
   private initializeForm() {
     this.addNote = new FormGroup({
       note: new FormControl(this.item.note),
+      exam: new FormControl(this.item.isExam)
     });
   }
 
@@ -110,6 +112,7 @@ export interface Scheduledday {
   field: string;
   teacher: string;
   note: string;
+  isExam: boolean;
 }
 
 // export interface Classroom {

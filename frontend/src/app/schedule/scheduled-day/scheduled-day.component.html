@@ -37,6 +37,8 @@
       <form [formGroup]="addNote" (ngSubmit)="onSubmit()">
         <label for="note">Note: </label>
         <input id="note" type="text" formControlName="note" /><br />
+        <label for="exam">Is exam: </label>
+        <input id="exam" type="checkbox" formControlName="exam"/><br />
         <button [disabled]="!addNote.valid" type="submit" class="button-action">
           Submit
         </button>

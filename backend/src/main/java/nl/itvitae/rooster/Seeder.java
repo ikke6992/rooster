@@ -94,7 +94,8 @@ public class Seeder implements CommandLineRunner {
 
     groupService.addVacation(group53, LocalDate.now().plusMonths(1), 2);
 
-    addNote(352L, "Linux les 3/10");
+    addNote(352L, "Linux les 3/10", false);
+    addNote(361L, "Linux Examen", true);
   }
 
   private Group saveGroup(int groupNumber, String color,int numberOfStudents, Field field) {
@@ -127,9 +128,10 @@ public class Seeder implements CommandLineRunner {
     return fieldRepository.save(new Field(name, daysPhase1, daysPhase2, daysPhase3));
   }
 
-  private void addNote(Long id, String note){
+  private void addNote(Long id, String note, boolean isExam){
     Lesson lesson = lessonRepository.findById(id).get();
     lesson.setNote(note);
+    lesson.setExam(isExam);
     lessonRepository.save(lesson);
   }
 }
