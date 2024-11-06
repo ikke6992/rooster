@@ -1,5 +1,6 @@
 <div *ngIf="item.date.getDate() === day">
   <div
+  [ngClass]="item.isExam ? 'border-red-500 border-2 rounded' : ''"
     *ngIf="item.classroomId === classroom"
     style="backgroundColor: {{ item.groupColor }}"
   >

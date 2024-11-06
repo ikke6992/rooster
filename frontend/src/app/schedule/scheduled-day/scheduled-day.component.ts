@@ -76,7 +76,7 @@ export class ScheduledDayComponent {
     this.dataService.editNote(this.item.id, data).subscribe(
       (response) => {
         console.log('Response:', response);
-        this.feedbackMsg = this.addNote.value.note === '' ? `Note successfully removed` : `Note ${data} successfully added`;
+        this.feedbackMsg = this.addNote.value.note === '' ? `Note successfully removed` : `Note ${data.note} successfully added`;
         this.showModal(`feedback-${this.item.id}`);
       },
       (error) => {

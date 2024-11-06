@@ -94,7 +94,9 @@ public class Seeder implements CommandLineRunner {
 
     groupService.addVacation(group53, LocalDate.now().plusMonths(1), 2);
 
-    addNote(352L, "Linux les 3/10", false);
+    for (int i = 1; i <= 10; i++) {
+      addNote(348L + i, "Linux les " + i + "/10", false);
+    }
     addNote(361L, "Linux Examen", true);
   }
 
