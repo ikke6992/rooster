@@ -1,5 +1,6 @@
 package nl.itvitae.rooster.group.vacation;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -25,6 +26,7 @@ public class Vacation {
   private int weeks;
 
   @ManyToOne
+  @JsonBackReference
   private Group group;
 
   public Vacation(LocalDate startDate, int weeks, Group group) {

@@ -1,5 +1,6 @@
 package nl.itvitae.rooster.teacher;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,12 @@ public class GroupTeacher {
 
   @ManyToOne
   @JoinColumn(name = "group_id")
+  @JsonBackReference
   private Group group;
 
   @ManyToOne
   @JoinColumn(name = "teacher_id")
+  @JsonBackReference
   private Teacher teacher;
 
   private int daysPhase1;

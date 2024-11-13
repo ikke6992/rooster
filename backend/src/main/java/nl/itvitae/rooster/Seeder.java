@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Optional;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
@@ -96,10 +97,16 @@ public class Seeder implements CommandLineRunner {
 
     groupService.addVacation(group53, LocalDate.now().plusMonths(1), 2);
 
+    int emptyLessons = 0;
     for (int i = 1; i <= 10; i++) {
-      addNote(348L + i, "Linux les " + i + "/10", false);
+      Optional<Lesson> lesson = lessonRepository.findById(361L - emptyLessons - i);
+      while (lesson.isEmpty()) {
+        emptyLessons += 1;
+        lesson = lessonRepository.findById(361L - emptyLessons - i);
+      }
+      addNote(lesson.get(), "Linux les " + (10 - i) + "/10", false);
     }
-    addNote(361L, "Linux Examen", true);
+    addNote(lessonRepository.findById(361L).get(), "Linux Examen", true);
 
     groupService.deleteGroup(group52);
   }
@@ -134,8 +141,7 @@ public class Seeder implements CommandLineRunner {
     return fieldRepository.save(new Field(name, daysPhase1, daysPhase2, daysPhase3));
   }
 
-  private void addNote(Long id, String note, boolean isExam){
-    Lesson lesson = lessonRepository.findById(id).get();
+  private void addNote(Lesson lesson, String note, boolean isExam){
     lesson.setNote(note);
     lesson.setExam(isExam);
     lessonRepository.save(lesson);
