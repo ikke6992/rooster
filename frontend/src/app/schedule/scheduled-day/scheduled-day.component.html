@@ -1,7 +1,8 @@
 <div *ngIf="item.date.getDate() === day">
   <div
+  [ngClass]="item.isExam ? 'border-4 rounded' : 'border-0'"
     *ngIf="item.classroomId === classroom"
-    style="backgroundColor: {{ item.groupColor }}"
+    style="backgroundColor: {{ item.groupColor }}; borderColor: #{{invertHex(item.groupColor)}}"
   >
     <div class="popup" (click)="showNote()" (mouseover)="pauseTimeout()" (mouseleave)="startTimer()">
       <div class="flex justify-center items-center">
@@ -10,6 +11,7 @@
         <div
           class="popuptext"
           id="myPopup{{ item.id }}"
+          style=" z-index: 20;"
           (mouseover)="pauseTimeout()"
           (mouseleave)="startTimer()"
           (dragstart)="preventDrag($event)"
@@ -36,6 +38,8 @@
       <form [formGroup]="addNote" (ngSubmit)="onSubmit()">
         <label for="note">Note: </label>
         <input id="note" type="text" formControlName="note" /><br />
+        <label for="isExam">Is exam: </label>
+        <input id="isExam" type="checkbox" formControlName="isExam"/><br />
         <button [disabled]="!addNote.valid" type="submit" class="button-action">
           Submit
         </button>

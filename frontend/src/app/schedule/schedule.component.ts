@@ -41,6 +41,7 @@ export class ScheduleComponent {
     field: '',
     teacher: 'none',
     note: '',
+    isExam: false,
   };
 
   @ViewChild('dragImage', { static: false }) dragImage!: ElementRef;
@@ -222,6 +223,7 @@ export interface Scheduledday {
   field: string;
   teacher: string;
   note: string;
+  isExam: boolean;
 }
 
 interface Day {

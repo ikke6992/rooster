@@ -16,10 +16,6 @@ public class LessonService {
     return lessonRepository.findAll();
   }
 
-  public Lesson createTestLesson(){
-    return lessonRepository.save(new Lesson());
-  }
-
   public Lesson createLesson(Group group){
     return lessonRepository.save(new Lesson(group));
   }

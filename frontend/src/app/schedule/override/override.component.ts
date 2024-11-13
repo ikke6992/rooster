@@ -17,7 +17,8 @@ export class OverrideComponent {
   @Input() classroomId: number = 0;
 
   override!: FormGroup;
-  errorMsg!: string;
+  feedbackMsg!: string;
+  window = window;
 
   constructor(private dataService: DataService) {}
 
@@ -54,12 +55,14 @@ export class OverrideComponent {
     this.dataService.override(this.scheduledday.id, data).subscribe(
       (response) => {
         console.log('Response:', response);
-        window.location.reload();
+        this.feedbackMsg =
+          `Successes:<br> ${response.successes.join(`<br>`)} <br>Failures:<br> ${response.failures.join(`<br>`)}<br>`;
+        this.showModal('feedback');
       },
       (error) => {
         console.error('Error:', error);
-        this.errorMsg = error.error;
-        this.showModal('error');
+        this.feedbackMsg = `Error: ${error.error}`;
+        this.showModal('feedback');
       }
     );
   }
