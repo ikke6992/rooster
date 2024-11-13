@@ -96,7 +96,7 @@ public class GroupController {
         group, LocalDate.parse(request.startDate()), request.weeks())));
   }
 
-  @DeleteMapping("/{number}/delete")
+  @DeleteMapping("/{number}/archive")
   public ResponseEntity<?> deleteGroup(@PathVariable int number) {
     Optional<Group> group = groupRepository.findByGroupNumber(number);
     if (group.isEmpty()) {

@@ -91,8 +91,9 @@ public class GroupService {
       group.removeLesson(lesson);
       lessonRepository.delete(lesson);
     }
-    for (Vacation vacation : group.getVacations()) {
+    for (Vacation vacation : vacationRepository.findByGroup(group)) {
       archivedVacationRepository.save(new ArchivedVacation(vacation, archivedGroup));
+      group.removeVacation(vacation);
       vacationRepository.delete(vacation);
     }
     for (GroupTeacher groupTeacher : group.getGroupTeachers()) {

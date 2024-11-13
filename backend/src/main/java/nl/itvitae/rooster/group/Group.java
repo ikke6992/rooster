@@ -80,6 +80,9 @@ public class Group {
     vacations.add(vacation);
   }
 
+  public void removeVacation(Vacation vacation) {
+    vacations.remove(vacation);
+  }
 
   public void addLesson(Lesson lesson) {
     lessons.add(lesson);

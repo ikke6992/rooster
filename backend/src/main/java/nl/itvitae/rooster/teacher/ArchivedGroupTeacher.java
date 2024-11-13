@@ -31,6 +31,7 @@ public class ArchivedGroupTeacher {
   private int daysPhase3;
 
   public ArchivedGroupTeacher(GroupTeacher groupTeacher, ArchivedGroup group) {
+    this.id = groupTeacher.getId();
     this.group = group;
     this.teacher = groupTeacher.getTeacher();
     this.daysPhase1 = groupTeacher.getDaysPhase1();
