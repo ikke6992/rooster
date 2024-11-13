@@ -36,6 +36,8 @@ public class Lesson {
 
   private String note;
 
+  private boolean isExam;
+
   public Lesson(Group group) {
     this.group = group;
   }

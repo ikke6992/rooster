@@ -42,8 +42,8 @@ export class DataService {
     });
   }
 
-  editNote(id: number, note: string){
+  editNote(id: number, note: any){
     const url = `${this.apiUrl}lessons/note/${id}`;
-    return this.http.put<any>(url, note);
+    return this.http.put<any>(url, note, { responseType: 'text' as 'json' });
   }
 } 
