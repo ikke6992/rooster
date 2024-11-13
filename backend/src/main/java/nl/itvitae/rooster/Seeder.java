@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Optional;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
@@ -70,6 +71,7 @@ public class Seeder implements CommandLineRunner {
 
     LocalDate returnDate = LocalDate.of(LocalDate.now().getYear(), 1, 1);
     var returnDay = groupService.addGroup(0, "#d3d3d3", 0, returning, returnDate, 52, 52, 52);
+    var group52 = groupService.addGroup(52, "#00ffff", 10, security, LocalDate.now().minusYears(1), 8, 12, 8);
     var group53 = saveGroup(53, "#ffa500", 12, java);
     var group54 = saveGroup(54, "#ff0000", 8, data);
     var group55 = saveGroup(55, "#00ff00", 10, java);
@@ -78,6 +80,7 @@ public class Seeder implements CommandLineRunner {
     var coen = saveTeacher("Coen", new ArrayList<>(List.of(monday, thursday)), 2, 2, 2, 1, group53, group55);
 
     groupService.scheduleReturnDay(returnDay, 4L, DayOfWeek.WEDNESDAY);
+    groupService.scheduleGroup(group52);
     groupService.scheduleGroup(group53);
     groupService.scheduleGroup(group54);
     groupService.scheduleGroup(group55);
@@ -94,10 +97,18 @@ public class Seeder implements CommandLineRunner {
 
     groupService.addVacation(group53, LocalDate.now().plusMonths(1), 2);
 
+    int emptyLessons = 0;
     for (int i = 1; i <= 10; i++) {
-      addNote(348L + i, "Linux les " + i + "/10", false);
+      Optional<Lesson> lesson = lessonRepository.findById(361L - emptyLessons - i);
+      while (lesson.isEmpty()) {
+        emptyLessons += 1;
+        lesson = lessonRepository.findById(361L - emptyLessons - i);
+      }
+      addNote(lesson.get(), "Linux les " + (10 - i) + "/10", false);
     }
-    addNote(361L, "Linux Examen", true);
+    addNote(lessonRepository.findById(361L).get(), "Linux Examen", true);
+
+    groupService.deleteGroup(group52);
   }
 
   private Group saveGroup(int groupNumber, String color,int numberOfStudents, Field field) {
@@ -130,8 +141,7 @@ public class Seeder implements CommandLineRunner {
     return fieldRepository.save(new Field(name, daysPhase1, daysPhase2, daysPhase3));
   }
 
-  private void addNote(Long id, String note, boolean isExam){
-    Lesson lesson = lessonRepository.findById(id).get();
+  private void addNote(Lesson lesson, String note, boolean isExam){
     lesson.setNote(note);
     lesson.setExam(isExam);
     lessonRepository.save(lesson);

@@ -29,6 +29,11 @@ public class GroupController {
     return ResponseEntity.ok(groupService.getAll().stream().map(GroupDTO::of).toList());
   }
 
+  @GetMapping("/archived")
+  public ResponseEntity<List<GroupDTO>> getArchived() {
+    return ResponseEntity.ok(groupService.getArchived().stream().map(GroupDTO::ofArchived).toList());
+  }
+
   @PostMapping("/new")
   public ResponseEntity<?> addGroup(@RequestBody GroupRequest request, UriComponentsBuilder ucb) {
     if (request.weeksPhase1() < 1 || request.weeksPhase2() < 1 || request.weeksPhase3() < 1) {
@@ -89,5 +94,14 @@ public class GroupController {
     Group group = groupRepository.findByGroupNumber(number).get();
     return ResponseEntity.ok(GroupDTO.of(groupService.addVacation(
         group, LocalDate.parse(request.startDate()), request.weeks())));
+  }
+
+  @DeleteMapping("/{number}/archive")
+  public ResponseEntity<?> deleteGroup(@PathVariable int number) {
+    Optional<Group> group = groupRepository.findByGroupNumber(number);
+    if (group.isEmpty()) {
+      return ResponseEntity.badRequest().build();
+    }
+    return ResponseEntity.ok(GroupDTO.ofArchived(groupService.deleteGroup(group.get())));
   }
 }

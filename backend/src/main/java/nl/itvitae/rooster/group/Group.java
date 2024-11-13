@@ -11,7 +11,7 @@ import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.group.vacation.Vacation;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.teacher.GroupTeacher;
-import nl.itvitae.rooster.teacher.Teacher;
+import org.hibernate.annotations.*;
 
 @Getter
 @Setter
@@ -27,7 +27,7 @@ public class Group {
   private String color;
   private int numberOfStudents;
   @OneToMany
-  private List<Lesson> lessons;
+  private List<Lesson> lessons = new ArrayList<>();
   @OneToMany
   private List<Vacation> vacations = new ArrayList<>();
   @OneToMany(mappedBy = "group")
@@ -78,5 +78,16 @@ public class Group {
   }
   public void addVacation(Vacation vacation) {
     vacations.add(vacation);
+  }
+
+  public void removeVacation(Vacation vacation) {
+    vacations.remove(vacation);
+  }
+
+  public void addLesson(Lesson lesson) {
+    lessons.add(lesson);
+  }
+  public void removeLesson(Lesson lesson) {
+    lessons.remove(lesson);
   }
 }
