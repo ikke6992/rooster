@@ -30,12 +30,12 @@ export class AddFieldComponent {
       (response) => {
         console.log('Response:', response);
         this.feedbackMsg = `Field ${response.name} succesfully added`;
-        this.showModal('feedback');
+        this.showModal('feedback-add-field');
       },
       (error) => {
         console.error('Error:', error);
         this.feedbackMsg = `Error: ${error.error}`;
-        this.showModal('feedback');
+        this.showModal('feedback-add-field');
       }
     );
   }

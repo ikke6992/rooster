@@ -37,12 +37,12 @@ export class AddGroupComponent {
       (response) => {
         console.log('Response:', response);
         this.feedbackMsg = `Group ${response.groupNumber} ${response.field.name} succesfully added and scheduled starting ${response.startDate}`;
-        this.showModal('feedback')
+        this.showModal('feedback-add-group')
       },
       (error) => {
         console.error('Error:', error);
         this.feedbackMsg = `Error: ${error.error}`;
-        this.showModal('feedback')
+        this.showModal('feedback-add-group')
       }
     );
   }

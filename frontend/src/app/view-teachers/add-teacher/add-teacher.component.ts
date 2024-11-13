@@ -49,12 +49,12 @@ window = window;
       (response) => {
         console.log('Response:', response);
         this.feedbackMsg = `Teacher ${response.name} succesfully added`
-        this.showModal('feedback');
+        this.showModal('feedback-add-teacher');
       },
       (error) => {
         console.error('Error:', error);
         this.feedbackMsg = `Error: ${error.error}`
-        this.showModal('feedback');
+        this.showModal('feedback-add-teacher');
       }
     );
   }

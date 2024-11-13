@@ -28,12 +28,12 @@ export class LoginComponent {
         console.log('Response:', response);
         localStorage.setItem('token', response)
         this.feedbackMsg = `Successfully logged in as ${this.login.value.username}`;
-        this.showModal('feedback')
+        this.showModal('feedback-login')
       },
       (error) => {
         console.error('Error:', error);
         this.feedbackMsg = `Error: ${error.error}`;
-        this.showModal('feedback')
+        this.showModal('feedback-login')
       }
     );
   }

@@ -12,7 +12,7 @@
   <button type="submit" [disabled]="!login.valid">Submit</button>
 </form>
 
-<app-modal id="feedback" class="hhidden">
+<app-modal id="feedback-login" class="hhidden">
     <p>{{ this.feedbackMsg }}</p>
     <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : window.location.reload()">Close</button>
   </app-modal>

@@ -54,7 +54,7 @@
     </button>
   </form>
 </ng-template>
-<app-modal id="feedback" class="hhidden">
+<app-modal id="feedback-add-free-day" class="hhidden">
   <p>{{ this.feedbackMsg }}</p>
   <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : window.location.reload()">Close</button>
 </app-modal>
