@@ -100,7 +100,7 @@ public class Seeder implements CommandLineRunner {
       addNote(348L + i, "Linux les " + i + "/10", false);
     }
     addNote(361L, "Linux Examen", true);
-    
+
     groupService.deleteGroup(group52);
   }
 

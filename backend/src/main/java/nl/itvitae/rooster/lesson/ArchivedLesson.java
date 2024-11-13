@@ -33,10 +33,13 @@ public class ArchivedLesson {
 
   private String note;
 
+  private boolean isExam;
+
   public ArchivedLesson(Lesson lesson, ArchivedGroup group) {
     this.id = lesson.getId();
     this.group = group;
     this.teacher = lesson.getTeacher();
     this.note = lesson.getNote();
+    this.isExam = lesson.isExam();
   }
 }
