@@ -1,11 +1,14 @@
 package nl.itvitae.rooster.security;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,21 +30,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     String token = null;
     String username = null;
 
-    String authenticationHeader = request.getHeader("Authorization");
-    if (authenticationHeader != null && authenticationHeader.startsWith("Bearer ")) {
-      token = authenticationHeader.substring(7);
-      username = jwtService.extractUsernameFromToken(token);
-    }
-    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-      if (jwtService.validateToken(token, userDetails)) {
-        UsernamePasswordAuthenticationToken authtoken = new UsernamePasswordAuthenticationToken(
-            userDetails, null,
-            userDetails.getAuthorities());
-        authtoken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authtoken);
+    try {
+
+      String authenticationHeader = request.getHeader("Authorization");
+      if (authenticationHeader != null && authenticationHeader.startsWith("Bearer ")) {
+        token = authenticationHeader.substring(7);
+        username = jwtService.extractUsernameFromToken(token);
       }
+      if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if (jwtService.validateToken(token, userDetails)) {
+          UsernamePasswordAuthenticationToken authtoken = new UsernamePasswordAuthenticationToken(
+              userDetails, null,
+              userDetails.getAuthorities());
+          authtoken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+          SecurityContextHolder.getContext().setAuthentication(authtoken);
+        }
+      }
+    } catch (ExpiredJwtException e) {
+    } finally {
+      filterChain.doFilter(request, response);
     }
-    filterChain.doFilter(request, response);
   }
 }
