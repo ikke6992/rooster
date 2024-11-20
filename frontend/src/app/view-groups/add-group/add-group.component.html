@@ -25,7 +25,7 @@
   ><br />
   <label for="teachers">Teachers: </label>
   <select multiple id="teachers">
-    <option [ngValue]="null" disabled>Select Teachers</option>
+    <option [ngValue]="null" disabled>Double Click to Select Teacher</option>
     <option
       *ngFor="let teacher of teachers"
       [ngValue]="teacherAssignments"
@@ -35,7 +35,7 @@
     </option></select
   ><br />
   <table>
-    <tr>
+    <tr *ngIf="teacherAssignments.length !== 0">
       <th>Teacher</th>
       <th>Days Phase 1</th>
       <th>Days Phase 2</th>
