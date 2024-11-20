@@ -23,6 +23,46 @@
       {{ field.name }}
     </option></select
   ><br />
+  <label for="teachers">Teachers: </label>
+  <select multiple id="teachers">
+    <option [ngValue]="null" disabled>Double Click to Select Teacher</option>
+    <option
+      *ngFor="let teacher of teachers"
+      [ngValue]="teacherAssignments"
+      (dblclick)="showModal('set-teacher-' + teacher.name)"
+    >
+      {{ teacher.name }}
+    </option></select
+  ><br />
+  <table>
+    <tr *ngIf="teacherAssignments.length !== 0">
+      <th>Teacher</th>
+      <th>Days Phase 1</th>
+      <th>Days Phase 2</th>
+      <th>Days Phase 3</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+    <tr *ngFor="let teacherAssignment of teacherAssignments">
+      <td>{{ teacherAssignment.name }}</td>
+      <td>{{ teacherAssignment.daysPhase1 }}</td>
+      <td>{{ teacherAssignment.daysPhase2 }}</td>
+      <td>{{ teacherAssignment.daysPhase3 }}</td>
+      <td>
+        <button
+          type="button"
+          (click)="showModal('set-teacher-' + teacherAssignment.name)"
+        >
+          Edit
+        </button>
+      </td>
+      <td>
+        <button type="button" (click)="removeAssignment(teacherAssignment)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </table>
   <label for="start-date">Start Date: </label>
   <input
     id="start-date"
@@ -51,7 +91,6 @@
     formControlName="weeksPhase3"
     required
   /><br />
-
   <button
     [ngClass]="addGroup.valid ? 'button-action' : 'button-incomplete'"
     type="submit"
@@ -59,10 +98,33 @@
   >
     Submit
   </button>
-  
 </form>
+
+<div *ngFor="let teacher of teachers">
+  <app-modal id="set-teacher-{{ teacher.name }}" class="hhidden">
+    <app-set-teacher
+      [teacher]="teacher"
+      (messageEvent)="receiveMessage($event)"
+    ></app-set-teacher>
+    <button
+      (click)="closeModal('set-teacher-' + teacher.name)"
+      class="button-action"
+    >
+      Close
+    </button>
+  </app-modal>
+</div>
 
 <app-modal id="feedback" class="hhidden">
   <p>{{ this.feedbackMsg }}</p>
-  <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : window.location.reload()">Close</button>
+  <button
+    class="button-action"
+    (click)="
+      this.feedbackMsg.startsWith('Error: ')
+        ? closeModal('feedback')
+        : window.location.reload()
+    "
+  >
+    Close
+  </button>
 </app-modal>

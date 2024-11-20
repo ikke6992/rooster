@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class DataService {
   private apiUrlFields = 'http://localhost:8080/api/v1/fields';
   private apiUrlGroups = 'http://localhost:8080/api/v1/groups';
+  private apiUrlTeachers = 'http://localhost:8080/api/v1/teachers';
 
   constructor(private http: HttpClient) {}
 
@@ -17,6 +18,10 @@ export class DataService {
 
   getGroups(): Observable<any> {
     return this.http.get<any>(this.apiUrlGroups);
+  }
+  
+  getTeachers(): Observable<any> {
+    return this.http.get<any>(this.apiUrlTeachers);
   }
 
   postGroup(data: any): Observable<any> {

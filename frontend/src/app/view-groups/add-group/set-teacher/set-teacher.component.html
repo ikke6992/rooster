@@ -1,0 +1,31 @@
+<h1>Add {{ teacher.name }}</h1>
+<form [formGroup]="addTeacher" (ngSubmit)="sendMessage()">
+  <label for="days-phase-1">Days Phase 1: </label>
+  <input
+    id="days-phase-1"
+    type="number"
+    formControlName="daysPhase1"
+    required
+  /><br />
+  <label for="days-phase-2">Days Phase 2: </label>
+  <input
+    id="days-phase-2"
+    type="number"
+    formControlName="daysPhase2"
+    required
+  /><br />
+  <label for="days-phase-3">Days Phase 3: </label>
+  <input
+    id="days-phase-3"
+    type="number"
+    formControlName="daysPhase3"
+    required
+  /><br />
+  <button
+    [ngClass]="addTeacher.valid ? 'button-action' : 'button-incomplete'"
+    type="submit"
+    [disabled]="!addTeacher.valid"
+  >
+    Submit
+  </button>
+</form>

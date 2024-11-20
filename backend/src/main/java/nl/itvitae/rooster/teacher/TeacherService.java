@@ -37,12 +37,12 @@ public class TeacherService {
     return teacherRepository.save(new Teacher(name, newAvailability, realMaxDaysPerWeek));
   }
 
-  public Teacher addGroup(long id, int groupNumber, int daysPhase1, int daysPhase2, int daysPhase3) {
-    Teacher teacher = getById(id);
-    Group group = groupRepository.findByGroupNumber(groupNumber).get();
+  public Teacher addGroup(Teacher teacher, Group group, int daysPhase1, int daysPhase2, int daysPhase3) {
     GroupTeacher groupTeacher = new GroupTeacher(group, teacher, daysPhase1, daysPhase2, daysPhase3);
+    teacher.addGroupTeacher(groupTeacher);
+    group.addGroupTeacher(groupTeacher);
     groupTeacherRepository.save(groupTeacher);
-    groupService.rescheduleGroup(group, LocalDate.now());
+    groupRepository.save(group);
     teacherRepository.save(teacher);
     return teacher;
   }
