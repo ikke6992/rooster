@@ -56,8 +56,18 @@ export class AddGroupComponent {
   }
 
   onSubmit() {
-    const data = this.addGroup.value;
-    console.log(data);
+    const formValue = this.addGroup.value;
+    const data = {
+      groupNumber: formValue.groupNumber,
+      color: formValue.color,
+      numberOfStudents: formValue.numberOfStudents,
+      field: formValue.field,
+      startDate: formValue.startDate,
+      weeksPhase1: formValue.weeksPhase1,
+      weeksPhase2: formValue.weeksPhase2,
+      weeksPhase3: formValue.weeksPhase3,
+      teacherAssignments: this.teacherAssignments,
+    };
     this.dataService.postGroup(data).subscribe(
       (response) => {
         console.log('Response:', response);

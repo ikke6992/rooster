@@ -41,8 +41,11 @@ public class TeacherService {
     Teacher teacher = getById(id);
     Group group = groupRepository.findByGroupNumber(groupNumber).get();
     GroupTeacher groupTeacher = new GroupTeacher(group, teacher, daysPhase1, daysPhase2, daysPhase3);
+    teacher.addGroupTeacher(groupTeacher);
+    group.addGroupTeacher(groupTeacher);
     groupTeacherRepository.save(groupTeacher);
-    groupService.rescheduleGroup(group, LocalDate.now());
+    groupRepository.save(group);
+    groupService.rescheduleGroup(group, group.getStartDate().isAfter(LocalDate.now()) ? group.getStartDate() : LocalDate.now());
     teacherRepository.save(teacher);
     return teacher;
   }

@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.field.FieldService;
 import nl.itvitae.rooster.group.vacation.VacationRequest;
+import nl.itvitae.rooster.teacher.Teacher;
+import nl.itvitae.rooster.teacher.TeacherService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +22,11 @@ import java.util.Optional;
 @RequestMapping("/api/v1/groups")
 public class GroupController {
 
-  private final GroupService groupService;
-  private final GroupRepository groupRepository;
   private final FieldService fieldService;
+  private final GroupService groupService;
+  private final TeacherService teacherService;
+
+  private final GroupRepository groupRepository;
 
   @GetMapping
   public ResponseEntity<List<GroupDTO>> getAll() {
@@ -47,6 +51,10 @@ public class GroupController {
         request.numberOfStudents(), field, startDate, request.weeksPhase1(), request.weeksPhase2(),
         request.weeksPhase3());
     groupService.scheduleGroup(group);
+    for (AssignmentRequest teacherAssignment : request.teacherAssignments()) {
+      teacherService.addGroup(teacherAssignment.id(), group.getGroupNumber(),
+          teacherAssignment.daysPhase1(), teacherAssignment.daysPhase2(), teacherAssignment.daysPhase3());
+    }
     URI locationOfGroup = ucb.path("/api/v1/groups").buildAndExpand(group.getId()).toUri();
     return ResponseEntity.created(locationOfGroup).body(group);
   }
