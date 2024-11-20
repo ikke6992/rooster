@@ -2,20 +2,28 @@ import { Component, Input } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { DataService } from '../data.service';
 import { CommonModule } from '@angular/common';
-import { ModalComponent } from "../../modal/modal.component";
+import { ModalComponent } from '../../modal/modal.component';
+import { SetTeacherComponent } from './set-teacher/set-teacher.component';
 
 @Component({
   selector: 'app-add-group',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ModalComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ModalComponent,
+    SetTeacherComponent,
+  ],
   templateUrl: './add-group.component.html',
   styleUrl: './add-group.component.css',
 })
 export class AddGroupComponent {
   feedbackMsg!: string;
+  teacherAssignments: any[] = [];
   window = window;
-  
+
   @Input() fields: any[] = [];
+  @Input() teachers: any[] = [];
 
   addGroup = new FormGroup({
     groupNumber: new FormControl(''),
@@ -30,6 +38,23 @@ export class AddGroupComponent {
 
   constructor(private dataService: DataService) {}
 
+  receiveMessage($event: any) {
+    this.teacherAssignments = this.teacherAssignments.filter(
+      (e) => e.id !== $event.id
+    );
+    this.teacherAssignments.push($event);
+  }
+
+  removeAssignment(teacherAssignment: any) {
+    this.teacherAssignments = this.teacherAssignments.filter(
+      (e) => e !== teacherAssignment
+    );
+  }
+
+  showInput() {
+    console.log(this.teacherAssignments);
+  }
+
   onSubmit() {
     const data = this.addGroup.value;
     console.log(data);
@@ -37,12 +62,12 @@ export class AddGroupComponent {
       (response) => {
         console.log('Response:', response);
         this.feedbackMsg = `Group ${response.groupNumber} ${response.field.name} succesfully added and scheduled starting ${response.startDate}`;
-        this.showModal('feedback')
+        this.showModal('feedback');
       },
       (error) => {
         console.error('Error:', error);
         this.feedbackMsg = `Error: ${error.error}`;
-        this.showModal('feedback')
+        this.showModal('feedback');
       }
     );
   }
