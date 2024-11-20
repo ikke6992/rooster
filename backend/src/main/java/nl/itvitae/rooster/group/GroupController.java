@@ -77,7 +77,8 @@ public class GroupController {
       final Group group = groupService.editGroup(existingGroup.get(), request.groupNumber(), request.color(),
           request.numberOfStudents(), fieldService.getById(request.field()), LocalDate.parse(request.startDate()),
           request.weeksPhase1(), request.weeksPhase2(), request.weeksPhase3());
-      groupService.rescheduleGroup(group, LocalDate.now());
+      groupService.rescheduleGroup(
+          group, group.getStartDate().isAfter(LocalDate.now()) ? group.getStartDate() : LocalDate.now());
       return ResponseEntity.ok(GroupDTO.of(group));
     }
   }
@@ -90,7 +91,8 @@ public class GroupController {
     } else if (number == 0) {
       return ResponseEntity.ok(GroupDTO.of(groupService.rescheduleReturnDay(group.get())));
     } else {
-      return ResponseEntity.ok(GroupDTO.of(groupService.rescheduleGroup(group.get(), LocalDate.now())));
+      return ResponseEntity.ok(GroupDTO.of(groupService.rescheduleGroup(group.get(),
+          group.get().getStartDate().isAfter(LocalDate.now()) ? group.get().getStartDate() : LocalDate.now())));
     }
   }
 
