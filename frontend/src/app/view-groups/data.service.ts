@@ -49,6 +49,15 @@ export class DataService {
     );
   }
 
+  archiveGroup(groupNumber: number): Observable<any> {
+    return this.http.delete<any>(
+      this.apiUrlGroups + '/' + groupNumber + '/archive',
+      {
+        headers: new HttpHeaders({ 'Content-type': 'application/json' }),
+      }
+    );
+  }
+
   addVacation(groupNumber: number, data: any): Observable<any> {
     return this.http.put<any>(
       this.apiUrlGroups + '/' + groupNumber + '/addVacation',

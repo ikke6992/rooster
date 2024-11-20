@@ -1,27 +1,24 @@
 package nl.itvitae.rooster.scheduledday;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-import java.time.LocalDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nl.itvitae.rooster.classroom.Classroom;
-import nl.itvitae.rooster.lesson.Lesson;
+import nl.itvitae.rooster.lesson.ArchivedLesson;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name = "scheduleddays")
-public class Scheduledday {
+@Entity(name = "archived_scheduleddays")
+public class ArchivedScheduledday {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private LocalDate date;
@@ -30,11 +27,12 @@ public class Scheduledday {
   private Classroom classroom;
 
   @OneToOne
-  private Lesson lesson;
+  private ArchivedLesson lesson;
 
-  public Scheduledday(LocalDate date, Classroom classroom, Lesson lesson) {
-    this.date = date;
-    this.classroom = classroom;
+  public ArchivedScheduledday(Scheduledday scheduledday, ArchivedLesson lesson) {
+    this.id = scheduledday.getId();
+    this.date = scheduledday.getDate();
+    this.classroom = scheduledday.getClassroom();
     this.lesson = lesson;
   }
 }
