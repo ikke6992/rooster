@@ -55,11 +55,11 @@ public class GroupController {
     final Group group = groupService.addGroup(request.groupNumber(), request.color(),
         request.numberOfStudents(), field, startDate, request.weeksPhase1(), request.weeksPhase2(),
         request.weeksPhase3());
-    groupService.scheduleGroup(group);
     for (AssignmentRequest teacherAssignment : request.teacherAssignments()) {
-      teacherService.addGroup(teacherAssignment.id(), group.getGroupNumber(),
+      teacherService.addGroup(teacherService.getById(teacherAssignment.id()), group,
           teacherAssignment.daysPhase1(), teacherAssignment.daysPhase2(), teacherAssignment.daysPhase3());
     }
+    groupService.scheduleGroup(group);
     URI locationOfGroup = ucb.path("/api/v1/groups").buildAndExpand(group.getId()).toUri();
     return ResponseEntity.created(locationOfGroup).body(group);
   }
