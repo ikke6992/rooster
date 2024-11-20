@@ -43,6 +43,13 @@ public class GroupController {
     if (request.weeksPhase1() < 1 || request.weeksPhase2() < 1 || request.weeksPhase3() < 1) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of weeks needs to be greater than 0");
     }
+    for (AssignmentRequest teacherAssignment : request.teacherAssignments()) {
+      if (teacherAssignment.daysPhase1() < 1 || teacherAssignment.daysPhase1() > 5
+          || teacherAssignment.daysPhase2() < 1 || teacherAssignment.daysPhase2() > 5
+          || teacherAssignment.daysPhase3() < 1 || teacherAssignment.daysPhase3() > 5) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of days needs to be between 1 and 5");
+      }
+    }
     if (groupRepository.findByGroupNumber(request.groupNumber()).isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT)
           .body("Group with number " + request.groupNumber() + " already exists.");
