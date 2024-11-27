@@ -13,5 +13,8 @@ export class ModalComponent {
   close() {
     this.el.nativeElement.classList.remove('sshow');
     this.el.nativeElement.classList.add('hhidden');
+    if (this.el.nativeElement.classList.contains('feedback')) {
+      window.location.reload();
+    }
   }
 }
