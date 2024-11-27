@@ -16,7 +16,7 @@ import nl.itvitae.rooster.scheduledday.Scheduledday;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
+@Entity(name = "classrooms")
 public class Classroom {
 
   @Id

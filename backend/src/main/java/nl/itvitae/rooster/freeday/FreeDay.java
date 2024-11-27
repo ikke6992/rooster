@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
+@Entity(name = "free_days")
 public class FreeDay {
 
   @Id

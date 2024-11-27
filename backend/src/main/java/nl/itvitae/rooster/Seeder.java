@@ -17,6 +17,8 @@ import nl.itvitae.rooster.freeday.FreeDayService;
 import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.group.GroupRepository;
 import nl.itvitae.rooster.group.GroupService;
+import nl.itvitae.rooster.lesson.note.Note;
+import nl.itvitae.rooster.lesson.note.NoteRepository;
 import nl.itvitae.rooster.teacher.GroupTeacher;
 import nl.itvitae.rooster.teacher.GroupTeacherRepository;
 import nl.itvitae.rooster.lesson.Lesson;
@@ -42,10 +44,11 @@ public class Seeder implements CommandLineRunner {
   private final TeacherRepository teacherRepository;
   private final GroupRepository groupRepository;
   private final GroupTeacherRepository groupTeacherRepository;
+  private final LessonRepository lessonRepository;
+  private final NoteRepository noteRepository;
 
   private final GroupService groupService;
   private final FreeDayService freeDayService;
-  private final LessonRepository lessonRepository;
 
   @Override
   public void run(String... args) throws Exception {
@@ -141,7 +144,9 @@ public class Seeder implements CommandLineRunner {
     return fieldRepository.save(new Field(name, daysPhase1, daysPhase2, daysPhase3));
   }
 
-  private void addNote(Lesson lesson, String note, boolean isExam){
+  private void addNote(Lesson lesson, String message, boolean isExam) {
+    Note note = new Note(message, lesson);
+    noteRepository.save(note);
     lesson.setNote(note);
     lesson.setExam(isExam);
     lessonRepository.save(lesson);

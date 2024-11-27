@@ -2,7 +2,9 @@ package nl.itvitae.rooster.lesson;
 
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import nl.itvitae.rooster.field.Field;
+import nl.itvitae.rooster.lesson.note.Note;
+import nl.itvitae.rooster.lesson.note.NoteRepository;
+import nl.itvitae.rooster.lesson.note.NoteRequest;
 import nl.itvitae.rooster.scheduledday.Scheduledday;
 import nl.itvitae.rooster.scheduledday.ScheduleddayRepository;
 import org.springframework.http.HttpStatus;
@@ -10,11 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,6 +26,7 @@ public class LessonController {
   private final LessonService lessonService;
   private final LessonRepository lessonRepository;
   private final ScheduleddayRepository scheduleddayRepository;
+  private final NoteRepository noteRepository;
 
   @GetMapping
   public ResponseEntity<?> getAll() {
@@ -48,7 +49,11 @@ public class LessonController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Scheduled day with Id: " + id + " does not exist");
     }
     Lesson lesson = scheduledday.get().getLesson();
-    lesson.setNote(noteRequest.note());
+    Optional<Note> existingNote = noteRepository.findByLesson(lesson);
+    existingNote.ifPresent(noteRepository::delete);
+    if (noteRequest.message() != null) {
+      noteRepository.save(new Note(noteRequest.message(), lesson));
+    }
     lesson.setExam(noteRequest.isExam());
     return ResponseEntity.ok(lessonRepository.save(lesson).getNote());
   }

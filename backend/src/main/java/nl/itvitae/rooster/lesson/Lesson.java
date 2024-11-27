@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nl.itvitae.rooster.group.Group;
+import nl.itvitae.rooster.lesson.note.Note;
 import nl.itvitae.rooster.scheduledday.Scheduledday;
 import nl.itvitae.rooster.teacher.Teacher;
 
@@ -34,7 +35,9 @@ public class Lesson {
   @ManyToOne
   private Teacher teacher;
 
-  private String note;
+  @OneToOne
+  @JsonBackReference
+  private Note note;
 
   private boolean isExam;
 
