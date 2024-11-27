@@ -1,7 +1,6 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import {
-  HTTP_INTERCEPTORS,
   HttpEvent,
   HttpHandlerFn,
   HttpRequest,
@@ -28,6 +27,13 @@ export function tokenInterceptor(
     return next(req);
   }
 
+  if (tokenExpired(token)) {
+    localStorage.clear()
+    setFeedback("Session expired, please log out and relog in")
+    showModal('feedback-main')
+    return next(req);
+  }
+
   const authToken: string = `Bearer ${token}`;
   
   const reqWithToken = req.clone({
@@ -38,3 +44,19 @@ export function tokenInterceptor(
   return next(reqWithToken);
 }
 
+const tokenExpired = (token: string) => {
+  const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+  return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+}
+
+function showModal(name: string) {
+  let modal_t = document.getElementById(name);
+  if (modal_t !== null) {
+    modal_t.classList.remove('hhidden');
+    modal_t.classList.add('sshow');
+  }
+}
+
+const setFeedback = (message: string) => {
+  document.getElementById('feedback-message')?.append(message)
+}

@@ -15,6 +15,7 @@ export class AppComponent {
   title = "frontend"
 
   isLoggedIn: boolean = localStorage.getItem('token') !== null
+  feedbackMsg: string = "";
 
   showModal(name: string) {
     let modal_t = document.getElementById(name);
@@ -36,5 +37,7 @@ export class AppComponent {
     window.location.reload()
   }
 }
+
+
 
 

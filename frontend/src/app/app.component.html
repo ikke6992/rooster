@@ -56,3 +56,8 @@
   </app-modal>
   <router-outlet />
 </div>
+
+<app-modal id="feedback-main" class="hhidden">
+  <p id="feedback-message">{{feedbackMsg}}</p>
+  <button class="button-action" (click)="logout()">Log Out</button>
+</app-modal>
