@@ -42,7 +42,7 @@
       >
         <div
           *ngFor="let item of filterData(data, day)"
-          draggable="true"
+          [attr.draggable]="isLoggedIn"
           (dragstart)="onDragStart($event, item)"
         >
           <div (mouseover)="setDraggedItem(item)">

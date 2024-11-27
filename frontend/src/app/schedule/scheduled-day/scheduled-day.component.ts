@@ -33,7 +33,8 @@ export class ScheduledDayComponent {
   feedbackMsg!: string;
   window: any = window;
   timerId: any;
-
+  isLoggedIn: boolean = localStorage.getItem('token') !== null
+  
   constructor(private dataService: DataService) {}
 
   showNote() {

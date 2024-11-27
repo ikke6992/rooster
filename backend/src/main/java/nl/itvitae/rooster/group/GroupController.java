@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("http://localhost:4200")
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/groups")
 public class GroupController {
@@ -55,7 +55,8 @@ public class GroupController {
           .body("Group with number " + request.groupNumber() + " already exists.");
     }
     if (groupService.checkSimilarColor(request.color())) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).body("Color is too similar to color of other group.");
+      return ResponseEntity.status(HttpStatus.CONFLICT)
+          .body("Color is too similar to color of other group.");
     }
     final Field field = fieldService.getById(request.field());
     final LocalDate startDate = LocalDate.parse(request.startDate());
@@ -95,12 +96,12 @@ public class GroupController {
     Optional<Group> group = groupRepository.findByGroupNumber(number);
     if (group.isEmpty()) {
       return ResponseEntity.badRequest().build();
-    } else if (number == 0) {
-      return ResponseEntity.ok(GroupDTO.of(groupService.rescheduleReturnDay(group.get())));
-    } else {
-      return ResponseEntity.ok(GroupDTO.of(groupService.rescheduleGroup(group.get(),
-          group.get().getStartDate().isAfter(LocalDate.now()) ? group.get().getStartDate() : LocalDate.now())));
     }
+    if (number == 0) {
+      return ResponseEntity.ok(GroupDTO.of(groupService.rescheduleReturnDay(group.get())));
+    }
+    return ResponseEntity.ok(
+        GroupDTO.of(groupService.rescheduleGroup(group.get(), LocalDate.now())));
   }
 
   @PutMapping("/{number}/addVacation")

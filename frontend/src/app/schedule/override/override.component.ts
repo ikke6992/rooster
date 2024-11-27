@@ -57,12 +57,12 @@ export class OverrideComponent {
         console.log('Response:', response);
         this.feedbackMsg =
           `Successes:<br> ${response.successes.join(`<br>`)} <br>Failures:<br> ${response.failures.join(`<br>`)}<br>`;
-        this.showModal('feedback');
+        this.showModal('feedback-override');
       },
       (error) => {
         console.error('Error:', error);
         this.feedbackMsg = `Error: ${error.error}`;
-        this.showModal('feedback');
+        this.showModal('feedback-override');
       }
     );
   }
