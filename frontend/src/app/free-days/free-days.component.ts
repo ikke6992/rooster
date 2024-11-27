@@ -14,6 +14,8 @@ import { AddFreeDaysComponent } from './add-free-days/add-free-days.component';
 export class FreeDaysComponent {
   freeDays: FreeDays[] = [];
   fields: any[] = [];
+
+  isLoggedIn: boolean = localStorage.getItem('token') !== null
   
   constructor(private dataService: DataService) {}
 

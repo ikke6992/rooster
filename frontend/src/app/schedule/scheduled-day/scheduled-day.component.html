@@ -19,13 +19,13 @@
         >
           <ng-container *ngIf="item.note !== null; else showNoNote" >
             <div>{{ item.note }}</div>
-            <button (click)="showModal('add-note-' + item.id)" class="button-action">
+            <button *ngIf="this.isLoggedIn" (click)="showModal('add-note-' + item.id)" class="button-action">
               Edit note
             </button>
           </ng-container>
           <ng-template #showNoNote>
             <div>No note</div>
-            <button (click)="showModal('add-note-' + item.id)" class="button-action">
+            <button *ngIf="this.isLoggedIn" (click)="showModal('add-note-' + item.id)" class="button-action">
               Add note
             </button>
           </ng-template>

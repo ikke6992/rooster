@@ -61,12 +61,12 @@ export class AddFreeDaysComponent {
       (response) => {
         console.log('Response:', response);
         this.feedbackMsg = `Freeday ${response.name} successfully added on ${response.date}`;
-        this.showModal('feedback');
+        this.showModal('feedback-add-free-day');
       },
       (error) => {
         console.error('Error:', error);
         this.feedbackMsg = 'Error: ' + error.error;
-        this.showModal('feedback');
+        this.showModal('feedback-add-free-day');
       }
     );
   }

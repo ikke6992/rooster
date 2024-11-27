@@ -44,6 +44,8 @@ export class ScheduleComponent {
     isExam: false,
   };
 
+  isLoggedIn: boolean = localStorage.getItem('token') !== null
+
   @ViewChild('dragImage', { static: false }) dragImage!: ElementRef;
 
   TOTAL_CLASSROOMS: number[] = Array(6)
@@ -151,7 +153,7 @@ export class ScheduleComponent {
   }
 
   onDragStart(event: DragEvent, draggedObject: Scheduledday) {
-
+    if (!this.isLoggedIn) {return}
     event?.dataTransfer?.setDragImage(this.dragImage.nativeElement, 0, 0);
     const index = this.data.findIndex((l) => l.id === draggedObject.id);
     event?.dataTransfer?.setData('text', index.toString());
@@ -162,6 +164,7 @@ export class ScheduleComponent {
   }
 
   onDragOver(event: DragEvent) {
+    if (!this.isLoggedIn) {return}
     event.preventDefault();
   }
 
