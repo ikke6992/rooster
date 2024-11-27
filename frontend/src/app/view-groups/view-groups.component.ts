@@ -28,7 +28,7 @@ export class ViewGroupsComponent {
 
   ngOnInit(): void {
     this.dataService.getGroups().subscribe((response: any[]) => {
-      this.groups = response;
+      this.groups = response.sort((a,b) => a.groupNumber - b.groupNumber);
       console.log(response);
     });
 
