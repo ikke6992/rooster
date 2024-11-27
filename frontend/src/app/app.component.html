@@ -28,12 +28,20 @@
         >View Fields</a
       >
       <a
-      *ngIf="isLoggedIn"
+        *ngIf="isLoggedIn"
         class="nav-button"
         routerLink="/teachers"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
         >View Teachers</a
+      >
+      <a
+        *ngIf="isLoggedIn"
+        class="nav-button"
+        routerLink="/archive"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        >Archive</a
       >
       <a
         class="nav-button"
@@ -58,6 +66,6 @@
 </div>
 
 <app-modal id="feedback-main" class="hhidden">
-  <p id="feedback-message">{{feedbackMsg}}</p>
+  <p id="feedback-message">{{ feedbackMsg }}</p>
   <button class="button-action" (click)="logout()">Log Out</button>
 </app-modal>

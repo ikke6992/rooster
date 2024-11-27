@@ -2,13 +2,17 @@ package nl.itvitae.rooster.teacher;
 
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.group.Group;
+import nl.itvitae.rooster.group.GroupRepository;
+import nl.itvitae.rooster.group.GroupService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -16,6 +20,8 @@ import java.util.List;
 @RequestMapping("/api/v1/teachers")
 public class TeacherController {
 
+  private final GroupService groupService;
+  private final GroupRepository groupRepository;
   private final TeacherService teacherService;
 
   @GetMapping
@@ -49,8 +55,13 @@ public class TeacherController {
         return ResponseEntity.status(HttpStatus.CONFLICT).body("Teacher is already assigned to this group.");
       }
     }
-    return ResponseEntity.ok(TeacherDTO.of(teacherService.addGroup(
-        id, groupNumber, request.daysPhase1(), request.daysPhase2(), request.daysPhase3())));
+    final Group group = groupRepository.findByGroupNumber(groupNumber).get();
+    final Teacher teacher = teacherService.getById(id);
+    teacherService.addGroup(
+        teacher, group, request.daysPhase1(), request.daysPhase2(), request.daysPhase3());
+    groupService.rescheduleGroup(
+        group, group.getStartDate().isAfter(LocalDate.now()) ? group.getStartDate() : LocalDate.now());
+    return ResponseEntity.ok(TeacherDTO.of(teacher));
   }
 
   @PutMapping("/edit/{id}")

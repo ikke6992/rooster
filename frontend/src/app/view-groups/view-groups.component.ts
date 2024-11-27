@@ -22,6 +22,7 @@ import { EditGroupComponent } from './edit-group/edit-group.component';
 export class ViewGroupsComponent {
   groups: any[] = [];
   fields: any[] = [];
+  teachers: any[] = [];
 
   constructor(private dataService: DataService) {}
 
@@ -35,11 +36,30 @@ export class ViewGroupsComponent {
       this.fields = response.filter((field) => field.name !== 'Returnday');
       console.log(response);
     });
+
+    this.dataService.getTeachers().subscribe((response: any[]) => {
+      this.teachers = response;
+      console.log(response);
+    });
   }
 
   reschedule(number: number) {
     if (window.confirm('Reschedule Group ' + number + '?')) {
       this.dataService.rescheduleGroup(number).subscribe(
+        (response) => {
+          console.log('Response:', response);
+          window.location.reload();
+        },
+        (error) => {
+          console.error('Error:', error);
+        }
+      );
+    }
+  }
+
+  archive(number: number) {
+    if (window.confirm('Archive Group ' + number + '?')) {
+      this.dataService.archiveGroup(number).subscribe(
         (response) => {
           console.log('Response:', response);
           window.location.reload();

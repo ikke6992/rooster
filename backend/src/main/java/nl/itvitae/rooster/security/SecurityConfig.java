@@ -31,7 +31,7 @@ public class SecurityConfig {
 
   public static final String ROLE_ADMIN = "ADMIN";
 
-  private static final String[] ADMIN_ONLY = {"api/v1/fields/**", "api/v1/groups",
+  private static final String[] ADMIN_ONLY = {"api/v1/fields/**", "api/v1/groups/**",
       "api/v1/teachers/**", "api/v1/lessons/**"};
   private static final String[] ADMIN_ONLY_POST = {"api/v1/freedays/**"};
   private static final String[] ADMIN_ONLY_DELETE = {"api/v1/freedays/**"};

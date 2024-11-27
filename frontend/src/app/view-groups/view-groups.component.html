@@ -43,8 +43,8 @@
         class="button-action"
         (click)="showModal('edit-group-' + group.groupNumber)"
       >
-        Edit Group
-      </button>
+        Edit Group</button
+      ><br />
 
       <app-modal id="edit-group-{{ group.groupNumber }}" class="hhidden">
         <app-edit-group [group]="group" [fields]="fields"></app-edit-group>
@@ -55,6 +55,10 @@
           Close
         </button>
       </app-modal>
+
+      <button class="button-action" (click)="archive(group.groupNumber)">
+        Archive Group</button
+      ><br />
     </div>
   </div>
   <br />
@@ -68,6 +72,6 @@
 </button>
 
 <app-modal id="add-group" class="hhidden">
-  <app-add-group [fields]="fields"></app-add-group>
+  <app-add-group [fields]="fields" [teachers]="teachers"></app-add-group>
   <button (click)="closeModal('add-group')" class="button-action">Close</button>
 </app-modal>

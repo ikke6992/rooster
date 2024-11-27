@@ -41,6 +41,7 @@ export class ScheduleComponent {
     field: '',
     teacher: 'none',
     note: '',
+    isExam: false,
   };
 
   isLoggedIn: boolean = localStorage.getItem('token') !== null
@@ -225,6 +226,7 @@ export interface Scheduledday {
   field: string;
   teacher: string;
   note: string;
+  isExam: boolean;
 }
 
 interface Day {
