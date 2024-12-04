@@ -92,9 +92,9 @@ public class GroupService {
       lessonRepository.delete(lesson);
     }
     for (Vacation vacation : vacationRepository.findByGroup(group)) {
-      archivedVacationRepository.save(new ArchivedVacation(vacation, archivedGroup));
       group.removeVacation(vacation);
       vacationRepository.delete(vacation);
+      archivedGroup.setVacations(List.of(archivedVacationRepository.save(new ArchivedVacation(vacation, archivedGroup))));
     }
     for (GroupTeacher groupTeacher : group.getGroupTeachers()) {
       ArchivedGroupTeacher archivedGroupTeacher = new ArchivedGroupTeacher(groupTeacher, archivedGroup);
@@ -102,7 +102,7 @@ public class GroupService {
       groupTeacherRepository.delete(groupTeacher);
     }
     groupRepository.delete(group);
-    return archivedGroup;
+    return archivedGroupRepository.save(archivedGroup);
   }
 
   public Group addVacation(Group group, LocalDate startDate, int weeks) {
