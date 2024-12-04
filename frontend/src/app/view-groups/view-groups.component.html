@@ -2,6 +2,7 @@
 <div class="flex">
   <div *ngFor="let group of groups" class="p-2">
     <div
+      [ngClass]="calculateBrightness(group.color) ? 'text-white' : ''"
       style="background-color: {{ group.color }};
       border-width: 1px;"
       class="justify-center flex-wrap flex-col content-around rounded-md border-black p-2"
@@ -81,3 +82,4 @@
   <app-add-group [fields]="fields" [teachers]="teachers"></app-add-group>
   <button (click)="closeModal('add-group')" class="button-action">Close</button>
 </app-modal>
+

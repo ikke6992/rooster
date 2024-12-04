@@ -4,6 +4,7 @@
     <div
       style="background-color: {{ group.color }};
   border-width: 1px;"
+    [ngClass]="calculateBrightness(group.color) ? 'text-white' : ''"
       class="justify-center flex-wrap flex-col content-around rounded-md border-black p-2"
     >
       <h3>Group {{ group.groupNumber }} {{ group.field }}</h3>
