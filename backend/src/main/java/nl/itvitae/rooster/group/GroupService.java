@@ -94,7 +94,7 @@ public class GroupService {
     for (Vacation vacation : vacationRepository.findByGroup(group)) {
       group.removeVacation(vacation);
       vacationRepository.delete(vacation);
-      archivedGroup.setVacations(List.of(archivedVacationRepository.save(new ArchivedVacation(vacation, archivedGroup))));
+      archivedGroup.addVacation(archivedVacationRepository.save(new ArchivedVacation(vacation, archivedGroup)));
     }
     for (GroupTeacher groupTeacher : group.getGroupTeachers()) {
       ArchivedGroupTeacher archivedGroupTeacher = new ArchivedGroupTeacher(groupTeacher, archivedGroup);

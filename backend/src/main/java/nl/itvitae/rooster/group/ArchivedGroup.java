@@ -60,4 +60,8 @@ public class ArchivedGroup {
     this.daysPhase3 = group.getDaysPhase3();
     this.weeksPhase3 = group.getWeeksPhase3();
   }
+
+  public void addVacation(ArchivedVacation vacation) {
+    vacations.add(vacation);
+  }
 }
