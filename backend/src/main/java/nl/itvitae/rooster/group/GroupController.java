@@ -3,6 +3,7 @@ package nl.itvitae.rooster.group;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.field.FieldService;
+import nl.itvitae.rooster.group.vacation.ArchivedVacationRepository;
 import nl.itvitae.rooster.group.vacation.VacationRequest;
 import nl.itvitae.rooster.teacher.Teacher;
 import nl.itvitae.rooster.teacher.TeacherService;
@@ -24,6 +25,7 @@ public class GroupController {
 
   private final FieldService fieldService;
   private final GroupService groupService;
+  private final ArchivedGroupRepository archivedGroupRepository;
   private final TeacherService teacherService;
 
   private final GroupRepository groupRepository;
@@ -50,7 +52,7 @@ public class GroupController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of days needs to be between 1 and 5");
       }
     }
-    if (groupRepository.findByGroupNumber(request.groupNumber()).isPresent()) {
+    if (groupRepository.findByGroupNumber(request.groupNumber()).isPresent() || archivedGroupRepository.findByGroupNumber(request.groupNumber()).isPresent()) {
       return ResponseEntity.status(HttpStatus.CONFLICT)
           .body("Group with number " + request.groupNumber() + " already exists.");
     }
