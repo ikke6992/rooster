@@ -237,87 +237,9 @@ public class ScheduleddayService {
     int year = scheduledDays.getFirst().getDate().getYear();
     int totalYears = scheduledDays.getLast().getDate().getYear() - year + 1;
     Workbook workbook = new XSSFWorkbook();
-    for (int l = 1; l <= totalYears; l++) {
-      for (int i = 1; i <= 12; i++) {
-        LocalDate currentDate = LocalDate.of(year, i, 1);
-        Sheet sheet = workbook.createSheet(currentDate.getMonth().toString() + year);
-
-        Row header = sheet.createRow(0);
-        for (int j = 1; j <= 6; j++) {
-          Cell cell = header.createCell(j);
-          cell.setCellValue("Lokaal " + j);
-        }
-        int monthLength = currentDate.lengthOfMonth();
-        for (int j = 1; j <= monthLength; j++) {
-          Row row = sheet.createRow(j);
-          sheet.setColumnWidth(0, 15 * 256);
-
-          Cell cell = row.createCell(0);
-          cell.setCellValue(currentDate.toString());
-          LocalDate finalCurrentDate = currentDate;
-          if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY
-              || currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
-            CellStyle weekendGreen = workbook.createCellStyle();
-            weekendGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-            org.apache.poi.ss.usermodel.Color color = new XSSFColor(
-                new java.awt.Color(181, 230, 162), new DefaultIndexedColorMap());
-            weekendGreen.setFillForegroundColor(color);
-            cell.setCellStyle(weekendGreen);
-            for (int k = 1; k <= 6; k++) {
-              Cell cell1 = row.createCell(k);
-              cell1.setCellStyle(weekendGreen);
-            }
-            currentDate = currentDate.plusDays(1);
-            continue;
-          }
-          if (freedays.stream().anyMatch((freeDay -> freeDay.getDate().equals(finalCurrentDate)))) {
-            CellStyle freeDayYellow = workbook.createCellStyle();
-            freeDayYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-            org.apache.poi.ss.usermodel.Color color = new XSSFColor(
-                new java.awt.Color(255, 255, 0), new DefaultIndexedColorMap());
-            freeDayYellow.setFillForegroundColor(color);
-            cell.setCellStyle(freeDayYellow);
-            for (int k = 1; k <= 6; k++) {
-              Cell cell1 = row.createCell(k);
-              cell1.setCellStyle(freeDayYellow);
-            }
-            currentDate = currentDate.plusDays(1);
-            continue;
-          }
-
-          for (int k = 1; k <= 6; k++) {
-            sheet.setColumnWidth(k, 25 * 256);
-            Cell cell1 = row.createCell(k);
-
-            int finalK = k;
-            List<Scheduledday> scheduleddaysFiltered = scheduledDays.stream().filter(
-                    day -> day.getDate().equals(finalCurrentDate)
-                        && day.getClassroom().getId() == finalK)
-                .toList();
-            if (!scheduleddaysFiltered.isEmpty()) {
-              Scheduledday scheduledday = scheduleddaysFiltered.getFirst();
-              cell1.setCellValue(
-                  "Group " + scheduledday.getLesson().getGroup().getGroupNumber() + " "
-                      + scheduledday.getLesson().getGroup().getField());
-              String hexColour = scheduledday.getLesson().getGroup().getColor();
-              int hexR = Integer.valueOf(hexColour.substring(1, 3), 16);
-              int hexG = Integer.valueOf(hexColour.substring(3, 5), 16);
-              int hexB = Integer.valueOf(hexColour.substring(5, 7), 16);
-              CellStyle cellStyle = workbook.createCellStyle();
-              cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-              org.apache.poi.ss.usermodel.Color color = new XSSFColor(
-                  new java.awt.Color(hexR, hexG, hexB), new DefaultIndexedColorMap());
-              cellStyle.setFillForegroundColor(color);
-              if (calculateBrightness(hexColour)) {
-                Font font = workbook.createFont();
-                font.setColor(IndexedColors.WHITE.getIndex());
-                cellStyle.setFont(font);
-              }
-              cell1.setCellStyle(cellStyle);
-            }
-          }
-          currentDate = currentDate.plusDays(1);
-        }
+    for (int i = 1; i <= totalYears; i++) {
+      for (int monthNumber = 1; monthNumber <= 12; monthNumber++) {
+        createSheet(workbook, year, monthNumber, scheduledDays, freedays);
       }
       year += 1;
     }
@@ -327,11 +249,87 @@ public class ScheduleddayService {
     return new ByteArrayInputStream(outputStream.toByteArray());
   }
 
-  private boolean calculateBrightness(String color){
-    int r = Integer.parseInt(color.substring(1, 3), 16);
-    int g = Integer.parseInt(color.substring(3, 5), 16);
-    int b = Integer.parseInt(color.substring(5, 7), 16);
+  private void createSheet(Workbook workbook, int year, int monthNumber, List<Scheduledday> scheduledDays, List<FreeDay> freedays) {
+    LocalDate currentDate = LocalDate.of(year, monthNumber, 1);
+    Sheet sheet = workbook.createSheet(currentDate.getMonth().toString() + " " + year);
 
+    // header row with classroom numbers
+    Row header = sheet.createRow(0);
+    for (int i = 1; i <= 6; i++) {
+      Cell cell = header.createCell(i);
+      cell.setCellValue("Lokaal " + i);
+    }
+    
+    for (int i = 1; i <= currentDate.lengthOfMonth(); i++) {
+      Row row = sheet.createRow(i);
+      sheet.setColumnWidth(0, 15 * 256);
+
+      Cell cell = row.createCell(0);
+      cell.setCellValue(currentDate.toString());
+      LocalDate finalCurrentDate = currentDate;
+      if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY
+          || currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+        CellStyle weekendGreen = createColor(workbook, 181, 230, 162);
+        cell.setCellStyle(weekendGreen);
+        for (int k = 1; k <= 6; k++) {
+          Cell cell1 = row.createCell(k);
+          cell1.setCellStyle(weekendGreen);
+        }
+        currentDate = currentDate.plusDays(1);
+        continue;
+      }
+      if (freedays.stream().anyMatch((freeDay -> freeDay.getDate().equals(finalCurrentDate)))) {
+        CellStyle freeDayYellow = createColor(workbook, 255, 255, 0);
+        cell.setCellStyle(freeDayYellow);
+        for (int k = 1; k <= 6; k++) {
+          Cell cell1 = row.createCell(k);
+          cell1.setCellStyle(freeDayYellow);
+        }
+        currentDate = currentDate.plusDays(1);
+        continue;
+      }
+
+      for (int k = 1; k <= 6; k++) {
+        sheet.setColumnWidth(k, 25 * 256);
+        Cell cell1 = row.createCell(k);
+
+        int finalK = k;
+        List<Scheduledday> scheduleddaysFiltered = scheduledDays.stream().filter(
+                day -> day.getDate().equals(finalCurrentDate)
+                    && day.getClassroom().getId() == finalK)
+            .toList();
+        if (!scheduleddaysFiltered.isEmpty()) {
+          Scheduledday scheduledday = scheduleddaysFiltered.getFirst();
+          cell1.setCellValue(
+              "Group " + scheduledday.getLesson().getGroup().getGroupNumber() + " "
+                  + scheduledday.getLesson().getGroup().getField());
+          String hexColour = scheduledday.getLesson().getGroup().getColor();
+          int hexR = Integer.valueOf(hexColour.substring(1, 3), 16);
+          int hexG = Integer.valueOf(hexColour.substring(3, 5), 16);
+          int hexB = Integer.valueOf(hexColour.substring(5, 7), 16);
+          CellStyle cellStyle = createColor(workbook, hexR, hexG, hexB);
+          cell1.setCellStyle(cellStyle);
+        }
+      }
+      currentDate = currentDate.plusDays(1);
+    }
+  }
+  
+  private CellStyle createColor(Workbook workbook, int r, int g, int b){
+    CellStyle styleColor = workbook.createCellStyle();
+    styleColor.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+    org.apache.poi.ss.usermodel.Color color = new XSSFColor(
+        new java.awt.Color(r, g, b), new DefaultIndexedColorMap());
+    styleColor.setFillForegroundColor(color);
+    if (calculateBrightness(r, g, b)) {
+      Font font = workbook.createFont();
+      font.setColor(IndexedColors.WHITE.getIndex());
+      styleColor.setFont(font);
+    }
+    return styleColor;
+  }
+
+  private boolean calculateBrightness(int r, int g, int b){
     double brightness = Math.sqrt(0.299*r*r + 0.587*g*g + 0.114*b*b);
 
     return brightness < BRIGHTNESS_THRESHOLD;
