@@ -269,22 +269,12 @@ public class ScheduleddayService {
       LocalDate finalCurrentDate = currentDate;
       if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY
           || currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
-        CellStyle weekendGreen = createColor(workbook, 181, 230, 162);
-        cell.setCellStyle(weekendGreen);
-        for (int k = 1; k <= 6; k++) {
-          Cell cell1 = row.createCell(k);
-          cell1.setCellStyle(weekendGreen);
-        }
+        styleDayOff(workbook, row, cell, 181, 230, 162);
         currentDate = currentDate.plusDays(1);
         continue;
       }
       if (freedays.stream().anyMatch((freeDay -> freeDay.getDate().equals(finalCurrentDate)))) {
-        CellStyle freeDayYellow = createColor(workbook, 255, 255, 0);
-        cell.setCellStyle(freeDayYellow);
-        for (int k = 1; k <= 6; k++) {
-          Cell cell1 = row.createCell(k);
-          cell1.setCellStyle(freeDayYellow);
-        }
+        styleDayOff(workbook, row, cell, 255, 255, 0);
         currentDate = currentDate.plusDays(1);
         continue;
       }
@@ -312,6 +302,15 @@ public class ScheduleddayService {
         }
       }
       currentDate = currentDate.plusDays(1);
+    }
+  }
+
+  private void styleDayOff(Workbook workbook, Row row, Cell cell, int r, int g, int b){
+    CellStyle weekendGreen = createColor(workbook, r, g, b);
+    cell.setCellStyle(weekendGreen);
+    for (int k = 1; k <= 6; k++) {
+      Cell cell1 = row.createCell(k);
+      cell1.setCellStyle(weekendGreen);
     }
   }
   
