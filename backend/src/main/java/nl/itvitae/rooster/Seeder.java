@@ -103,6 +103,7 @@ public class Seeder implements CommandLineRunner {
             holiday.getDescription()));
       }
       freeDayService.addFreeDay(new FreeDay(LocalDate.now(), "test"));
+      freeDayService.addFreeDay(new FreeDay(LocalDate.now().minusWeeks(10), "test passed"));
 
       groupService.addVacation(group53, LocalDate.now().plusMonths(1), 2);
 

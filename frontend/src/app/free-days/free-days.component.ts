@@ -20,15 +20,16 @@ export class FreeDaysComponent {
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService.getData().subscribe((response: any[]) => {
+    this.dataService.getUpcomingDays().subscribe((response: any[]) => {
       this.freeDays = response;
       console.log(response);
     });
   }
 
   remove(id: number){
-    this.dataService.removeDay(id).subscribe();
-    (this.freeDays.find((freeDay) => freeDay.id === id) || this.freeDays[id]).isDeleted = true;
+    this.dataService.removeDay(id).subscribe(() => {
+      (this.freeDays.find((freeDay) => freeDay.id === id) || this.freeDays[id]).isDeleted = true;
+    });
   }  
   
   showModal() {
