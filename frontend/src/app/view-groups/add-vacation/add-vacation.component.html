@@ -1,4 +1,10 @@
-<h1 i18n>Group {{ group.groupNumber }} {{ group.field }}</h1>
+<h1 i18n>
+  Group {{ group.groupNumber }}
+  <ng-container *ngIf="group.field === 'Returnday'">Returnday</ng-container>
+  <ng-container *ngIf="group.field !== 'Returnday'">
+    {{ group.field }}
+  </ng-container>
+</h1>
 <form [formGroup]="addVacation" (ngSubmit)="onSubmit()">
   <label for="start-date" i18n>Start Date: </label>
   <input

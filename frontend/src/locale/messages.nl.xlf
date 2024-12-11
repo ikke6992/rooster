@@ -197,10 +197,6 @@
           <context context-type="sourcefile">src/app/schedule/override/override.component.html</context>
           <context context-type="linenumber">1,2</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/view-groups/add-vacation/add-vacation.component.html</context>
-          <context context-type="linenumber">1,2</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="6808796603154039874" datatype="html">
         <source>Classroom: </source>
@@ -255,7 +251,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/add-vacation/add-vacation.component.html</context>
-          <context context-type="linenumber">12,13</context>
+          <context context-type="linenumber">18,19</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-teachers/add-teacher/add-teacher.component.html</context>
@@ -295,15 +291,15 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">36,37</context>
+          <context context-type="linenumber">42,43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">64</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">81,82</context>
+          <context context-type="linenumber">87,88</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-teachers/add-teacher/add-teacher.component.html</context>
@@ -652,12 +648,24 @@
           <context context-type="linenumber">1,2</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="6330430160861587856" datatype="html">
+        <source> Group <x id="INTERPOLATION" equiv-text="{{ group.groupNumber }}"/> <x id="START_TAG_NG_CONTAINER" ctype="x-ng_container" equiv-text="&lt;ng-container *ngIf=&quot;group.field === &apos;Returnday&apos;&quot;&gt;"/>Returnday<x id="CLOSE_TAG_NG_CONTAINER" ctype="x-ng_container" equiv-text="&lt;/ng-container&gt;"/><x id="START_TAG_NG_CONTAINER_1" ctype="x-ng_container_1" equiv-text="&lt;ng-container *ngIf=&quot;group.field !== &apos;Returnday&apos;&quot;&gt;"/> <x id="INTERPOLATION_1" equiv-text="{{ group.field }}"/> <x id="CLOSE_TAG_NG_CONTAINER" ctype="x-ng_container" equiv-text="&lt;/ng-container&gt;"/></source>
+        <target> Groep <x id="INTERPOLATION" equiv-text="{{ group.groupNumber }}"/> <x id="START_TAG_NG_CONTAINER" ctype="x-ng_container" equiv-text="&lt;ng-container *ngIf=&quot;group.field === &apos;Returnday&apos;&quot;&gt;"/>Terugkomdag<x id="CLOSE_TAG_NG_CONTAINER" ctype="x-ng_container" equiv-text="&lt;/ng-container&gt;"/><x id="START_TAG_NG_CONTAINER_1" ctype="x-ng_container_1" equiv-text="&lt;ng-container *ngIf=&quot;group.field !== &apos;Returnday&apos;&quot;&gt;"/> <x id="INTERPOLATION_1" equiv-text="{{ group.field }}"/> <x id="CLOSE_TAG_NG_CONTAINER" ctype="x-ng_container" equiv-text="&lt;/ng-container&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-vacation/add-vacation.component.html</context>
+          <context context-type="linenumber">2,8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">5,11</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="1159539688826207765" datatype="html">
         <source>Weeks: </source>
         <target>Aantal weken: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/add-vacation/add-vacation.component.html</context>
-          <context context-type="linenumber">10,11</context>
+          <context context-type="linenumber">16,17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6865238426137570972" datatype="html">
@@ -681,7 +689,7 @@
         <target>Aantal studenten: <x id="INTERPOLATION" equiv-text="{{ group.numberOfStudents }}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">6,7</context>
+          <context context-type="linenumber">12,13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6013523957514998774" datatype="html">
@@ -689,7 +697,7 @@
         <target>Startdatum: <x id="INTERPOLATION" equiv-text="{{ group.startDate }}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">7,8</context>
+          <context context-type="linenumber">13,14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1714431618876568614" datatype="html">
@@ -697,7 +705,7 @@
         <target> Fase 1: <x id="INTERPOLATION" equiv-text="{{ group.daysPhase1 }}"/> dagen voor <x id="INTERPOLATION_1" equiv-text="{{ group.weeksPhase1 }}"/> weken </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">9,11</context>
+          <context context-type="linenumber">15,17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7242829187000762029" datatype="html">
@@ -705,7 +713,7 @@
         <target> Fase 2: <x id="INTERPOLATION" equiv-text="{{ group.daysPhase2 }}"/> dagen voor <x id="INTERPOLATION_1" equiv-text="{{ group.weeksPhase2 }}"/> weken </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">12,14</context>
+          <context context-type="linenumber">18,20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5582181687997116292" datatype="html">
@@ -713,7 +721,7 @@
         <target> Fase 3: <x id="INTERPOLATION" equiv-text="{{ group.daysPhase3 }}"/> dagen voor <x id="INTERPOLATION_1" equiv-text="{{ group.weeksPhase3 }}"/> weken </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">15,17</context>
+          <context context-type="linenumber">21,23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1202339917691175840" datatype="html">
@@ -721,7 +729,7 @@
         <target>Leraren:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">17,18</context>
+          <context context-type="linenumber">23,24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5918030537636076589" datatype="html">
@@ -729,7 +737,7 @@
         <target>Vakanties:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">22,23</context>
+          <context context-type="linenumber">28,29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5307707610341678668" datatype="html">
@@ -737,7 +745,7 @@
         <target>Vakantie toevoegen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6334128070465555593" datatype="html">
@@ -745,7 +753,7 @@
         <target>Groep opnieuw inroosteren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6651905729165189676" datatype="html">
@@ -753,7 +761,7 @@
         <target> Groep aanpassen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2085010813693052099" datatype="html">
@@ -761,7 +769,7 @@
         <target> Groep archiveren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2239161057931062116" datatype="html">
@@ -769,7 +777,7 @@
         <target> Groep toevoegen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
-          <context context-type="linenumber">75,76</context>
+          <context context-type="linenumber">81,82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="402785015655073812" datatype="html">

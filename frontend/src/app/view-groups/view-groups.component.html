@@ -1,7 +1,13 @@
 <h1 i18n>Groups</h1>
 <div *ngFor="let group of groups">
   <div style="color: {{ group.color }}">
-    <h3>Group {{ group.groupNumber }} {{ group.field }}</h3>
+    <h3 i18n>
+      Group {{ group.groupNumber }}
+      <ng-container *ngIf="group.field === 'Returnday'">Returnday</ng-container>
+      <ng-container *ngIf="group.field !== 'Returnday'">
+        {{ group.field }}
+      </ng-container>
+    </h3>
     <div *ngIf="group.groupNumber != 0">
       <p i18n>Number of students: {{ group.numberOfStudents }}</p>
       <p i18n>Startdate: {{ group.startDate }}</p>
