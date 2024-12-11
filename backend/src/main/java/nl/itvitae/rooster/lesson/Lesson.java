@@ -17,7 +17,7 @@ import nl.itvitae.rooster.teacher.Teacher;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
+@Entity(name = "lessons")
 public class Lesson {
 
   @Id
@@ -34,10 +34,11 @@ public class Lesson {
   @ManyToOne
   private Teacher teacher;
 
-  private boolean isPracticum;
+  private String note;
 
-  public Lesson(Group group, boolean isPracticum) {
+  private boolean isExam;
+
+  public Lesson(Group group) {
     this.group = group;
-    this.isPracticum = isPracticum;
   }
 }

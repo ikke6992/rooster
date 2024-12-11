@@ -1,8 +1,5 @@
-/** this makes the .modal visible */
-.sshow {
-    display: block;
-}
-/** this makes the element hidden/invisible */
-.hhidden {
-    display: none;
+#add-free-day-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }

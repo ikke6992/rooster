@@ -10,6 +10,23 @@
     required
   /><br />
   <label for="adapt-weekly" i18n>Adapt Weekly: </label>
-  <input id="adapt-weekly" type="checkbox" formControlName="adaptWeekly" /><br />
+  <input
+    id="adapt-weekly"
+    type="checkbox"
+    formControlName="adaptWeekly"
+  /><br />
   <button type="submit" class="button-action" i18n>Submit</button>
 </form>
+<app-modal id="feedback-override" class="hhidden">
+  <div [innerHTML]="feedbackMsg"></div>
+  <button
+    (click)="
+      this.feedbackMsg.startsWith('Error: ')
+        ? closeModal('feedback-override')
+        : window.location.reload()
+    "
+    class="button-action"
+  >
+    Close
+  </button>
+</app-modal>

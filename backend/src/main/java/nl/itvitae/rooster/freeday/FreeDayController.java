@@ -28,14 +28,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("http://localhost:4200")
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/freedays")
 public class FreeDayController {
 
   private final FreeDayRepository freeDayRepository;
   private final FreeDayService freeDayService;
-  private final ScheduleddayRepository scheduleddayRepository;
 
   @GetMapping
   public ResponseEntity<List<FreeDay>> getAll() {
@@ -53,7 +52,7 @@ public class FreeDayController {
   @PostMapping
   public ResponseEntity<?> addFreeDay(@RequestBody FreeDay freeDay, UriComponentsBuilder ucb) {
     if (freeDayRepository.existsByDate(freeDay.getDate())) {
-      return new ResponseEntity<>(HttpStatus.CONFLICT);
+      return new ResponseEntity<>("Freeday already exists on that day", HttpStatus.CONFLICT);
     }
     FreeDay savedFreeday = freeDayService.addFreeDay(freeDay);
     URI locationOfFreeDay = ucb.path("/api/v1/freedays").buildAndExpand(freeDay.getId()).toUri();

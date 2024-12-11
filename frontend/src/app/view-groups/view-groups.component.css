@@ -1,8 +1,9 @@
-/** this makes the .modal visible */
-.sshow {
-    display: block;
+button {
+  color: black;
 }
-/** this makes the element hidden/invisible */
-.hhidden {
-    display: none;
+
+#add-group-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }

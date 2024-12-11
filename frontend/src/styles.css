@@ -4,11 +4,11 @@
 @tailwind utilities;
 
 body {
-    print-color-adjust: exact
-  }
+  print-color-adjust: exact;
+}
 
-@media print{
-  .non-printable{
+@media print {
+  .non-printable {
     visibility: hidden;
   }
 }
@@ -16,8 +16,31 @@ body {
 .button-action {
   border-radius: 0.375rem;
   border-width: 2px;
+  color: black;
   background-color: #d1d5db;
-  :hover {
-    background-color: #9ca3af;
-  }
+}
+
+.button-action:hover {
+  background-color: #9ca3af;
+}
+
+.button-incomplete {
+  border-radius: 0.375rem;
+  border-width: 2px;
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+input {
+  border-width: 1px;
+  border-color: black;
+}
+
+/** this makes the .modal visible */
+.sshow {
+  display: block;
+}
+/** this makes the element hidden/invisible */
+.hhidden {
+  display: none;
 }

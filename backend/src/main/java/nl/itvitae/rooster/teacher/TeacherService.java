@@ -9,6 +9,7 @@ import nl.itvitae.rooster.group.GroupService;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class TeacherService {
   private final GroupService groupService;
   private final GroupRepository groupRepository;
   private final MyDayRepository myDayRepository;
+  private final GroupTeacherRepository groupTeacherRepository;
 
   public List<Teacher> getAll() {
     return teacherRepository.findAll();
@@ -29,17 +31,18 @@ public class TeacherService {
     return teacherRepository.findById(id).get();
   }
 
-  public Teacher addTeacher(String name, boolean teachesPracticum, String[] availability, int maxDaysPerWeek) {
+  public Teacher addTeacher(String name, String[] availability, int maxDaysPerWeek) {
     List<MyDay> newAvailability = getAvailability(availability);
     int realMaxDaysPerWeek = Math.min(newAvailability.size(), maxDaysPerWeek);
-    return teacherRepository.save(new Teacher(name, teachesPracticum, newAvailability, realMaxDaysPerWeek));
+    return teacherRepository.save(new Teacher(name, newAvailability, realMaxDaysPerWeek));
   }
 
-  public Teacher addGroup(long id, int groupNumber) {
-    Teacher teacher = getById(id);
-    Group group = groupRepository.findByGroupNumber(groupNumber).get();
-    teacher.addGroup(group);
-    groupService.rescheduleGroup(group);
+  public Teacher addGroup(Teacher teacher, Group group, int daysPhase1, int daysPhase2, int daysPhase3) {
+    GroupTeacher groupTeacher = new GroupTeacher(group, teacher, daysPhase1, daysPhase2, daysPhase3);
+    teacher.addGroupTeacher(groupTeacher);
+    group.addGroupTeacher(groupTeacher);
+    groupTeacherRepository.save(groupTeacher);
+    groupRepository.save(group);
     teacherRepository.save(teacher);
     return teacher;
   }

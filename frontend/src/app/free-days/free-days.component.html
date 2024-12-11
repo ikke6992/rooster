@@ -1,10 +1,12 @@
 <h1 i18n>Free Days</h1>
-<button (click)="showModal()" class="button-action" i18n>Add Free Day</button>
+<button *ngIf="isLoggedIn" (click)="showModal()" class="button-action" i18n>
+  Add Free Day
+</button>
 
 <br />
 <app-modal id="add-free-days" class="hhidden">
   <app-add-free-days [fields]="fields"></app-add-free-days>
-  <button (click)="closeModal()"  class="button-action" i18n>Close</button>
+  <button (click)="closeModal()" class="button-action" i18n>Close</button>
 </app-modal>
 
 <div *ngFor="let freeDay of freeDays">
@@ -13,6 +15,8 @@
   </ng-container>
   <ng-template #showDeleted>
     {{ freeDay.date }} - {{ freeDay.name }}
-    <button (click)="remove(freeDay.id)" >🗑</button></ng-template
+    <button *ngIf="isLoggedIn" (click)="remove(freeDay.id)">
+      🗑
+    </button></ng-template
   >
 </div>

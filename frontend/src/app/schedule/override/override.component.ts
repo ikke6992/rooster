@@ -2,11 +2,12 @@ import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataService } from '../data.service';
 import { CommonModule } from '@angular/common';
+import { ModalComponent } from "../../modal/modal.component";
 
 @Component({
   selector: 'app-override',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ModalComponent],
   templateUrl: './override.component.html',
   styleUrl: './override.component.css',
 })
@@ -16,6 +17,8 @@ export class OverrideComponent {
   @Input() classroomId: number = 0;
 
   override!: FormGroup;
+  feedbackMsg!: string;
+  window = window;
 
   constructor(private dataService: DataService) {}
 
@@ -52,11 +55,30 @@ export class OverrideComponent {
     this.dataService.override(this.scheduledday.id, data).subscribe(
       (response) => {
         console.log('Response:', response);
-        window.location.reload();
+        this.feedbackMsg =
+          `Successes:<br> ${response.successes.join(`<br>`)} <br>Failures:<br> ${response.failures.join(`<br>`)}<br>`;
+        this.showModal('feedback-override');
       },
       (error) => {
         console.error('Error:', error);
+        this.feedbackMsg = `Error: ${error.error}`;
+        this.showModal('feedback-override');
       }
     );
+  }
+
+  showModal(name: string) {
+    let modal_t = document.getElementById(name);
+    if (modal_t !== null) {
+      modal_t.classList.remove('hhidden');
+      modal_t.classList.add('sshow');
+    }
+  }
+  closeModal(name: string) {
+    let modal_t = document.getElementById(name);
+    if (modal_t !== null) {
+      modal_t.classList.remove('sshow');
+      modal_t.classList.add('hhidden');
+    }
   }
 }

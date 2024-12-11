@@ -41,12 +41,12 @@ public class ScheduleddayController {
 
   @GetMapping("/export/{year}")
   public ResponseEntity<?> exportExcel(@PathVariable int year) throws IOException {
-    HttpHeaders headers = new HttpHeaders();
-    headers.add("Content-Disposition", "attachment; filename=scheduleddays.xlsx");
     var body = scheduleddayService.createExcel(year);
     if (body == null) {
       return ResponseEntity.badRequest().body("No days planned for this year");
     }
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Content-Disposition", "attachment; filename=scheduleddays.xlsx");
 
     return ResponseEntity.ok().headers(headers)
         .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
@@ -58,11 +58,19 @@ public class ScheduleddayController {
     Scheduledday scheduledday = scheduleddayService.findById(id);
     LocalDate date = LocalDate.parse(overrideRequest.date());
     Optional<Classroom> classroom = classroomService.getById(overrideRequest.classroomId());
-    if (classroom.isEmpty() || date.getDayOfWeek().equals(DayOfWeek.SATURDAY) || date.getDayOfWeek().equals(DayOfWeek.SUNDAY)
-        || freeDayRepository.existsByDate(date) || scheduleddayRepository.existsByDateAndClassroom(date, classroom.get())
-        || (!date.equals(scheduledday.getDate()) && scheduleddayRepository.existsByDateAndLessonGroup(date, scheduledday.getLesson().getGroup()))) {
-      return ResponseEntity.badRequest().build();
+    if (classroom.isEmpty()) {
+      return ResponseEntity.badRequest().body("Classroom does not exist");
     }
-    return ResponseEntity.ok(scheduleddayService.overrideScheduling(scheduledday, date, classroom.get(), overrideRequest.adaptWeekly()));
+    if (date.getDayOfWeek().equals(DayOfWeek.SATURDAY) || date.getDayOfWeek().equals(DayOfWeek.SUNDAY)
+        || freeDayRepository.existsByDate(date)){
+      return ResponseEntity.badRequest().body("Day cannot be scheduled on weekends on freedays");
+    }
+    if (scheduleddayRepository.existsByDateAndClassroom(date, classroom.get())
+        || (!date.equals(scheduledday.getDate()) && scheduleddayRepository.existsByDateAndLessonGroup(
+            date, scheduledday.getLesson().getGroup()))) {
+      return ResponseEntity.badRequest().body("Day + Classroom are already scheduled");
+    }
+    return ResponseEntity.ok(scheduleddayService.overrideScheduling(
+        scheduledday, date, classroom.get(), overrideRequest.adaptWeekly()));
   }
 }

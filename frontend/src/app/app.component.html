@@ -1,16 +1,20 @@
 <div class="non-printable">
   <nav class="sticky top-0 w-full z-10 px-4 bg-nav text-white">
     <div class="width-medium mx-auto h-12 flex items-center gap-4">
+      <b>ROOSTER</b>
+      <img src="rooster.svg" height="50px" width="50px" />
       <a
-        class="border-b border-[#05a8bf] hover:border-b hover:border-white"
-        routerLink="/schedule"
+        class="nav-button"
+        routerLink=""
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
         i18n
         >View schedule</a
       >
+
       <a
-        class="border-b border-[#05a8bf] hover:border-b hover:border-white"
+        *ngIf="isLoggedIn"
+        class="nav-button"
         routerLink="/groups"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
@@ -18,7 +22,17 @@
         >View Groups</a
       >
       <a
-        class="border-b border-[#05a8bf] hover:border-b hover:border-white"
+        *ngIf="isLoggedIn"
+        class="nav-button"
+        routerLink="/fields"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        i18n
+        >View Fields</a
+      >
+      <a
+        *ngIf="isLoggedIn"
+        class="nav-button"
         routerLink="/teachers"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
@@ -26,14 +40,40 @@
         >View Teachers</a
       >
       <a
-        class="border-b border-[#05a8bf] hover:border-b hover:border-white"
+        *ngIf="isLoggedIn"
+        class="nav-button"
+        routerLink="/archive"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        i18n
+        >Archive</a
+      >
+      <a
+        class="nav-button"
         routerLink="/free-days"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
         i18n
         >View Free Days</a
       >
+      <ng-container *ngIf="isLoggedIn; else showLogout">
+        <button class="nav-button" (click)="logout()" i18n>Logout</button>
+      </ng-container>
+      <ng-template #showLogout>
+        <button class="nav-button" (click)="showModal('login')" i18n>
+          Login
+        </button>
+      </ng-template>
     </div>
   </nav>
+  <app-modal id="login" class="hhidden">
+    <app-login></app-login>
+    <button (click)="closeModal('login')" i18n>Close</button>
+  </app-modal>
   <router-outlet />
 </div>
+
+<app-modal id="feedback-main" class="hhidden feedback">
+  <p id="feedback-message">{{ feedbackMsg }}</p>
+  <button class="button-action" (click)="logout()">Log Out</button>
+</app-modal>

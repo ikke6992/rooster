@@ -24,11 +24,8 @@
   background-color: white; /* Default for classrooms */
 }
 
-/** this makes the .modal visible */
-.sshow {
-    display: block;
-}
-/** this makes the element hidden/invisible */
-.hhidden {
-    display: none;
+.custom-drag-image {
+  position: absolute;
+  text-align: center;
+  top: -9999px; 
 }

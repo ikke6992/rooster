@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class DataService {
   private apiUrlTeachers = 'http://localhost:8080/api/v1/teachers';
-  private apiUrlGroups = 'http://localhost:8080/api/v1/groups/';
+  private apiUrlGroups = 'http://localhost:8080/api/v1/groups';
 
   constructor(private http: HttpClient) {}
 
@@ -31,9 +31,12 @@ export class DataService {
     });
   }
 
-  putGroup(id: number, groupId: number): Observable<any> {
-    return this.http.put<any>(this.apiUrlTeachers + '/edit/' + id + '/addGroup/' + groupId, {
-      headers: new HttpHeaders({ 'Content-type': 'application/json' }),
-    });
+  putGroup(id: number, groupId: number, data: any): Observable<any> {
+    return this.http.put<any>(
+      this.apiUrlTeachers + '/edit/' + id + '/addGroup/' + groupId, data, 
+      {
+        headers: new HttpHeaders({ 'Content-type': 'application/json' }),
+      }
+    );
   }
 }
