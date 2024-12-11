@@ -5,6 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -24,11 +26,14 @@ import nl.itvitae.rooster.teacher.Teacher;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +41,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ScheduleddayService {
 
+  private static final double BRIGHTNESS_THRESHOLD = 128;
   private final ScheduleddayRepository scheduleddayRepository;
   private final ClassroomRepository classroomRepository;
   private final LessonRepository lessonRepository;
@@ -226,90 +232,111 @@ public class ScheduleddayService {
   public ByteArrayInputStream createExcel(int year) throws IOException {
     LocalDate startDate = LocalDate.of(year, 1, 1);
     LocalDate endDate = LocalDate.of(year, 12, 31);
-    List<Scheduledday> scheduledDays = scheduleddayRepository.findByDateBetween(startDate, endDate);
+    List<Scheduledday> scheduledDays = scheduleddayRepository.findAll();
+    Collections.sort(scheduledDays, Comparator.comparing(Scheduledday::getDate));
     if (scheduledDays.isEmpty()) return null;
-    List<FreeDay> freedays = freeDayRepository.findByDateBetween(startDate, endDate);
+    List<FreeDay> freedays = freeDayRepository.findAll();
+    int totalYears = scheduledDays.getLast().getDate().getYear() - scheduledDays.getFirst().getDate().getYear() + 1;
     Workbook workbook = new XSSFWorkbook();
-    for (int i = 1; i <= 12; i++) {
-      LocalDate currentDate = LocalDate.of(year, i, 1);
-      Sheet sheet = workbook.createSheet(currentDate.getMonth().toString() + year);
+    for (int l = 1; l <= totalYears; l++) {
+      for (int i = 1; i <= 12; i++) {
+        LocalDate currentDate = LocalDate.of(year, i, 1);
+        Sheet sheet = workbook.createSheet(currentDate.getMonth().toString() + year);
 
-      Row header = sheet.createRow(0);
-      for (int j = 1; j <= 6; j++) {
-        Cell cell = header.createCell(j);
-        cell.setCellValue("Lokaal " + j);
-      }
-      int monthLength = currentDate.lengthOfMonth();
-      for (int j = 1; j <= monthLength; j++) {
-        Row row = sheet.createRow(j);
-        sheet.setColumnWidth(0, 15 * 256);
-
-        Cell cell = row.createCell(0);
-        cell.setCellValue(currentDate.toString());
-        LocalDate finalCurrentDate = currentDate;
-        if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY || currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
-          CellStyle weekendGreen = workbook.createCellStyle();
-          weekendGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-          org.apache.poi.ss.usermodel.Color color = new XSSFColor(
-              new java.awt.Color(181, 230, 162), new DefaultIndexedColorMap());
-          weekendGreen.setFillForegroundColor(color);
-          cell.setCellStyle(weekendGreen);
-          for (int k = 1; k <= 6; k++) {
-            Cell cell1 = row.createCell(k);
-            cell1.setCellStyle(weekendGreen);
-          }
-          currentDate = currentDate.plusDays(1);
-          continue;
+        Row header = sheet.createRow(0);
+        for (int j = 1; j <= 6; j++) {
+          Cell cell = header.createCell(j);
+          cell.setCellValue("Lokaal " + j);
         }
-        if (freedays.stream().anyMatch((freeDay -> freeDay.getDate().equals(finalCurrentDate)))) {
-          CellStyle freeDayYellow = workbook.createCellStyle();
-          freeDayYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-          org.apache.poi.ss.usermodel.Color color = new XSSFColor(
-              new java.awt.Color(255, 255, 0), new DefaultIndexedColorMap());
-          freeDayYellow.setFillForegroundColor(color);
-          cell.setCellStyle(freeDayYellow);
-          for (int k = 1; k <= 6; k++) {
-            Cell cell1 = row.createCell(k);
-            cell1.setCellStyle(freeDayYellow);
-          }
-          currentDate = currentDate.plusDays(1);
-          continue;
-        }
+        int monthLength = currentDate.lengthOfMonth();
+        for (int j = 1; j <= monthLength; j++) {
+          Row row = sheet.createRow(j);
+          sheet.setColumnWidth(0, 15 * 256);
 
-        for (int k = 1; k <= 6; k++) {
-          sheet.setColumnWidth(k, 25 * 256);
-          Cell cell1 = row.createCell(k);
-
-          int finalK = k;
-          List<Scheduledday> scheduleddaysFiltered = scheduledDays.stream().filter(
-                  day -> day.getDate().equals(finalCurrentDate) && day.getClassroom().getId() == finalK)
-              .toList();
-          if (!scheduleddaysFiltered.isEmpty()) {
-            Scheduledday scheduledday = scheduleddaysFiltered.getFirst();
-            cell1.setCellValue("Group " + scheduledday.getLesson().getGroup().getGroupNumber() + " "
-                + scheduledday.getLesson().getGroup().getField());
-            String hexColour = scheduledday.getLesson().getGroup().getColor();
-            int hexR = Integer.valueOf(hexColour.substring(1, 3), 16);
-            int hexG = Integer.valueOf(hexColour.substring(3, 5), 16);
-            int hexB = Integer.valueOf(hexColour.substring(5, 7), 16);
-            CellStyle cellStyle = workbook.createCellStyle();
-            cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+          Cell cell = row.createCell(0);
+          cell.setCellValue(currentDate.toString());
+          LocalDate finalCurrentDate = currentDate;
+          if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY
+              || currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+            CellStyle weekendGreen = workbook.createCellStyle();
+            weekendGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             org.apache.poi.ss.usermodel.Color color = new XSSFColor(
-                new java.awt.Color(hexR, hexG, hexB), new DefaultIndexedColorMap());
-            cellStyle.setFillForegroundColor(color);
-            cell1.setCellStyle(cellStyle);
+                new java.awt.Color(181, 230, 162), new DefaultIndexedColorMap());
+            weekendGreen.setFillForegroundColor(color);
+            cell.setCellStyle(weekendGreen);
+            for (int k = 1; k <= 6; k++) {
+              Cell cell1 = row.createCell(k);
+              cell1.setCellStyle(weekendGreen);
+            }
+            currentDate = currentDate.plusDays(1);
+            continue;
           }
-        }
-        currentDate = currentDate.plusDays(1);
-      }
-    }
+          if (freedays.stream().anyMatch((freeDay -> freeDay.getDate().equals(finalCurrentDate)))) {
+            CellStyle freeDayYellow = workbook.createCellStyle();
+            freeDayYellow.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            org.apache.poi.ss.usermodel.Color color = new XSSFColor(
+                new java.awt.Color(255, 255, 0), new DefaultIndexedColorMap());
+            freeDayYellow.setFillForegroundColor(color);
+            cell.setCellStyle(freeDayYellow);
+            for (int k = 1; k <= 6; k++) {
+              Cell cell1 = row.createCell(k);
+              cell1.setCellStyle(freeDayYellow);
+            }
+            currentDate = currentDate.plusDays(1);
+            continue;
+          }
 
+          for (int k = 1; k <= 6; k++) {
+            sheet.setColumnWidth(k, 25 * 256);
+            Cell cell1 = row.createCell(k);
+
+            int finalK = k;
+            List<Scheduledday> scheduleddaysFiltered = scheduledDays.stream().filter(
+                    day -> day.getDate().equals(finalCurrentDate)
+                        && day.getClassroom().getId() == finalK)
+                .toList();
+            if (!scheduleddaysFiltered.isEmpty()) {
+              Scheduledday scheduledday = scheduleddaysFiltered.getFirst();
+              cell1.setCellValue(
+                  "Group " + scheduledday.getLesson().getGroup().getGroupNumber() + " "
+                      + scheduledday.getLesson().getGroup().getField());
+              String hexColour = scheduledday.getLesson().getGroup().getColor();
+              int hexR = Integer.valueOf(hexColour.substring(1, 3), 16);
+              int hexG = Integer.valueOf(hexColour.substring(3, 5), 16);
+              int hexB = Integer.valueOf(hexColour.substring(5, 7), 16);
+              CellStyle cellStyle = workbook.createCellStyle();
+              cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+              org.apache.poi.ss.usermodel.Color color = new XSSFColor(
+                  new java.awt.Color(hexR, hexG, hexB), new DefaultIndexedColorMap());
+              cellStyle.setFillForegroundColor(color);
+              if (calculateBrightness(hexColour)) {
+                Font font = workbook.createFont();
+                font.setColor(IndexedColors.WHITE.getIndex());
+                cellStyle.setFont(font);
+              }
+              cell1.setCellStyle(cellStyle);
+            }
+          }
+          currentDate = currentDate.plusDays(1);
+        }
+      }
+      year += 1;
+    }
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     workbook.write(outputStream);
     workbook.close();
     return new ByteArrayInputStream(outputStream.toByteArray());
   }
 
+  private boolean calculateBrightness(String color){
+    int r = Integer.parseInt(color.substring(1, 3), 16);
+    int g = Integer.parseInt(color.substring(3, 5), 16);
+    int b = Integer.parseInt(color.substring(5, 7), 16);
+
+    double brightness = Math.sqrt(0.299*r*r + 0.587*g*g + 0.114*b*b);
+
+    return brightness < BRIGHTNESS_THRESHOLD;
+  }
 }
 
 class OverrideException extends Exception {
@@ -317,3 +344,4 @@ class OverrideException extends Exception {
     super(msg);
   }
 }
+
