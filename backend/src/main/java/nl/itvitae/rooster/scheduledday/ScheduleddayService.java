@@ -279,11 +279,11 @@ public class ScheduleddayService {
         continue;
       }
 
-      for (int k = 1; k <= 6; k++) {
-        sheet.setColumnWidth(k, 25 * 256);
-        Cell cell1 = row.createCell(k);
+      for (int j = 1; j <= 6; j++) {
+        sheet.setColumnWidth(j, 25 * 256);
+        Cell cell1 = row.createCell(j);
 
-        int finalK = k;
+        int finalK = j;
         List<Scheduledday> scheduleddaysFiltered = scheduledDays.stream().filter(
                 day -> day.getDate().equals(finalCurrentDate)
                     && day.getClassroom().getId() == finalK)
@@ -300,6 +300,7 @@ public class ScheduleddayService {
           CellStyle cellStyle = createColor(workbook, hexR, hexG, hexB);
           cell1.setCellStyle(cellStyle);
         }
+        scheduledDays.removeAll(scheduleddaysFiltered);
       }
       currentDate = currentDate.plusDays(1);
     }
