@@ -2,10 +2,9 @@
 <div class="flex flex-wrap">
   <div *ngFor="let group of groups" class="p-2">
     <div
-      style="background-color: {{ group.color }};
-             border-width: 1px;"
+      style="background-color: {{ group.color }};"
       [ngClass]="calculateBrightness(group.color) ? 'text-white' : ''"
-      class="rounded-md border-black p-2"
+      class="rounded-md border border-black p-2"
     >
       <h3 class="font-bold">Group {{ group.groupNumber }} {{ group.field }}</h3>
       <div *ngIf="group.groupNumber != 0">
