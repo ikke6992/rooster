@@ -1,43 +1,43 @@
-<h1>Edit Group {{ group.groupNumber }}</h1>
+<h1 i18n>Edit Group {{ group.groupNumber }}</h1>
 <form [formGroup]="editGroup" (ngSubmit)="onSubmit()">
-  <label for="color">Color: </label>
+  <label for="color" i18n>Color: </label>
   <input id="color" type="color" formControlName="color" required /><br />
-  <label for="number-of-students">Number of students: </label>
+  <label for="number-of-students" i18n>Number of students: </label>
   <input
     id="number-of-students"
     type="number"
     formControlName="numberOfStudents"
     required
   /><br />
-  <label for="field">Field: </label>
+  <label for="field" i18n>Field: </label>
   <select id="field" formControlName="field" required>
     <option [ngValue]="null" disabled>Select Field</option>
     <option *ngFor="let field of fields" [ngValue]="field.id">
       {{ field.name }}
     </option></select
   ><br />
-  <label for="start-date">Start Date: </label>
+  <label for="start-date" i18n>Start Date: </label>
   <input
     id="start-date"
     type="date"
     formControlName="startDate"
     required
   /><br />
-  <label for="weeks-phase-1">Weeks Phase 1: </label>
+  <label for="weeks-phase-1" i18n>Weeks Phase 1: </label>
   <input
     id="weeks-phase-1"
     type="number"
     formControlName="weeksPhase1"
     required
   /><br />
-  <label for="weeks-phase-2">Weeks Phase 2: </label>
+  <label for="weeks-phase-2" i18n>Weeks Phase 2: </label>
   <input
     id="weeks-phase-2"
     type="number"
     formControlName="weeksPhase2"
     required
   /><br />
-  <label for="weeks-phase-3">Weeks Phase 2: </label>
+  <label for="weeks-phase-3" i18n>Weeks Phase 3: </label>
   <input
     id="weeks-phase-3"
     type="number"
@@ -49,6 +49,7 @@
     [ngClass]="editGroup.valid ? 'button-action' : 'button-incomplete'"
     type="submit"
     [disabled]="!editGroup.valid"
+    i18n
   >
     Submit
   </button>
@@ -63,6 +64,7 @@
         ? closeModal('feedback-edit-group-' + group.groupNumber)
         : window.location.reload()
     "
+    i18n
   >
     Close
   </button>

@@ -1,13 +1,13 @@
-<h1>Group {{ group.groupNumber }} {{ group.field }}</h1>
+<h1 i18n>Group {{ group.groupNumber }} {{ group.field }}</h1>
 <form [formGroup]="addVacation" (ngSubmit)="onSubmit()">
-  <label for="start-date">Start Date: </label>
+  <label for="start-date" i18n>Start Date: </label>
   <input
     id="start-date"
     type="date"
     formControlName="startDate"
     required
   /><br />
-  <label for="weeks">Weeks: </label>
+  <label for="weeks" i18n>Weeks: </label>
   <input id="weeks" type="number" formControlName="weeks" required /><br />
-  <button type="submit" [disabled]="!addVacation.valid">Submit</button>
+  <button type="submit" [disabled]="!addVacation.valid" i18n>Submit</button>
 </form>

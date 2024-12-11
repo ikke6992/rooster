@@ -1,496 +1,854 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US">
-  <file id="ngi18n" original="ng.template">
-    <unit id="1386476281664639257">
-      <notes>
-        <note category="location">src/app/app.component.html:10,11</note>
-      </notes>
-      <segment>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="1386476281664639257" datatype="html">
         <source>View schedule</source>
-      </segment>
-    </unit>
-    <unit id="617578924717842115">
-      <notes>
-        <note category="location">src/app/app.component.html:18,19</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="617578924717842115" datatype="html">
         <source>View Groups</source>
-      </segment>
-    </unit>
-    <unit id="5108433400701140066">
-      <notes>
-        <note category="location">src/app/app.component.html:26,27</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8903101625346338746" datatype="html">
+        <source>View Fields</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5108433400701140066" datatype="html">
         <source>View Teachers</source>
-      </segment>
-    </unit>
-    <unit id="4094388602891901631">
-      <notes>
-        <note category="location">src/app/app.component.html:34,35</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1055686627716339120" datatype="html">
+        <source>Archive</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">49,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4094388602891901631" datatype="html">
         <source>View Free Days</source>
-      </segment>
-    </unit>
-    <unit id="8402297709136511605">
-      <notes>
-        <note category="location">src/app/free-days/add-free-days/add-free-days.component.html:7,8</note>
-      </notes>
-      <segment>
-        <source> Add one free day </source>
-      </segment>
-    </unit>
-    <unit id="4539138390637899238">
-      <notes>
-        <note category="location">src/app/free-days/add-free-days/add-free-days.component.html:14,15</note>
-      </notes>
-      <segment>
-        <source> Add multiple common freedays </source>
-      </segment>
-    </unit>
-    <unit id="721969814050790921">
-      <notes>
-        <note category="location">src/app/free-days/add-free-days/add-free-days.component.html:20,21</note>
-      </notes>
-      <segment>
-        <source>Free day name: </source>
-      </segment>
-    </unit>
-    <unit id="6735318627194228061">
-      <notes>
-        <note category="location">src/app/free-days/add-free-days/add-free-days.component.html:27,28</note>
-        <note category="location">src/app/schedule/override/override.component.html:3,4</note>
-      </notes>
-      <segment>
-        <source>Date: </source>
-      </segment>
-    </unit>
-    <unit id="4943998242904350511">
-      <notes>
-        <note category="location">src/app/free-days/add-free-days/add-free-days.component.html:30,31</note>
-        <note category="location">src/app/free-days/add-free-days/add-free-days.component.html:49,50</note>
-        <note category="location">src/app/view-teachers/set-availability/set-availability.component.html:25,26</note>
-      </notes>
-      <segment>
-        <source> Submit </source>
-      </segment>
-    </unit>
-    <unit id="2476251429306026469">
-      <notes>
-        <note category="location">src/app/free-days/add-free-days/add-free-days.component.html:36,37</note>
-      </notes>
-      <segment>
-        <source>Year: </source>
-      </segment>
-    </unit>
-    <unit id="3854539566990922474">
-      <notes>
-        <note category="location">src/app/free-days/free-days.component.html:1,2</note>
-      </notes>
-      <segment>
-        <source>Free Days</source>
-      </segment>
-    </unit>
-    <unit id="4775951916261613143">
-      <notes>
-        <note category="location">src/app/free-days/free-days.component.html:2,3</note>
-      </notes>
-      <segment>
-        <source>Add Free Day</source>
-      </segment>
-    </unit>
-    <unit id="7819314041543176992">
-      <notes>
-        <note category="location">src/app/free-days/free-days.component.html:7,8</note>
-        <note category="location">src/app/schedule/schedule.component.html:54,55</note>
-        <note category="location">src/app/view-groups/view-groups.component.html:31,32</note>
-        <note category="location">src/app/view-teachers/view-teachers.component.html:18,19</note>
-        <note category="location">src/app/view-teachers/view-teachers.component.html:33,34</note>
-        <note category="location">src/app/view-teachers/view-teachers.component.html:45,46</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3797778920049399855" datatype="html">
+        <source>Logout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">60,61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1908285951500318953" datatype="html">
+        <source> Login </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7819314041543176992" datatype="html">
         <source>Close</source>
-      </segment>
-    </unit>
-    <unit id="5227326580783851704">
-      <notes>
-        <note category="location">src/app/free-days/free-days.component.html:12,13</note>
-      </notes>
-      <segment>
-        <source> Removed <ph id="0" equiv="INTERPOLATION" disp="{{ freeDay.name }}"/> </source>
-      </segment>
-    </unit>
-    <unit id="6808796603154039874">
-      <notes>
-        <note category="location">src/app/schedule/override/override.component.html:5,6</note>
-      </notes>
-      <segment>
-        <source>Classroom: </source>
-      </segment>
-    </unit>
-    <unit id="8434949161407876797">
-      <notes>
-        <note category="location">src/app/schedule/override/override.component.html:12,13</note>
-      </notes>
-      <segment>
-        <source>Adapt Weekly: </source>
-      </segment>
-    </unit>
-    <unit id="935187492052582731">
-      <notes>
-        <note category="location">src/app/schedule/override/override.component.html:14,15</note>
-        <note category="location">src/app/view-groups/add-group/add-group.component.html:55,56</note>
-        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:19,20</note>
-        <note category="location">src/app/view-teachers/set-group/set-group.component.html:10,11</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">71,72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/free-days/free-days.component.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/view-teachers.component.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/view-teachers.component.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8402297709136511605" datatype="html">
+        <source> Add one free day </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/free-days/add-free-days/add-free-days.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4539138390637899238" datatype="html">
+        <source> Add multiple common freedays </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/free-days/add-free-days/add-free-days.component.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="721969814050790921" datatype="html">
+        <source>Free day name: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/free-days/add-free-days/add-free-days.component.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6735318627194228061" datatype="html">
+        <source>Date: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/free-days/add-free-days/add-free-days.component.html</context>
+          <context context-type="linenumber">27,28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/schedule/override/override.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4943998242904350511" datatype="html">
+        <source> Submit </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/free-days/add-free-days/add-free-days.component.html</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/free-days/add-free-days/add-free-days.component.html</context>
+          <context context-type="linenumber">53,54</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/add-field/add-field.component.html</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/edit-field/edit-field.component.html</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/add-group.component.html</context>
+          <context context-type="linenumber">105,106</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/set-teacher/set-teacher.component.html</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/edit-group/edit-group.component.html</context>
+          <context context-type="linenumber">54,55</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/set-availability/set-availability.component.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2476251429306026469" datatype="html">
+        <source>Year: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/free-days/add-free-days/add-free-days.component.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3854539566990922474" datatype="html">
+        <source>Free Days</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/free-days/free-days.component.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1893557651289246583" datatype="html">
+        <source> Add Free Day
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/free-days/free-days.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5227326580783851704" datatype="html">
+        <source> Removed <x id="INTERPOLATION" equiv-text="{{ freeDay.name }}"/> </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/free-days/free-days.component.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2454050363478003966" datatype="html">
+        <source>Login</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5625146011024730344" datatype="html">
+        <source>Username: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8281836453106783702" datatype="html">
+        <source>Password: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="935187492052582731" datatype="html">
         <source>Submit</source>
-      </segment>
-    </unit>
-    <unit id="3314245895634017103">
-      <notes>
-        <note category="location">src/app/schedule/schedule.component.html:2,3</note>
-      </notes>
-      <segment>
-        <source>Previous Month</source>
-      </segment>
-    </unit>
-    <unit id="5356491740033235590">
-      <notes>
-        <note category="location">src/app/schedule/schedule.component.html:3,4</note>
-      </notes>
-      <segment>
-        <source>Next Month</source>
-      </segment>
-    </unit>
-    <unit id="5298179909452540880">
-      <notes>
-        <note category="location">src/app/schedule/schedule.component.html:4,5</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/schedule/override/override.component.html</context>
+          <context context-type="linenumber">18,19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-vacation/add-vacation.component.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/add-teacher/add-teacher.component.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/set-group/set-group.component.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5547981558491672240" datatype="html">
+        <source> Close </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/schedule/override/override.component.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/schedule/schedule.component.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/add-field/add-field.component.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/edit-field/edit-field.component.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/view-fields.component.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/edit-group/edit-group.component.html</context>
+          <context context-type="linenumber">69,70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">81,82</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/add-teacher/add-teacher.component.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/set-group/set-group.component.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/view-teachers.component.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1602915982833367902" datatype="html">
+        <source>Group <x id="INTERPOLATION" equiv-text="{{ scheduledday.groupNumber }}"/> <x id="INTERPOLATION_1" equiv-text="{{ scheduledday.field }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/schedule/override/override.component.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-vacation/add-vacation.component.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6808796603154039874" datatype="html">
+        <source>Classroom: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/schedule/override/override.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8434949161407876797" datatype="html">
+        <source>Adapt Weekly: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/schedule/override/override.component.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8007336582268760691" datatype="html">
+        <source> Previous Month </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/schedule/schedule.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1815110162533505111" datatype="html">
+        <source> Next Month </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/schedule/schedule.component.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5298179909452540880" datatype="html">
         <source>Print schedule</source>
-      </segment>
-    </unit>
-    <unit id="3010647078476647776">
-      <notes>
-        <note category="location">src/app/schedule/schedule.component.html:5,6</note>
-      </notes>
-      <segment>
-        <source>Download Excel</source>
-      </segment>
-    </unit>
-    <unit id="3973931101896534797">
-      <notes>
-        <note category="location">src/app/schedule/schedule.component.html:9,10</note>
-      </notes>
-      <segment>
-        <source>Date</source>
-      </segment>
-    </unit>
-    <unit id="5908588864162839605">
-      <notes>
-        <note category="location">src/app/schedule/schedule.component.html:10,11</note>
-      </notes>
-      <segment>
-        <source>Classroom <ph id="0" equiv="INTERPOLATION" disp="{{ number }}"/></source>
-      </segment>
-    </unit>
-    <unit id="4195472677282961776">
-      <notes>
-        <note category="location">src/app/scheduled-day/scheduled-day.component.html:4,9</note>
-      </notes>
-      <segment>
-        <source> Group <ph id="0" equiv="INTERPOLATION" disp="{{ item.groupNumber }}"/> <ph id="1" equiv="INTERPOLATION_1" disp="{{ item.field }}"/> <pc id="2" equivStart="START_TAG_DIV" equivEnd="CLOSE_TAG_DIV" type="other" dispStart="&lt;div class=&quot;non-printable ml-1&quot;&gt;" dispEnd="&lt;/div&gt;"> - Teacher: <ph id="3" equiv="INTERPOLATION_2" disp="{{item.teacher}}"/> </pc></source>
-      </segment>
-    </unit>
-    <unit id="9124347207158517893">
-      <notes>
-        <note category="location">src/app/view-groups/add-group/add-group.component.html:1,2</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/schedule/schedule.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1324268324454404353" datatype="html">
+        <source> Download Excel </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/schedule/schedule.component.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="778437806502599626" datatype="html">
+        <source> Classroom <x id="INTERPOLATION" equiv-text="{{ number }}"/> </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/schedule/schedule.component.html</context>
+          <context context-type="linenumber">21,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3413849834954950478" datatype="html">
+        <source> Group <x id="INTERPOLATION" equiv-text="{{ item.groupNumber }}"/> <x id="START_TAG_NG_CONTAINER" ctype="x-ng_container" equiv-text="&lt;ng-container *ngIf=&quot;item.field === &apos;Returnday&apos;&quot;&gt;"/> Returnday <x id="CLOSE_TAG_NG_CONTAINER" ctype="x-ng_container" equiv-text="&lt;/ng-container&gt;"/><x id="START_TAG_NG_CONTAINER_1" ctype="x-ng_container_1" equiv-text="&lt;ng-container *ngIf=&quot;item.field !== &apos;Returnday&apos;&quot;&gt;"/> <x id="INTERPOLATION_1" equiv-text="{{ item.field }}"/> <x id="CLOSE_TAG_NG_CONTAINER" ctype="x-ng_container" equiv-text="&lt;/ng-container&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div class=&quot;non-printable ml-1&quot;&gt;"/>- Teacher: <x id="INTERPOLATION_2" equiv-text="{{ item.teacher }}"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV_2" ctype="x-div_2" equiv-text="&lt;div
+          class=&quot;popuptext&quot;
+          id=&quot;myPopup{{ item.id }}&quot;
+          style=&quot;z-index: 20&quot;
+          (mouseover)=&quot;pauseTimeout()&quot;
+          (mouseleave)=&quot;startTimer()&quot;
+          (dragstart)=&quot;preventDrag($event)&quot;
+          draggable=&quot;true&quot;
+        &gt;"/><x id="START_TAG_NG_CONTAINER_2" ctype="x-ng_container_2" equiv-text="&lt;ng-container *ngIf=&quot;item.note !== null; else showNoNote&quot;&gt;"/><x id="START_TAG_DIV_1" ctype="x-div_1" equiv-text="&lt;div&gt;"/><x id="INTERPOLATION_3" equiv-text="{{ item.note }}"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_BUTTON" ctype="x-button" equiv-text="&lt;button
+              *ngIf=&quot;this.isLoggedIn&quot;
+              (click)=&quot;showModal(&apos;add-note-&apos; + item.id)&quot;
+              class=&quot;button-action&quot;
+            &gt;"/> Edit note <x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/><x id="CLOSE_TAG_NG_CONTAINER" ctype="x-ng_container" equiv-text="&lt;/ng-container&gt;"/><x id="START_TAG_NG_TEMPLATE" ctype="x-ng_template" equiv-text="&lt;ng-template #showNoNote&gt;"/><x id="START_TAG_DIV_1" ctype="x-div_1" equiv-text="&lt;div&gt;"/>No note<x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_BUTTON" ctype="x-button" equiv-text="&lt;button
+              *ngIf=&quot;this.isLoggedIn&quot;
+              (click)=&quot;showModal(&apos;add-note-&apos; + item.id)&quot;
+              class=&quot;button-action&quot;
+            &gt;"/> Add note <x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/><x id="CLOSE_TAG_NG_TEMPLATE" ctype="x-ng_template" equiv-text="&lt;/ng-template&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/schedule/scheduled-day/scheduled-day.component.html</context>
+          <context context-type="linenumber">16,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4166605884961050646" datatype="html">
+        <source><x id="START_TAG_APP_MODAL_1" ctype="x-app_modal_1" equiv-text="&lt;app-modal id=&quot;add-note-{{ item.id }}&quot; class=&quot;hhidden&quot;&gt;"/><x id="START_TAG_FORM" ctype="x-form" equiv-text="&lt;form [formGroup]=&quot;addNote&quot; (ngSubmit)=&quot;onSubmit()&quot;&gt;"/><x id="START_TAG_LABEL" ctype="x-label" equiv-text="&lt;label for=&quot;note&quot;&gt;"/>Note: <x id="CLOSE_TAG_LABEL" ctype="x-label" equiv-text="&lt;/label&gt;"/><x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input id=&quot;note&quot; type=&quot;text&quot; formControlName=&quot;note&quot; /&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/><x id="START_TAG_LABEL_1" ctype="x-label_1" equiv-text="&lt;label for=&quot;isExam&quot;&gt;"/>Is exam: <x id="CLOSE_TAG_LABEL" ctype="x-label" equiv-text="&lt;/label&gt;"/><x id="TAG_INPUT_1" ctype="x-input_1" equiv-text="&lt;input id=&quot;isExam&quot; type=&quot;checkbox&quot; formControlName=&quot;isExam&quot; /&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/><x id="START_TAG_BUTTON" ctype="x-button" equiv-text="&lt;button [disabled]=&quot;!addNote.valid&quot; type=&quot;submit&quot; class=&quot;button-action&quot;&gt;"/> Submit <x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/><x id="CLOSE_TAG_FORM" ctype="x-form" equiv-text="&lt;/form&gt;"/><x id="START_TAG_BUTTON_1" ctype="x-button_1" equiv-text="&lt;button class=&quot;button-action&quot; (click)=&quot;closeModal(&apos;add-note-&apos; + item.id)&quot;&gt;"/> Close <x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/><x id="START_TAG_APP_MODAL" ctype="x-app_modal" equiv-text="&lt;app-modal id=&quot;feedback-{{ item.id }}&quot; class=&quot;hhidden&quot;&gt;"/><x id="START_PARAGRAPH" ctype="x-p" equiv-text="&lt;p&gt;"/><x id="INTERPOLATION" equiv-text="{{ this.feedbackMsg }}"/><x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p&gt;"/><x id="START_TAG_BUTTON_2" ctype="x-button_2" equiv-text="&lt;button
+          class=&quot;button-action&quot;
+          (click)=&quot;
+            this.feedbackMsg.startsWith(&apos;Error: &apos;)
+              ? closeModal(&apos;feedback-&apos; + item.id)
+              : window.location.reload()
+          &quot;
+        &gt;"/> Close <x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/><x id="CLOSE_TAG_APP_MODAL" ctype="x-app_modal" equiv-text="&lt;/app-modal&gt;"/><x id="CLOSE_TAG_APP_MODAL" ctype="x-app_modal" equiv-text="&lt;/app-modal&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/schedule/scheduled-day/scheduled-day.component.html</context>
+          <context context-type="linenumber">58,87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8019331026479399960" datatype="html">
+        <source>Add Field</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/add-field/add-field.component.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="402785015655073812" datatype="html">
+        <source>Name: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/add-field/add-field.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/edit-field/edit-field.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/add-teacher/add-teacher.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4962424214848593028" datatype="html">
+        <source>Days Phase 1: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/add-field/add-field.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/edit-field/edit-field.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/set-teacher/set-teacher.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/set-group/set-group.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8529123187164366786" datatype="html">
+        <source>Days Phase 2: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/add-field/add-field.component.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/edit-field/edit-field.component.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/set-teacher/set-teacher.component.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/set-group/set-group.component.html</context>
+          <context context-type="linenumber">18,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4130016077696467741" datatype="html">
+        <source>Days Phase 3: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/add-field/add-field.component.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/edit-field/edit-field.component.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/set-teacher/set-teacher.component.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/set-group/set-group.component.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7121519025624812307" datatype="html">
+        <source>Edit Field <x id="INTERPOLATION" equiv-text="{{ field.name }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/edit-field/edit-field.component.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9033045811000879464" datatype="html">
+        <source>Fields</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/view-fields.component.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6036217019491604753" datatype="html">
+        <source><x id="START_PARAGRAPH" ctype="x-p" equiv-text="&lt;p&gt;"/><x id="INTERPOLATION" equiv-text="{{ field.name }}"/><x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p&gt;"/><x id="START_PARAGRAPH" ctype="x-p" equiv-text="&lt;p&gt;"/>Phase 1: <x id="INTERPOLATION_1" equiv-text="{{ field.daysPhase1 }}"/> days per week<x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p&gt;"/><x id="START_PARAGRAPH" ctype="x-p" equiv-text="&lt;p&gt;"/>Phase 2: <x id="INTERPOLATION_2" equiv-text="{{ field.daysPhase2 }}"/> days per week<x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p&gt;"/><x id="START_PARAGRAPH" ctype="x-p" equiv-text="&lt;p&gt;"/>Phase 2: <x id="INTERPOLATION_3" equiv-text="{{ field.daysPhase3 }}"/> days per week<x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p&gt;"/><x id="START_TAG_BUTTON" ctype="x-button" equiv-text="&lt;button
+      class=&quot;button-action&quot;
+      (click)=&quot;showModal(&apos;edit-field-&apos; + field.name)&quot;
+    &gt;"/> Edit <x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/><x id="START_TAG_APP_MODAL" ctype="x-app_modal" equiv-text="&lt;app-modal id=&quot;edit-field-{{ field.name }}&quot; class=&quot;hhidden&quot;&gt;"/><x id="START_TAG_APP_EDIT_FIELD" ctype="x-app_edit_field" equiv-text="&lt;app-edit-field [field]=&quot;field&quot;&gt;"/><x id="CLOSE_TAG_APP_EDIT_FIELD" ctype="x-app_edit_field" equiv-text="&lt;/app-edit-field&gt;"/><x id="START_TAG_BUTTON_1" ctype="x-button_1" equiv-text="&lt;button
+        (click)=&quot;closeModal(&apos;edit-field-&apos; + field.name)&quot;
+        class=&quot;button-action&quot;
+      &gt;"/> Close <x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/><x id="CLOSE_TAG_APP_MODAL" ctype="x-app_modal" equiv-text="&lt;/app-modal&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/view-fields.component.html</context>
+          <context context-type="linenumber">4,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6011579010351344051" datatype="html">
+        <source> Add Field
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-fields/view-fields.component.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9124347207158517893" datatype="html">
         <source>Add Group</source>
-      </segment>
-    </unit>
-    <unit id="7694411860880695392">
-      <notes>
-        <note category="location">src/app/view-groups/add-group/add-group.component.html:3,4</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/add-group.component.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7694411860880695392" datatype="html">
         <source>Group number: </source>
-      </segment>
-    </unit>
-    <unit id="5817350616201369494">
-      <notes>
-        <note category="location">src/app/view-groups/add-group/add-group.component.html:10,11</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/add-group.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5817350616201369494" datatype="html">
         <source>Color: </source>
-      </segment>
-    </unit>
-    <unit id="7912769833508560865">
-      <notes>
-        <note category="location">src/app/view-groups/add-group/add-group.component.html:12,13</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/add-group.component.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/edit-group/edit-group.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7912769833508560865" datatype="html">
         <source>Number of students: </source>
-      </segment>
-    </unit>
-    <unit id="4031733163488184701">
-      <notes>
-        <note category="location">src/app/view-groups/add-group/add-group.component.html:19,20</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/add-group.component.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/edit-group/edit-group.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4031733163488184701" datatype="html">
         <source>Field: </source>
-      </segment>
-    </unit>
-    <unit id="4148662983516763897">
-      <notes>
-        <note category="location">src/app/view-groups/add-group/add-group.component.html:21,22</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/add-group.component.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/edit-group/edit-group.component.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4148662983516763897" datatype="html">
         <source>Select Field</source>
-      </segment>
-    </unit>
-    <unit id="6918871917201353101">
-      <notes>
-        <note category="location">src/app/view-groups/add-group/add-group.component.html:26,27</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/add-group.component.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5377078063439833222" datatype="html">
+        <source> Edit </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/add-group.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6660925946511264619" datatype="html">
+        <source> Delete </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/add-group.component.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6918871917201353101" datatype="html">
         <source>Start Date: </source>
-      </segment>
-    </unit>
-    <unit id="3968404992664316753">
-      <notes>
-        <note category="location">src/app/view-groups/add-group/add-group.component.html:33,34</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/add-group.component.html</context>
+          <context context-type="linenumber">71,72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-vacation/add-vacation.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/edit-group/edit-group.component.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3968404992664316753" datatype="html">
         <source>Weeks Phase 1: </source>
-      </segment>
-    </unit>
-    <unit id="9007104510859228932">
-      <notes>
-        <note category="location">src/app/view-groups/add-group/add-group.component.html:40,41</note>
-        <note category="location">src/app/view-groups/add-group/add-group.component.html:47,48</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/add-group.component.html</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/edit-group/edit-group.component.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9007104510859228932" datatype="html">
         <source>Weeks Phase 2: </source>
-      </segment>
-    </unit>
-    <unit id="5944812089887969249">
-      <notes>
-        <note category="location">src/app/view-groups/view-groups.component.html:1,2</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/add-group.component.html</context>
+          <context context-type="linenumber">85,86</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/edit-group/edit-group.component.html</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4889181358781656862" datatype="html">
+        <source>Weeks Phase 3: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/add-group.component.html</context>
+          <context context-type="linenumber">92,93</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/edit-group/edit-group.component.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1260099573097287890" datatype="html">
+        <source>Add <x id="INTERPOLATION" equiv-text="{{ teacher.name }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-group/set-teacher/set-teacher.component.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1159539688826207765" datatype="html">
+        <source>Weeks: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/add-vacation/add-vacation.component.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6865238426137570972" datatype="html">
+        <source>Edit Group <x id="INTERPOLATION" equiv-text="{{ group.groupNumber }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/edit-group/edit-group.component.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5944812089887969249" datatype="html">
         <source>Groups</source>
-      </segment>
-    </unit>
-    <unit id="1602915982833367902">
-      <notes>
-        <note category="location">src/app/view-groups/view-groups.component.html:4,5</note>
-      </notes>
-      <segment>
-        <source>Group <ph id="0" equiv="INTERPOLATION" disp="{{ group.groupNumber }}"/> <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.field }}"/></source>
-      </segment>
-    </unit>
-    <unit id="6343854631088621632">
-      <notes>
-        <note category="location">src/app/view-groups/view-groups.component.html:5,6</note>
-      </notes>
-      <segment>
-        <source>Number of students: <ph id="0" equiv="INTERPOLATION" disp="{{ group.numberOfStudents }}"/></source>
-      </segment>
-    </unit>
-    <unit id="6013523957514998774">
-      <notes>
-        <note category="location">src/app/view-groups/view-groups.component.html:6,7</note>
-      </notes>
-      <segment>
-        <source>Startdate: <ph id="0" equiv="INTERPOLATION" disp="{{ group.startDate }}"/></source>
-      </segment>
-    </unit>
-    <unit id="1714431618876568614">
-      <notes>
-        <note category="location">src/app/view-groups/view-groups.component.html:8,10</note>
-      </notes>
-      <segment>
-        <source> Phase 1: <ph id="0" equiv="INTERPOLATION" disp="{{ group.daysPhase1 }}"/> days for <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.weeksPhase1 }}"/> weeks </source>
-      </segment>
-    </unit>
-    <unit id="7242829187000762029">
-      <notes>
-        <note category="location">src/app/view-groups/view-groups.component.html:11,13</note>
-      </notes>
-      <segment>
-        <source> Phase 2: <ph id="0" equiv="INTERPOLATION" disp="{{ group.daysPhase2 }}"/> days for <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.weeksPhase2 }}"/> weeks </source>
-      </segment>
-    </unit>
-    <unit id="5582181687997116292">
-      <notes>
-        <note category="location">src/app/view-groups/view-groups.component.html:14,16</note>
-      </notes>
-      <segment>
-        <source> Phase 3: <ph id="0" equiv="INTERPOLATION" disp="{{ group.daysPhase3 }}"/> days for <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.weeksPhase3 }}"/> weeks </source>
-      </segment>
-    </unit>
-    <unit id="1202339917691175840">
-      <notes>
-        <note category="location">src/app/view-groups/view-groups.component.html:16,17</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6343854631088621632" datatype="html">
+        <source>Number of students: <x id="INTERPOLATION" equiv-text="{{ group.numberOfStudents }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6013523957514998774" datatype="html">
+        <source>Startdate: <x id="INTERPOLATION" equiv-text="{{ group.startDate }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1714431618876568614" datatype="html">
+        <source> Phase 1: <x id="INTERPOLATION" equiv-text="{{ group.daysPhase1 }}"/> days for <x id="INTERPOLATION_1" equiv-text="{{ group.weeksPhase1 }}"/> weeks </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7242829187000762029" datatype="html">
+        <source> Phase 2: <x id="INTERPOLATION" equiv-text="{{ group.daysPhase2 }}"/> days for <x id="INTERPOLATION_1" equiv-text="{{ group.weeksPhase2 }}"/> weeks </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">12,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5582181687997116292" datatype="html">
+        <source> Phase 3: <x id="INTERPOLATION" equiv-text="{{ group.daysPhase3 }}"/> days for <x id="INTERPOLATION_1" equiv-text="{{ group.weeksPhase3 }}"/> weeks </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">15,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1202339917691175840" datatype="html">
         <source>Teachers:</source>
-      </segment>
-    </unit>
-    <unit id="2239161057931062116">
-      <notes>
-        <note category="location">src/app/view-groups/view-groups.component.html:26,27</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5918030537636076589" datatype="html">
+        <source>Vacations:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5307707610341678668" datatype="html">
+        <source> Add Vacation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6334128070465555593" datatype="html">
+        <source> Reschedule Group</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6651905729165189676" datatype="html">
+        <source> Edit Group</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2085010813693052099" datatype="html">
+        <source> Archive Group</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2239161057931062116" datatype="html">
         <source> Add Group
 </source>
-      </segment>
-    </unit>
-    <unit id="402785015655073812">
-      <notes>
-        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:3,4</note>
-      </notes>
-      <segment>
-        <source>Name: </source>
-      </segment>
-    </unit>
-    <unit id="2837249951441622560">
-      <notes>
-        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:5,6</note>
-      </notes>
-      <segment>
-        <source>Teaches practicum: </source>
-      </segment>
-    </unit>
-    <unit id="3031050102315323127">
-      <notes>
-        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:9,10</note>
-        <note category="location">src/app/view-teachers/set-availability/set-availability.component.html:5,6</note>
-      </notes>
-      <segment>
-        <source>Tuesday: </source>
-      </segment>
-    </unit>
-    <unit id="1307018129652114887">
-      <notes>
-        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:11,12</note>
-        <note category="location">src/app/view-teachers/set-availability/set-availability.component.html:7,8</note>
-      </notes>
-      <segment>
-        <source>Wednesday: </source>
-      </segment>
-    </unit>
-    <unit id="2668028374839342230">
-      <notes>
-        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:13,14</note>
-        <note category="location">src/app/view-teachers/set-availability/set-availability.component.html:9,10</note>
-      </notes>
-      <segment>
-        <source>Thursday: </source>
-      </segment>
-    </unit>
-    <unit id="4490342843012301515">
-      <notes>
-        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:15,16</note>
-        <note category="location">src/app/view-teachers/set-availability/set-availability.component.html:11,12</note>
-      </notes>
-      <segment>
-        <source>Friday: </source>
-      </segment>
-    </unit>
-    <unit id="1967441180913476652">
-      <notes>
-        <note category="location">src/app/view-teachers/add-teacher/add-teacher.component.html:17,18</note>
-        <note category="location">src/app/view-teachers/set-availability/set-availability.component.html:13,14</note>
-      </notes>
-      <segment>
-        <source>Max days per week: </source>
-      </segment>
-    </unit>
-    <unit id="2298382585162629649">
-      <notes>
-        <note category="location">src/app/view-teachers/set-availability/set-availability.component.html:3,4</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
+          <context context-type="linenumber">75,76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1687100391230722898" datatype="html">
+        <source>Add Teacher</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/add-teacher/add-teacher.component.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2298382585162629649" datatype="html">
         <source>Monday: </source>
-      </segment>
-    </unit>
-    <unit id="6035313748381399832">
-      <notes>
-        <note category="location">src/app/view-teachers/set-group/set-group.component.html:3,4</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/add-teacher/add-teacher.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/set-availability/set-availability.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3031050102315323127" datatype="html">
+        <source>Tuesday: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/add-teacher/add-teacher.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/set-availability/set-availability.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1307018129652114887" datatype="html">
+        <source>Wednesday: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/add-teacher/add-teacher.component.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/set-availability/set-availability.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2668028374839342230" datatype="html">
+        <source>Thursday: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/add-teacher/add-teacher.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/set-availability/set-availability.component.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4490342843012301515" datatype="html">
+        <source>Friday: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/add-teacher/add-teacher.component.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/set-availability/set-availability.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1967441180913476652" datatype="html">
+        <source>Max days per week: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/add-teacher/add-teacher.component.html</context>
+          <context context-type="linenumber">15,16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/set-availability/set-availability.component.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6035313748381399832" datatype="html">
         <source>Group: </source>
-      </segment>
-    </unit>
-    <unit id="7316113874732599634">
-      <notes>
-        <note category="location">src/app/view-teachers/set-group/set-group.component.html:7,9</note>
-      </notes>
-      <segment>
-        <source> Group <ph id="0" equiv="INTERPOLATION" disp="{{ group.groupNumber }}"/> <ph id="1" equiv="INTERPOLATION_1" disp="{{ group.field }}"/> </source>
-      </segment>
-    </unit>
-    <unit id="4494957391104569472">
-      <notes>
-        <note category="location">src/app/view-teachers/view-teachers.component.html:1,2</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/set-group/set-group.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7316113874732599634" datatype="html">
+        <source> Group <x id="INTERPOLATION" equiv-text="{{ group.groupNumber }}"/> <x id="INTERPOLATION_1" equiv-text="{{ group.field }}"/> </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/set-group/set-group.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4494957391104569472" datatype="html">
         <source>Teachers</source>
-      </segment>
-    </unit>
-    <unit id="8013335369410808318">
-      <notes>
-        <note category="location">src/app/view-teachers/view-teachers.component.html:5,6</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/view-teachers.component.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8013335369410808318" datatype="html">
         <source>Availability:</source>
-      </segment>
-    </unit>
-    <unit id="7724285606730447230">
-      <notes>
-        <note category="location">src/app/view-teachers/view-teachers.component.html:9,11</note>
-      </notes>
-      <segment>
-        <source>max. <ph id="0" equiv="INTERPOLATION" disp="{{ teacher.maxDaysPerWeek }}"/> days per week</source>
-      </segment>
-    </unit>
-    <unit id="5691249662476054955">
-      <notes>
-        <note category="location">src/app/view-teachers/view-teachers.component.html:14,15</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/view-teachers.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7724285606730447230" datatype="html">
+        <source>max. <x id="INTERPOLATION" equiv-text="{{ teacher.maxDaysPerWeek }}"/> days per week</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/view-teachers.component.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5691249662476054955" datatype="html">
         <source> Set Availability </source>
-      </segment>
-    </unit>
-    <unit id="239911470633002624">
-      <notes>
-        <note category="location">src/app/view-teachers/view-teachers.component.html:21,22</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/view-teachers.component.html</context>
+          <context context-type="linenumber">15,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="239911470633002624" datatype="html">
         <source>Groups:</source>
-      </segment>
-    </unit>
-    <unit id="4980067665411228515">
-      <notes>
-        <note category="location">src/app/view-teachers/view-teachers.component.html:29,30</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/view-teachers.component.html</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4980067665411228515" datatype="html">
         <source> Add Group </source>
-      </segment>
-    </unit>
-    <unit id="8309793787195819258">
-      <notes>
-        <note category="location">src/app/view-teachers/view-teachers.component.html:41,42</note>
-      </notes>
-      <segment>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/view-teachers.component.html</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8309793787195819258" datatype="html">
         <source> Add Teacher
 </source>
-      </segment>
-    </unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/view-teachers/view-teachers.component.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+      </trans-unit>
+    </body>
   </file>
 </xliff>

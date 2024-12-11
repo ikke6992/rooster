@@ -1,4 +1,4 @@
-<h1>Group {{ scheduledday.groupNumber }} {{ scheduledday.field }}</h1>
+<h1 i18n>Group {{ scheduledday.groupNumber }} {{ scheduledday.field }}</h1>
 <form [formGroup]="override" (ngSubmit)="onSubmit()">
   <label for="date" i18n>Date: </label>
   <input id="date" type="date" formControlName="date" required /><br />
@@ -26,6 +26,7 @@
         : window.location.reload()
     "
     class="button-action"
+    i18n
   >
     Close
   </button>

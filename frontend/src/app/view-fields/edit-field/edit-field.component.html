@@ -1,22 +1,22 @@
-<h1>Edit Field {{ field.name }}</h1>
+<h1 i18n>Edit Field {{ field.name }}</h1>
 <form [formGroup]="editField" (ngSubmit)="onSubmit()">
-  <label for="name">Name: </label>
+  <label for="name" i18n>Name: </label>
   <input id="name" type="text" formControlName="name" required /><br />
-  <label for="days-phase-1">Days Phase 1: </label>
+  <label for="days-phase-1" i18n>Days Phase 1: </label>
   <input
     id="days-phase-1"
     type="number"
     formControlName="daysPhase1"
     required
   /><br />
-  <label for="days-phase-2">Days Phase 2: </label>
+  <label for="days-phase-2" i18n>Days Phase 2: </label>
   <input
     id="days-phase-2"
     type="number"
     formControlName="daysPhase2"
     required
   /><br />
-  <label for="days-phase-3">Days Phase 2: </label>
+  <label for="days-phase-3" i18n>Days Phase 3: </label>
   <input
     id="days-phase-3"
     type="number"
@@ -28,6 +28,7 @@
     [ngClass]="editField.valid ? 'button-action' : 'button-incomplete'"
     type="submit"
     [disabled]="!editField.valid"
+    i18n
   >
     Submit
   </button>
@@ -42,6 +43,7 @@
         ? closeModal('feedback-' + field.name)
         : window.location.reload()
     "
+    i18n
   >
     Close
   </button>
