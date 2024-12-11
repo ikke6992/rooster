@@ -1,41 +1,61 @@
 <h1>Teachers</h1>
-<div *ngFor="let teacher of teachers">
-  <div>
-    <h3>{{ teacher.name }}</h3>
-
-    <h4>Availability:</h4>
-    <div *ngFor="let day of teacher.availability">
-      <p>- {{ day }}</p>
-    </div>
-    <p>max. {{ teacher.maxDaysPerWeek }} days per week</p>
-    <button
-      class="button-action"
-      (click)="showModal('set-availability-' + teacher.name)"
+<div class="flex flex-wrap">
+  <div *ngFor="let teacher of teachers" class="p-2">
+    <div
+      style="border-width: 1px"
+      class="grid grid-cols-2 rounded-md border-black p-2 gap-2"
     >
-      Set Availability
-    </button>
-    <app-modal id="set-availability-{{ teacher.name }}" class="hhidden">
-      <app-set-availability [teacher]="teacher"></app-set-availability>
-      <button (click)="closeModal('set-availability-' + teacher.name)">
-        Close
-      </button>
-    </app-modal>
-
-    <h4>Groups:</h4>
-    <div *ngFor="let group of teacher.groups">
-      <p>- {{ group }}</p>
+      <h3 class="font-bold">{{ teacher.name }}</h3>
+      <div class="invisible"></div>
+      <div>
+        <h4>Availability:</h4>
+        <div *ngFor="let day of teacher.availability">
+          <p>- {{ day }}</p>
+        </div>
+        <p>max. {{ teacher.maxDaysPerWeek }} days per week</p>
+      </div>
+      <div>
+        <h4>Groups:</h4>
+        <ng-container *ngIf="teacher.groups.length === 0; else showGroups">
+          <div>none</div>
+        </ng-container>
+        <ng-template #showGroups>
+          <div *ngFor="let group of teacher.groups">
+            <p class="whitespace-pre">- {{ group }}</p>
+          </div>
+        </ng-template>
+      </div>
+      <div class="text-center">
+        <button
+          class="button-action"
+          (click)="showModal('set-availability-' + teacher.name)"
+        >
+          Set Availability
+        </button>
+        <app-modal id="set-availability-{{ teacher.name }}" class="hhidden">
+          <app-set-availability [teacher]="teacher"></app-set-availability>
+          <button (click)="closeModal('set-availability-' + teacher.name)">
+            Close
+          </button>
+        </app-modal>
+      </div>
+      <div class="text-center">
+        <button
+          (click)="showModal('add-group-' + teacher.name)"
+          class="button-action"
+        >
+          Add Group
+        </button>
+        <app-modal id="add-group-{{ teacher.name }}" class="hhidden">
+          <app-set-group [groups]="groups" [teacher]="teacher"></app-set-group>
+          <button (click)="closeModal('add-group-' + teacher.name)">
+            Close
+          </button>
+        </app-modal>
+      </div>
     </div>
-    <button
-      (click)="showModal('add-group-' + teacher.name)"
-      class="button-action"
-    >
-      Add Group
-    </button>
-    <app-modal id="add-group-{{ teacher.name }}" class="hhidden">
-      <app-set-group [groups]="groups" [teacher]="teacher"></app-set-group>
-      <button (click)="closeModal('add-group-' + teacher.name)">Close</button>
-    </app-modal>
-  </div><br />
+    <br />
+  </div>
 </div>
 
 <button
