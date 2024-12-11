@@ -194,6 +194,10 @@
         <source>Group <x id="INTERPOLATION" equiv-text="{{ scheduledday.groupNumber }}"/> <x id="INTERPOLATION_1" equiv-text="{{ scheduledday.field }}"/></source>
         <target>Groep <x id="INTERPOLATION" equiv-text="{{ scheduledday.groupNumber }}"/> <x id="INTERPOLATION_1" equiv-text="{{ scheduledday.field }}"/></target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/archive/archive.component.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/schedule/override/override.component.html</context>
           <context context-type="linenumber">1,2</context>
         </context-group>
@@ -572,6 +576,10 @@
         <source>Number of students: </source>
         <target>Aantal studenten: </target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/archive/archive.component.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/add-group/add-group.component.html</context>
           <context context-type="linenumber">12,13</context>
         </context-group>
@@ -680,6 +688,10 @@
         <source>Groups</source>
         <target>Groepen</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/archive/archive.component.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
           <context context-type="linenumber">1,2</context>
         </context-group>
@@ -696,6 +708,10 @@
         <source>Startdate: <x id="INTERPOLATION" equiv-text="{{ group.startDate }}"/></source>
         <target>Startdatum: <x id="INTERPOLATION" equiv-text="{{ group.startDate }}"/></target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/archive/archive.component.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
           <context context-type="linenumber">13,14</context>
         </context-group>
@@ -703,6 +719,10 @@
       <trans-unit id="1714431618876568614" datatype="html">
         <source> Phase 1: <x id="INTERPOLATION" equiv-text="{{ group.daysPhase1 }}"/> days for <x id="INTERPOLATION_1" equiv-text="{{ group.weeksPhase1 }}"/> weeks </source>
         <target> Fase 1: <x id="INTERPOLATION" equiv-text="{{ group.daysPhase1 }}"/> dagen voor <x id="INTERPOLATION_1" equiv-text="{{ group.weeksPhase1 }}"/> weken </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/archive/archive.component.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
           <context context-type="linenumber">15,17</context>
@@ -712,6 +732,10 @@
         <source> Phase 2: <x id="INTERPOLATION" equiv-text="{{ group.daysPhase2 }}"/> days for <x id="INTERPOLATION_1" equiv-text="{{ group.weeksPhase2 }}"/> weeks </source>
         <target> Fase 2: <x id="INTERPOLATION" equiv-text="{{ group.daysPhase2 }}"/> dagen voor <x id="INTERPOLATION_1" equiv-text="{{ group.weeksPhase2 }}"/> weken </target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/archive/archive.component.html</context>
+          <context context-type="linenumber">12,14</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
           <context context-type="linenumber">18,20</context>
         </context-group>
@@ -719,6 +743,10 @@
       <trans-unit id="5582181687997116292" datatype="html">
         <source> Phase 3: <x id="INTERPOLATION" equiv-text="{{ group.daysPhase3 }}"/> days for <x id="INTERPOLATION_1" equiv-text="{{ group.weeksPhase3 }}"/> weeks </source>
         <target> Fase 3: <x id="INTERPOLATION" equiv-text="{{ group.daysPhase3 }}"/> dagen voor <x id="INTERPOLATION_1" equiv-text="{{ group.weeksPhase3 }}"/> weken </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/archive/archive.component.html</context>
+          <context context-type="linenumber">15,17</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
           <context context-type="linenumber">21,23</context>
@@ -728,6 +756,10 @@
         <source>Teachers:</source>
         <target>Leraren:</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/archive/archive.component.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
           <context context-type="linenumber">23,24</context>
         </context-group>
@@ -735,6 +767,10 @@
       <trans-unit id="5918030537636076589" datatype="html">
         <source>Vacations:</source>
         <target>Vakanties:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/archive/archive.component.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/view-groups/view-groups.component.html</context>
           <context context-type="linenumber">28,29</context>
