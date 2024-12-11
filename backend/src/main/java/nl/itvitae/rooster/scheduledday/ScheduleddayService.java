@@ -229,14 +229,13 @@ public class ScheduleddayService {
     }
   }
 
-  public ByteArrayInputStream createExcel(int year) throws IOException {
-    LocalDate startDate = LocalDate.of(year, 1, 1);
-    LocalDate endDate = LocalDate.of(year, 12, 31);
+  public ByteArrayInputStream createExcel() throws IOException {
     List<Scheduledday> scheduledDays = scheduleddayRepository.findAll();
     Collections.sort(scheduledDays, Comparator.comparing(Scheduledday::getDate));
     if (scheduledDays.isEmpty()) return null;
     List<FreeDay> freedays = freeDayRepository.findAll();
-    int totalYears = scheduledDays.getLast().getDate().getYear() - scheduledDays.getFirst().getDate().getYear() + 1;
+    int year = scheduledDays.getFirst().getDate().getYear();
+    int totalYears = scheduledDays.getLast().getDate().getYear() - year + 1;
     Workbook workbook = new XSSFWorkbook();
     for (int l = 1; l <= totalYears; l++) {
       for (int i = 1; i <= 12; i++) {

@@ -39,9 +39,9 @@ public class ScheduleddayController {
             .toList());
   }
 
-  @GetMapping("/export/{year}")
-  public ResponseEntity<?> exportExcel(@PathVariable int year) throws IOException {
-    var body = scheduleddayService.createExcel(year);
+  @GetMapping("/export")
+  public ResponseEntity<?> exportExcel() throws IOException {
+    var body = scheduleddayService.createExcel();
     if (body == null) {
       return ResponseEntity.badRequest().body("No days planned for this year");
     }

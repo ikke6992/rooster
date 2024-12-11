@@ -112,7 +112,7 @@ export class ScheduleComponent {
   }
 
   exportExcel() {
-    this.dataService.getExcel(this.year).subscribe(
+    this.dataService.getExcel().subscribe(
       (response: any) => {},
       (error) => {
         console.error('Error:', error);
