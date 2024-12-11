@@ -13,6 +13,10 @@ export class DataService {
   getUpcomingDays(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/upcoming`);
   }
+  
+  getPastDays(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/past`);
+  }
 
   addDay(data: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, data, {

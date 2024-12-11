@@ -46,6 +46,11 @@ public class FreeDayController {
     return ResponseEntity.ok(freeDayRepository.findAllByDateAfterOrderByDateAsc(LocalDate.now().minusDays(1)));
   }
 
+  @GetMapping("/past")
+  public ResponseEntity<List<FreeDay>> getPastFreeDays() {
+    return ResponseEntity.ok(freeDayRepository.findAllByDateBeforeOrderByDateAsc(LocalDate.now()));
+  }
+
   @GetMapping("/month/{month}/{year}")
   public ResponseEntity<?> getAllByMonth(@PathVariable int month, @PathVariable int year) {
     LocalDate startDate = LocalDate.of(year, month, 1);

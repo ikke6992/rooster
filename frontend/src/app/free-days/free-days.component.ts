@@ -13,8 +13,9 @@ import { AddFreeDaysComponent } from './add-free-days/add-free-days.component';
 })
 export class FreeDaysComponent {
   freeDays: FreeDays[] = [];
+  pastFreeDays: FreeDays[] = [];
   fields: any[] = [];
-
+  showPastDaysCounter: number = 0;
   isLoggedIn: boolean = localStorage.getItem('token') !== null
   
   constructor(private dataService: DataService) {}
@@ -26,10 +27,22 @@ export class FreeDaysComponent {
     });
   }
 
-  remove(id: number){
+  getPastDays(){
+    // only request past free days once
+    if (this.showPastDaysCounter === 0) {
+      this.dataService.getPastDays().subscribe((response: any[]) => {
+        this.pastFreeDays= response;
+      })
+    }
+    //counter used to show (even numbers) or close (uneven numbers) past free days
+    this.showPastDaysCounter += 1
+    
+  }
+
+  remove(id: number){  
     this.dataService.removeDay(id).subscribe(() => {
-      (this.freeDays.find((freeDay) => freeDay.id === id) || this.freeDays[id]).isDeleted = true;
-    });
+      (this.freeDays.find((freeDay) => freeDay.id === id) || this.pastFreeDays.find((freeday) => freeday.id === id) || this.freeDays[id]).isDeleted = true;
+    });    
   }  
   
   showModal() {

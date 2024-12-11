@@ -16,9 +16,28 @@
   >
 </div>
 <br/>
-<button>
-  ▼ Show Past Free Days
+<button (click)="getPastDays()"> <code>{{ showPastDaysCounter % 2 == 1 ? '▼' : '▶'}}</code> Show Past Free Days
 </button>
+<ng-container *ngIf="showPastDaysCounter % 2 == 1">
+  <ng-container *ngIf="pastFreeDays.length === 0; else showPastFreeDays">
+    <div>none</div>
+  </ng-container>
+  <ng-template #showPastFreeDays>
+    <div *ngFor="let freeDay of pastFreeDays">
+      <ng-container *ngIf="freeDay.isDeleted; else showPastDeleted">
+        Removed {{ freeDay.name }}
+      </ng-container>
+      <ng-template #showPastDeleted>
+        {{ freeDay.date }} - {{ freeDay.name }}
+        <button *ngIf="isLoggedIn" (click)="remove(freeDay.id)">
+          🗑
+        </button></ng-template
+      >
+    </div>
+  </ng-template>
+</ng-container>
+
+
 <button
   *ngIf="isLoggedIn"
   id="add-free-day-button"
