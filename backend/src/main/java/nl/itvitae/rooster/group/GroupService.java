@@ -15,6 +15,7 @@ import nl.itvitae.rooster.group.vacation.VacationRepository;
 import nl.itvitae.rooster.lesson.*;
 import nl.itvitae.rooster.scheduledday.*;
 import nl.itvitae.rooster.teacher.*;
+import nl.itvitae.rooster.utils.ColorUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -40,8 +41,6 @@ public class GroupService {
   private final ClassroomService classroomService;
   private final FreeDayRepository freeDayRepository;
   private final VacationRepository vacationRepository;
-
-  private static final int COLOR_DISTANCE_THRESHOLD = 50;
 
   public List<Group> getAll() {
     return groupRepository.findAll();
@@ -115,18 +114,14 @@ public class GroupService {
   }
 
   public boolean checkSimilarColor(String hexColor) {
-    int hexR = Integer.valueOf(hexColor.substring(1, 3), 16);
-    int hexG = Integer.valueOf(hexColor.substring(3, 5), 16);
-    int hexB = Integer.valueOf(hexColor.substring(5, 7), 16);
+    int[] rgb = ColorUtils.hexToRgb(hexColor);
     List<Group> groups = getAll();
     for (Group group : groups) {
-      int hexGroupR = Integer.valueOf(group.getColor().substring(1, 3), 16);
-      int hexGroupG = Integer.valueOf(group.getColor().substring(3, 5), 16);
-      int hexGroupB = Integer.valueOf(group.getColor().substring(5, 7), 16);
+      int[] groupRgb = ColorUtils.hexToRgb(group.getColor());
       double distance = Math.sqrt(
-          Math.pow((hexGroupR - hexR), 2) + Math.pow((hexGroupG - hexG), 2) + Math.pow(
-              (hexGroupB - hexB), 2));
-      if (distance < COLOR_DISTANCE_THRESHOLD) {
+          Math.pow((groupRgb[0] - rgb[0]), 2) + Math.pow((groupRgb[1] - rgb[1]), 2) + Math.pow(
+              (groupRgb[2] - rgb[2]), 2));
+      if (distance < ColorUtils.COLOR_DISTANCE_THRESHOLD) {
         return true;
       }
     }

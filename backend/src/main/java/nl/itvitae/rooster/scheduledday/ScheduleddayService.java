@@ -23,6 +23,7 @@ import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonRepository;
 import nl.itvitae.rooster.teacher.GroupTeacher;
 import nl.itvitae.rooster.teacher.Teacher;
+import nl.itvitae.rooster.utils.ColorUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -40,7 +41,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ScheduleddayService {
 
-  private static final double BRIGHTNESS_THRESHOLD = 128;
   private final ScheduleddayRepository scheduleddayRepository;
   private final ClassroomRepository classroomRepository;
   private final LessonRepository lessonRepository;
@@ -258,7 +258,7 @@ public class ScheduleddayService {
       cell.setCellValue("Lokaal " + i);
     }
     
-    for (int i = 1; i <= currentDate.lengthOfMonth(); i++) {
+    for (int i = 1; i <= currentDate.lengthOfMonth(); i++, currentDate = currentDate.plusDays(1)) {
       Row row = sheet.createRow(i);
       sheet.setColumnWidth(0, 15 * 256);
 
@@ -268,12 +268,10 @@ public class ScheduleddayService {
       if (currentDate.getDayOfWeek() == DayOfWeek.SATURDAY
           || currentDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
         styleDayOff(workbook, row, cell, 181, 230, 162);
-        currentDate = currentDate.plusDays(1);
         continue;
       }
       if (freedays.stream().anyMatch((freeDay -> freeDay.getDate().equals(finalCurrentDate)))) {
         styleDayOff(workbook, row, cell, 255, 255, 0);
-        currentDate = currentDate.plusDays(1);
         continue;
       }
 
@@ -292,25 +290,27 @@ public class ScheduleddayService {
               "Group " + scheduledday.getLesson().getGroup().getGroupNumber() + " "
                   + scheduledday.getLesson().getGroup().getField());
           String hexColour = scheduledday.getLesson().getGroup().getColor();
-          int hexR = Integer.valueOf(hexColour.substring(1, 3), 16);
-          int hexG = Integer.valueOf(hexColour.substring(3, 5), 16);
-          int hexB = Integer.valueOf(hexColour.substring(5, 7), 16);
-          CellStyle cellStyle = createColor(workbook, hexR, hexG, hexB);
+          int[] hexRgb = ColorUtils.hexToRgb(hexColour);
+          CellStyle cellStyle = createColor(workbook, hexRgb);
           cell1.setCellStyle(cellStyle);
         }
         scheduledDays.removeAll(scheduleddaysFiltered);
       }
-      currentDate = currentDate.plusDays(1);
     }
   }
 
   private void styleDayOff(Workbook workbook, Row row, Cell cell, int r, int g, int b){
-    CellStyle weekendGreen = createColor(workbook, r, g, b);
-    cell.setCellStyle(weekendGreen);
+    CellStyle color = createColor(workbook, r, g, b);
+    cell.setCellStyle(color);
     for (int k = 1; k <= 6; k++) {
       Cell cell1 = row.createCell(k);
-      cell1.setCellStyle(weekendGreen);
+      cell1.setCellStyle(color);
     }
+  }
+
+  private CellStyle createColor(Workbook workbook, int[] rgb){
+    if (rgb.length < 3) return null;
+    return createColor(workbook, rgb[0], rgb[1], rgb[2]);
   }
   
   private CellStyle createColor(Workbook workbook, int r, int g, int b){
@@ -319,18 +319,12 @@ public class ScheduleddayService {
     org.apache.poi.ss.usermodel.Color color = new XSSFColor(
         new java.awt.Color(r, g, b), new DefaultIndexedColorMap());
     styleColor.setFillForegroundColor(color);
-    if (calculateBrightness(r, g, b)) {
+    if (ColorUtils.calculateBrightness(r, g, b)) {
       Font font = workbook.createFont();
       font.setColor(IndexedColors.WHITE.getIndex());
       styleColor.setFont(font);
     }
     return styleColor;
-  }
-
-  private boolean calculateBrightness(int r, int g, int b){
-    double brightness = Math.sqrt(0.299*r*r + 0.587*g*g + 0.114*b*b);
-
-    return brightness < BRIGHTNESS_THRESHOLD;
   }
 }
 
