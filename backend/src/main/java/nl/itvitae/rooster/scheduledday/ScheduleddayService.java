@@ -33,7 +33,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
@@ -231,17 +230,16 @@ public class ScheduleddayService {
 
   public ByteArrayInputStream createExcel() throws IOException {
     List<Scheduledday> scheduledDays = scheduleddayRepository.findAll();
-    Collections.sort(scheduledDays, Comparator.comparing(Scheduledday::getDate));
+    scheduledDays.sort(Comparator.comparing(Scheduledday::getDate));
     if (scheduledDays.isEmpty()) return null;
     List<FreeDay> freedays = freeDayRepository.findAll();
     int year = scheduledDays.getFirst().getDate().getYear();
     int totalYears = scheduledDays.getLast().getDate().getYear() - year + 1;
     Workbook workbook = new XSSFWorkbook();
-    for (int i = 1; i <= totalYears; i++) {
+    for (int i = 1; i <= totalYears; i++, year++) {
       for (int monthNumber = 1; monthNumber <= 12; monthNumber++) {
         createSheet(workbook, year, monthNumber, scheduledDays, freedays);
       }
-      year += 1;
     }
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     workbook.write(outputStream);
