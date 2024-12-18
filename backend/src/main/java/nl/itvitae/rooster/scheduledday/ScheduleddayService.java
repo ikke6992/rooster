@@ -24,11 +24,14 @@ import nl.itvitae.rooster.teacher.Teacher;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +39,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ScheduleddayService {
 
+  private static final double BRIGHTNESS_THRESHOLD = 128;
   private final ScheduleddayRepository scheduleddayRepository;
   private final ClassroomRepository classroomRepository;
   private final LessonRepository lessonRepository;
@@ -297,6 +301,11 @@ public class ScheduleddayService {
             org.apache.poi.ss.usermodel.Color color = new XSSFColor(
                 new java.awt.Color(hexR, hexG, hexB), new DefaultIndexedColorMap());
             cellStyle.setFillForegroundColor(color);
+            if(calculateBrightness(hexColour)){
+              Font font = workbook.createFont();
+              font.setColor(IndexedColors.WHITE.getIndex());
+              cellStyle.setFont(font);
+            }
             cell1.setCellStyle(cellStyle);
           }
         }
@@ -310,6 +319,15 @@ public class ScheduleddayService {
     return new ByteArrayInputStream(outputStream.toByteArray());
   }
 
+  private boolean calculateBrightness(String color){
+    int r = Integer.parseInt(color.substring(1, 3), 16);
+    int g = Integer.parseInt(color.substring(3, 5), 16);
+    int b = Integer.parseInt(color.substring(5, 7), 16);
+
+    double brightness = Math.sqrt(0.299*r*r + 0.587*g*g + 0.114*b*b);
+
+    return brightness < BRIGHTNESS_THRESHOLD;
+  }
 }
 
 class OverrideException extends Exception {
@@ -317,3 +335,4 @@ class OverrideException extends Exception {
     super(msg);
   }
 }
+

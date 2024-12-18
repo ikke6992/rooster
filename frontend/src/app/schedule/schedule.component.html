@@ -11,7 +11,7 @@
 </div>
 <div id="schedule">
   <table class="w-full">
-    <tr class="sticky" style="top: 100px; background-color: white; z-index: 10;">
+    <tr class="sticky" style="top: 100px; background-color: white; z-index: 10">
       <th>Date</th>
       <th *ngFor="let number of TOTAL_CLASSROOMS">Classroom {{ number }}</th>
     </tr>
@@ -75,7 +75,10 @@
 </app-modal>
 
 <div #dragImage class="custom-drag-image">
-  <div style="backgroundColor: {{ draggedItem.groupColor }}">
+  <div
+    [ngClass]="calculateBrightness(draggedItem.groupColor) ? 'text-white' : ''"
+    style="backgroundColor: {{ draggedItem.groupColor }}"
+  >
     <div class="flex justify-center items-center">
       Group {{ draggedItem.groupNumber }} {{ draggedItem.field }} - Teacher:
       {{ draggedItem.teacher }}

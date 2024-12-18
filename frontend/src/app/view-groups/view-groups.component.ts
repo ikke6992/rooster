@@ -23,12 +23,13 @@ export class ViewGroupsComponent {
   groups: any[] = [];
   fields: any[] = [];
   teachers: any[] = [];
+  BRIGHTNESS_THRESHOLD: number = 128;
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
     this.dataService.getGroups().subscribe((response: any[]) => {
-      this.groups = response;
+      this.groups = response.sort((a,b) => a.groupNumber - b.groupNumber);
       console.log(response);
     });
 
@@ -84,5 +85,15 @@ export class ViewGroupsComponent {
       modal_t.classList.remove('sshow');
       modal_t.classList.add('hhidden');
     }
+  }
+
+  calculateBrightness(color: string): boolean{
+    const r = parseInt(color.substring(1, 3), 16);
+    const g = parseInt(color.substring(3, 5), 16);
+    const b = parseInt(color.substring(5, 7), 16);
+
+    const brightness = Math.sqrt(0.299*r*r + 0.587*g*g + 0.114*b*b);    
+    
+    return brightness < this.BRIGHTNESS_THRESHOLD;
   }
 }

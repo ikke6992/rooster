@@ -1,10 +1,11 @@
 <h1>Fields</h1>
-<div *ngFor="let field of fields">
-  <div>
+<div class="flex flex-wrap">
+<div *ngFor="let field of fields" class="p-2">
+  <div class="rounded-md border-black p-2 border">
     <p>{{ field.name }}</p>
     <p>Phase 1: {{ field.daysPhase1 }} days per week</p>
     <p>Phase 2: {{ field.daysPhase2 }} days per week</p>
-    <p>Phase 2: {{ field.daysPhase3 }} days per week</p>
+    <p>Phase 3: {{ field.daysPhase3 }} days per week</p>
     <button
       class="button-action"
       (click)="showModal('edit-field-' + field.name)"
@@ -21,6 +22,7 @@
       </button>
     </app-modal>
   </div><br />
+</div>
 </div>
 <button
   (click)="showModal('add-field')"

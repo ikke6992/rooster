@@ -34,6 +34,8 @@ export class ScheduledDayComponent {
   window: any = window;
   timerId: any;
   isLoggedIn: boolean = localStorage.getItem('token') !== null
+
+  BRIGHTNESS_THRESHOLD: number = 128;
   
   constructor(private dataService: DataService) {}
 
@@ -107,6 +109,16 @@ export class ScheduledDayComponent {
 
   preventDrag(event: DragEvent){
     event.preventDefault();
+  }
+
+  calculateBrightness(color: string): boolean{
+    const r = parseInt(color.substring(1, 3), 16);
+    const g = parseInt(color.substring(3, 5), 16);
+    const b = parseInt(color.substring(5, 7), 16);
+
+    const brightness = Math.sqrt(0.299*r*r + 0.587*g*g + 0.114*b*b);    
+    
+    return brightness < this.BRIGHTNESS_THRESHOLD;
   }
 }
 
