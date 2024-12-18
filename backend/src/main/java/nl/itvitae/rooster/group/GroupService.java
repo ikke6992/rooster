@@ -3,6 +3,7 @@ package nl.itvitae.rooster.group;
 import java.time.DayOfWeek;
 
 import jakarta.persistence.EntityManager;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomService;
@@ -115,9 +116,9 @@ public class GroupService {
 
   public boolean checkSimilarColor(String hexColor) {
     int[] rgb = ColorUtils.hexToRgb(hexColor);
-    List<Group> groups = getAll();
-    for (Group group : groups) {
-      int[] groupRgb = ColorUtils.hexToRgb(group.getColor());
+    List<String> groupColors = Stream.concat(getAll().stream().map(Group::getColor), getArchived().stream().map(ArchivedGroup::getColor)).toList();
+    for (String groupColor : groupColors) {
+      int[] groupRgb = ColorUtils.hexToRgb(groupColor);
       double distance = Math.sqrt(
           Math.pow((groupRgb[0] - rgb[0]), 2) + Math.pow((groupRgb[1] - rgb[1]), 2) + Math.pow(
               (groupRgb[2] - rgb[2]), 2));

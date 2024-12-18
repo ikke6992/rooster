@@ -279,19 +279,16 @@ public class ScheduleddayService {
         sheet.setColumnWidth(j, 25 * 256);
         Cell cell1 = row.createCell(j);
 
-        int finalK = j;
+        int classroom = j;
         List<Scheduledday> scheduleddaysFiltered = scheduledDays.stream().filter(
                 day -> day.getDate().equals(finalCurrentDate)
-                    && day.getClassroom().getId() == finalK)
+                    && day.getClassroom().getId() == classroom)
             .toList();
         if (!scheduleddaysFiltered.isEmpty()) {
-          Scheduledday scheduledday = scheduleddaysFiltered.getFirst();
-          cell1.setCellValue(
-              "Group " + scheduledday.getLesson().getGroup().getGroupNumber() + " "
-                  + scheduledday.getLesson().getGroup().getField());
-          String hexColour = scheduledday.getLesson().getGroup().getColor();
-          int[] hexRgb = ColorUtils.hexToRgb(hexColour);
-          CellStyle cellStyle = createColor(workbook, hexRgb);
+          Group group = scheduleddaysFiltered.getFirst().getLesson().getGroup();
+          cell1.setCellValue(String.format("Group %d %s", group.getGroupNumber(), group.getField()));
+          String hexColour = group.getColor();
+          CellStyle cellStyle = createColor(workbook, ColorUtils.hexToRgb(hexColour));
           cell1.setCellStyle(cellStyle);
         }
         scheduledDays.removeAll(scheduleddaysFiltered);
