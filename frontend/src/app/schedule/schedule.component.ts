@@ -44,6 +44,8 @@ export class ScheduleComponent {
     isExam: false,
   };
 
+  BRIGHTNESS_THRESHOLD: number = 128;
+
   isLoggedIn: boolean = localStorage.getItem('token') !== null
 
   @ViewChild('dragImage', { static: false }) dragImage!: ElementRef;
@@ -214,6 +216,16 @@ export class ScheduleComponent {
     return data.filter(
       (scheduledDay) => scheduledDay.date.getDate() === day.id
     );
+  }
+
+  calculateBrightness(color: string): boolean{
+    const r = parseInt(color.substring(1, 3), 16);
+    const g = parseInt(color.substring(3, 5), 16);
+    const b = parseInt(color.substring(5, 7), 16);
+
+    const brightness = Math.sqrt(0.299*r*r + 0.587*g*g + 0.114*b*b);    
+    
+    return brightness < this.BRIGHTNESS_THRESHOLD;
   }
 }
 

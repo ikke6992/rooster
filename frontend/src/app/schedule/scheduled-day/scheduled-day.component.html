@@ -5,7 +5,9 @@
     style="backgroundColor: {{ item.groupColor }}; borderColor: #{{invertHex(item.groupColor)}}"
   >
     <div class="popup" (click)="showNote()" (mouseover)="pauseTimeout()" (mouseleave)="startTimer()">
-      <div class="flex justify-center items-center">
+      <div 
+      [ngClass]="calculateBrightness(item.groupColor) ? 'text-white' : ''"
+      class="flex justify-center items-center">
         Group {{ item.groupNumber }} {{ item.field }}
         <div class="non-printable ml-1">- Teacher: {{ item.teacher }}</div>
         <div

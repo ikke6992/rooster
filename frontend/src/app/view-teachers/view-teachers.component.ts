@@ -22,7 +22,7 @@ export class ViewTeachersComponent {
   ngOnInit(): void {
     this.dataService.getTeachers().subscribe((response: any[]) => {
       this.teachers = response;
-      console.log(response);
+      console.log(response);      
     });
 
     this.dataService.getGroups().subscribe((response: any[]) => {

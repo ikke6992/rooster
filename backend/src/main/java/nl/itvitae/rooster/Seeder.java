@@ -82,7 +82,7 @@ public class Seeder implements CommandLineRunner {
       var group52 = groupService.addGroup(52, "#00ffff", 10, security, LocalDate.now().minusYears(1), 8, 12, 8);
       var group53 = saveGroup(53, "#ffa500", 12, java);
       var group54 = saveGroup(54, "#ff0000", 8, data);
-      var group55 = saveGroup(55, "#00ff00", 10, java);
+      var group55 = saveGroup(55, "#000000", 10, java);
 
       var wubbo = saveTeacher("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)),
           3, 1, 2, 2, group53, group55);
@@ -96,13 +96,14 @@ public class Seeder implements CommandLineRunner {
 
       final HolidayManager holidayManager = HolidayManager.getInstance(
           ManagerParameters.create(NETHERLANDS));
-      final Set<Holiday> holidays = holidayManager.getHolidays(LocalDate.now(),
+      final Set<Holiday> holidays = holidayManager.getHolidays(LocalDate.now().minusWeeks(4),
           LocalDate.now().plusYears(2));
       for (Holiday holiday : holidays) {
         freeDayService.addFreeDay(new FreeDay(holiday.getDate(),
             holiday.getDescription()));
       }
       freeDayService.addFreeDay(new FreeDay(LocalDate.now(), "test"));
+      freeDayService.addFreeDay(new FreeDay(LocalDate.now().minusWeeks(10), "test passed"));
 
       groupService.addVacation(group53, LocalDate.now().plusMonths(1), 2);
 
