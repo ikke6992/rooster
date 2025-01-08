@@ -237,7 +237,7 @@ public class ScheduleddayService {
     int totalYears = scheduledDays.getLast().getDate().getYear() - year + 1;
     Workbook workbook = new XSSFWorkbook();
     for (int i = 1; i <= totalYears; i++, year++) {
-      for (int monthNumber = 1; monthNumber <= 12; monthNumber++) {
+      for (int monthNumber = scheduledDays.getFirst().getDate().getMonthValue(); monthNumber <= 12; monthNumber++) {
         createSheet(workbook, year, monthNumber, scheduledDays, freedays);
       }
     }
@@ -257,8 +257,9 @@ public class ScheduleddayService {
       Cell cell = header.createCell(i);
       cell.setCellValue("Lokaal " + i);
     }
+    int monthLength = currentDate.lengthOfMonth();
     
-    for (int i = 1; i <= currentDate.lengthOfMonth(); i++, currentDate = currentDate.plusDays(1)) {
+    for (int i = 1; i <= monthLength; i++, currentDate = currentDate.plusDays(1)) {
       Row row = sheet.createRow(i);
       sheet.setColumnWidth(0, 15 * 256);
 

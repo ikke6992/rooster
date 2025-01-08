@@ -68,6 +68,7 @@ public class ScheduleddayController {
     if (scheduleddayRepository.existsByDateAndClassroom(date, classroom.get())
         || (!date.equals(scheduledday.getDate()) && scheduleddayRepository.existsByDateAndLessonGroup(
             date, scheduledday.getLesson().getGroup()))) {
+
       return ResponseEntity.badRequest().body("Day + Classroom are already scheduled");
     }
     return ResponseEntity.ok(scheduleddayService.overrideScheduling(
