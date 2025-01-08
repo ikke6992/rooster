@@ -39,9 +39,9 @@ public class ScheduleddayController {
             .toList());
   }
 
-  @GetMapping("/export/{year}")
-  public ResponseEntity<?> exportExcel(@PathVariable int year) throws IOException {
-    var body = scheduleddayService.createExcel(year);
+  @GetMapping("/export")
+  public ResponseEntity<?> exportExcel() throws IOException {
+    var body = scheduleddayService.createExcel();
     if (body == null) {
       return ResponseEntity.badRequest().body("No days planned for this year");
     }
@@ -68,6 +68,7 @@ public class ScheduleddayController {
     if (scheduleddayRepository.existsByDateAndClassroom(date, classroom.get())
         || (!date.equals(scheduledday.getDate()) && scheduleddayRepository.existsByDateAndLessonGroup(
             date, scheduledday.getLesson().getGroup()))) {
+
       return ResponseEntity.badRequest().body("Day + Classroom are already scheduled");
     }
     return ResponseEntity.ok(scheduleddayService.overrideScheduling(
