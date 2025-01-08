@@ -1,9 +1,4 @@
 <h1>Free Days</h1>
-<button *ngIf="isLoggedIn" (click)="showModal()" class="button-action">
-  Add Free Day
-</button>
-
-<br />
 <app-modal id="add-free-days" class="hhidden">
   <app-add-free-days [fields]="fields"></app-add-free-days>
   <button (click)="closeModal()" class="button-action">Close</button>
@@ -20,3 +15,34 @@
     </button></ng-template
   >
 </div>
+<br/>
+<button (click)="getPastDays()"> <code>{{ showPastDaysCounter % 2 == 1 ? '▼' : '▶'}}</code> Show Past Free Days
+</button>
+<ng-container *ngIf="showPastDaysCounter % 2 == 1">
+  <ng-container *ngIf="pastFreeDays.length === 0; else showPastFreeDays">
+    <div>none</div>
+  </ng-container>
+  <ng-template #showPastFreeDays>
+    <div *ngFor="let freeDay of pastFreeDays">
+      <ng-container *ngIf="freeDay.isDeleted; else showPastDeleted">
+        Removed {{ freeDay.name }}
+      </ng-container>
+      <ng-template #showPastDeleted>
+        {{ freeDay.date }} - {{ freeDay.name }}
+        <button *ngIf="isLoggedIn" (click)="remove(freeDay.id)">
+          🗑
+        </button></ng-template
+      >
+    </div>
+  </ng-template>
+</ng-container>
+
+
+<button
+  *ngIf="isLoggedIn"
+  id="add-free-day-button"
+  (click)="showModal()"
+  class="button-action"
+>
+  Add Free Day
+</button>

@@ -43,7 +43,7 @@ export class AddFreeDaysComponent {
           holiday.name == 'Goede Vrijdag'
       );
     this.addMultipleFreedays = this.fb.group({
-      year: 2024,
+      year: new Date().getFullYear(),
       array: this.fb.array(
         this.holidays.map((holiday) => new FormControl(false))
       ),
