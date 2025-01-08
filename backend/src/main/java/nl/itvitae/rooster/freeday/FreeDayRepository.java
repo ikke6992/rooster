@@ -10,6 +10,10 @@ public interface FreeDayRepository  extends JpaRepository<FreeDay, Long> {
 
   List<FreeDay> findByDateBetween(LocalDate startDate, LocalDate endDate);
 
+  List<FreeDay> findAllByDateAfterOrderByDateAsc(LocalDate date);
+
+  List<FreeDay> findAllByDateBeforeOrderByDateAsc(LocalDate date);
+
   boolean existsByDate(LocalDate date);
 
   List<FreeDay> findAllByOrderByDateAsc();

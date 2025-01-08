@@ -12,7 +12,11 @@
       (mouseover)="pauseTimeout()"
       (mouseleave)="startTimer()"
     >
-      <div class="flex justify-center items-center" i18n>
+      <div
+        [ngClass]="calculateBrightness(item.groupColor) ? 'text-white' : ''"
+        class="flex justify-center items-center"
+        i18n
+      >
         Group {{ item.groupNumber }}
         <ng-container *ngIf="item.field === 'Returnday'">
           Returnday
@@ -20,7 +24,11 @@
         <ng-container *ngIf="item.field !== 'Returnday'">
           {{ item.field }}
         </ng-container>
-        <div class="non-printable ml-1">- Teacher: {{ item.teacher }}</div>
+        <div class="non-printable ml-1">
+          <ng-container *ngIf="item.teacher !== 'none'"
+            >- Teacher: {{ item.teacher }}</ng-container
+          >
+        </div>
         <div
           class="popuptext"
           id="myPopup{{ item.id }}"

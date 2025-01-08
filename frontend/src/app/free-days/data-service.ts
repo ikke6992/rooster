@@ -10,8 +10,12 @@ export class DataService {
 
   constructor(private http: HttpClient) {}
 
-  getData(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  getUpcomingDays(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/upcoming`);
+  }
+  
+  getPastDays(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/past`);
   }
 
   addDay(data: any): Observable<any> {

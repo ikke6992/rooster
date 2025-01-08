@@ -1,5 +1,5 @@
 <div class="sticky top-12 w-full z-10 px-4 bg-white">
-  <div class="mx-2">
+  <div class="mx-2" i18n>
     Currently viewing: {{ getMonthName(month) }} {{ year }}
   </div>
   <button (click)="decrementMonth()" class="button-action" i18n>
@@ -10,7 +10,7 @@
   </button>
   <button (click)="print()" class="button-action" i18n>Print schedule</button>
   <button (click)="exportExcel()" class="button-action" i18n>
-    Download Excel
+    Download Excel File
   </button>
 </div>
 <div id="schedule">
@@ -81,7 +81,10 @@
 </app-modal>
 
 <div #dragImage class="custom-drag-image">
-  <div style="backgroundColor: {{ draggedItem.groupColor }}">
+  <div
+    [ngClass]="calculateBrightness(draggedItem.groupColor) ? 'text-white' : ''"
+    style="backgroundColor: {{ draggedItem.groupColor }}"
+  >
     <div class="flex justify-center items-center">
       Group {{ draggedItem.groupNumber }} {{ draggedItem.field }} - Teacher:
       {{ draggedItem.teacher }}
