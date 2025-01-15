@@ -64,6 +64,12 @@
           Login
         </button>
       </ng-template>
+      <ng-container *ngIf="dutch">
+        <button class="language-button" (click)="switchLanguage()">🇬🇧</button>
+      </ng-container>
+      <ng-container *ngIf="!dutch">
+        <button class="language-button" (click)="switchLanguage()">🇳🇱</button>
+      </ng-container>
     </div>
   </nav>
   <app-modal id="login" class="hhidden">

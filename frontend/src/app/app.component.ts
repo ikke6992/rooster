@@ -15,7 +15,14 @@ export class AppComponent {
   title = "frontend"
 
   isLoggedIn: boolean = localStorage.getItem('token') !== null
+  dutch: boolean = false;
   feedbackMsg: string = "";
+
+  constructor(private translate: Translate) {}
+
+  switchLanguage() {
+    this.dutch = !this.dutch;
+  }
 
   showModal(name: string) {
     let modal_t = document.getElementById(name);
