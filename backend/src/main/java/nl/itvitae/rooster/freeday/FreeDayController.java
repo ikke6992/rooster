@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@CrossOrigin("http://localhost:4200")
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/freedays")
 public class FreeDayController {

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrlFields = 'http://localhost:8080/api/v1/fields';
-  private apiUrlGroups = 'http://localhost:8080/api/v1/groups';
-  private apiUrlTeachers = 'http://localhost:8080/api/v1/teachers';
+  private apiUrlFields = `${environment.apiUrl}/v1/fields`;
+  private apiUrlGroups = `${environment.apiUrl}/v1/groups`;
+  private apiUrlTeachers = `${environment.apiUrl}/v1/teachers`;
 
   constructor(private http: HttpClient) {}
 
@@ -19,7 +20,7 @@ export class DataService {
   getGroups(): Observable<any> {
     return this.http.get<any>(this.apiUrlGroups);
   }
-  
+
   getTeachers(): Observable<any> {
     return this.http.get<any>(this.apiUrlTeachers);
   }

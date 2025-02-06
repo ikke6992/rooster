@@ -1,6 +1,6 @@
 services:
   backend:
-    image: backend
+    image: ikke1992/rooster_backend
     build:
       context: ./backend
     container_name: rooster_backend
@@ -15,6 +15,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=$POSTGRES_USERNAME
       - SPRING_DATASOURCE_PASSWORD=$POSTGRES_PASSWORD
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - APP_FRONTEND_URL=http://rooster_frontend:$ANGULAR_LOCAL_PORT
       - APP_JWT_SECRET=qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm
 
   postgresdb:
@@ -30,11 +31,17 @@ services:
       - $POSTGRES_LOCAL_PORT:$POSTGRES_DOCKER_PORT
       
   frontend:
-    image: frontend
+    image: ikke1992/rooster_frontend
     container_name: rooster_frontend
     build:
       context: ./frontend
+    env_file: ./.env
+    environment:
+      - NGINX_PORT=$ANGULAR_DOCKER_PORT
+      - API_URL=http://rooster_backend:$SPRING_LOCAL_PORT/api
     ports:
       - $ANGULAR_LOCAL_PORT:$ANGULAR_DOCKER_PORT
     depends_on:
       - backend
+      
+      

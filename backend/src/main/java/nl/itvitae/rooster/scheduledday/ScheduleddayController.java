@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin("http://localhost:4200")
 @AllArgsConstructor
 @RequestMapping("api/v1/scheduleddays")
 public class ScheduleddayController {

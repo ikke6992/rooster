@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin("http://localhost:4200")
 @AllArgsConstructor
 @RequestMapping("api/v1/lessons")
 public class LessonController {

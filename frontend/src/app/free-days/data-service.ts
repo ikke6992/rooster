@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrl = 'http://localhost:8080/api/v1/freedays';
+  private apiUrl = `${environment.apiUrl}/v1/freedays`;
 
   constructor(private http: HttpClient) {}
 
   getUpcomingDays(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/upcoming`);
   }
-  
+
   getPastDays(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/past`);
   }

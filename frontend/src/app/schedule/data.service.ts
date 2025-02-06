@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { map } from 'rxjs/operators';
+import { environment } from '../../environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrl = 'http://localhost:8080/api/v1/';
+  private apiUrl = `${environment.apiUrl}/v1/`;
 
   constructor(private http: HttpClient) {}
 
@@ -17,21 +18,25 @@ export class DataService {
   }
 
   getScheduledDaysByMonth(month: number, year: number): Observable<any> {
-    const url = `${this.apiUrl}scheduleddays/month/${month}/${year}`
+    const url = `${this.apiUrl}scheduleddays/month/${month}/${year}`;
     return this.http.get<any>(url);
   }
 
   getExcel(year: number): Observable<any> {
-    return this.http.get(this.apiUrl + `scheduleddays/export/${year}`, { responseType: 'blob' }).pipe(
-      map((response: Blob) => {
-        saveAs(response, 'scheduleddays.xlsx');
-        return response;
+    return this.http
+      .get(this.apiUrl + `scheduleddays/export/${year}`, {
+        responseType: 'blob',
       })
-    );
+      .pipe(
+        map((response: Blob) => {
+          saveAs(response, 'scheduleddays.xlsx');
+          return response;
+        })
+      );
   }
 
   getFreeDaysByMonth(month: number, year: number): Observable<any> {
-    const url = `${this.apiUrl}freedays/month/${month}/${year}`
+    const url = `${this.apiUrl}freedays/month/${month}/${year}`;
     return this.http.get<any>(url);
   }
 
@@ -42,8 +47,8 @@ export class DataService {
     });
   }
 
-  editNote(id: number, note: any){
+  editNote(id: number, note: any) {
     const url = `${this.apiUrl}lessons/note/${id}`;
     return this.http.put<any>(url, note, { responseType: 'text' as 'json' });
   }
-} 
+}
