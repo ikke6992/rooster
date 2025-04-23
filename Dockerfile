@@ -18,14 +18,15 @@ WORKDIR /app/frontend
 RUN npm install --legacy-peer-deps && npm run build
 
 # Copy built frontend to Nginx
-COPY --from=builder /rooster/dist/frontend/browser /usr/share/nginx/html/
+RUN cp -r /app/frontend/dist/frontend/browser /usr/share/nginx/html/
 
 # Copy backend
 WORKDIR /app
 COPY rooster-0.0.1-SNAPSHOT.jar /app/rooster.jar
 
 # Copy Nginx and supervisord config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx_rooster.conf /etc/nginx/http.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.conf /etc/supervisord.conf
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

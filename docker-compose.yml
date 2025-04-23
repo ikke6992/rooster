@@ -1,13 +1,13 @@
 services:
   rooster:
-    image: ikke6992/rooster
+    image: ikke1992/rooster:latest
     container_name: rooster
     depends_on:
       - postgresdb
     restart: on-failure
     env_file: ./.env
     ports:
-      - 4200:80
+      - 8080:5080
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:$POSTGRES_DOCKER_PORT/$POSTGRES_DATABASE
       - SPRING_DATASOURCE_USERNAME=$POSTGRES_USERNAME
