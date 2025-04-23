@@ -35,6 +35,9 @@ public class SecurityConfig {
   @Value("${app.frontend.url}")
   private String frontendUrl;
 
+  @Value("${app.backend.url}")
+  private String backendUrl;
+
   public static final String ROLE_ADMIN = "ADMIN";
 
   private static final String[] ADMIN_ONLY = {"api/v1/fields/**", "api/v1/groups/**",
@@ -66,8 +69,20 @@ public class SecurityConfig {
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration config = new CorsConfiguration();
 
+    /** Get frontend URL from environment variable or default to localhost
+    String frontendUrl = System.getenv("APP_FRONTEND_URL");
+    if (frontendUrl == null || frontendUrl.isEmpty()) {
+      frontendUrl = "http://localhost:4200"; // Default for local dev
+    }
+
+    // Get backend URL from environment variable or default to localhost
+    String backendUrl = System.getenv("APP_BACKEND_URL");
+    if (backendUrl == null || backendUrl.isEmpty()) {
+      backendUrl = "http://localhost:8080"; // Default for local dev
+    }*/
+
     // Allow specific frontend origins
-    config.setAllowedOrigins(Arrays.asList(frontendUrl));
+    config.setAllowedOrigins(Arrays.asList("http://localhost:4201", frontendUrl, backendUrl));
 
     // Allow standard HTTP methods
     config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));

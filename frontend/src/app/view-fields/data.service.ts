@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrlFields = `${environment.apiUrl}/v1/fields`;
+  private apiUrlFields = `${environment.apiUrl}/api/v1/fields`;
 
   constructor(private http: HttpClient) {}
 

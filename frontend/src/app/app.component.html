@@ -5,7 +5,7 @@
       <img src="rooster.svg" height="50px" width="50px" />
       <a
         class="nav-button"
-        routerLink=""
+        [routerLink]="['/', rootUrl]"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
         >View schedule</a
@@ -14,7 +14,7 @@
       <a
         *ngIf="isLoggedIn"
         class="nav-button"
-        routerLink="/groups"
+        [routerLink]="['/', rootUrl, 'groups']"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
         >View Groups</a
@@ -22,7 +22,7 @@
       <a
         *ngIf="isLoggedIn"
         class="nav-button"
-        routerLink="/fields"
+        [routerLink]="['/', rootUrl, 'fields']"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
         >View Fields</a
@@ -30,7 +30,7 @@
       <a
         *ngIf="isLoggedIn"
         class="nav-button"
-        routerLink="/teachers"
+        [routerLink]="['/', rootUrl, 'teachers']"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
         >View Teachers</a
@@ -38,14 +38,14 @@
       <a
         *ngIf="isLoggedIn"
         class="nav-button"
-        routerLink="/archive"
+        [routerLink]="['/', rootUrl, 'archive']"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
         >Archive</a
       >
       <a
         class="nav-button"
-        routerLink="/free-days"
+        [routerLink]="['/', rootUrl, 'free-days']"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
         >View Free Days</a

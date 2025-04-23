@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ModalComponent } from "./modal/modal.component";
 import { LoginComponent } from "./login/login.component";
+import { environment } from '../environments/environment';
           
 @Component({
   selector: 'app-root',
@@ -16,6 +17,8 @@ export class AppComponent {
 
   isLoggedIn: boolean = localStorage.getItem('token') !== null
   feedbackMsg: string = "";
+
+  rootUrl = `${environment.rootUrl}`;
 
   showModal(name: string) {
     let modal_t = document.getElementById(name);

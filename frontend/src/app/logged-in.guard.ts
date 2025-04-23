@@ -6,5 +6,5 @@ export const loggedInGuard: CanActivateFn = (route, state) => {
   if (loggedIn) {
     return true;
   }
-  return inject(Router).createUrlTree(['']);
+  return inject(Router).createUrlTree(['rooster']);
 };
