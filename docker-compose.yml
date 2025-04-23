@@ -7,7 +7,8 @@ services:
     restart: on-failure
     env_file: ./.env
     ports:
-      - 8080:5080
+      - 4201:5080
+      - 5500:8080
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:$POSTGRES_DOCKER_PORT/$POSTGRES_DATABASE
       - SPRING_DATASOURCE_USERNAME=$POSTGRES_USERNAME
