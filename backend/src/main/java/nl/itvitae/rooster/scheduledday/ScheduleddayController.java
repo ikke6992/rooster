@@ -2,6 +2,10 @@ package nl.itvitae.rooster.scheduledday;
 
 import java.io.IOException;
 import lombok.AllArgsConstructor;
+import nl.itvitae.rooster.group.Group;
+import nl.itvitae.rooster.group.GroupRepository;
+import nl.itvitae.rooster.lesson.Lesson;
+import nl.itvitae.rooster.lesson.LessonService;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,11 +29,29 @@ public class ScheduleddayController {
   private final ScheduleddayService scheduleddayService;
   private final ClassroomService classroomService;
   private final FreeDayRepository freeDayRepository;
+  private final GroupRepository groupRepository;
+  private final LessonService lessonService;
 
   @GetMapping
   public ResponseEntity<?> getAll() {
     return ResponseEntity.ok(
         scheduleddayService.findAll().stream().map(ScheduleddayDTO::new).toList());
+  }
+
+  @PostMapping  public ResponseEntity<?> addScheduledDay(@RequestBody ScheduledDayRequest scheduledDayRequest){
+    Optional<Classroom> classroom = classroomService.getById(scheduledDayRequest.classroomId());
+    Optional<Group> group = groupRepository.findByGroupNumber(scheduledDayRequest.groupNumber());
+    LocalDate date = LocalDate.parse(scheduledDayRequest.date());
+
+    if (scheduleddayRepository.existsByDateAndClassroom(date, classroom.get())){
+      return ResponseEntity.badRequest().body("Day + Classroom are already scheduled");
+    }
+    if (group.isEmpty()){
+      return ResponseEntity.badRequest().body("Group does not exist");
+    }
+    Lesson lesson = lessonService.createLesson(group.get());
+    scheduleddayService.addScheduledday(0, date, classroom.get(), lesson);
+    return ResponseEntity.ok("meow");
   }
 
   @GetMapping("/month/{month}/{year}")
