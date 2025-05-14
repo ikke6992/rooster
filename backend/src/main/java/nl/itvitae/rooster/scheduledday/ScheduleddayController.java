@@ -6,6 +6,8 @@ import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.group.GroupRepository;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonService;
+import nl.itvitae.rooster.teacher.Teacher;
+import nl.itvitae.rooster.teacher.TeacherRepository;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -31,6 +33,7 @@ public class ScheduleddayController {
   private final FreeDayRepository freeDayRepository;
   private final GroupRepository groupRepository;
   private final LessonService lessonService;
+  private final TeacherRepository teacherRepository;
 
   @GetMapping
   public ResponseEntity<?> getAll() {
@@ -41,7 +44,9 @@ public class ScheduleddayController {
   @PostMapping  public ResponseEntity<?> addScheduledDay(@RequestBody ScheduledDayRequest scheduledDayRequest){
     Optional<Classroom> classroom = classroomService.getById(scheduledDayRequest.classroomId());
     Optional<Group> group = groupRepository.findByGroupNumber(scheduledDayRequest.groupNumber());
+    Optional<Teacher> teacher = teacherRepository.findById(scheduledDayRequest.teacherId());
     LocalDate date = LocalDate.parse(scheduledDayRequest.date());
+    Lesson lesson;
 
     if (scheduleddayRepository.existsByDateAndClassroom(date, classroom.get())){
       return ResponseEntity.badRequest().body("Day + Classroom are already scheduled");
@@ -49,7 +54,11 @@ public class ScheduleddayController {
     if (group.isEmpty()){
       return ResponseEntity.badRequest().body("Group does not exist");
     }
-    Lesson lesson = lessonService.createLesson(group.get());
+    if (teacher.isPresent()){
+      lesson = lessonService.createLesson(group.get(), teacher.get());
+    } else {
+      lesson = lessonService.createLesson(group.get());
+    }
     scheduleddayService.addScheduledday(0, date, classroom.get(), lesson);
     return ResponseEntity.ok("meow");
   }
