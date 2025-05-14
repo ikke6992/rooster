@@ -12,7 +12,7 @@ public record GroupDTO(
     int groupNumber = group.getGroupNumber();
     String color = group.getColor();
     int numberOfStudents = group.getNumberOfStudents();
-    String field = group.getField().getName();
+    String field = group.getField();
     String startDate = group.getStartDate().toString();
     int weeksPhase1 = group.getWeeksPhase1();
     int weeksPhase2 = group.getWeeksPhase2();
@@ -38,7 +38,7 @@ public record GroupDTO(
     int groupNumber = group.getGroupNumber();
     String color = group.getColor();
     int numberOfStudents = group.getNumberOfStudents();
-    String field = group.getField().getName();
+    String field = group.getField();
     String startDate = group.getStartDate().toString();
     int weeksPhase1 = group.getWeeksPhase1();
     int weeksPhase2 = group.getWeeksPhase2();

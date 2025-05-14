@@ -6,15 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrlFields = 'http://localhost:8080/api/v1/fields';
   private apiUrlGroups = 'http://localhost:8080/api/v1/groups';
   private apiUrlTeachers = 'http://localhost:8080/api/v1/teachers';
 
   constructor(private http: HttpClient) {}
-
-  getFields(): Observable<any> {
-    return this.http.get<any>(this.apiUrlFields);
-  }
 
   getGroups(): Observable<any> {
     return this.http.get<any>(this.apiUrlGroups);

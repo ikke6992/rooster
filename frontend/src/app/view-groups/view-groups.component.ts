@@ -33,11 +33,6 @@ export class ViewGroupsComponent {
       console.log(response);
     });
 
-    this.dataService.getFields().subscribe((response: any[]) => {
-      this.fields = response.filter((field) => field.name !== 'Returnday');
-      console.log(response);
-    });
-
     this.dataService.getTeachers().subscribe((response: any[]) => {
       this.teachers = response;
       console.log(response);

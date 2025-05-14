@@ -7,7 +7,6 @@ import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.group.vacation.ArchivedVacation;
 import nl.itvitae.rooster.lesson.ArchivedLesson;
 import nl.itvitae.rooster.teacher.ArchivedGroupTeacher;
@@ -35,8 +34,7 @@ public class ArchivedGroup {
   @OneToMany(mappedBy = "group")
   private List<ArchivedGroupTeacher> groupTeachers = new ArrayList<>();
 
-  @ManyToOne
-  private Field field;
+  private String field;
 
   private LocalDate startDate;
   private int daysPhase1;
