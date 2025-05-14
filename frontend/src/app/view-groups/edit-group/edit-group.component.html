@@ -1,5 +1,7 @@
 <h1>Edit Group {{ group.groupNumber }}</h1>
 <form [formGroup]="editGroup" (ngSubmit)="onSubmit()">
+  <label for="field">Field: </label>
+  <input id="field" type="text" formControlName="field" /><br />
   <label for="color">Color: </label>
   <input id="color" type="color" formControlName="color" required /><br />
   <label for="number-of-students">Number of students: </label>
@@ -9,8 +11,6 @@
     formControlName="numberOfStudents"
     required
   /><br />
-  <label for="field">Field: </label>
-  <input id="field" type="text" formControlName="field" /><br />
   <label for="start-date">Start Date: </label>
   <input
     id="start-date"
