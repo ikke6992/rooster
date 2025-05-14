@@ -1,3 +1,7 @@
+button {
+  color: black;
+}
+
 #add-teacher-button {
   position: fixed;
   bottom: 20px;
