@@ -1,0 +1,26 @@
+<h1>Add Lesson</h1>
+<form [formGroup]="login" (ngSubmit)="onSubmit()">
+  <label for="group">Group: </label>
+  <select id="group" formControlName="group" required>
+    <option [ngValue]="null" disabled>Select Group</option>
+    <option *ngFor="let group of groups" [ngValue]="group.id">
+      {{ group.name }}
+    </option></select
+  ><br />
+  <label for="teacher">Teacher: </label>
+  <select id="teacher" formControlName="teacher" required>
+    <option [ngValue]="null" disabled>Select Teacher</option>
+    <option *ngFor="let teacher of teachers" [ngValue]="teacher.id">
+      {{ teacher.name }}
+    </option></select
+  ><br />
+  <label for="classroom">Classroom: </label>
+  <input id="classroom" type="number" formControlName="classroom" required /><br />
+  <button type="submit" [disabled]="!login.valid">Submit</button>
+  <!-- add date -->
+</form>
+
+<app-modal id="feedback-login" class="hhidden feedback">
+    <p>{{ this.feedbackMsg }}</p>
+    <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback') : window.location.reload()">Close</button>
+</app-modal>

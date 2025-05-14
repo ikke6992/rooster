@@ -4,6 +4,7 @@ import { DataService } from './data.service';
 import { ScheduledDayComponent } from './scheduled-day/scheduled-day.component';
 import { ModalComponent } from '../modal/modal.component';
 import { OverrideComponent } from './override/override.component';
+import { AddLessonComponent } from "./add-lesson/add-lesson.component";
 
 @Component({
   selector: 'app-schedule',
@@ -13,7 +14,8 @@ import { OverrideComponent } from './override/override.component';
     ScheduledDayComponent,
     ModalComponent,
     OverrideComponent,
-  ],
+    AddLessonComponent
+],
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.css',
 })
