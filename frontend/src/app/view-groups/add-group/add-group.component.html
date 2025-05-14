@@ -17,12 +17,7 @@
     required
   /><br />
   <label for="field">Field: </label>
-  <select id="field" formControlName="field" required>
-    <option [ngValue]="null" disabled>Select Field</option>
-    <option *ngFor="let field of fields" [ngValue]="field.id">
-      {{ field.name }}
-    </option></select
-  ><br />
+  <input id="field" type="text" formControlName="field" required /><br />
   <label for="teachers">Teachers: </label>
   <select multiple id="teachers">
     <option [ngValue]="null" disabled>Double Click to Select Teacher</option>

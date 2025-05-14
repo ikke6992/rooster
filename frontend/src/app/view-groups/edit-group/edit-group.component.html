@@ -10,12 +10,7 @@
     required
   /><br />
   <label for="field">Field: </label>
-  <select id="field" formControlName="field" required>
-    <option [ngValue]="null" disabled>Select Field</option>
-    <option *ngFor="let field of fields" [ngValue]="field.id">
-      {{ field.name }}
-    </option></select
-  ><br />
+  <input id="field" type="text" formControlName="field"/><br />
   <label for="start-date">Start Date: </label>
   <input
     id="start-date"

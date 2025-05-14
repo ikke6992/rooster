@@ -21,8 +21,7 @@ export class AddGroupComponent {
   feedbackMsg!: string;
   teacherAssignments: any[] = [];
   window = window;
-
-  @Input() fields: any[] = [];
+  
   @Input() teachers: any[] = [];
 
   addGroup = new FormGroup({

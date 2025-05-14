@@ -32,18 +32,11 @@ export class EditGroupComponent {
     }
   }
 
-  getField() {
-    const field = this.fields.filter(
-      (field) => field.name === this.group.field
-    );
-    return field[0].id;
-  }
-
   private initializeForm() {
     this.editGroup = new FormGroup({
       color: new FormControl(this.group.color),
       numberOfStudents: new FormControl(this.group.numberOfStudents),
-      field: new FormControl(this.getField()),
+      field: new FormControl(this.group.field),
       startDate: new FormControl(this.group.startDate),
       weeksPhase1: new FormControl(this.group.weeksPhase1),
       weeksPhase2: new FormControl(this.group.weeksPhase2),
