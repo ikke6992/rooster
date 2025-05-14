@@ -1,4 +1,4 @@
-from alpine:latest
+FROM alpine:latest
 
 RUN apk add openjdk21-jdk
 
