@@ -2,6 +2,7 @@ package nl.itvitae.rooster.teacher;
 
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.group.Group;
+import nl.itvitae.rooster.group.GroupDTO;
 import nl.itvitae.rooster.group.GroupRepository;
 import nl.itvitae.rooster.group.GroupService;
 import org.springframework.http.HttpStatus;
@@ -64,7 +65,7 @@ public class TeacherController {
         teacher, group, request.daysPhase1(), request.daysPhase2(), request.daysPhase3());
     groupService.rescheduleGroup(
         group, group.getStartDate().isAfter(LocalDate.now()) ? group.getStartDate() : LocalDate.now());
-    return ResponseEntity.ok(TeacherDTO.of(teacher));
+    return ResponseEntity.ok(GroupDTO.of(group));
   }
 
   @PutMapping("/edit/{id}")
