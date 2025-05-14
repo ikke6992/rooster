@@ -38,8 +38,11 @@ export class EditGroupComponent {
       numberOfStudents: new FormControl(this.group.numberOfStudents),
       field: new FormControl(this.group.field),
       startDate: new FormControl(this.group.startDate),
+      daysPhase1: new FormControl(this.group.daysPhase1),
       weeksPhase1: new FormControl(this.group.weeksPhase1),
+      daysPhase2: new FormControl(this.group.daysPhase2),
       weeksPhase2: new FormControl(this.group.weeksPhase2),
+      daysPhase3: new FormControl(this.group.daysPhase3),
       weeksPhase3: new FormControl(this.group.weeksPhase3),
     });
   }
@@ -52,8 +55,14 @@ export class EditGroupComponent {
       numberOfStudents: formValue.numberOfStudents,
       field: formValue.field,
       startDate: formValue.startDate,
+
+      daysPhase1: formValue.daysPhase1,
       weeksPhase1: formValue.weeksPhase1,
+
+      daysPhase2: formValue.daysPhase2,
       weeksPhase2: formValue.weeksPhase2,
+
+      daysPhase3: formValue.daysPhase3,
       weeksPhase3: formValue.weeksPhase3,
     };
     this.dataService.putGroup(this.group.groupNumber, data).subscribe(

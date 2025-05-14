@@ -21,7 +21,7 @@ export class AddGroupComponent {
   feedbackMsg!: string;
   teacherAssignments: any[] = [];
   window = window;
-  
+
   @Input() teachers: any[] = [];
 
   addGroup = new FormGroup({
@@ -30,8 +30,11 @@ export class AddGroupComponent {
     numberOfStudents: new FormControl(''),
     field: new FormControl(''),
     startDate: new FormControl(''),
+    daysPhase1: new FormControl(''),
     weeksPhase1: new FormControl(''),
+    daysPhase2: new FormControl(''),
     weeksPhase2: new FormControl(''),
+    daysPhase3: new FormControl(''),
     weeksPhase3: new FormControl(''),
   });
 
