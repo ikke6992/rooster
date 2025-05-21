@@ -1,6 +1,7 @@
 package nl.itvitae.rooster.scheduledday;
 
 import java.io.IOException;
+import java.net.URI;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.group.Group;
 import nl.itvitae.rooster.group.GroupRepository;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Optional;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -41,16 +43,16 @@ public class ScheduleddayController {
         scheduleddayService.findAll().stream().map(ScheduleddayDTO::new).toList());
   }
 
-  @PostMapping  public ResponseEntity<?> addScheduledDay(@RequestBody ScheduledDayRequest scheduledDayRequest){
-    Optional<Classroom> classroom = classroomService.getById(scheduledDayRequest.classroomId());
+  @PostMapping  public ResponseEntity<?> addScheduledDay(@RequestBody ScheduledDayRequest scheduledDayRequest, UriComponentsBuilder ucb){
+    Optional<Classroom> classroom = classroomService.getById(1);
     Optional<Group> group = groupRepository.findByGroupNumber(scheduledDayRequest.groupNumber());
     Optional<Teacher> teacher = teacherRepository.findById(scheduledDayRequest.teacherId());
     LocalDate date = LocalDate.parse(scheduledDayRequest.date());
     Lesson lesson;
 
-    if (scheduleddayRepository.existsByDateAndClassroom(date, classroom.get())){
-      return ResponseEntity.badRequest().body("Day + Classroom are already scheduled");
-    }
+//    if (scheduleddayRepository.existsByDateAndClassroom(date, classroom.get())){
+//      return ResponseEntity.badRequest().body("Day + Classroom are already scheduled");
+//    }
     if (group.isEmpty()){
       return ResponseEntity.badRequest().body("Group does not exist");
     }
@@ -59,8 +61,9 @@ public class ScheduleddayController {
     } else {
       lesson = lessonService.createLesson(group.get());
     }
-    scheduleddayService.addScheduledday(0, date, classroom.get(), lesson);
-    return ResponseEntity.ok("meow");
+    Scheduledday scheduledday = scheduleddayService.addScheduledday(0, date, classroom.get(), lesson);
+    URI locationOfScheduledDay = ucb.path("/api/v1/groups").buildAndExpand(scheduledday.getId()).toUri();
+    return ResponseEntity.created(locationOfScheduledDay).body(group);
   }
 
   @GetMapping("/month/{month}/{year}")

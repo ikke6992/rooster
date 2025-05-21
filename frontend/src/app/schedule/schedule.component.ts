@@ -45,6 +45,8 @@ export class ScheduleComponent {
     note: '',
     isExam: false,
   };
+  groups: any[] = [];
+  teachers: any[] = [];
 
   BRIGHTNESS_THRESHOLD: number = 128;
 
@@ -128,8 +130,19 @@ export class ScheduleComponent {
   }
 
   constructor(private dataService: DataService) {}
-
   ngOnInit(): void {
+    this.dataService.getGroups().subscribe(
+      (response: any[]) => {
+        this.groups = response;
+        console.log(response);
+      }
+    );
+    this.dataService.getTeachers().subscribe(
+      (response: any[]) => {
+        this.teachers = response;
+        console.log(response);
+      }
+    );
     this.dataService.getScheduledDaysByMonth(this.month, this.year).subscribe(
       (response: any[]) => {
         this.data = response;
@@ -154,6 +167,7 @@ export class ScheduleComponent {
         this.showModal('error');
       }
     );
+
   }
 
   onDragStart(event: DragEvent, draggedObject: Scheduledday) {

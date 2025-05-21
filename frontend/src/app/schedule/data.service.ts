@@ -46,4 +46,20 @@ export class DataService {
     const url = `${this.apiUrl}lessons/note/${id}`;
     return this.http.put<any>(url, note, { responseType: 'text' as 'json' });
   }
+
+  getGroups(): Observable<any> {
+    const url =  `${this.apiUrl}groups`
+    return this.http.get(url);
+  }
+
+  getTeachers(): Observable<any> {
+    const url =  `${this.apiUrl}teachers`
+    return this.http.get(url);
+  }
+
+  addLesson(data: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'scheduleddays', data, {
+      headers: new HttpHeaders({ 'Content-type': 'application/json' }),
+    });
+  }
 } 

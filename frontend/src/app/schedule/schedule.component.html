@@ -8,7 +8,9 @@
   <button (click)="incrementMonth()" class="button-action">Next Month</button>
   <button (click)="print()" class="button-action">Print schedule</button>
   <button (click)="exportExcel()" class="button-action">Download Excel</button>
-  <button (click)="showModal('add-lesson')" class="button-action">Add Lesson</button>
+  <button (click)="showModal('add-lesson')" class="button-action">
+    Add Lesson
+  </button>
 </div>
 <div id="schedule">
   <table class="w-full">
@@ -76,8 +78,10 @@
 </app-modal>
 
 <app-modal id="add-lesson" class="hhidden">
-  <app-add-lesson></app-add-lesson>
-  <button (click)="closeModal('add-lesson')" class="button-action">Close</button>
+  <app-add-lesson [groups]="groups" [teachers]="teachers"></app-add-lesson>
+  <button (click)="closeModal('add-lesson')" class="button-action">
+    Close
+  </button>
 </app-modal>
 
 <div #dragImage class="custom-drag-image">
