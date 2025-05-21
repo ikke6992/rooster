@@ -12,6 +12,9 @@ import { ModalComponent } from '../../modal/modal.component';
   styleUrl: './set-group.component.css',
 })
 export class SetGroupComponent {
+  feedbackMsg!: string;
+  window = window;
+
   @Input() groups: any[] = [];
   @Input() teacher: any;
 
@@ -37,12 +40,13 @@ export class SetGroupComponent {
       .subscribe(
         (response) => {
           console.log('Response:', response);
-          window.location.reload();
+          this.feedbackMsg = `${this.teacher.name} assigned to Group ${response.groupNumber}`;
+          this.showModal('feedback-set-group-' + this.teacher.name);
         },
         (error) => {
           console.error('Error:', error);
-          this.errorMsg = error.error;
-          this.showModal('error');
+          this.feedbackMsg = `Error: ${error.error}`;
+          this.showModal('feedback-set-group-' + this.teacher.name);
         }
       );
   }
