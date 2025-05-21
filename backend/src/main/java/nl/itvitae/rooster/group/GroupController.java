@@ -54,7 +54,7 @@ public class GroupController {
       if (teacherAssignment.daysPhase1() == 0 && teacherAssignment.daysPhase2() == 0
           && teacherAssignment.daysPhase3() == 0) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body("Teacher "+ teacherAssignment.name() + " needs to be assigned at least 1 day in at least 1 phase");
+            .body(teacherAssignment.name() + " needs to be assigned at least 1 day in at least 1 phase");
       }
     }
     if (groupRepository.findByGroupNumber(request.groupNumber()).isPresent()
@@ -85,10 +85,15 @@ public class GroupController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of weeks needs to be greater than 0");
     }
     for (AssignmentRequest teacherAssignment : request.teacherAssignments()) {
-      if (teacherAssignment.daysPhase1() < 1 || teacherAssignment.daysPhase1() > 5
-          || teacherAssignment.daysPhase2() < 1 || teacherAssignment.daysPhase2() > 5
-          || teacherAssignment.daysPhase3() < 1 || teacherAssignment.daysPhase3() > 5) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of days needs to be between 1 and 5");
+      if (teacherAssignment.daysPhase1() < 0 || teacherAssignment.daysPhase1() > 5
+          || teacherAssignment.daysPhase2() < 0 || teacherAssignment.daysPhase2() > 5
+          || teacherAssignment.daysPhase3() < 0 || teacherAssignment.daysPhase3() > 5) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of days needs to be between 0 and 5");
+      }
+      if (teacherAssignment.daysPhase1() == 0 && teacherAssignment.daysPhase2() == 0
+          && teacherAssignment.daysPhase3() == 0) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(teacherAssignment.name() + " needs to be assigned at least 1 day in at least 1 phase");
       }
     }
     Optional<Group> existingGroup = groupRepository.findByGroupNumber(number);
