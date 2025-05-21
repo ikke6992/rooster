@@ -10,8 +10,6 @@ import java.util.Set;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
-import nl.itvitae.rooster.field.Field;
-import nl.itvitae.rooster.field.FieldRepository;
 import nl.itvitae.rooster.freeday.FreeDay;
 import nl.itvitae.rooster.freeday.FreeDayService;
 import nl.itvitae.rooster.group.Group;
@@ -43,7 +41,6 @@ public class Seeder implements CommandLineRunner {
 
   private final MyDayRepository myDayRepository;
   private final ClassroomRepository classroomRepository;
-  private final FieldRepository fieldRepository;
   private final TeacherRepository teacherRepository;
   private final GroupRepository groupRepository;
   private final GroupTeacherRepository groupTeacherRepository;
@@ -71,18 +68,21 @@ public class Seeder implements CommandLineRunner {
       var classroom5 = saveClassroom(25, true, false);
       var classroom6 = saveClassroom(14, true, true);
 
-      var java = saveField("Java", 3, 4, 2);
-      var data = saveField("Data", 3, 4, 3);
-      var cloud = saveField("Cloud", 2, 4, 2);
-      var security = saveField("Security", 3, 3, 2);
-      var returning = saveField("Returnday", 1, 1, 1);
-
       LocalDate returnDate = LocalDate.of(LocalDate.now().getYear(), 1, 1);
-      var returnDay = groupService.addGroup(0, "#d3d3d3", 0, returning, returnDate, 52, 52, 52);
-      var group52 = groupService.addGroup(52, "#00ffff", 10, security, LocalDate.now().minusYears(1), 8, 12, 8);
-      var group53 = saveGroup(53, "#ffa500", 12, java);
-      var group54 = saveGroup(54, "#ff0000", 8, data);
-      var group55 = saveGroup(55, "#000000", 10, java);
+      var returnDay = groupService.addGroup(0, "#d3d3d3", 0, "Terugkomdag",
+          returnDate, 1, 52, 1, 52, 1, 52);
+      var group52 = groupService.addGroup(52, "#00ffff", 10, "Security",
+          LocalDate.now().minusYears(1), 3, 8, 4, 12,
+          4, 8);
+      var group53 = groupService.addGroup(53, "#ffa500", 12, "Java",
+          LocalDate.now().minusWeeks(4), 3, 10, 4, 12,
+          2, 10);
+      var group54 = groupService.addGroup(54, "#ff0000", 8, "Data",
+          LocalDate.now().minusWeeks(4), 3, 10, 3, 14,
+          3, 10);
+      var group55 = groupService.addGroup(55, "#000000", 10, "Java",
+          LocalDate.now().plusWeeks(4), 3, 8, 4, 12,
+          4, 10);
 
       var wubbo = saveTeacher("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)),
           3, 1, 2, 2, group53, group55);
@@ -123,11 +123,6 @@ public class Seeder implements CommandLineRunner {
     }
   }
 
-  private Group saveGroup(int groupNumber, String color, int numberOfStudents, Field field) {
-    return groupService.addGroup(groupNumber, color, numberOfStudents, field,
-        LocalDate.now().minusWeeks(4), 8, 12, 8);
-  }
-
   private Teacher saveTeacher(String name, List<MyDay> availability, int maxDaysPerWeek,
       int daysPhase1, int daysPhase2, int daysPhase3, Group... groups) {
     Teacher teacher = new Teacher(name, availability, maxDaysPerWeek);
@@ -150,10 +145,6 @@ public class Seeder implements CommandLineRunner {
 
   private Classroom saveClassroom(int capacity, boolean hasBeamer, boolean forPracticum) {
     return classroomRepository.save(new Classroom(capacity, hasBeamer, forPracticum));
-  }
-
-  private Field saveField(String name, int daysPhase1, int daysPhase2, int daysPhase3) {
-    return fieldRepository.save(new Field(name, daysPhase1, daysPhase2, daysPhase3));
   }
 
   private void addNote(Lesson lesson, String note, boolean isExam){
