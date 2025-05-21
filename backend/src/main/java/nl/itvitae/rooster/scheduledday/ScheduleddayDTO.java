@@ -9,7 +9,7 @@ public record ScheduleddayDTO(Long id, LocalDate date, Long classroomId, int gro
     this(scheduledday.getId(), scheduledday.getDate(), scheduledday.getClassroom().getId(),
         scheduledday.getLesson().getGroup().getGroupNumber(),
         scheduledday.getLesson().getGroup().getColor(),
-        scheduledday.getLesson().getGroup().getField().getName(),
+        scheduledday.getLesson().getGroup().getField(),
         getTeacherName(scheduledday), scheduledday.getLesson().getNote(), scheduledday.getLesson().isExam());
   }
 

@@ -1,4 +1,4 @@
-<h1>Edit Group {{ group.groupNumber }}</h1>
+<h1 class="font-bold">Edit Group {{ group.groupNumber }}</h1>
 <form [formGroup]="editGroup" (ngSubmit)="onSubmit()">
   <label for="field">Field: </label>
   <input id="field" type="text" formControlName="field" required /><br />
@@ -17,31 +17,58 @@
     type="date"
     formControlName="startDate"
     required
+  /><br /><br />
+
+  <h1>Phase 1:</h1>
+  <label for="days-phase-1">Days per week: </label>
+  <input
+    id="days-phase-1"
+    type="number"
+    formControlName="daysPhase1"
+    required
   /><br />
-  <label for="weeks-phase-1">Weeks Phase 1: </label>
+  <label for="weeks-phase-1">Amount of weeks: </label>
   <input
     id="weeks-phase-1"
     type="number"
     formControlName="weeksPhase1"
     required
+  /><br /><br />
+
+  <h1>Phase 2:</h1>
+  <label for="days-phase-2">Days per week: </label>
+  <input
+    id="days-phase-2"
+    type="number"
+    formControlName="daysPhase2"
+    required
   /><br />
-  <label for="weeks-phase-2">Weeks Phase 2: </label>
+  <label for="weeks-phase-2">Amount of weeks: </label>
   <input
     id="weeks-phase-2"
     type="number"
     formControlName="weeksPhase2"
     required
+  /><br /><br />
+
+  <h1>Phase 3:</h1>
+  <label for="days-phase-3">Days per week: </label>
+  <input
+    id="days-phase-3"
+    type="number"
+    formControlName="daysPhase3"
+    required
   /><br />
-  <label for="weeks-phase-3">Weeks Phase 2: </label>
+  <label for="weeks-phase-3">Amount of weeks: </label>
   <input
     id="weeks-phase-3"
     type="number"
     formControlName="weeksPhase3"
     required
-  /><br />
+  /><br /><br />
 
-  <label for="edit-teachers">Teachers: </label>
-  <select multiple id="edit-teachers">
+  <label for="teachers">Teachers: </label>
+  <select multiple id="teachers">
     <option [ngValue]="null" disabled>Double Click to Select Teacher</option>
     <option
       *ngFor="let teacher of teachers"
