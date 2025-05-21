@@ -29,7 +29,6 @@ export class SetTeacherComponent {
       daysPhase3: formValue.daysPhase3,
     };
     this.messageEvent.emit(teacherAssignment);
-    console.log(teacherAssignment);
   }
 
   closeModal(name: string) {

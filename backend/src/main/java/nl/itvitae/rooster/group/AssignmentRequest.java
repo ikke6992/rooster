@@ -7,7 +7,7 @@ public record AssignmentRequest(String name, long id, int daysPhase1, int daysPh
 
   static AssignmentRequest of(GroupTeacher teacher) {
     String name = teacher.getTeacher().getName();
-    long id = teacher.getId();
+    long id = teacher.getTeacher().getId();
     int daysPhase1 = teacher.getDaysPhase1();
     int daysPhase2 = teacher.getDaysPhase2();
     int daysPhase3 = teacher.getDaysPhase3();
@@ -16,7 +16,7 @@ public record AssignmentRequest(String name, long id, int daysPhase1, int daysPh
 
   static AssignmentRequest ofArchived(ArchivedGroupTeacher teacher) {
     String name = teacher.getTeacher().getName();
-    long id = teacher.getId();
+    long id = teacher.getTeacher().getId();
     int daysPhase1 = teacher.getDaysPhase1();
     int daysPhase2 = teacher.getDaysPhase2();
     int daysPhase3 = teacher.getDaysPhase3();
