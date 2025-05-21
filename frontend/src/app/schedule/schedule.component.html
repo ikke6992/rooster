@@ -8,7 +8,11 @@
   <button (click)="incrementMonth()" class="button-action">Next Month</button>
   <button (click)="print()" class="button-action">Print schedule</button>
   <button (click)="exportExcel()" class="button-action">Download Excel</button>
-  <button (click)="showModal('add-lesson')" class="button-action">
+  <button
+    (click)="showModal('add-lesson')"
+    class="button-action"
+    *ngIf="isLoggedIn"
+  >
     Add Lesson
   </button>
 </div>
