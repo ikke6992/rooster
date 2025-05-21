@@ -51,7 +51,7 @@ public class GroupController {
       if (teacherAssignment.daysPhase1() == 0 && teacherAssignment.daysPhase2() == 0
           && teacherAssignment.daysPhase3() == 0) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body("Needs to be assigned at least 1 day in at least 1 phase");
+            .body("Teacher "+ teacherAssignment.name() + " needs to be assigned at least 1 day in at least 1 phase");
       }
     }
     if (groupRepository.findByGroupNumber(request.groupNumber()).isPresent()
