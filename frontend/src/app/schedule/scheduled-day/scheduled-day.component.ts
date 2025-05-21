@@ -59,6 +59,20 @@ export class ScheduledDayComponent {
     }
   }
 
+  removeLesson(){
+if (window.confirm(`Remove Lesson from Group ${this.item.groupNumber} ${this.item.field} on ${this.item.date.toDateString()}`)) {
+      this.dataService.removeLesson(this.item.id).subscribe(
+        (response) => {
+          console.log('Response:', response);
+          window.location.reload();
+        },
+        (error) => {
+          console.error('Error:', error);
+        }
+      );
+    }
+  }
+
   showModal(name: string) {    
     let modal_t = document.getElementById(name);
     if (modal_t !== null) {

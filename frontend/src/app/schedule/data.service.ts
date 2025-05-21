@@ -46,4 +46,8 @@ export class DataService {
     const url = `${this.apiUrl}lessons/note/${id}`;
     return this.http.put<any>(url, note, { responseType: 'text' as 'json' });
   }
+
+  removeLesson(id: number){
+    return this.http.delete<any>(`${this.apiUrl}scheduleddays/${id}`);
+  }
 } 
