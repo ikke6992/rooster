@@ -2,6 +2,7 @@ package nl.itvitae.rooster.teacher;
 
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.group.Group;
+import nl.itvitae.rooster.group.GroupDTO;
 import nl.itvitae.rooster.group.GroupRepository;
 import nl.itvitae.rooster.group.GroupService;
 import org.springframework.http.HttpStatus;
@@ -46,9 +47,13 @@ public class TeacherController {
   @PutMapping("/edit/{id}/addGroup/{groupNumber}")
   public ResponseEntity<?> addGroup(
       @PathVariable long id, @PathVariable int groupNumber, @RequestBody DaysAssignedRequest request) {
-    if (request.daysPhase1() < 1 || request.daysPhase1() > 5 || request.daysPhase2() < 1
-        || request.daysPhase2() > 5 || request.daysPhase3() < 1 || request.daysPhase3() > 5) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of days needs to be between 1 and 5");
+    if (request.daysPhase1() < 0 || request.daysPhase1() > 5 || request.daysPhase2() < 0
+        || request.daysPhase2() > 5 || request.daysPhase3() < 0 || request.daysPhase3() > 5) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of days needs to be between 0 and 5");
+    }
+    if (request.daysPhase1() == 0 && request.daysPhase2() == 0 && request.daysPhase3() == 0) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+          .body("Needs to be assigned at least 1 day in at least 1 phase");
     }
     for (GroupTeacher groupTeacher : teacherService.getById(id).getGroupTeachers()) {
       if (groupTeacher.getGroup().getGroupNumber() == groupNumber) {
@@ -61,7 +66,7 @@ public class TeacherController {
         teacher, group, request.daysPhase1(), request.daysPhase2(), request.daysPhase3());
     groupService.rescheduleGroup(
         group, group.getStartDate().isAfter(LocalDate.now()) ? group.getStartDate() : LocalDate.now());
-    return ResponseEntity.ok(TeacherDTO.of(teacher));
+    return ResponseEntity.ok(GroupDTO.of(group));
   }
 
   @PutMapping("/edit/{id}")
