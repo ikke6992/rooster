@@ -1,5 +1,7 @@
 <h1>Edit Group {{ group.groupNumber }}</h1>
 <form [formGroup]="editGroup" (ngSubmit)="onSubmit()">
+  <label for="field">Field: </label>
+  <input id="field" type="text" formControlName="field" required /><br />
   <label for="color">Color: </label>
   <input id="color" type="color" formControlName="color" required /><br />
   <label for="number-of-students">Number of students: </label>
@@ -9,13 +11,6 @@
     formControlName="numberOfStudents"
     required
   /><br />
-  <label for="field">Field: </label>
-  <select id="field" formControlName="field" required>
-    <option [ngValue]="null" disabled>Select Field</option>
-    <option *ngFor="let field of fields" [ngValue]="field.id">
-      {{ field.name }}
-    </option></select
-  ><br />
   <label for="start-date">Start Date: </label>
   <input
     id="start-date"
@@ -45,6 +40,56 @@
     required
   /><br />
 
+  <label for="edit-teachers">Teachers: </label>
+  <select multiple id="edit-teachers">
+    <option [ngValue]="null" disabled>Double Click to Select Teacher</option>
+    <option
+      *ngFor="let teacher of teachers"
+      [ngValue]="teacherAssignments"
+      (dblclick)="
+        showModal('group-' + group.groupNumber + '-set-teacher-' + teacher.name)
+      "
+    >
+      {{ teacher.name }}
+    </option></select
+  ><br />
+  <table>
+    <tr *ngIf="teacherAssignments.length !== 0">
+      <th>Teacher</th>
+      <th>Days Phase 1</th>
+      <th>Days Phase 2</th>
+      <th>Days Phase 3</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+    <tr *ngFor="let teacherAssignment of teacherAssignments">
+      <td>{{ teacherAssignment.name }}</td>
+      <td>{{ teacherAssignment.daysPhase1 }}</td>
+      <td>{{ teacherAssignment.daysPhase2 }}</td>
+      <td>{{ teacherAssignment.daysPhase3 }}</td>
+      <td>
+        <button
+          type="button"
+          (click)="
+            showModal(
+              'group-' +
+                group.groupNumber +
+                '-set-teacher-' +
+                teacherAssignment.name
+            )
+          "
+        >
+          Edit
+        </button>
+      </td>
+      <td>
+        <button type="button" (click)="removeAssignment(teacherAssignment)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </table>
+
   <button
     [ngClass]="editGroup.valid ? 'button-action' : 'button-incomplete'"
     type="submit"
@@ -53,6 +98,28 @@
     Submit
   </button>
 </form>
+
+<div *ngFor="let teacher of teachers">
+  <app-modal
+    id="group-{{ group.groupNumber }}-set-teacher-{{ teacher.name }}"
+    class="hhidden"
+  >
+    <app-set-teacher
+      [teacher]="teacher"
+      (messageEvent)="receiveMessage($event)"
+    ></app-set-teacher>
+    <button
+      (click)="
+        closeModal(
+          'group-' + group.groupNumber + '-set-teacher-' + teacher.name
+        )
+      "
+      class="button-action"
+    >
+      Close
+    </button>
+  </app-modal>
+</div>
 
 <app-modal id="feedback-edit-group-{{ group.groupNumber }}" class="hhidden">
   <p>{{ this.feedbackMsg }}</p>

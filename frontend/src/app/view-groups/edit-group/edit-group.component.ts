@@ -3,24 +3,44 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataService } from '../data.service';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../../modal/modal.component';
+import { SetTeacherComponent } from '../set-teacher/set-teacher.component';
 
 @Component({
   selector: 'app-edit-group',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ModalComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ModalComponent,
+    SetTeacherComponent,
+  ],
   templateUrl: './edit-group.component.html',
   styleUrl: './edit-group.component.css',
 })
 export class EditGroupComponent {
   feedbackMsg!: string;
+  teacherAssignments: any[] = [];
   window = window;
 
   @Input() group: any;
-  @Input() fields: any[] = [];
+  @Input() teachers: any[] = [];
 
   editGroup!: FormGroup;
 
   constructor(private dataService: DataService) {}
+
+  receiveMessage($event: any) {
+    this.teacherAssignments = this.teacherAssignments.filter(
+      (e) => e.id !== $event.id
+    );
+    this.teacherAssignments.push($event);
+  }
+
+  removeAssignment(teacherAssignment: any) {
+    this.teacherAssignments = this.teacherAssignments.filter(
+      (e) => e !== teacherAssignment
+    );
+  }
 
   ngOnInit() {
     this.initializeForm();
@@ -32,18 +52,11 @@ export class EditGroupComponent {
     }
   }
 
-  getField() {
-    const field = this.fields.filter(
-      (field) => field.name === this.group.field
-    );
-    return field[0].id;
-  }
-
   private initializeForm() {
     this.editGroup = new FormGroup({
+      field: new FormControl(this.group.field),
       color: new FormControl(this.group.color),
       numberOfStudents: new FormControl(this.group.numberOfStudents),
-      field: new FormControl(this.getField()),
       startDate: new FormControl(this.group.startDate),
       weeksPhase1: new FormControl(this.group.weeksPhase1),
       weeksPhase2: new FormControl(this.group.weeksPhase2),

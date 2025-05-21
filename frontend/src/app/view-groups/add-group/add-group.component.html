@@ -23,8 +23,38 @@
       {{ field.name }}
     </option></select
   ><br />
-  <label for="teachers">Teachers: </label>
-  <select multiple id="teachers">
+
+  <label for="start-date">Start Date: </label>
+  <input
+    id="start-date"
+    type="date"
+    formControlName="startDate"
+    required
+  /><br />
+  <label for="weeks-phase-1">Weeks Phase 1: </label>
+  <input
+    id="weeks-phase-1"
+    type="number"
+    formControlName="weeksPhase1"
+    required
+  /><br />
+  <label for="weeks-phase-2">Weeks Phase 2: </label>
+  <input
+    id="weeks-phase-2"
+    type="number"
+    formControlName="weeksPhase2"
+    required
+  /><br />
+  <label for="weeks-phase-3">Weeks Phase 2: </label>
+  <input
+    id="weeks-phase-3"
+    type="number"
+    formControlName="weeksPhase3"
+    required
+  /><br />
+
+  <label for="add-teachers">Teachers: </label>
+  <select multiple id="add-teachers">
     <option [ngValue]="null" disabled>Double Click to Select Teacher</option>
     <option
       *ngFor="let teacher of teachers"
@@ -63,34 +93,7 @@
       </td>
     </tr>
   </table>
-  <label for="start-date">Start Date: </label>
-  <input
-    id="start-date"
-    type="date"
-    formControlName="startDate"
-    required
-  /><br />
-  <label for="weeks-phase-1">Weeks Phase 1: </label>
-  <input
-    id="weeks-phase-1"
-    type="number"
-    formControlName="weeksPhase1"
-    required
-  /><br />
-  <label for="weeks-phase-2">Weeks Phase 2: </label>
-  <input
-    id="weeks-phase-2"
-    type="number"
-    formControlName="weeksPhase2"
-    required
-  /><br />
-  <label for="weeks-phase-3">Weeks Phase 2: </label>
-  <input
-    id="weeks-phase-3"
-    type="number"
-    formControlName="weeksPhase3"
-    required
-  /><br />
+
   <button
     [ngClass]="addGroup.valid ? 'button-action' : 'button-incomplete'"
     type="submit"
