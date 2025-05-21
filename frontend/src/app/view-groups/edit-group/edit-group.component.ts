@@ -19,11 +19,11 @@ import { SetTeacherComponent } from '../set-teacher/set-teacher.component';
 })
 export class EditGroupComponent {
   feedbackMsg!: string;
-  teacherAssignments: any[] = [];
   window = window;
 
   @Input() group: any;
   @Input() teachers: any[] = [];
+  @Input() teacherAssignments: any[] = [];
 
   editGroup!: FormGroup;
 
@@ -34,6 +34,10 @@ export class EditGroupComponent {
       (e) => e.id !== $event.id
     );
     this.teacherAssignments.push($event);
+
+    this.closeModal(
+      'group-' + this.group.groupNumber + '-set-teacher-' + $event.name
+    );
   }
 
   removeAssignment(teacherAssignment: any) {
@@ -84,6 +88,8 @@ export class EditGroupComponent {
 
       daysPhase3: formValue.daysPhase3,
       weeksPhase3: formValue.weeksPhase3,
+
+      teacherAssignments: this.teacherAssignments,
     };
     this.dataService.putGroup(this.group.groupNumber, data).subscribe(
       (response) => {

@@ -30,7 +30,6 @@ export class SetTeacherComponent {
     };
     this.messageEvent.emit(teacherAssignment);
     console.log(teacherAssignment);
-    this.closeModal('set-teacher-' + this.teacher.name);
   }
 
   closeModal(name: string) {

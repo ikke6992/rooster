@@ -45,6 +45,7 @@ export class AddGroupComponent {
       (e) => e.id !== $event.id
     );
     this.teacherAssignments.push($event);
+    this.closeModal('set-teacher-' + $event.name);
   }
 
   removeAssignment(teacherAssignment: any) {

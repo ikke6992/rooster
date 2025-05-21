@@ -55,6 +55,7 @@
           <app-edit-group
             [group]="group"
             [teachers]="teachers"
+            [teacherAssignments]="group.teachers"
           ></app-edit-group>
           <button
             (click)="closeModal('edit-group-' + group.groupNumber)"

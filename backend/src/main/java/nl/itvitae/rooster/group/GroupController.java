@@ -3,6 +3,8 @@ package nl.itvitae.rooster.group;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.group.vacation.ArchivedVacationRepository;
 import nl.itvitae.rooster.group.vacation.VacationRequest;
+import nl.itvitae.rooster.teacher.GroupTeacher;
+import nl.itvitae.rooster.teacher.GroupTeacherRepository;
 import nl.itvitae.rooster.teacher.Teacher;
 import nl.itvitae.rooster.teacher.TeacherService;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,7 @@ public class GroupController {
   private final TeacherService teacherService;
 
   private final GroupRepository groupRepository;
+  private final GroupTeacherRepository groupTeacherRepository;
 
   @GetMapping
   public ResponseEntity<List<GroupDTO>> getAll() {
@@ -75,7 +78,13 @@ public class GroupController {
     if (request.weeksPhase1() < 1 || request.weeksPhase2() < 1 || request.weeksPhase3() < 1) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of weeks needs to be greater than 0");
     }
-
+    for (AssignmentRequest teacherAssignment : request.teacherAssignments()) {
+      if (teacherAssignment.daysPhase1() < 1 || teacherAssignment.daysPhase1() > 5
+          || teacherAssignment.daysPhase2() < 1 || teacherAssignment.daysPhase2() > 5
+          || teacherAssignment.daysPhase3() < 1 || teacherAssignment.daysPhase3() > 5) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of days needs to be between 1 and 5");
+      }
+    }
     Optional<Group> existingGroup = groupRepository.findByGroupNumber(number);
     if (existingGroup.isEmpty()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Group " + number + " does not exist");
@@ -84,6 +93,23 @@ public class GroupController {
           request.numberOfStudents(), request.field(), LocalDate.parse(request.startDate()),
           request.daysPhase1(), request.weeksPhase1(), request.daysPhase2(), request.weeksPhase2(),
           request.daysPhase3(), request.weeksPhase3());
+      for (AssignmentRequest teacherAssignment : request.teacherAssignments()) {
+        boolean exists = false;
+        for (GroupTeacher teacher : group.getGroupTeachers()) {
+          if (teacher.getTeacher().getId() == teacherAssignment.id()) {
+            teacher.setDaysPhase1(teacherAssignment.daysPhase1());
+            teacher.setDaysPhase2(teacherAssignment.daysPhase2());
+            teacher.setDaysPhase3(teacherAssignment.daysPhase3());
+            groupTeacherRepository.save(teacher);
+            exists = true;
+            break;
+          }
+        }
+        if (!exists) {
+          teacherService.addGroup(teacherService.getById(teacherAssignment.id()), group,
+              teacherAssignment.daysPhase1(), teacherAssignment.daysPhase2(), teacherAssignment.daysPhase3());
+        }
+      }
       groupService.rescheduleGroup(
           group, group.getStartDate().isAfter(LocalDate.now()) ? group.getStartDate() : LocalDate.now());
       return ResponseEntity.ok(GroupDTO.of(group));
