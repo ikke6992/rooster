@@ -65,15 +65,22 @@ export class AddGroupComponent {
       numberOfStudents: formValue.numberOfStudents,
       field: formValue.field,
       startDate: formValue.startDate,
+
+      daysPhase1: formValue.daysPhase1,
       weeksPhase1: formValue.weeksPhase1,
+
+      daysPhase2: formValue.daysPhase2,
       weeksPhase2: formValue.weeksPhase2,
+
+      daysPhase3: formValue.daysPhase3,
       weeksPhase3: formValue.weeksPhase3,
+
       teacherAssignments: this.teacherAssignments,
     };
     this.dataService.postGroup(data).subscribe(
       (response) => {
         console.log('Response:', response);
-        this.feedbackMsg = `Group ${response.groupNumber} ${response.field.name} succesfully added and scheduled starting ${response.startDate}`;
+        this.feedbackMsg = `Group ${response.groupNumber} ${response.field} succesfully added and scheduled starting ${response.startDate}`;
         this.showModal('feedback');
       },
       (error) => {
