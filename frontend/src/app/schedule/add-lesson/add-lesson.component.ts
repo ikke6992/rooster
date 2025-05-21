@@ -40,7 +40,7 @@ export class AddLessonComponent {
     this.dataService.addLesson(data).subscribe(
       (response) => {
         console.log('Response:', response);
-        this.feedbackMsg = `Succesfully added lesson for group ${response.lesson.group.groupNumber} ${response.lesson.group.field.name} on ${response.date}`;
+        this.feedbackMsg = `Succesfully added lesson for group ${response.lesson.group.groupNumber} ${response.lesson.group.field} on ${response.date}`;
         this.showModal('feedback-add-lesson');
       },
       (error) => {

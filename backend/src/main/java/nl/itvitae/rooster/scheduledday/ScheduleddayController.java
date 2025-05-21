@@ -53,10 +53,15 @@ public class ScheduleddayController {
     if (group.isEmpty()){
       return ResponseEntity.badRequest().body("Group does not exist");
     }
-    if (teacher.isPresent()){
-      lesson = lessonService.createLesson(group.get(), teacher.get());
-    } else {
+    if (freeDayRepository.existsByDate(date) || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
+      return ResponseEntity.badRequest().body("Selected day is on a weekend/freeday");
+    }
+    if (teacher.isEmpty()){
       lesson = lessonService.createLesson(group.get());
+    } else if (scheduleddayRepository.existsByDateAndLessonTeacher(date, teacher.get())){
+      return ResponseEntity.badRequest().body("Teacher is already scheduled for that day");}
+    else {
+      lesson = lessonService.createLesson(group.get(), teacher.get());
     }
     if (scheduleddayRepository.existsByDateAndLessonGroup(date, lesson
         .getGroup())){
