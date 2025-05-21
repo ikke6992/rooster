@@ -50,9 +50,6 @@ public class ScheduleddayController {
     LocalDate date = LocalDate.parse(scheduledDayRequest.date());
     Lesson lesson;
 
-//    if (scheduleddayRepository.existsByDateAndClassroom(date, classroom.get())){
-//      return ResponseEntity.badRequest().body("Day + Classroom are already scheduled");
-//    }
     if (group.isEmpty()){
       return ResponseEntity.badRequest().body("Group does not exist");
     }
@@ -61,9 +58,13 @@ public class ScheduleddayController {
     } else {
       lesson = lessonService.createLesson(group.get());
     }
+    if (scheduleddayRepository.existsByDateAndLessonGroup(date, lesson
+        .getGroup())){
+      return ResponseEntity.badRequest().body("Group is already scheduled on this day");
+    }
     Scheduledday scheduledday = scheduleddayService.addScheduledday(0, date, classroom.get(), lesson);
-    URI locationOfScheduledDay = ucb.path("/api/v1/groups").buildAndExpand(scheduledday.getId()).toUri();
-    return ResponseEntity.created(locationOfScheduledDay).body(group);
+    URI locationOfScheduledDay = ucb.path("/api/v1/scheduledday").buildAndExpand(scheduledday.getId()).toUri();
+    return ResponseEntity.created(locationOfScheduledDay).body(scheduledday);
   }
 
   @GetMapping("/month/{month}/{year}")

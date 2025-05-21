@@ -145,16 +145,6 @@ public class ScheduleddayService {
     Classroom classroom = scheduledday.getClassroom();
     boolean isClassroomFull =
         classroom.getCapacity() < lesson.getGroup().getNumberOfStudents();
-    if (scheduleddayRepository.existsByDateAndLessonGroup(date, lesson
-        .getGroup())) {
-      if (date.getDayOfWeek() != DayOfWeek.FRIDAY) {
-        scheduledday.setDate(date.plusDays(1));
-        preventConflicts(phase, scheduledday, looped);
-      } else {
-        scheduledday.setDate(date.minusDays(4));
-        preventConflicts(phase, scheduledday, true);
-      }
-    }
     if (isClassroomFull || scheduleddayRepository.existsByDateAndClassroom(scheduledday.getDate(),
         classroom)) {
       int nextClassroomId = (classroom.getId() == 3 || classroom.getId() == 4) ? 2 : 1;
@@ -166,6 +156,16 @@ public class ScheduleddayService {
         scheduledday.setClassroom(classroomRepository.findById(1L).get());
       }
       preventConflicts(phase, scheduledday, looped);
+    }
+    if (scheduleddayRepository.existsByDateAndLessonGroup(date, lesson
+        .getGroup())) {
+      if (date.getDayOfWeek() != DayOfWeek.FRIDAY) {
+        scheduledday.setDate(date.plusDays(1));
+        preventConflicts(phase, scheduledday, looped);
+      } else {
+        scheduledday.setDate(date.minusDays(4));
+        preventConflicts(phase, scheduledday, true);
+      }
     }
 
     //if a group has teachers available

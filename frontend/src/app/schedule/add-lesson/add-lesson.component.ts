@@ -30,17 +30,17 @@ export class AddLessonComponent {
   constructor(private dataService: DataService) {}
   
   onSubmit(){
-    console.log('meow');
     const formValue = this.addLesson.value;
     const data = {
-      groupId: formValue.group,
+      groupNumber: formValue.group,
       teacherId: formValue.teacher,
       date: formValue.date
     };
+    console.log(data);
     this.dataService.addLesson(data).subscribe(
       (response) => {
         console.log('Response:', response);
-        this.feedbackMsg = `Succesfully added lesson for group ${response.groupNumber} ${response.field.name} on ${response.startDate}`;
+        this.feedbackMsg = `Succesfully added lesson for group ${response.lesson.group.groupNumber} ${response.lesson.group.field.name} on ${response.date}`;
         this.showModal('feedback-add-lesson');
       },
       (error) => {
