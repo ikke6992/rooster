@@ -52,7 +52,8 @@ public class TeacherController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of days needs to be between 0 and 5");
     }
     if (request.daysPhase1() == 0 && request.daysPhase2() == 0 && request.daysPhase3() == 0) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Needs to be assigned at least 1 day in at least 1 phase");
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+          .body("Needs to be assigned at least 1 day in at least 1 phase");
     }
     for (GroupTeacher groupTeacher : teacherService.getById(id).getGroupTeachers()) {
       if (groupTeacher.getGroup().getGroupNumber() == groupNumber) {
