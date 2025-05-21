@@ -1,8 +1,6 @@
 package nl.itvitae.rooster.group;
 
 import lombok.RequiredArgsConstructor;
-import nl.itvitae.rooster.field.Field;
-import nl.itvitae.rooster.field.FieldService;
 import nl.itvitae.rooster.group.vacation.ArchivedVacationRepository;
 import nl.itvitae.rooster.group.vacation.VacationRequest;
 import nl.itvitae.rooster.teacher.Teacher;
@@ -23,7 +21,6 @@ import java.util.Optional;
 @RequestMapping("/api/v1/groups")
 public class GroupController {
 
-  private final FieldService fieldService;
   private final GroupService groupService;
   private final ArchivedGroupRepository archivedGroupRepository;
   private final TeacherService teacherService;
@@ -66,11 +63,10 @@ public class GroupController {
       return ResponseEntity.status(HttpStatus.CONFLICT)
           .body("Color is too similar to color of other group.");
     }
-    final Field field = fieldService.getById(request.field());
     final LocalDate startDate = LocalDate.parse(request.startDate());
-    final Group group = groupService.addGroup(request.groupNumber(), request.color(),
-        request.numberOfStudents(), field, startDate, request.weeksPhase1(), request.weeksPhase2(),
-        request.weeksPhase3());
+    final Group group = groupService.addGroup(request.groupNumber(), request.color(), request.numberOfStudents(),
+        request.field(), startDate, request.daysPhase1(), request.weeksPhase1(),
+        request.daysPhase2(), request.weeksPhase2(), request.daysPhase3(), request.weeksPhase3());
     for (AssignmentRequest teacherAssignment : request.teacherAssignments()) {
       teacherService.addGroup(teacherService.getById(teacherAssignment.id()), group,
           teacherAssignment.daysPhase1(), teacherAssignment.daysPhase2(), teacherAssignment.daysPhase3());
@@ -91,8 +87,9 @@ public class GroupController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Group " + number + " does not exist");
     } else {
       final Group group = groupService.editGroup(existingGroup.get(), request.groupNumber(), request.color(),
-          request.numberOfStudents(), fieldService.getById(request.field()), LocalDate.parse(request.startDate()),
-          request.weeksPhase1(), request.weeksPhase2(), request.weeksPhase3());
+          request.numberOfStudents(), request.field(), LocalDate.parse(request.startDate()),
+          request.daysPhase1(), request.weeksPhase1(), request.daysPhase2(), request.weeksPhase2(),
+          request.daysPhase3(), request.weeksPhase3());
       groupService.rescheduleGroup(
           group, group.getStartDate().isAfter(LocalDate.now()) ? group.getStartDate() : LocalDate.now());
       return ResponseEntity.ok(GroupDTO.of(group));
