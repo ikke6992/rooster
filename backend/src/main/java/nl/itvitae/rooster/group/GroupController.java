@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -104,6 +105,7 @@ public class GroupController {
           request.numberOfStudents(), request.field(), LocalDate.parse(request.startDate()),
           request.daysPhase1(), request.weeksPhase1(), request.daysPhase2(), request.weeksPhase2(),
           request.daysPhase3(), request.weeksPhase3());
+      List<GroupTeacher> existing = new ArrayList<>();
       for (AssignmentRequest teacherAssignment : request.teacherAssignments()) {
         boolean exists = false;
         for (GroupTeacher teacher : group.getGroupTeachers()) {
@@ -112,6 +114,7 @@ public class GroupController {
             teacher.setDaysPhase2(teacherAssignment.daysPhase2());
             teacher.setDaysPhase3(teacherAssignment.daysPhase3());
             groupTeacherRepository.save(teacher);
+            existing.add(teacher);
             exists = true;
             break;
           }
@@ -120,6 +123,11 @@ public class GroupController {
           teacherService.addGroup(teacherService.getById(teacherAssignment.id()), group,
               teacherAssignment.daysPhase1(), teacherAssignment.daysPhase2(), teacherAssignment.daysPhase3());
         }
+      }
+      List<GroupTeacher> delete = group.getGroupTeachers();
+      delete.removeAll(existing);
+      for (int i = 0; i < delete.size(); i++) {
+        teacherService.removeGroup(delete.get(i));
       }
       groupService.rescheduleGroup(
           group, group.getStartDate().isAfter(LocalDate.now()) ? group.getStartDate() : LocalDate.now());

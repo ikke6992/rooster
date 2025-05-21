@@ -47,6 +47,17 @@ public class TeacherService {
     return teacher;
   }
 
+  public Teacher removeGroup(GroupTeacher groupTeacher) {
+    Group group = groupTeacher.getGroup();
+    Teacher teacher = groupTeacher.getTeacher();
+    group.removeGroupTeacher(groupTeacher);
+    teacher.removeGroupTeacher(groupTeacher);
+    groupRepository.save(group);
+    teacherRepository.save(teacher);
+    groupTeacherRepository.delete(groupTeacher);
+    return teacher;
+  }
+
   public Teacher setAvailability(long id, String[] availability, int maxDaysPerWeek) {
     Teacher teacher = getById(id);
     List<MyDay> newAvailability = getAvailability(availability);
