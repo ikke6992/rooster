@@ -10,7 +10,7 @@ public record GroupDTO(
     String startDate, int weeksPhase1, int weeksPhase2, int weeksPhase3, int daysPhase1, int daysPhase2, int daysPhase3,
     AssignmentRequest[] teachers, String[] vacations) {
 
-  static GroupDTO of(Group group) {
+  public static GroupDTO of(Group group) {
     int groupNumber = group.getGroupNumber();
     String color = group.getColor();
     int numberOfStudents = group.getNumberOfStudents();
