@@ -9,6 +9,7 @@ import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.lesson.LessonService;
 import nl.itvitae.rooster.teacher.Teacher;
 import nl.itvitae.rooster.teacher.TeacherRepository;
+import nl.itvitae.rooster.freeday.FreeDay;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -113,5 +114,15 @@ public class ScheduleddayController {
     }
     return ResponseEntity.ok(scheduleddayService.overrideScheduling(
         scheduledday, date, classroom.get(), overrideRequest.adaptWeekly()));
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> removeScheduledday(@PathVariable Long id){
+    Optional<Scheduledday> optScheduledday = scheduleddayRepository.findById(id);
+    if (optScheduledday.isEmpty()) {
+      return ResponseEntity.notFound().build();
+    }
+    scheduleddayRepository.delete(optScheduledday.get());
+    return ResponseEntity.noContent().build();
   }
 }

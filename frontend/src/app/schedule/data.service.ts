@@ -62,4 +62,8 @@ export class DataService {
       headers: new HttpHeaders({ 'Content-type': 'application/json' }),
     });
   }
+  
+  removeLesson(id: number){
+    return this.http.delete<any>(`${this.apiUrl}scheduleddays/${id}`);
+  }
 } 
