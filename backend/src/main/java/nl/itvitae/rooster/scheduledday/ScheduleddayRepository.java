@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.group.Group;
+import nl.itvitae.rooster.teacher.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ScheduleddayRepository extends JpaRepository<Scheduledday, Long> {
@@ -16,4 +17,5 @@ public interface ScheduleddayRepository extends JpaRepository<Scheduledday, Long
   List<Scheduledday> findByLessonGroup(Group group);
   boolean existsByDateAndClassroom(LocalDate date, Classroom classroom);
   boolean existsByDateAndLessonGroup(LocalDate date, Group group);
+  boolean existsByDateAndLessonTeacher(LocalDate date, Teacher teacher);
 }

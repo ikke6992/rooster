@@ -10,8 +10,6 @@ import java.util.Set;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomRepository;
-import nl.itvitae.rooster.field.Field;
-import nl.itvitae.rooster.field.FieldRepository;
 import nl.itvitae.rooster.freeday.FreeDay;
 import nl.itvitae.rooster.freeday.FreeDayService;
 import nl.itvitae.rooster.group.Group;
@@ -43,7 +41,6 @@ public class Seeder implements CommandLineRunner {
 
   private final MyDayRepository myDayRepository;
   private final ClassroomRepository classroomRepository;
-  private final FieldRepository fieldRepository;
   private final TeacherRepository teacherRepository;
   private final GroupRepository groupRepository;
   private final GroupTeacherRepository groupTeacherRepository;
@@ -71,20 +68,16 @@ public class Seeder implements CommandLineRunner {
       var classroom5 = saveClassroom(25, true, false);
       var classroom6 = saveClassroom(14, true, true);
 
-      var java = saveField("Java", 3, 4, 2);
-      var data = saveField("Data", 3, 4, 3);
-      var cloud = saveField("Cloud", 2, 4, 2);
-      var security = saveField("Security", 3, 3, 2);
-      var returning = saveField("Returnday", 1, 1, 1);
-
       LocalDate returnDate = LocalDate.of(LocalDate.now().getYear(), 1, 1);
-      var returnDay = groupService.addGroup(0, "#d3d3d3", 0, returning, returnDate, 52, 52, 52);
+
+      var returnDay = groupService.addGroup(0, "#d3d3d3", 0, "Terugkomdag",
+          returnDate, 1, 52, 1, 52, 1, 52);
 
       groupService.scheduleReturnDay(returnDay, 4L, DayOfWeek.WEDNESDAY);
 
       final HolidayManager holidayManager = HolidayManager.getInstance(
           ManagerParameters.create(NETHERLANDS));
-      final Set<Holiday> holidays = holidayManager.getHolidays(LocalDate.now(),
+      final Set<Holiday> holidays = holidayManager.getHolidays(LocalDate.now().minusYears(1),
           LocalDate.now().plusYears(2));
       for (Holiday holiday : holidays) {
         freeDayService.addFreeDay(new FreeDay(holiday.getDate(),
@@ -93,11 +86,6 @@ public class Seeder implements CommandLineRunner {
 
       userRepository.save(new User("admin", passwordEncoder.encode("admin"), Role.ROLE_ADMIN));
     }
-  }
-
-  private Group saveGroup(int groupNumber, String color, int numberOfStudents, Field field) {
-    return groupService.addGroup(groupNumber, color, numberOfStudents, field,
-        LocalDate.now().minusWeeks(4), 8, 12, 8);
   }
 
   private Teacher saveTeacher(String name, List<MyDay> availability, int maxDaysPerWeek,
@@ -122,10 +110,6 @@ public class Seeder implements CommandLineRunner {
 
   private Classroom saveClassroom(int capacity, boolean hasBeamer, boolean forPracticum) {
     return classroomRepository.save(new Classroom(capacity, hasBeamer, forPracticum));
-  }
-
-  private Field saveField(String name, int daysPhase1, int daysPhase2, int daysPhase3) {
-    return fieldRepository.save(new Field(name, daysPhase1, daysPhase2, daysPhase3));
   }
 
   private void addNote(Lesson lesson, String note, boolean isExam){

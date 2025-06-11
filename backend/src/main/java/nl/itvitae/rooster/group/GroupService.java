@@ -3,10 +3,10 @@ package nl.itvitae.rooster.group;
 import java.time.DayOfWeek;
 
 import jakarta.persistence.EntityManager;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
 import nl.itvitae.rooster.classroom.ClassroomService;
-import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.freeday.FreeDayRepository;
 import nl.itvitae.rooster.group.vacation.ArchivedVacation;
 import nl.itvitae.rooster.group.vacation.ArchivedVacationRepository;
@@ -15,6 +15,7 @@ import nl.itvitae.rooster.group.vacation.VacationRepository;
 import nl.itvitae.rooster.lesson.*;
 import nl.itvitae.rooster.scheduledday.*;
 import nl.itvitae.rooster.teacher.*;
+import nl.itvitae.rooster.utils.ColorUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -41,8 +42,6 @@ public class GroupService {
   private final FreeDayRepository freeDayRepository;
   private final VacationRepository vacationRepository;
 
-  private static final int COLOR_DISTANCE_THRESHOLD = 50;
-
   public List<Group> getAll() {
     return groupRepository.findAll();
   }
@@ -51,22 +50,27 @@ public class GroupService {
     return archivedGroupRepository.findAll();
   }
 
-  public Group addGroup(int groupNumber, String color, int numberOfStudents, Field field,
-      LocalDate startDate, int weeksPhase1, int weeksPhase2, int weeksPhase3) {
+  public Group addGroup(int groupNumber, String color, int numberOfStudents, String field,
+                        LocalDate startDate, int daysPhase1, int weeksPhase1,
+                        int daysPhase2, int weeksPhase2, int daysPhase3, int weeksPhase3) {
     return groupRepository.save(
-        new Group(groupNumber, color, numberOfStudents, field, startDate, weeksPhase1, weeksPhase2,
-            weeksPhase3));
+        new Group(groupNumber, color, numberOfStudents, field, startDate,
+            daysPhase1, weeksPhase1, daysPhase2, weeksPhase2, daysPhase3, weeksPhase3));
   }
 
-  public Group editGroup(Group group, int groupNumber, String color, int numberOfStudents, Field field,
-                         LocalDate startDate, int weeksPhase1, int weeksPhase2, int weeksPhase3) {
+  public Group editGroup(Group group, int groupNumber, String color, int numberOfStudents, String field,
+                         LocalDate startDate, int daysPhase1, int weeksPhase1,
+                         int daysPhase2, int weeksPhase2, int daysPhase3, int weeksPhase3) {
     group.setGroupNumber(groupNumber);
     group.setColor(color);
     group.setNumberOfStudents(numberOfStudents);
     group.setField(field);
     group.setStartDate(startDate);
+    group.setDaysPhase1(daysPhase1);
     group.setWeeksPhase1(weeksPhase1);
+    group.setDaysPhase2(daysPhase2);
     group.setWeeksPhase2(weeksPhase2);
+    group.setDaysPhase3(daysPhase3);
     group.setWeeksPhase3(weeksPhase3);
     return groupRepository.save(group);
   }
@@ -115,18 +119,14 @@ public class GroupService {
   }
 
   public boolean checkSimilarColor(String hexColor) {
-    int hexR = Integer.valueOf(hexColor.substring(1, 3), 16);
-    int hexG = Integer.valueOf(hexColor.substring(3, 5), 16);
-    int hexB = Integer.valueOf(hexColor.substring(5, 7), 16);
-    List<Group> groups = getAll();
-    for (Group group : groups) {
-      int hexGroupR = Integer.valueOf(group.getColor().substring(1, 3), 16);
-      int hexGroupG = Integer.valueOf(group.getColor().substring(3, 5), 16);
-      int hexGroupB = Integer.valueOf(group.getColor().substring(5, 7), 16);
+    int[] rgb = ColorUtils.hexToRgb(hexColor);
+    List<String> groupColors = Stream.concat(getAll().stream().map(Group::getColor), getArchived().stream().map(ArchivedGroup::getColor)).toList();
+    for (String groupColor : groupColors) {
+      int[] groupRgb = ColorUtils.hexToRgb(groupColor);
       double distance = Math.sqrt(
-          Math.pow((hexGroupR - hexR), 2) + Math.pow((hexGroupG - hexG), 2) + Math.pow(
-              (hexGroupB - hexB), 2));
-      if (distance < COLOR_DISTANCE_THRESHOLD) {
+          Math.pow((groupRgb[0] - rgb[0]), 2) + Math.pow((groupRgb[1] - rgb[1]), 2) + Math.pow(
+              (groupRgb[2] - rgb[2]), 2));
+      if (distance < ColorUtils.COLOR_DISTANCE_THRESHOLD) {
         return true;
       }
     }

@@ -7,15 +7,10 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrlFields = `${environment.apiUrl}/api/v1/fields`;
   private apiUrlGroups = `${environment.apiUrl}/api/v1/groups`;
   private apiUrlTeachers = `${environment.apiUrl}/api/v1/teachers`;
 
   constructor(private http: HttpClient) {}
-
-  getFields(): Observable<any> {
-    return this.http.get<any>(this.apiUrlFields);
-  }
 
   getGroups(): Observable<any> {
     return this.http.get<any>(this.apiUrlGroups);

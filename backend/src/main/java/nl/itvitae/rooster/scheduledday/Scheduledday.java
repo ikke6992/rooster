@@ -29,7 +29,7 @@ public class Scheduledday {
   @ManyToOne
   private Classroom classroom;
 
-  @OneToOne
+  @OneToOne(orphanRemoval=true)
   private Lesson lesson;
 
   public Scheduledday(LocalDate date, Classroom classroom, Lesson lesson) {

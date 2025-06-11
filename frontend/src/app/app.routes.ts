@@ -3,7 +3,6 @@ import { ScheduleComponent } from './schedule/schedule.component';
 import { ViewGroupsComponent } from './view-groups/view-groups.component';
 import { ViewTeachersComponent } from './view-teachers/view-teachers.component';
 import { FreeDaysComponent } from './free-days/free-days.component';
-import { ViewFieldsComponent } from './view-fields/view-fields.component';
 import { loggedInGuard } from './logged-in.guard';
 import { ArchiveComponent } from './archive/archive.component';
 import { environment } from '../environments/environment';
@@ -13,11 +12,6 @@ export const routes: Routes = [
   {
     path: `${environment.rootUrl}/groups`,
     component: ViewGroupsComponent,
-    canActivate: [loggedInGuard],
-  },
-  {
-    path: `${environment.rootUrl}/fields`,
-    component: ViewFieldsComponent,
     canActivate: [loggedInGuard],
   },
   {
@@ -31,5 +25,5 @@ export const routes: Routes = [
     canActivate: [loggedInGuard],
   },
   { path: `${environment.rootUrl}/free-days`, component: FreeDaysComponent },
-  { path: `${environment.rootUrl}/**`, redirectTo: `${environment.rootUrl}` },
+  { path: `${environment.rootUrl}/**`, redirectTo: `${environment.rootUrl}` }
 ];

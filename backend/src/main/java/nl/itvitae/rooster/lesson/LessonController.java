@@ -2,7 +2,6 @@ package nl.itvitae.rooster.lesson;
 
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.scheduledday.Scheduledday;
 import nl.itvitae.rooster.scheduledday.ScheduleddayRepository;
 import org.springframework.http.HttpStatus;

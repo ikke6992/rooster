@@ -43,7 +43,7 @@ public class SecurityConfig {
   private static final String[] ADMIN_ONLY = {"api/v1/fields/**", "api/v1/groups/**",
       "api/v1/teachers/**", "api/v1/lessons/**"};
   private static final String[] ADMIN_ONLY_POST = {"api/v1/freedays/**"};
-  private static final String[] ADMIN_ONLY_DELETE = {"api/v1/freedays/**"};
+  private static final String[] ADMIN_ONLY_DELETE = {"api/v1/freedays/**", "api/v1/scheduleddays/**"};
   private static final String[] ADMIN_ONLY_PUT = {"api/v1/scheduleddays/**"};
 
   @Bean

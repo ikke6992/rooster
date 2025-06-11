@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewFieldsComponent } from './view-fields.component';
+import { AddLessonComponent } from './add-lesson.component';
 
-describe('ViewFieldsComponent', () => {
-  let component: ViewFieldsComponent;
-  let fixture: ComponentFixture<ViewFieldsComponent>;
+describe('AddLessonComponent', () => {
+  let component: AddLessonComponent;
+  let fixture: ComponentFixture<AddLessonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ViewFieldsComponent]
+      imports: [AddLessonComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ViewFieldsComponent);
+    fixture = TestBed.createComponent(AddLessonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

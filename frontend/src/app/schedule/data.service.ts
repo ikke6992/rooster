@@ -22,11 +22,9 @@ export class DataService {
     return this.http.get<any>(url);
   }
 
-  getExcel(year: number): Observable<any> {
+  getExcel(): Observable<any> {
     return this.http
-      .get(this.apiUrl + `/scheduleddays/export/${year}`, {
-        responseType: 'blob',
-      })
+      .get(this.apiUrl + `scheduleddays/export`, { responseType: 'blob' })
       .pipe(
         map((response: Blob) => {
           saveAs(response, 'scheduleddays.xlsx');
@@ -51,4 +49,24 @@ export class DataService {
     const url = `${this.apiUrl}/lessons/note/${id}`;
     return this.http.put<any>(url, note, { responseType: 'text' as 'json' });
   }
-}
+
+  getGroups(): Observable<any> {
+    const url = `${this.apiUrl}groups`;
+    return this.http.get(url);
+  }
+
+  getTeachers(): Observable<any> {
+    const url = `${this.apiUrl}teachers`;
+    return this.http.get(url);
+  }
+
+  addLesson(data: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'scheduleddays', data, {
+      headers: new HttpHeaders({ 'Content-type': 'application/json' }),
+    });
+  }
+
+  removeLesson(id: number) {
+    return this.http.delete<any>(`${this.apiUrl}scheduleddays/${id}`);
+  }
+} 

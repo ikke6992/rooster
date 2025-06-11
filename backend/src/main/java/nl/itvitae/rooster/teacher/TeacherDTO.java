@@ -1,7 +1,6 @@
 package nl.itvitae.rooster.teacher;
 
 import nl.itvitae.rooster.MyDay;
-import nl.itvitae.rooster.group.Group;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
