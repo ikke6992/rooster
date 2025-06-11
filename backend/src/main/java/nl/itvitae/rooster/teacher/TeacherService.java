@@ -18,7 +18,6 @@ import java.util.List;
 public class TeacherService {
 
   private final TeacherRepository teacherRepository;
-  private final GroupService groupService;
   private final GroupRepository groupRepository;
   private final MyDayRepository myDayRepository;
   private final GroupTeacherRepository groupTeacherRepository;

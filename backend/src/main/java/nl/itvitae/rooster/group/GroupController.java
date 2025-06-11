@@ -1,11 +1,7 @@
 package nl.itvitae.rooster.group;
 
 import lombok.RequiredArgsConstructor;
-import nl.itvitae.rooster.group.vacation.ArchivedVacationRepository;
 import nl.itvitae.rooster.group.vacation.VacationRequest;
-import nl.itvitae.rooster.teacher.GroupTeacher;
-import nl.itvitae.rooster.teacher.GroupTeacherRepository;
-import nl.itvitae.rooster.teacher.Teacher;
 import nl.itvitae.rooster.teacher.TeacherService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +10,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +24,6 @@ public class GroupController {
   private final TeacherService teacherService;
 
   private final GroupRepository groupRepository;
-  private final GroupTeacherRepository groupTeacherRepository;
 
   @GetMapping
   public ResponseEntity<List<GroupDTO>> getAll() {
@@ -104,31 +98,8 @@ public class GroupController {
       final Group group = groupService.editGroup(existingGroup.get(), request.groupNumber(), request.color(),
           request.numberOfStudents(), request.field(), LocalDate.parse(request.startDate()),
           request.daysPhase1(), request.weeksPhase1(), request.daysPhase2(), request.weeksPhase2(),
-          request.daysPhase3(), request.weeksPhase3());
-      List<GroupTeacher> existing = new ArrayList<>();
-      for (AssignmentRequest teacherAssignment : request.teacherAssignments()) {
-        boolean exists = false;
-        for (GroupTeacher teacher : group.getGroupTeachers()) {
-          if (teacher.getTeacher().getId() == teacherAssignment.id()) {
-            teacher.setDaysPhase1(teacherAssignment.daysPhase1());
-            teacher.setDaysPhase2(teacherAssignment.daysPhase2());
-            teacher.setDaysPhase3(teacherAssignment.daysPhase3());
-            groupTeacherRepository.save(teacher);
-            existing.add(teacher);
-            exists = true;
-            break;
-          }
-        }
-        if (!exists) {
-          teacherService.addGroup(teacherService.getById(teacherAssignment.id()), group,
-              teacherAssignment.daysPhase1(), teacherAssignment.daysPhase2(), teacherAssignment.daysPhase3());
-        }
-      }
-      List<GroupTeacher> delete = group.getGroupTeachers();
-      delete.removeAll(existing);
-      for (int i = 0; i < delete.size(); i++) {
-        teacherService.removeGroup(delete.get(i));
-      }
+          request.daysPhase3(), request.weeksPhase3(), request.teacherAssignments());
+
       groupService.rescheduleGroup(
           group, group.getStartDate().isAfter(LocalDate.now()) ? group.getStartDate() : LocalDate.now());
       return ResponseEntity.ok(GroupDTO.of(group));
