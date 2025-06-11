@@ -132,7 +132,7 @@
     class="hhidden"
   >
     <app-set-teacher
-      [teacher]="teacher"
+      [teacher]="getTeacherAssignment(teacher)"
       (messageEvent)="receiveMessage($event)"
     ></app-set-teacher>
     <button

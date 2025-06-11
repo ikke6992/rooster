@@ -13,11 +13,19 @@ export class SetTeacherComponent {
   @Input() teacher: any;
   @Output() messageEvent = new EventEmitter<any>();
 
-  addTeacher = new FormGroup({
-    daysPhase1: new FormControl(),
-    daysPhase2: new FormControl(),
-    daysPhase3: new FormControl(),
-  });
+  addTeacher!: FormGroup;
+
+  ngOnInit() {
+    this.initializeForm();
+  }
+
+  private initializeForm() {
+    this.addTeacher = new FormGroup({
+      daysPhase1: new FormControl(this.teacher.daysPhase1),
+      daysPhase2: new FormControl(this.teacher.daysPhase2),
+      daysPhase3: new FormControl(this.teacher.daysPhase3),
+    });
+  }
 
   sendMessage() {
     const formValue = this.addTeacher.value;

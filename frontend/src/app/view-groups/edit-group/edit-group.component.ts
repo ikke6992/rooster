@@ -46,6 +46,15 @@ export class EditGroupComponent {
     );
   }
 
+  getTeacherAssignment(teacher: any) {
+    const teacherAssignment = this.teacherAssignments.find((e) => e.id == teacher.id);
+    if (teacherAssignment == null) {
+      return {id: teacher.id, name: teacher.name, daysPhase1: 0, daysPhase2: 0, daysPhase3: 0}
+    } else {
+      return teacherAssignment;
+    }
+  }
+
   ngOnInit() {
     this.initializeForm();
   }
