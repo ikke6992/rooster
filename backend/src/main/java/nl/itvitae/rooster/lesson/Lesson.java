@@ -24,7 +24,7 @@ public class Lesson {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToOne
+  @OneToOne(orphanRemoval=true)
   @JsonBackReference
   private Scheduledday scheduledday;
 
@@ -40,5 +40,10 @@ public class Lesson {
 
   public Lesson(Group group) {
     this.group = group;
+  }
+
+  public Lesson(Group group, Teacher teacher) {
+    this.group = group;
+    this.teacher = teacher;
   }
 }

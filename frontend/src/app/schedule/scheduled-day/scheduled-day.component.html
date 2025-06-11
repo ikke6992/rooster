@@ -1,58 +1,91 @@
 <div *ngIf="item.date.getDate() === day">
   <div
-  [ngClass]="item.isExam ? 'border-4 rounded' : 'border-0'"
+    [ngClass]="item.isExam ? 'border-4 rounded' : 'border-0'"
     *ngIf="item.classroomId === classroom"
-    style="backgroundColor: {{ item.groupColor }}; borderColor: #{{invertHex(item.groupColor)}}"
+    style="backgroundColor: {{ item.groupColor }}; borderColor: #{{
+      invertHex(item.groupColor)
+    }}"
   >
-    <div class="popup" (click)="showNote()" (mouseover)="pauseTimeout()" (mouseleave)="startTimer()">
-      <div 
-      [ngClass]="calculateBrightness(item.groupColor) ? 'text-white' : ''"
-      class="flex justify-center items-center">
+    <div
+      class="popup"
+      (click)="showNote()"
+      (mouseover)="pauseTimeout()"
+      (mouseleave)="startTimer()"
+    >
+      <div
+        [ngClass]="calculateBrightness(item.groupColor) ? 'text-white' : ''"
+        class="flex justify-center items-center"
+      >
         Group {{ item.groupNumber }} {{ item.field }}
         <div class="non-printable ml-1">- Teacher: {{ item.teacher }}</div>
         <div
           class="popuptext"
           id="myPopup{{ item.id }}"
-          style=" z-index: 20;"
+          style="z-index: 20"
           (mouseover)="pauseTimeout()"
           (mouseleave)="startTimer()"
           (dragstart)="preventDrag($event)"
           draggable="true"
         >
-          <ng-container *ngIf="item.note !== null; else showNoNote" >
+          <ng-container *ngIf="item.note !== null; else showNoNote">
             <div>{{ item.note }}</div>
-            <button *ngIf="this.isLoggedIn" (click)="showModal('add-note-' + item.id)" class="button-action">
-              Edit note
-            </button>
+            <div *ngIf="this.isLoggedIn">
+              <button
+                (click)="showModal('add-note-' + item.id)"
+                class="button-action"
+              >
+                Edit note
+              </button>
+              <button (click)="removeLesson()" class="button-action">
+                Remove Lesson
+              </button>
+            </div>
           </ng-container>
           <ng-template #showNoNote>
             <div>No note</div>
-            <button *ngIf="this.isLoggedIn" (click)="showModal('add-note-' + item.id)" class="button-action">
-              Add note
-            </button>
+            <div *ngIf="this.isLoggedIn">
+              <button
+                (click)="showModal('add-note-' + item.id)"
+                class="button-action"
+              >
+                Edit note
+              </button>
+              <button (click)="removeLesson()" class="button-action">
+                Remove Lesson
+              </button>
+            </div>
           </ng-template>
         </div>
       </div>
     </div>
   </div>
   <div draggable="true" (dragstart)="preventDrag($event)">
-    <app-modal id="add-note-{{item.id}}" class="hhidden" >
+    <app-modal id="add-note-{{ item.id }}" class="hhidden">
       <form [formGroup]="addNote" (ngSubmit)="onSubmit()">
         <label for="note">Note: </label>
         <input id="note" type="text" formControlName="note" /><br />
         <label for="isExam">Is exam: </label>
-        <input id="isExam" type="checkbox" formControlName="isExam"/><br />
+        <input id="isExam" type="checkbox" formControlName="isExam" /><br />
         <button [disabled]="!addNote.valid" type="submit" class="button-action">
           Submit
         </button>
       </form>
-      <button class="button-action" (click)="closeModal('add-note-' + item.id)">Close</button>
-      <app-modal id="feedback-{{item.id}}" class="hhidden">
+      <button class="button-action" (click)="closeModal('add-note-' + item.id)">
+        Close
+      </button>
+      <app-modal id="feedback-{{ item.id }}" class="hhidden">
         <p>{{ this.feedbackMsg }}</p>
-        <button class="button-action" (click)="this.feedbackMsg.startsWith('Error: ') ? closeModal('feedback-' + item.id) : window.location.reload()">Close</button>
+        <button
+          class="button-action"
+          (click)="
+            this.feedbackMsg.startsWith('Error: ')
+              ? closeModal('feedback-' + item.id)
+              : window.location.reload()
+          "
+        >
+          Close
+        </button>
       </app-modal>
-      
     </app-modal>
   </div>
-
 </div>
