@@ -63,7 +63,8 @@ public class ScheduleddayService {
 
   public Scheduledday addScheduledday(int phase, LocalDate date, Classroom classroom, Lesson lesson) {
     Scheduledday scheduledday = new Scheduledday(date, classroom, lesson);
-    preventConflicts(phase, scheduledday, false);
+    if (phase == 0) moveClassroom(scheduledday, classroom);
+    else preventConflicts(phase, scheduledday, false);
     scheduleddayRepository.save(scheduledday);
     lesson.setScheduledday(scheduledday);
     lessonRepository.save(lesson);
@@ -143,8 +144,10 @@ public class ScheduleddayService {
     LocalDate date = scheduledday.getDate();
     Lesson lesson = scheduledday.getLesson();
     Classroom classroom = scheduledday.getClassroom();
-    boolean isClassroomFull =
-        classroom.getCapacity() < lesson.getGroup().getNumberOfStudents();
+
+    if (moveClassroom(scheduledday, classroom)) {
+      preventConflicts(phase, scheduledday, looped);
+    }
     if (scheduleddayRepository.existsByDateAndLessonGroup(date, lesson
         .getGroup())) {
       if (date.getDayOfWeek() != DayOfWeek.FRIDAY) {
@@ -154,18 +157,6 @@ public class ScheduleddayService {
         scheduledday.setDate(date.minusDays(4));
         preventConflicts(phase, scheduledday, true);
       }
-    }
-    if (isClassroomFull || scheduleddayRepository.existsByDateAndClassroom(scheduledday.getDate(),
-        classroom)) {
-      int nextClassroomId = (classroom.getId() == 3 || classroom.getId() == 4) ? 2 : 1;
-      Optional<Classroom> newClassroom = classroomRepository.findById(
-          classroom.getId() + nextClassroomId);
-      if (newClassroom.isPresent()) {
-        scheduledday.setClassroom(newClassroom.get());
-      } else {
-        scheduledday.setClassroom(classroomRepository.findById(1L).get());
-      }
-      preventConflicts(phase, scheduledday, looped);
     }
 
     //if a group has teachers available
@@ -323,6 +314,24 @@ public class ScheduleddayService {
       styleColor.setFont(font);
     }
     return styleColor;
+  }
+
+  private boolean moveClassroom(Scheduledday scheduledday, Classroom classroom){
+    boolean isClassroomFull =
+        classroom.getCapacity() < scheduledday.getLesson().getGroup().getNumberOfStudents();
+    if (isClassroomFull || scheduleddayRepository.existsByDateAndClassroom(scheduledday.getDate(),
+        classroom)) {
+      int nextClassroomId = (classroom.getId() == 3 || classroom.getId() == 4) ? 2 : 1;
+      Optional<Classroom> newClassroom = classroomRepository.findById(
+          classroom.getId() + nextClassroomId);
+      if (newClassroom.isPresent()) {
+        scheduledday.setClassroom(newClassroom.get());
+      } else {
+        scheduledday.setClassroom(classroomRepository.findById(1L).get());
+      };
+      return true;
+    }
+    return  false;
   }
 }
 

@@ -96,14 +96,12 @@ public class Seeder implements CommandLineRunner {
 
       final HolidayManager holidayManager = HolidayManager.getInstance(
           ManagerParameters.create(NETHERLANDS));
-      final Set<Holiday> holidays = holidayManager.getHolidays(LocalDate.now().minusWeeks(4),
+      final Set<Holiday> holidays = holidayManager.getHolidays(LocalDate.now().minusYears(1),
           LocalDate.now().plusYears(2));
       for (Holiday holiday : holidays) {
         freeDayService.addFreeDay(new FreeDay(holiday.getDate(),
             holiday.getDescription()));
       }
-      freeDayService.addFreeDay(new FreeDay(LocalDate.now(), "test"));
-      freeDayService.addFreeDay(new FreeDay(LocalDate.now().minusWeeks(10), "test passed"));
 
       groupService.addVacation(group53, LocalDate.now().plusMonths(1), 2);
 

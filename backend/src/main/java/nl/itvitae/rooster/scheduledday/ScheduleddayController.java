@@ -1,7 +1,14 @@
 package nl.itvitae.rooster.scheduledday;
 
 import java.io.IOException;
+import java.net.URI;
 import lombok.AllArgsConstructor;
+import nl.itvitae.rooster.group.Group;
+import nl.itvitae.rooster.group.GroupRepository;
+import nl.itvitae.rooster.lesson.Lesson;
+import nl.itvitae.rooster.lesson.LessonService;
+import nl.itvitae.rooster.teacher.Teacher;
+import nl.itvitae.rooster.teacher.TeacherRepository;
 import nl.itvitae.rooster.freeday.FreeDay;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Optional;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -26,11 +34,43 @@ public class ScheduleddayController {
   private final ScheduleddayService scheduleddayService;
   private final ClassroomService classroomService;
   private final FreeDayRepository freeDayRepository;
+  private final GroupRepository groupRepository;
+  private final LessonService lessonService;
+  private final TeacherRepository teacherRepository;
 
   @GetMapping
   public ResponseEntity<?> getAll() {
     return ResponseEntity.ok(
         scheduleddayService.findAll().stream().map(ScheduleddayDTO::new).toList());
+  }
+
+  @PostMapping  public ResponseEntity<?> addScheduledDay(@RequestBody ScheduledDayRequest scheduledDayRequest, UriComponentsBuilder ucb){
+    Optional<Classroom> classroom = classroomService.getById(1);
+    Optional<Group> group = groupRepository.findByGroupNumber(scheduledDayRequest.groupNumber());
+    Optional<Teacher> teacher = teacherRepository.findById(scheduledDayRequest.teacherId());
+    LocalDate date = LocalDate.parse(scheduledDayRequest.date());
+    Lesson lesson;
+
+    if (group.isEmpty()){
+      return ResponseEntity.badRequest().body("Group does not exist");
+    }
+    if (freeDayRepository.existsByDate(date) || date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY){
+      return ResponseEntity.badRequest().body("Selected day is on a weekend/freeday");
+    }
+    if (teacher.isEmpty()){
+      lesson = lessonService.createLesson(group.get());
+    } else if (scheduleddayRepository.existsByDateAndLessonTeacher(date, teacher.get())){
+      return ResponseEntity.badRequest().body("Teacher is already scheduled for that day");}
+    else {
+      lesson = lessonService.createLesson(group.get(), teacher.get());
+    }
+    if (scheduleddayRepository.existsByDateAndLessonGroup(date, lesson
+        .getGroup())){
+      return ResponseEntity.badRequest().body("Group is already scheduled on this day");
+    }
+    Scheduledday scheduledday = scheduleddayService.addScheduledday(0, date, classroom.get(), lesson);
+    URI locationOfScheduledDay = ucb.path("/api/v1/scheduledday").buildAndExpand(scheduledday.getId()).toUri();
+    return ResponseEntity.created(locationOfScheduledDay).body(scheduledday);
   }
 
   @GetMapping("/month/{month}/{year}")
