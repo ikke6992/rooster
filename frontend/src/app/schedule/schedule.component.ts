@@ -67,10 +67,13 @@ export class ScheduleComponent {
       (value, index) =>
         (days[index] = {
           id: value,
+          isToday: this.checkIfToday(year, month, value),
           isWeekend: this.checkIfWeekend(year, month, value),
           isFreeDay: this.checkIfFreeDay(year, month, value),
         })
     );
+    console.log(days);
+    
     return days;
   }
 
@@ -84,6 +87,11 @@ export class ScheduleComponent {
     return !!this.freeDays.find(
       (freeDay) => freeDay.date.getDate() == fday.getDate()
     );
+  }
+
+  checkIfToday(year: number, month: number, day: number) {
+    const today = new Date();
+    return today.getDate() == day && today.getMonth() == month-1 && today.getFullYear() == year
   }
 
   getMonthName(monthNumber: number): string {
@@ -259,6 +267,7 @@ export interface Scheduledday {
 
 interface Day {
   id: number;
+  isToday: boolean;
   isWeekend: boolean;
   isFreeDay: boolean;
 }

@@ -24,12 +24,12 @@
     </tr>
     <tr class="text-center border-2" *ngFor="let day of days">
       <td
-        [ngClass]="
-          day.isWeekend
+        [ngClass]="day.isToday ? 'bg-light-blue' :
+           (day.isWeekend
             ? 'bg-light-green'
-            : day.isFreeDay
+            : (day.isFreeDay
             ? 'bg-yellow'
-            : 'bg-blue'
+            : 'bg-blue'))
         "
         style="width: 5%"
       >
@@ -38,11 +38,11 @@
       <td
         *ngFor="let number of TOTAL_CLASSROOMS"
         [ngClass]="
-          day.isWeekend
+          day.isToday ? 'bg-light-blue' : (day.isWeekend
             ? 'bg-light-green'
-            : day.isFreeDay
+            : (day.isFreeDay
             ? 'bg-yellow'
-            : 'bg-white'
+            : 'bg-white'))
         "
         (dragover)="onDragOver($event)"
         (drop)="onDrop($event, day, number)"
