@@ -16,7 +16,7 @@ import { DataService } from '../data.service';
 export class AddLessonComponent {
   addLesson = new FormGroup({
     group: new FormControl(),
-    teacher: new FormControl(),
+    teacher: new FormControl(0),
     date: new FormControl(),
   });
   feedbackMsg!: string;
