@@ -77,6 +77,10 @@ public class Group {
   public void addGroupTeacher(GroupTeacher groupTeacher) {
     groupTeachers.add(groupTeacher);
   }
+
+  public void removeGroupTeacher(GroupTeacher groupTeacher) {
+    groupTeachers.remove(groupTeacher);
+  }
   public void addVacation(Vacation vacation) {
     vacations.add(vacation);
   }

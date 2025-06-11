@@ -21,7 +21,7 @@
         </p>
         <h4>Teachers:</h4>
         <div *ngFor="let teacher of group.teachers">
-          <p>- {{ teacher }}</p>
+          <p>- {{ teacher.name }}</p>
         </div>
       </div>
       <h4>Vacations:</h4>
@@ -52,7 +52,11 @@
         ><br />
 
         <app-modal id="edit-group-{{ group.groupNumber }}" class="hhidden">
-          <app-edit-group [group]="group"></app-edit-group>
+          <app-edit-group
+            [group]="group"
+            [teachers]="teachers"
+            [teacherAssignments]="group.teachers"
+          ></app-edit-group>
           <button
             (click)="closeModal('edit-group-' + group.groupNumber)"
             class="button-action"
@@ -81,4 +85,3 @@
   <app-add-group [teachers]="teachers"></app-add-group>
   <button (click)="closeModal('add-group')" class="button-action">Close</button>
 </app-modal>
-
