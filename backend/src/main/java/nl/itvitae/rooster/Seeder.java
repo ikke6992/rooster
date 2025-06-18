@@ -61,12 +61,12 @@ public class Seeder implements CommandLineRunner {
       var thursday = saveDay(DayOfWeek.THURSDAY);
       var friday = saveDay(DayOfWeek.FRIDAY);
 
-      var classroom1 = saveClassroom(12, true, false);
-      var classroom2 = saveClassroom(20, true, false);
-      var classroom3 = saveClassroom(20, true, false);
-      var classroom4 = saveClassroom(12, false, true);
-      var classroom5 = saveClassroom(25, true, false);
-      var classroom6 = saveClassroom(14, true, true);
+      var classroom1 = saveClassroom(10, true, false);
+      var classroom2 = saveClassroom(15, true, false);
+      var classroom3 = saveClassroom(15, true, false);
+      var classroom4 = saveClassroom(15, false, true);
+      var classroom5 = saveClassroom(15, true, false);
+      var classroom6 = saveClassroom(10, true, true);
 
       LocalDate returnDate = LocalDate.of(LocalDate.now().getYear(), 1, 1);
 
