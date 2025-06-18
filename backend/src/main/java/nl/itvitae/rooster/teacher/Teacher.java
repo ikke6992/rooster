@@ -53,6 +53,10 @@ public class Teacher {
     groupTeachers.add(groupTeacher);
   }
 
+  public void removeGroupTeacher(GroupTeacher groupTeacher) {
+    groupTeachers.remove(groupTeacher);
+  }
+
   public void addLesson(Lesson lesson) {
     lessons.add(lesson);
   }

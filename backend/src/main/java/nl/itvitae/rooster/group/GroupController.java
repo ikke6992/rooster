@@ -1,9 +1,7 @@
 package nl.itvitae.rooster.group;
 
 import lombok.RequiredArgsConstructor;
-import nl.itvitae.rooster.group.vacation.ArchivedVacationRepository;
 import nl.itvitae.rooster.group.vacation.VacationRequest;
-import nl.itvitae.rooster.teacher.Teacher;
 import nl.itvitae.rooster.teacher.TeacherService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +48,7 @@ public class GroupController {
       if (teacherAssignment.daysPhase1() == 0 && teacherAssignment.daysPhase2() == 0
           && teacherAssignment.daysPhase3() == 0) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body("Teacher "+ teacherAssignment.name() + " needs to be assigned at least 1 day in at least 1 phase");
+            .body(teacherAssignment.name() + " needs to be assigned at least 1 day in at least 1 phase");
       }
     }
     if (groupRepository.findByGroupNumber(request.groupNumber()).isPresent()
@@ -80,7 +78,18 @@ public class GroupController {
     if (request.weeksPhase1() < 1 || request.weeksPhase2() < 1 || request.weeksPhase3() < 1) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of weeks needs to be greater than 0");
     }
-
+    for (AssignmentRequest teacherAssignment : request.teacherAssignments()) {
+      if (teacherAssignment.daysPhase1() < 0 || teacherAssignment.daysPhase1() > 5
+          || teacherAssignment.daysPhase2() < 0 || teacherAssignment.daysPhase2() > 5
+          || teacherAssignment.daysPhase3() < 0 || teacherAssignment.daysPhase3() > 5) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Amount of days needs to be between 0 and 5");
+      }
+      if (teacherAssignment.daysPhase1() == 0 && teacherAssignment.daysPhase2() == 0
+          && teacherAssignment.daysPhase3() == 0) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(teacherAssignment.name() + " needs to be assigned at least 1 day in at least 1 phase");
+      }
+    }
     Optional<Group> existingGroup = groupRepository.findByGroupNumber(number);
     if (existingGroup.isEmpty()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Group " + number + " does not exist");
@@ -88,7 +97,8 @@ public class GroupController {
       final Group group = groupService.editGroup(existingGroup.get(), request.groupNumber(), request.color(),
           request.numberOfStudents(), request.field(), LocalDate.parse(request.startDate()),
           request.daysPhase1(), request.weeksPhase1(), request.daysPhase2(), request.weeksPhase2(),
-          request.daysPhase3(), request.weeksPhase3());
+          request.daysPhase3(), request.weeksPhase3(), request.teacherAssignments());
+
       groupService.rescheduleGroup(
           group, group.getStartDate().isAfter(LocalDate.now()) ? group.getStartDate() : LocalDate.now());
       return ResponseEntity.ok(GroupDTO.of(group));

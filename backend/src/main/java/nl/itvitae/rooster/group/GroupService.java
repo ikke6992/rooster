@@ -3,6 +3,8 @@ package nl.itvitae.rooster.group;
 import java.time.DayOfWeek;
 
 import jakarta.persistence.EntityManager;
+
+import java.util.ArrayList;
 import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
@@ -33,6 +35,7 @@ public class GroupService {
   private final ArchivedVacationRepository archivedVacationRepository;
   private final GroupRepository groupRepository;
   private final GroupTeacherRepository groupTeacherRepository;
+  private final TeacherService teacherService;
   private final TeacherRepository teacherRepository;
   private final ScheduleddayService scheduleddayService;
   private final ScheduleddayRepository scheduleddayRepository;
@@ -60,7 +63,7 @@ public class GroupService {
 
   public Group editGroup(Group group, int groupNumber, String color, int numberOfStudents, String field,
                          LocalDate startDate, int daysPhase1, int weeksPhase1,
-                         int daysPhase2, int weeksPhase2, int daysPhase3, int weeksPhase3) {
+                         int daysPhase2, int weeksPhase2, int daysPhase3, int weeksPhase3, AssignmentRequest[] teacherAssignments) {
     group.setGroupNumber(groupNumber);
     group.setColor(color);
     group.setNumberOfStudents(numberOfStudents);
@@ -72,6 +75,18 @@ public class GroupService {
     group.setWeeksPhase2(weeksPhase2);
     group.setDaysPhase3(daysPhase3);
     group.setWeeksPhase3(weeksPhase3);
+
+    List<GroupTeacher> groupTeachers = List.copyOf(group.getGroupTeachers());
+
+    for (int i = 0; i < groupTeachers.size(); i++) {
+      teacherService.removeGroup(groupTeachers.get(i));
+    }
+
+    for (AssignmentRequest teacherAssignment : teacherAssignments) {
+      teacherService.addGroup(teacherService.getById(teacherAssignment.id()), group,
+          teacherAssignment.daysPhase1(), teacherAssignment.daysPhase2(), teacherAssignment.daysPhase3());
+    }
+
     return groupRepository.save(group);
   }
 

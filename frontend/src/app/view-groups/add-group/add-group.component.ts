@@ -3,7 +3,7 @@ import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { DataService } from '../data.service';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../../modal/modal.component';
-import { SetTeacherComponent } from './set-teacher/set-teacher.component';
+import { SetTeacherComponent } from '../set-teacher/set-teacher.component';
 
 @Component({
   selector: 'app-add-group',
@@ -45,6 +45,7 @@ export class AddGroupComponent {
       (e) => e.id !== $event.id
     );
     this.teacherAssignments.push($event);
+    this.closeModal('set-teacher-' + $event.name);
   }
 
   removeAssignment(teacherAssignment: any) {
