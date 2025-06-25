@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.Optional;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import nl.itvitae.rooster.classroom.Classroom;
@@ -61,38 +60,40 @@ public class Seeder implements CommandLineRunner {
       var thursday = saveDay(DayOfWeek.THURSDAY);
       var friday = saveDay(DayOfWeek.FRIDAY);
 
-      var classroom1 = saveClassroom(12, true, false);
-      var classroom2 = saveClassroom(20, true, false);
-      var classroom3 = saveClassroom(20, true, false);
-      var classroom4 = saveClassroom(12, false, true);
-      var classroom5 = saveClassroom(25, true, false);
-      var classroom6 = saveClassroom(14, true, true);
+      var classroom1 = saveClassroom(10, true, false);
+      var classroom2 = saveClassroom(15, true, false);
+      var classroom3 = saveClassroom(15, true, false);
+      var classroom4 = saveClassroom(15, false, true);
+      var classroom5 = saveClassroom(15, true, false);
+      var classroom6 = saveClassroom(10, true, true);
 
       LocalDate returnDate = LocalDate.of(LocalDate.now().getYear(), 1, 1);
       var returnDay = groupService.addGroup(0, "#d3d3d3", 0, "Terugkomdag",
           returnDate, 1, 52, 1, 52, 1, 52);
-      var group52 = groupService.addGroup(52, "#00ffff", 10, "Security",
-          LocalDate.now().minusYears(1), 3, 8, 4, 12,
-          4, 8);
-      var group53 = groupService.addGroup(53, "#ffa500", 12, "Java",
-          LocalDate.now().minusWeeks(4), 3, 10, 4, 12,
-          2, 10);
-      var group54 = groupService.addGroup(54, "#ff0000", 8, "Data",
-          LocalDate.now().minusWeeks(4), 3, 10, 3, 14,
-          3, 10);
-      var group55 = groupService.addGroup(55, "#000000", 10, "Java",
-          LocalDate.now().plusWeeks(4), 3, 8, 4, 12,
-          4, 10);
+//      var group52 = groupService.addGroup(52, "#00ffff", 10, "Security",
+//          LocalDate.now().minusYears(1), 3, 8, 4, 12,
+//          4, 8);
+      var group61 = groupService.addGroup(61, "#ffa500", 14, "Data",
+          LocalDate.parse("2025-02-28"), 3, 12, 3, 8,
+          3, 16);
+      var group62 = groupService.addGroup(62, "#ff0000", 12, "Java",
+          LocalDate.parse("2025-04-28"), 3, 12, 4, 12,
+          4, 12);
+      var group63 = groupService.addGroup(63, "#000000", 13, "Cyber",
+          LocalDate.parse("2025-05-26"), 3, 12, 4, 12,
+          4, 7);
 
-      var wubbo = saveTeacher("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)),
-          3, 1, 2, 2, group53, group55);
-      var coen = saveTeacher("Coen", new ArrayList<>(List.of(monday, thursday)), 2, 2, 2, 1,
-          group53, group55);
+      var meow = saveTeacher("meow", new ArrayList<>(List.of(monday, tuesday, wednesday, thursday)), 4);
+
+//      var wubbo = saveTeacher("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)),
+//          3, 1, 2, 2, group61, group55);
+//      var coen = saveTeacher("Coen", new ArrayList<>(List.of(monday, thursday)), 2, 2, 2, 1,
+//          group61, group55);
 
       groupService.scheduleReturnDay(returnDay, 4L, DayOfWeek.WEDNESDAY);
-      groupService.scheduleGroup(group53);
-      groupService.scheduleGroup(group54);
-      groupService.scheduleGroup(group55);
+      groupService.scheduleGroup(group61);
+      groupService.scheduleGroup(group62);
+      groupService.scheduleGroup(group63);
 
       final HolidayManager holidayManager = HolidayManager.getInstance(
           ManagerParameters.create(NETHERLANDS));
@@ -103,37 +104,36 @@ public class Seeder implements CommandLineRunner {
             holiday.getDescription()));
       }
 
-      groupService.addVacation(group53, LocalDate.now().plusMonths(1), 2);
-
-      int emptyLessons = 0;
-      for (int i = 1; i <= 10; i++) {
-        Optional<Lesson> lesson = lessonRepository.findById(361L - emptyLessons - i);
-        while (lesson.isEmpty()) {
-          emptyLessons += 1;
-          lesson = lessonRepository.findById(361L - emptyLessons - i);
-        }
-        addNote(lesson.get(), "Linux les " + (10 - i) + "/10", false);
-      }
-      addNote(lessonRepository.findById(361L).get(), "Linux Examen", true);
-
-      groupService.deleteGroup(group52);
+//      groupService.addVacation(group53, LocalDate.now().plusMonths(1), 2);
+//
+//      int emptyLessons = 0;
+//      for (int i = 1; i <= 10; i++) {
+//        Optional<Lesson> lesson = lessonRepository.findById(361L - emptyLessons - i);
+//        while (lesson.isEmpty()) {
+//          emptyLessons += 1;
+//          lesson = lessonRepository.findById(361L - emptyLessons - i);
+//        }
+//        addNote(lesson.get(), "Linux les " + (10 - i) + "/10", false);
+//      }
+//      addNote(lessonRepository.findById(361L).get(), "Linux Examen", true);
+//
+//      groupService.deleteGroup(group52);
       userRepository.save(new User("admin", passwordEncoder.encode("admin"), Role.ROLE_ADMIN));
     }
   }
 
-  private Teacher saveTeacher(String name, List<MyDay> availability, int maxDaysPerWeek,
-      int daysPhase1, int daysPhase2, int daysPhase3, Group... groups) {
+  private Teacher saveTeacher(String name, List<MyDay> availability, int maxDaysPerWeek) {
     Teacher teacher = new Teacher(name, availability, maxDaysPerWeek);
     teacherRepository.save(teacher);
-    for (Group group : groups) {
-      GroupTeacher groupTeacher = new GroupTeacher(group, teacher, daysPhase1, daysPhase2,
-          daysPhase3);
-      groupTeacherRepository.save(groupTeacher);
-      group.addGroupTeacher(groupTeacher);
-      groupRepository.save(group);
-      teacher.addGroupTeacher(groupTeacher);
-      teacherRepository.save(teacher);
-    }
+//    for (Group group : groups) {
+//      GroupTeacher groupTeacher = new GroupTeacher(group, teacher, daysPhase1, daysPhase2,
+//          daysPhase3);
+//      groupTeacherRepository.save(groupTeacher);
+//      group.addGroupTeacher(groupTeacher);
+//      groupRepository.save(group);
+//      teacher.addGroupTeacher(groupTeacher);
+//      teacherRepository.save(teacher);
+//    }
     return teacher;
   }
 

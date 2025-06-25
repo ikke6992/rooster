@@ -63,8 +63,13 @@ public class ScheduleddayService {
 
   public Scheduledday addScheduledday(int phase, LocalDate date, Classroom classroom, Lesson lesson) {
     Scheduledday scheduledday = new Scheduledday(date, classroom, lesson);
-    if (phase == 0) moveClassroom(scheduledday, classroom);
-    else preventConflicts(phase, scheduledday, false);
+    try {
+      if (phase == 0) moveClassroom(scheduledday, classroom);
+      else preventConflicts(phase, scheduledday, false);
+    } catch (ClassroomException e) {
+      throw new RuntimeException(e);
+    }
+
     scheduleddayRepository.save(scheduledday);
     lesson.setScheduledday(scheduledday);
     lessonRepository.save(lesson);
@@ -140,14 +145,11 @@ public class ScheduleddayService {
     return new OverrideDTO(successes, failures);
   }
 
-  private void preventConflicts(int phase, Scheduledday scheduledday, boolean looped) {
+  private void preventConflicts(int phase, Scheduledday scheduledday, boolean looped) throws ClassroomException {
     LocalDate date = scheduledday.getDate();
     Lesson lesson = scheduledday.getLesson();
     Classroom classroom = scheduledday.getClassroom();
 
-    if (moveClassroom(scheduledday, classroom)) {
-      preventConflicts(phase, scheduledday, looped);
-    }
     if (scheduleddayRepository.existsByDateAndLessonGroup(date, lesson
         .getGroup())) {
       if (date.getDayOfWeek() != DayOfWeek.FRIDAY) {
@@ -157,6 +159,9 @@ public class ScheduleddayService {
         scheduledday.setDate(date.minusDays(4));
         preventConflicts(phase, scheduledday, true);
       }
+    }
+    if (moveClassroom(scheduledday, classroom)) {
+      preventConflicts(phase, scheduledday, looped);
     }
 
     //if a group has teachers available
@@ -316,7 +321,8 @@ public class ScheduleddayService {
     return styleColor;
   }
 
-  private boolean moveClassroom(Scheduledday scheduledday, Classroom classroom){
+  private boolean moveClassroom(Scheduledday scheduledday, Classroom classroom)
+      throws ClassroomException {
     boolean isClassroomFull =
         classroom.getCapacity() < scheduledday.getLesson().getGroup().getNumberOfStudents();
     if (isClassroomFull || scheduleddayRepository.existsByDateAndClassroom(scheduledday.getDate(),
@@ -327,7 +333,7 @@ public class ScheduleddayService {
       if (newClassroom.isPresent()) {
         scheduledday.setClassroom(newClassroom.get());
       } else {
-        scheduledday.setClassroom(classroomRepository.findById(1L).get());
+        return false;
       };
       return true;
     }
@@ -339,5 +345,9 @@ class OverrideException extends Exception {
   public OverrideException(String msg) {
     super(msg);
   }
+}
+
+class ClassroomException extends Exception {
+  public ClassroomException(String msg) {super(msg);}
 }
 
