@@ -61,38 +61,40 @@ public class Seeder implements CommandLineRunner {
       var thursday = saveDay(DayOfWeek.THURSDAY);
       var friday = saveDay(DayOfWeek.FRIDAY);
 
-      var classroom1 = saveClassroom(12, true, false);
-      var classroom2 = saveClassroom(20, true, false);
-      var classroom3 = saveClassroom(20, true, false);
-      var classroom4 = saveClassroom(12, false, true);
-      var classroom5 = saveClassroom(25, true, false);
-      var classroom6 = saveClassroom(14, true, true);
+      var classroom1 = saveClassroom(10, true, false);
+      var classroom2 = saveClassroom(15, true, false);
+      var classroom3 = saveClassroom(15, true, false);
+      var classroom4 = saveClassroom(15, false, true);
+      var classroom5 = saveClassroom(15, true, false);
+      var classroom6 = saveClassroom(10, true, true);
 
       LocalDate returnDate = LocalDate.of(LocalDate.now().getYear(), 1, 1);
       var returnDay = groupService.addGroup(0, "#d3d3d3", 0, "Terugkomdag",
           returnDate, 1, 52, 1, 52, 1, 52);
-      var group52 = groupService.addGroup(52, "#00ffff", 10, "Security",
+      var group60 = groupService.addGroup(60, "#00ffff", 10, "Security",
           LocalDate.now().minusYears(1), 3, 8, 4, 12,
           4, 8);
-      var group53 = groupService.addGroup(53, "#ffa500", 12, "Java",
-          LocalDate.now().minusWeeks(4), 3, 10, 4, 12,
-          2, 10);
-      var group54 = groupService.addGroup(54, "#ff0000", 8, "Data",
-          LocalDate.now().minusWeeks(4), 3, 10, 3, 14,
-          3, 10);
-      var group55 = groupService.addGroup(55, "#000000", 10, "Java",
-          LocalDate.now().plusWeeks(4), 3, 8, 4, 12,
-          4, 10);
+      var group61 = groupService.addGroup(61, "#000000", 14, "Data",
+          LocalDate.parse("2025-02-28"), 3, 12, 3, 8,
+          3, 16);
+      var group62 = groupService.addGroup(62, "#ff0000", 12, "Java",
+          LocalDate.parse("2025-04-28"), 3, 12, 4, 12,
+          4, 12);
+      var group63 = groupService.addGroup(63, "#00ff00", 13, "Cyber",
+          LocalDate.parse("2025-05-26"), 3, 12, 4, 12,
+          4, 7);
 
-      var wubbo = saveTeacher("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)),
-          3, 1, 2, 2, group53, group55);
-      var coen = saveTeacher("Coen", new ArrayList<>(List.of(monday, thursday)), 2, 2, 2, 1,
-          group53, group55);
+      var meow = saveTeacher("meow", new ArrayList<>(List.of(monday, tuesday, wednesday, thursday)), 4);
+
+      var wubbo = saveTeacherWithGroups("Wubbo", new ArrayList<>(List.of(monday, tuesday, wednesday, friday)),
+          3, 1, 2, 2, group61, group63);
+      var coen = saveTeacherWithGroups("Coen", new ArrayList<>(List.of(monday, thursday)), 2, 2, 2, 1,
+          group61, group62);
 
       groupService.scheduleReturnDay(returnDay, 4L, DayOfWeek.WEDNESDAY);
-      groupService.scheduleGroup(group53);
-      groupService.scheduleGroup(group54);
-      groupService.scheduleGroup(group55);
+      groupService.scheduleGroup(group61);
+      groupService.scheduleGroup(group62);
+      groupService.scheduleGroup(group63);
 
       final HolidayManager holidayManager = HolidayManager.getInstance(
           ManagerParameters.create(NETHERLANDS));
@@ -103,25 +105,32 @@ public class Seeder implements CommandLineRunner {
             holiday.getDescription()));
       }
 
-      groupService.addVacation(group53, LocalDate.now().plusMonths(1), 2);
+      groupService.addVacation(group61, LocalDate.now().plusMonths(1), 2);
 
       int emptyLessons = 0;
+      Long lessonId = scheduleddayRepository.findByDate(LocalDate.now()).getLast().getLesson().getId();
       for (int i = 1; i <= 10; i++) {
-        Optional<Lesson> lesson = lessonRepository.findById(361L - emptyLessons - i);
+        Optional<Lesson> lesson = lessonRepository.findById(lessonId - emptyLessons - i);
         while (lesson.isEmpty()) {
           emptyLessons += 1;
-          lesson = lessonRepository.findById(361L - emptyLessons - i);
+          lesson = lessonRepository.findById(lessonId - emptyLessons - i);
         }
-        addNote(lesson.get(), "Linux les " + (10 - i) + "/10", false);
+        addNote(lesson.get(), "Linux les " + (11 - i) + "/10", false);
       }
-      addNote(lessonRepository.findById(361L).get(), "Linux Examen", true);
+      addNote(lessonRepository.findById(lessonId).get(), "Linux Examen", true);
 
-      groupService.deleteGroup(group52);
+      groupService.deleteGroup(group60);
       userRepository.save(new User("admin", passwordEncoder.encode("admin"), Role.ROLE_ADMIN));
     }
   }
 
-  private Teacher saveTeacher(String name, List<MyDay> availability, int maxDaysPerWeek,
+  private Teacher saveTeacher(String name, List<MyDay> availability, int maxDaysPerWeek) {
+    Teacher teacher = new Teacher(name, availability, maxDaysPerWeek);
+    teacherRepository.save(teacher);
+    return teacher;
+  }
+
+  private Teacher saveTeacherWithGroups(String name, List<MyDay> availability, int maxDaysPerWeek,
       int daysPhase1, int daysPhase2, int daysPhase3, Group... groups) {
     Teacher teacher = new Teacher(name, availability, maxDaysPerWeek);
     teacherRepository.save(teacher);
