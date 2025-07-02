@@ -27,7 +27,7 @@ export class DataService {
       .get(this.apiUrl + `/scheduleddays/export`, { responseType: 'blob' })
       .pipe(
         map((response: Blob) => {
-          saveAs(response, 'scheduleddays.xlsx');
+          saveAs(response, '/scheduleddays.xlsx');
           return response;
         })
       );
@@ -69,4 +69,4 @@ export class DataService {
   removeLesson(id: number) {
     return this.http.delete<any>(`${this.apiUrl}/scheduleddays/${id}`);
   }
-} 
+}

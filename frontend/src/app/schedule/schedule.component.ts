@@ -4,7 +4,7 @@ import { DataService } from './data.service';
 import { ScheduledDayComponent } from './scheduled-day/scheduled-day.component';
 import { ModalComponent } from '../modal/modal.component';
 import { OverrideComponent } from './override/override.component';
-import { AddLessonComponent } from "./add-lesson/add-lesson.component";
+import { AddLessonComponent } from './add-lesson/add-lesson.component';
 
 @Component({
   selector: 'app-schedule',
@@ -14,8 +14,8 @@ import { AddLessonComponent } from "./add-lesson/add-lesson.component";
     ScheduledDayComponent,
     ModalComponent,
     OverrideComponent,
-    AddLessonComponent
-],
+    AddLessonComponent,
+  ],
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.css',
 })
@@ -50,7 +50,7 @@ export class ScheduleComponent {
 
   BRIGHTNESS_THRESHOLD: number = 128;
 
-  isLoggedIn: boolean = localStorage.getItem('token') !== null
+  isLoggedIn: boolean = localStorage.getItem('token') !== null;
 
   @ViewChild('dragImage', { static: false }) dragImage!: ElementRef;
 
@@ -73,7 +73,7 @@ export class ScheduleComponent {
         })
     );
     console.log(days);
-    
+
     return days;
   }
 
@@ -91,7 +91,11 @@ export class ScheduleComponent {
 
   checkIfToday(year: number, month: number, day: number) {
     const today = new Date();
-    return today.getDate() == day && today.getMonth() == month-1 && today.getFullYear() == year
+    return (
+      today.getDate() == day &&
+      today.getMonth() == month - 1 &&
+      today.getFullYear() == year
+    );
   }
 
   getMonthName(monthNumber: number): string {
@@ -139,18 +143,16 @@ export class ScheduleComponent {
 
   constructor(private dataService: DataService) {}
   ngOnInit(): void {
-    this.dataService.getGroups().subscribe(
-      (response: any[]) => {
+    if (this.isLoggedIn) {
+      this.dataService.getGroups().subscribe((response: any[]) => {
         this.groups = response;
         console.log(response);
-      }
-    );
-    this.dataService.getTeachers().subscribe(
-      (response: any[]) => {
+      });
+      this.dataService.getTeachers().subscribe((response: any[]) => {
         this.teachers = response;
         console.log(response);
-      }
-    );
+      });
+    }
     this.dataService.getScheduledDaysByMonth(this.month, this.year).subscribe(
       (response: any[]) => {
         this.data = response;
@@ -175,22 +177,25 @@ export class ScheduleComponent {
         this.showModal('error');
       }
     );
-
   }
 
   onDragStart(event: DragEvent, draggedObject: Scheduledday) {
-    if (!this.isLoggedIn) {return}
+    if (!this.isLoggedIn) {
+      return;
+    }
     event?.dataTransfer?.setDragImage(this.dragImage.nativeElement, 0, 0);
     const index = this.data.findIndex((l) => l.id === draggedObject.id);
     event?.dataTransfer?.setData('text', index.toString());
   }
 
-  setDraggedItem(item: Scheduledday){
+  setDraggedItem(item: Scheduledday) {
     this.draggedItem = item;
   }
 
   onDragOver(event: DragEvent) {
-    if (!this.isLoggedIn) {return}
+    if (!this.isLoggedIn) {
+      return;
+    }
     event.preventDefault();
   }
 
@@ -242,13 +247,13 @@ export class ScheduleComponent {
     );
   }
 
-  calculateBrightness(color: string): boolean{
+  calculateBrightness(color: string): boolean {
     const r = parseInt(color.substring(1, 3), 16);
     const g = parseInt(color.substring(3, 5), 16);
     const b = parseInt(color.substring(5, 7), 16);
 
-    const brightness = Math.sqrt(0.299*r*r + 0.587*g*g + 0.114*b*b);    
-    
+    const brightness = Math.sqrt(0.299 * r * r + 0.587 * g * g + 0.114 * b * b);
+
     return brightness < this.BRIGHTNESS_THRESHOLD;
   }
 }

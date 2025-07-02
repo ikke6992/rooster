@@ -1,5 +1,6 @@
 package nl.itvitae.rooster.group;
 
+import java.time.DayOfWeek;
 import lombok.RequiredArgsConstructor;
 import nl.itvitae.rooster.group.vacation.VacationRequest;
 import nl.itvitae.rooster.teacher.TeacherService;
@@ -100,7 +101,8 @@ public class GroupController {
           request.daysPhase3(), request.weeksPhase3(), request.teacherAssignments());
 
       groupService.rescheduleGroup(
-          group, group.getStartDate().isAfter(LocalDate.now()) ? group.getStartDate() : LocalDate.now());
+          group, group.getStartDate().isAfter(LocalDate.now()) ? group.getStartDate() : LocalDate.now().with(
+              DayOfWeek.MONDAY));
       return ResponseEntity.ok(GroupDTO.of(group));
     }
   }

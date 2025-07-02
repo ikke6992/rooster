@@ -72,7 +72,6 @@ public class Seeder implements CommandLineRunner {
 
       var returnDay = groupService.addGroup(0, "#d3d3d3", 0, "Terugkomdag",
           returnDate, 1, 52, 1, 52, 1, 52);
-
       groupService.scheduleReturnDay(returnDay, 4L, DayOfWeek.WEDNESDAY);
 
       final HolidayManager holidayManager = HolidayManager.getInstance(
@@ -83,12 +82,18 @@ public class Seeder implements CommandLineRunner {
         freeDayService.addFreeDay(new FreeDay(holiday.getDate(),
             holiday.getDescription()));
       }
-
+      
       userRepository.save(new User("admin", passwordEncoder.encode("admin"), Role.ROLE_ADMIN));
     }
   }
 
-  private Teacher saveTeacher(String name, List<MyDay> availability, int maxDaysPerWeek,
+  private Teacher saveTeacher(String name, List<MyDay> availability, int maxDaysPerWeek) {
+    Teacher teacher = new Teacher(name, availability, maxDaysPerWeek);
+    teacherRepository.save(teacher);
+    return teacher;
+  }
+
+  private Teacher saveTeacherWithGroups(String name, List<MyDay> availability, int maxDaysPerWeek,
       int daysPhase1, int daysPhase2, int daysPhase3, Group... groups) {
     Teacher teacher = new Teacher(name, availability, maxDaysPerWeek);
     teacherRepository.save(teacher);
