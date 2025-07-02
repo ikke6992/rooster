@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrlGroups = 'http://localhost:8080/api/v1/groups';
-  private apiUrlTeachers = 'http://localhost:8080/api/v1/teachers';
+  private apiUrlGroups = 'http://localhost:8080/api/v1/groups/';
+  private apiUrlTeachers = 'http://localhost:8080/api/v1/teachers/';
 
   constructor(private http: HttpClient) {}
 
@@ -20,14 +20,14 @@ export class DataService {
   }
 
   postGroup(data: any): Observable<any> {
-    return this.http.post<any>(this.apiUrlGroups + '/new', data, {
+    return this.http.post<any>(this.apiUrlGroups + 'new', data, {
       headers: new HttpHeaders({ 'Content-type': 'application/json' }),
     });
   }
 
   putGroup(groupNumber: number, data: any): Observable<any> {
     return this.http.put<any>(
-      this.apiUrlGroups + '/' + groupNumber + '/edit',
+      this.apiUrlGroups + groupNumber + '/edit',
       data,
       {
         headers: new HttpHeaders({ 'Content-type': 'application/json' }),
@@ -37,7 +37,7 @@ export class DataService {
 
   rescheduleGroup(groupNumber: number): Observable<any> {
     return this.http.put<any>(
-      this.apiUrlGroups + '/' + groupNumber + '/reschedule',
+      this.apiUrlGroups + groupNumber + '/reschedule',
       {
         headers: new HttpHeaders({ 'Content-type': 'application/json' }),
       }
@@ -46,7 +46,7 @@ export class DataService {
 
   archiveGroup(groupNumber: number): Observable<any> {
     return this.http.delete<any>(
-      this.apiUrlGroups + '/' + groupNumber + '/archive',
+      this.apiUrlGroups + groupNumber + '/archive',
       {
         headers: new HttpHeaders({ 'Content-type': 'application/json' }),
       }
@@ -55,7 +55,7 @@ export class DataService {
 
   addVacation(groupNumber: number, data: any): Observable<any> {
     return this.http.put<any>(
-      this.apiUrlGroups + '/' + groupNumber + '/addVacation',
+      this.apiUrlGroups + groupNumber + '/addVacation',
       data,
       {
         headers: new HttpHeaders({ 'Content-type': 'application/json' }),

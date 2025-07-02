@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrlTeachers = 'http://localhost:8080/api/v1/teachers';
-  private apiUrlGroups = 'http://localhost:8080/api/v1/groups';
+  private apiUrlTeachers = 'http://localhost:8080/api/v1/teachers/';
+  private apiUrlGroups = 'http://localhost:8080/api/v1/groups/';
 
   constructor(private http: HttpClient) {}
 
@@ -20,20 +20,20 @@ export class DataService {
   }
 
   postTeacher(data: any): Observable<any> {
-    return this.http.post<any>(this.apiUrlTeachers + '/new', data, {
+    return this.http.post<any>(this.apiUrlTeachers + 'new', data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
   }
 
   putAvailability(id: number, data: any): Observable<any> {
-    return this.http.put<any>(this.apiUrlTeachers + '/edit/' + id, data, {
+    return this.http.put<any>(this.apiUrlTeachers + 'edit/' + id, data, {
       headers: new HttpHeaders({ 'Content-type': 'application/json' }),
     });
   }
 
   putGroup(id: number, groupId: number, data: any): Observable<any> {
     return this.http.put<any>(
-      this.apiUrlTeachers + '/edit/' + id + '/addGroup/' + groupId, data, 
+      this.apiUrlTeachers + 'edit/' + id + '/addGroup/' + groupId, data, 
       {
         headers: new HttpHeaders({ 'Content-type': 'application/json' }),
       }
