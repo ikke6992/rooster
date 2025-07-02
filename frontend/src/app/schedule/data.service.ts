@@ -31,7 +31,7 @@ export class DataService {
   }
 
   getFreeDaysByMonth(month: number, year: number): Observable<any> {
-    const url = `${this.apiUrl}freedays/month/${month}/${year}`
+    const url = `${this.apiUrl}/freedays/month/${month}/${year}`
     return this.http.get<any>(url);
   }
 
