@@ -69,6 +69,9 @@ public class ScheduleddayController {
       return ResponseEntity.badRequest().body("Group is already scheduled on this day");
     }
     Scheduledday scheduledday = scheduleddayService.addScheduledday(0, date, classroom.get(), lesson);
+    if (scheduledday == null) {
+      return ResponseEntity.badRequest().body("No available classrooms");
+    }
     URI locationOfScheduledDay = ucb.path("/api/v1/scheduledday").buildAndExpand(scheduledday.getId()).toUri();
     return ResponseEntity.created(locationOfScheduledDay).body(scheduledday);
   }

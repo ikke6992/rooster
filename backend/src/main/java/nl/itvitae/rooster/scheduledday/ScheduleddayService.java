@@ -67,7 +67,7 @@ public class ScheduleddayService {
       if (phase == 0) moveClassroom(scheduledday, classroom);
       else preventConflicts(phase, scheduledday, false);
     } catch (ClassroomException e) {
-      throw new RuntimeException(e);
+      return null;
     }
 
     scheduleddayRepository.save(scheduledday);
