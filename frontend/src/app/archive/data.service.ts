@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrlGroups = 'http://localhost:8080/api/v1/groups/';
+  private apiUrlGroups = 'http://localhost:8080/api/v1/groups';
 
   constructor(private http: HttpClient) {}
 
   getGroups(): Observable<any> {
-    return this.http.get<any>(this.apiUrlGroups + 'archived');
+    return this.http.get<any>(this.apiUrlGroups + '/archived');
   }
 }

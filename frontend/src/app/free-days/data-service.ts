@@ -6,16 +6,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrl = 'http://localhost:8080/api/v1/freedays/';
+  private apiUrl = 'http://localhost:8080/api/v1/freedays';
 
   constructor(private http: HttpClient) {}
 
   getUpcomingDays(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}upcoming`);
+    return this.http.get<any>(`${this.apiUrl}/upcoming`);
   }
   
   getPastDays(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}past`);
+    return this.http.get<any>(`${this.apiUrl}/past`);
   }
 
   addDay(data: any): Observable<any> {
@@ -25,7 +25,7 @@ export class DataService {
   }
 
   addMultipleDays(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}multi`, data, {
+    return this.http.post<any>(`${this.apiUrl}/multi`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
   }
