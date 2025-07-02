@@ -19,4 +19,8 @@ public class LessonService {
   public Lesson createLesson(Group group){
     return lessonRepository.save(new Lesson(group));
   }
+
+  public Lesson createLesson(Group group, Teacher teacher){
+    return lessonRepository.save(new Lesson(group, teacher));
+  }
 }

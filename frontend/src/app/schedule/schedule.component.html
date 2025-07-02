@@ -9,8 +9,13 @@
     Next Month
   </button>
   <button (click)="print()" class="button-action" i18n>Print schedule</button>
-  <button (click)="exportExcel()" class="button-action" i18n>
-    Download Excel File
+  <button (click)="exportExcel()" class="button-action" i18n>Download Excel</button>
+  <button
+    (click)="showModal('add-lesson')"
+    class="button-action"
+    *ngIf="isLoggedIn"
+  >
+    Add Lesson
   </button>
 </div>
 <div id="schedule">
@@ -23,12 +28,12 @@
     </tr>
     <tr class="text-center border-2" *ngFor="let day of days">
       <td
-        [ngClass]="
-          day.isWeekend
+        [ngClass]="day.isToday ? 'bg-light-blue' :
+           (day.isWeekend
             ? 'bg-light-green'
-            : day.isFreeDay
+            : (day.isFreeDay
             ? 'bg-yellow'
-            : 'bg-blue'
+            : 'bg-blue'))
         "
         style="width: 5%"
       >
@@ -37,11 +42,11 @@
       <td
         *ngFor="let number of TOTAL_CLASSROOMS"
         [ngClass]="
-          day.isWeekend
+          day.isToday ? 'bg-light-blue' : (day.isWeekend
             ? 'bg-light-green'
-            : day.isFreeDay
+            : (day.isFreeDay
             ? 'bg-yellow'
-            : 'bg-white'
+            : 'bg-white'))
         "
         (dragover)="onDragOver($event)"
         (drop)="onDrop($event, day, number)"
@@ -78,6 +83,13 @@
 <app-modal id="error" class="hhidden">
   <p>{{ errorMsg }}</p>
   <button (click)="closeModal('error')" class="button-action">Close</button>
+</app-modal>
+
+<app-modal id="add-lesson" class="hhidden">
+  <app-add-lesson [groups]="groups" [teachers]="teachers"></app-add-lesson>
+  <button (click)="closeModal('add-lesson')" class="button-action">
+    Close
+  </button>
 </app-modal>
 
 <div #dragImage class="custom-drag-image">

@@ -32,7 +32,11 @@
         </button>
         <app-modal id="set-availability-{{ teacher.name }}" class="hhidden">
           <app-set-availability [teacher]="teacher"></app-set-availability>
-          <button (click)="closeModal('set-availability-' + teacher.name)" i18n>
+          <button
+            (click)="closeModal('set-availability-' + teacher.name)"
+            class="button-action"
+            i18n
+          >
             Close
           </button>
         </app-modal>
@@ -47,7 +51,11 @@
         </button>
         <app-modal id="add-group-{{ teacher.name }}" class="hhidden">
           <app-set-group [groups]="groups" [teacher]="teacher"></app-set-group>
-          <button (click)="closeModal('add-group-' + teacher.name)" i18n>
+          <button
+            (click)="closeModal('add-group-' + teacher.name)"
+            class="button-action"
+            i18n
+          >
             Close
           </button>
         </app-modal>

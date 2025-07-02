@@ -3,7 +3,7 @@ import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { DataService } from '../data.service';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../../modal/modal.component';
-import { SetTeacherComponent } from './set-teacher/set-teacher.component';
+import { SetTeacherComponent } from '../set-teacher/set-teacher.component';
 
 @Component({
   selector: 'app-add-group',
@@ -22,7 +22,6 @@ export class AddGroupComponent {
   teacherAssignments: any[] = [];
   window = window;
 
-  @Input() fields: any[] = [];
   @Input() teachers: any[] = [];
 
   addGroup = new FormGroup({
@@ -31,8 +30,11 @@ export class AddGroupComponent {
     numberOfStudents: new FormControl(''),
     field: new FormControl(''),
     startDate: new FormControl(''),
+    daysPhase1: new FormControl(''),
     weeksPhase1: new FormControl(''),
+    daysPhase2: new FormControl(''),
     weeksPhase2: new FormControl(''),
+    daysPhase3: new FormControl(''),
     weeksPhase3: new FormControl(''),
   });
 
@@ -43,6 +45,7 @@ export class AddGroupComponent {
       (e) => e.id !== $event.id
     );
     this.teacherAssignments.push($event);
+    this.closeModal('set-teacher-' + $event.name);
   }
 
   removeAssignment(teacherAssignment: any) {
@@ -63,15 +66,22 @@ export class AddGroupComponent {
       numberOfStudents: formValue.numberOfStudents,
       field: formValue.field,
       startDate: formValue.startDate,
+
+      daysPhase1: formValue.daysPhase1,
       weeksPhase1: formValue.weeksPhase1,
+
+      daysPhase2: formValue.daysPhase2,
       weeksPhase2: formValue.weeksPhase2,
+
+      daysPhase3: formValue.daysPhase3,
       weeksPhase3: formValue.weeksPhase3,
+
       teacherAssignments: this.teacherAssignments,
     };
     this.dataService.postGroup(data).subscribe(
       (response) => {
         console.log('Response:', response);
-        this.feedbackMsg = `Group ${response.groupNumber} ${response.field.name} succesfully added and scheduled starting ${response.startDate}`;
+        this.feedbackMsg = `Group ${response.groupNumber} ${response.field} succesfully added and scheduled starting ${response.startDate}`;
         this.showModal('feedback');
       },
       (error) => {

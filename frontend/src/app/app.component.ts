@@ -18,8 +18,6 @@ export class AppComponent {
   dutch: boolean = false;
   feedbackMsg: string = "";
 
-  constructor(private translate: Translate) {}
-
   switchLanguage() {
     this.dutch = !this.dutch;
   }

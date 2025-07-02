@@ -40,23 +40,31 @@
         >
           <ng-container *ngIf="item.note !== null; else showNoNote">
             <div>{{ item.note }}</div>
-            <button
-              *ngIf="this.isLoggedIn"
-              (click)="showModal('add-note-' + item.id)"
-              class="button-action"
-            >
-              Edit note
-            </button>
+            <div *ngIf="this.isLoggedIn">
+              <button
+                (click)="showModal('add-note-' + item.id)"
+                class="button-action"
+              >
+                Edit note
+              </button>
+              <button (click)="removeLesson()" class="button-action">
+                Remove Lesson
+              </button>
+            </div>
           </ng-container>
           <ng-template #showNoNote>
             <div>No note</div>
-            <button
-              *ngIf="this.isLoggedIn"
-              (click)="showModal('add-note-' + item.id)"
-              class="button-action"
-            >
-              Add note
-            </button>
+            <div *ngIf="this.isLoggedIn">
+              <button
+                (click)="showModal('add-note-' + item.id)"
+                class="button-action"
+              >
+                Edit note
+              </button>
+              <button (click)="removeLesson()" class="button-action">
+                Remove Lesson
+              </button>
+            </div>
           </ng-template>
         </div>
       </div>

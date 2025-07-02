@@ -7,7 +7,6 @@ import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nl.itvitae.rooster.field.Field;
 import nl.itvitae.rooster.group.vacation.Vacation;
 import nl.itvitae.rooster.lesson.Lesson;
 import nl.itvitae.rooster.teacher.GroupTeacher;
@@ -33,8 +32,7 @@ public class Group {
   @OneToMany(mappedBy = "group")
   private List<GroupTeacher> groupTeachers = new ArrayList<>();
 
-  @ManyToOne
-  private Field field;
+  private String field;
 
   private LocalDate startDate;
   private int daysPhase1;
@@ -54,10 +52,13 @@ public class Group {
       int groupNumber,
       String color,
       int numberOfStudents,
-      Field field,
+      String field,
       LocalDate startDate,
+      int daysPhase1,
       int weeksPhase1,
+      int daysPhase2,
       int weeksPhase2,
+      int daysPhase3,
       int weeksPhase3
   ) {
     this.groupNumber = groupNumber;
@@ -65,16 +66,20 @@ public class Group {
     this.numberOfStudents = numberOfStudents;
     this.field = field;
     this.startDate = startDate;
-    this.daysPhase1 = field.getDaysPhase1();
+    this.daysPhase1 = daysPhase1;
     this.weeksPhase1 = weeksPhase1;
-    this.daysPhase2 = field.getDaysPhase2();
+    this.daysPhase2 = daysPhase2;
     this.weeksPhase2 = weeksPhase2;
-    this.daysPhase3 = field.getDaysPhase3();
+    this.daysPhase3 = daysPhase3;
     this.weeksPhase3 = weeksPhase3;
   }
 
   public void addGroupTeacher(GroupTeacher groupTeacher) {
     groupTeachers.add(groupTeacher);
+  }
+
+  public void removeGroupTeacher(GroupTeacher groupTeacher) {
+    groupTeachers.remove(groupTeacher);
   }
   public void addVacation(Vacation vacation) {
     vacations.add(vacation);

@@ -18,7 +18,6 @@ import java.util.List;
 public class TeacherService {
 
   private final TeacherRepository teacherRepository;
-  private final GroupService groupService;
   private final GroupRepository groupRepository;
   private final MyDayRepository myDayRepository;
   private final GroupTeacherRepository groupTeacherRepository;
@@ -44,6 +43,17 @@ public class TeacherService {
     groupTeacherRepository.save(groupTeacher);
     groupRepository.save(group);
     teacherRepository.save(teacher);
+    return teacher;
+  }
+
+  public Teacher removeGroup(GroupTeacher groupTeacher) {
+    Group group = groupTeacher.getGroup();
+    Teacher teacher = groupTeacher.getTeacher();
+    group.removeGroupTeacher(groupTeacher);
+    teacher.removeGroupTeacher(groupTeacher);
+    groupRepository.save(group);
+    teacherRepository.save(teacher);
+    groupTeacherRepository.delete(groupTeacher);
     return teacher;
   }
 
