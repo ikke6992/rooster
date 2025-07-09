@@ -4,10 +4,6 @@
   "newProjectRoot": "projects",
   "projects": {
     "frontend": {
-      "i18n":{
-        "sourceLocale": "en-US",
-        "locales": {"nl": "src/locale/messages.nl.xlf"}
-      },
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -23,7 +19,6 @@
               "moment-timezone",
               "jalaali-js"
             ],
-            "localize": ["nl"],
             "outputPath": "dist/frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
