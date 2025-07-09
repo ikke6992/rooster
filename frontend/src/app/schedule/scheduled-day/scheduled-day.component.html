@@ -15,7 +15,6 @@
       <div
         [ngClass]="calculateBrightness(item.groupColor) ? 'text-white' : ''"
         class="flex justify-center items-center"
-        i18n
       >
         Group {{ item.groupNumber }}
         <ng-container *ngIf="item.field === 'Returnday'">
@@ -70,7 +69,7 @@
       </div>
     </div>
   </div>
-  <div draggable="true" (dragstart)="preventDrag($event)" i18n>
+  <div draggable="true" (dragstart)="preventDrag($event)">
     <app-modal id="add-note-{{ item.id }}" class="hhidden">
       <form [formGroup]="addNote" (ngSubmit)="onSubmit()">
         <label for="note">Note: </label>

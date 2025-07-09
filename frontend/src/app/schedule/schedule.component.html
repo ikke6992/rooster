@@ -1,14 +1,14 @@
 <div class="sticky top-12 w-full z-10 px-4 bg-white">
-  <div class="mx-2" i18n>
+  <div class="mx-2">
     Currently viewing: {{ getMonthName(month) }} {{ year }}
   </div>
-  <button (click)="decrementMonth()" class="button-action" i18n>
+  <button (click)="decrementMonth()" class="button-action">
     Previous Month
   </button>
-  <button (click)="incrementMonth()" class="button-action" i18n>
+  <button (click)="incrementMonth()" class="button-action">
     Next Month
   </button>
-  <button (click)="print()" class="button-action" i18n>Print schedule</button>
+  <button (click)="print()" class="button-action">Print schedule</button>
   <button (click)="exportExcel()" class="button-action">Download Excel</button>
   <button
     (click)="showModal('add-lesson')"
@@ -22,7 +22,7 @@
   <table class="w-full">
     <tr class="sticky" style="top: 100px; background-color: white; z-index: 10">
       <th>Date</th>
-      <th *ngFor="let number of TOTAL_CLASSROOMS" i18n>
+      <th *ngFor="let number of TOTAL_CLASSROOMS">
         Classroom {{ number }}
       </th>
     </tr>
@@ -69,7 +69,7 @@
                   [date]="destinationdate"
                   [classroomId]="destinationclassroom"
                 ></app-override>
-                <button (click)="closeModal('override-' + item.id)" i18n>
+                <button (click)="closeModal('override-' + item.id)">
                   Close
                 </button>
               </ng-container>

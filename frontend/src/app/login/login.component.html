@@ -1,15 +1,15 @@
-<h1 i18n>Login</h1>
+<h1>Login</h1>
 <form [formGroup]="login" (ngSubmit)="onSubmit()">
-  <label for="username" i18n>Username: </label>
+  <label for="username">Username: </label>
   <input id="username" type="text" formControlName="username" required /><br />
-  <label for="password" i18n>Password: </label>
+  <label for="password">Password: </label>
   <input
     id="password"
     type="password"
     formControlName="password"
     required
   /><br />
-  <button type="submit" [disabled]="!login.valid" i18n>Submit</button>
+  <button type="submit" [disabled]="!login.valid">Submit</button>
 </form>
 
 <app-modal id="feedback-login" class="hhidden feedback">
@@ -21,7 +21,6 @@
         ? closeModal('feedback')
         : window.location.reload()
     "
-    i18n
   >
     Close
   </button>

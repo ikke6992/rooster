@@ -8,8 +8,7 @@
         routerLink=""
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
-        i18n
-        >View schedule</a
+        >{{ "View Schedule" | translate }}</a
       >
 
       <a
@@ -18,8 +17,7 @@
         routerLink="/groups"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
-        i18n
-        >View Groups</a
+        >{{ "View Groups" | translate }}</a
       >
       <a
         *ngIf="isLoggedIn"
@@ -27,8 +25,7 @@
         routerLink="/teachers"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
-        i18n
-        >View Teachers</a
+        >{{ "View Teachers" | translate }}</a
       >
       <a
         *ngIf="isLoggedIn"
@@ -36,36 +33,36 @@
         routerLink="/archive"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
-        i18n
-        >Archive</a
+        >{{ Archive | translate }}</a
       >
       <a
         class="nav-button"
         routerLink="/free-days"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
-        i18n
-        >View Free Days</a
+        >{{ "View Free Days" | translate }}</a
       >
       <ng-container *ngIf="isLoggedIn; else showLogout">
-        <button class="nav-button" (click)="logout()" i18n>Logout</button>
+        <button class="nav-button" (click)="logout()">
+          {{ Logout | translate }}
+        </button>
       </ng-container>
       <ng-template #showLogout>
-        <button class="nav-button" (click)="showModal('login')" i18n>
-          Login
+        <button class="nav-button" (click)="showModal('login')">
+          {{ Login | translate }}
         </button>
       </ng-template>
-      <ng-container *ngIf="dutch">
-        <button class="language-button" (click)="switchLanguage()">🇬🇧</button>
+      <ng-container *ngIf="currentLanguage === 'nl'">
+        <button class="language-button" (click)="switchLanguage('en')">🇬🇧</button>
       </ng-container>
-      <ng-container *ngIf="!dutch">
-        <button class="language-button" (click)="switchLanguage()">🇳🇱</button>
+      <ng-container *ngIf="currentLanguage === 'en'">
+        <button class="language-button" (click)="switchLanguage('nl')">🇳🇱</button>
       </ng-container>
     </div>
   </nav>
   <app-modal id="login" class="hhidden">
     <app-login></app-login>
-    <button (click)="closeModal('login')" i18n>Close</button>
+    <button (click)="closeModal('login')">Close</button>
   </app-modal>
   <router-outlet />
 </div>

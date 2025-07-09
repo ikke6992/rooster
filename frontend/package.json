@@ -8,6 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
+  "overrides": {
+    "@angular/compiler": "^18.0.0"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^18.0.0",
@@ -19,6 +22,8 @@
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
+    "@ngx-translate/core": "^16.0.4",
+    "@ngx-translate/http-loader": "^16.0.1",
     "date-holidays": "^3.23.12",
     "file-saver": "^2.0.5",
     "rxjs": "~7.8.0",

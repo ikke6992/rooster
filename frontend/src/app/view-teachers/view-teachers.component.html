@@ -1,20 +1,20 @@
-<h1 i18n>Teachers</h1>
+<h1>Teachers</h1>
 <div class="flex flex-wrap">
   <div *ngFor="let teacher of teachers" class="p-2">
     <div class="grid grid-cols-2 rounded-md border border-black p-2 gap-2">
       <h3 class="font-bold">{{ teacher.name }}</h3>
       <div class="invisible"></div>
       <div>
-        <h4 i18n>Availability:</h4>
+        <h4>Availability:</h4>
         <div *ngFor="let day of teacher.availability">
-          <p i18n>- {{ day }}</p>
+          <p>- {{ day }}</p>
         </div>
-        <p i18n>max. {{ teacher.maxDaysPerWeek }} days per week</p>
+        <p>max. {{ teacher.maxDaysPerWeek }} days per week</p>
       </div>
       <div>
-        <h4 i18n>Groups:</h4>
+        <h4>Groups:</h4>
         <ng-container *ngIf="teacher.groups.length === 0; else showGroups">
-          <div i18n>none</div>
+          <div>none</div>
         </ng-container>
         <ng-template #showGroups>
           <div *ngFor="let group of teacher.groups">
@@ -26,7 +26,6 @@
         <button
           class="button-action"
           (click)="showModal('set-availability-' + teacher.name)"
-          i18n
         >
           Set Availability
         </button>
@@ -35,7 +34,6 @@
           <button
             (click)="closeModal('set-availability-' + teacher.name)"
             class="button-action"
-            i18n
           >
             Close
           </button>
@@ -45,7 +43,6 @@
         <button
           (click)="showModal('add-group-' + teacher.name)"
           class="button-action"
-          i18n
         >
           Add Group
         </button>
@@ -54,7 +51,6 @@
           <button
             (click)="closeModal('add-group-' + teacher.name)"
             class="button-action"
-            i18n
           >
             Close
           </button>
@@ -69,11 +65,10 @@
   (click)="showModal('add-teacher')"
   class="button-action"
   id="add-teacher-button"
-  i18n
 >
   Add Teacher
 </button>
 <app-modal id="add-teacher" class="hhidden">
   <app-add-teacher></app-add-teacher>
-  <button (click)="closeModal('add-teacher')" i18n>Close</button>
+  <button (click)="closeModal('add-teacher')">Close</button>
 </app-modal>

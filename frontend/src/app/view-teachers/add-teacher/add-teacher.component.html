@@ -1,25 +1,25 @@
-<h1 i18n>Add Teacher</h1>
+<h1>Add Teacher</h1>
 <form [formGroup]="addTeacher" (ngSubmit)="onSubmit()">
-  <label for="name" i18n>Name: </label>
+  <label for="name">Name: </label>
   <input id="name" type="text" formControlName="name" required /><br />
-  <label for="monday" i18n>Monday: </label>
+  <label for="monday">Monday: </label>
   <input id="monday" type="checkbox" formControlName="monday" /><br />
-  <label for="tuesday" i18n>Tuesday: </label>
+  <label for="tuesday">Tuesday: </label>
   <input id="tuesday" type="checkbox" formControlName="tuesday" /><br />
-  <label for="wednesday" i18n>Wednesday: </label>
+  <label for="wednesday">Wednesday: </label>
   <input id="wednesday" type="checkbox" formControlName="wednesday" /><br />
-  <label for="thursday" i18n>Thursday: </label>
+  <label for="thursday">Thursday: </label>
   <input id="thursday" type="checkbox" formControlName="thursday" /><br />
-  <label for="friday" i18n>Friday: </label>
+  <label for="friday">Friday: </label>
   <input id="friday" type="checkbox" formControlName="friday" /><br />
-  <label for="max-days" i18n>Max days per week: </label>
+  <label for="max-days">Max days per week: </label>
   <input
     id="max-days"
     type="number"
     formControlName="maxDaysPerWeek"
     required
   /><br />
-  <button type="submit" [disabled]="!addTeacher.valid" i18n>Submit</button>
+  <button type="submit" [disabled]="!addTeacher.valid">Submit</button>
 </form>
 
 <app-modal id="feedback-add-teacher" class="hhidden">
@@ -31,7 +31,6 @@
         ? closeModal('feedback')
         : window.location.reload()
     "
-    i18n
   >
     Close
   </button>

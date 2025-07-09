@@ -1,10 +1,10 @@
-<h1 class="font-bold" i18n>Edit Group {{ group.groupNumber }}</h1>
+<h1 class="font-bold">Edit Group {{ group.groupNumber }}</h1>
 <form [formGroup]="editGroup" (ngSubmit)="onSubmit()">
-  <label for="field" i18n>Field: </label>
+  <label for="field">Field: </label>
   <input id="field" type="text" formControlName="field" required /><br />
-  <label for="color" i18n>Color: </label>
+  <label for="color">Color: </label>
   <input id="color" type="color" formControlName="color" required /><br />
-  <label for="number-of-students" i18n>Number of students: </label>
+  <label for="number-of-students">Number of students: </label>
   <input
     id="number-of-students"
     type="number"
@@ -12,7 +12,7 @@
     required
   /><br />
 
-  <label for="start-date" i18n>Start Date: </label>main
+  <label for="start-date">Start Date: </label>main
   <input
     id="start-date"
     type="date"
@@ -20,15 +20,15 @@
     required
   /><br /><br />
 
-  <h1 i18n>Phase 1:</h1>
-  <label for="days-phase-1" i18n>Days per week: </label>
+  <h1>Phase 1:</h1>
+  <label for="days-phase-1">Days per week: </label>
   <input
     id="days-phase-1"
     type="number"
     formControlName="daysPhase1"
     required
   /><br />
-  <label for="weeks-phase-1" i18n>Amount of weeks: </label> main
+  <label for="weeks-phase-1">Amount of weeks: </label> main
   <input
     id="weeks-phase-1"
     type="number"
@@ -36,15 +36,15 @@
     required
   /><br /><br />
 
-  <h1 i18n>Phase 2:</h1>
-  <label for="days-phase-2" i18n>Days per week: </label>
+  <h1>Phase 2:</h1>
+  <label for="days-phase-2">Days per week: </label>
   <input
     id="days-phase-2"
     type="number"
     formControlName="daysPhase2"
     required
   /><br />
-  <label for="weeks-phase-2" i18n>Amount of weeks: </label>
+  <label for="weeks-phase-2">Amount of weeks: </label>
   <input
     id="weeks-phase-2"
     type="number"
@@ -52,15 +52,15 @@
     required
   /><br /><br />
 
-  <h1 i18n>Phase 3:</h1>
-  <label for="days-phase-3" i18n>Days per week: </label>
+  <h1>Phase 3:</h1>
+  <label for="days-phase-3">Days per week: </label>
   <input
     id="days-phase-3"
     type="number"
     formControlName="daysPhase3"
     required
   /><br />
-  <label for="weeks-phase-3" i18n>Amount of weeks: </label>
+  <label for="weeks-phase-3">Amount of weeks: </label>
   <input
     id="weeks-phase-3"
     type="number"
@@ -68,7 +68,7 @@
     required
   /><br /><br />
 
-  <label for="teachers" i18n>Teachers: </label>
+  <label for="teachers">Teachers: </label>
   <select multiple id="teachers">
     <option [ngValue]="null" disabled>Double Click to Select Teacher</option>
     <option
@@ -83,12 +83,12 @@
   ><br />
   <table>
     <tr *ngIf="teacherAssignments.length !== 0">
-      <th i18n>Teacher</th>
-      <th i18n>Days Phase 1</th>
-      <th i18n>Days Phase 2</th>
-      <th i18n>Days Phase 3</th>
-      <th i18n>Edit</th>
-      <th i18n>Delete</th>
+      <th>Teacher</th>
+      <th>Days Phase 1</th>
+      <th>Days Phase 2</th>
+      <th>Days Phase 3</th>
+      <th>Edit</th>
+      <th>Delete</th>
     </tr>
     <tr *ngFor="let teacherAssignment of teacherAssignments">
       <td>{{ teacherAssignment.name }}</td>
@@ -106,13 +106,12 @@
                 teacherAssignment.name
             )
           "
-          i18n
         >
           Edit
         </button>
       </td>
       <td>
-        <button type="button" (click)="removeAssignment(teacherAssignment)" i18n>
+        <button type="button" (click)="removeAssignment(teacherAssignment)">
           Delete
         </button>
       </td>
@@ -123,7 +122,6 @@
     [ngClass]="editGroup.valid ? 'button-action' : 'button-incomplete'"
     type="submit"
     [disabled]="!editGroup.valid"
-    i18n
   >
     Submit
   </button>
@@ -145,7 +143,6 @@
         )
       "
       class="button-action"
-      i18n
     >
       Close
     </button>
@@ -161,7 +158,6 @@
         ? closeModal('feedback-edit-group-' + group.groupNumber)
         : window.location.reload()
     "
-    i18n
   >
     Close
   </button>

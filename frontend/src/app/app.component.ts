@@ -1,25 +1,47 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { ModalComponent } from "./modal/modal.component";
-import { LoginComponent } from "./login/login.component";
-          
+import { ModalComponent } from './modal/modal.component';
+import { LoginComponent } from './login/login.component';
+import { TranslateService } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, RouterOutlet, ModalComponent, LoginComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    RouterOutlet,
+    ModalComponent,
+    LoginComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = "frontend"
+  title = 'frontend';
 
-  isLoggedIn: boolean = localStorage.getItem('token') !== null
-  dutch: boolean = false;
-  feedbackMsg: string = "";
+  isLoggedIn: boolean = localStorage.getItem('token') !== null;
+  currentLanguage = 'en';
+  feedbackMsg: string = '';
 
-  switchLanguage() {
-    this.dutch = !this.dutch;
+  constructor(public translate: TranslateService) {
+    translate.addLangs(['en', 'nl']);
+    translate.setDefaultLang('en');
+
+    const storedLang = localStorage.getItem('language');
+    const defaultLang = storedLang || 'en';
+    translate.setDefaultLang(defaultLang);
+    translate.use(defaultLang);
+    localStorage.setItem('language', defaultLang);
+    this.currentLanguage = defaultLang;
+  }
+
+  switchLanguage(language: string) {
+    this.translate.use(language);
+    localStorage.setItem('language', language);
+    this.currentLanguage = language;
   }
 
   showModal(name: string) {
@@ -37,12 +59,8 @@ export class AppComponent {
     }
   }
 
-  logout(){
+  logout() {
     localStorage.clear();
-    window.location.reload()
+    window.location.reload();
   }
 }
-
-
-
-
